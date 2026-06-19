@@ -952,13 +952,13 @@ export default function TriagePage() {
   const isGuest = authStatus !== "authenticated";
 
   const [inputMode, setInputMode]     = useState<"paste" | "upload" | "manual">("paste");
-  const [rawText, setRawText]         = useState(activeDeal?.rawText ?? "");
-  const [extracted, setExtracted]     = useState<ExtractedDeal | null>(activeDeal?.extracted ?? null);
+  const [rawText, setRawText]         = useState(activeDeal?.isDemo ? "" : (activeDeal?.rawText ?? ""));
+  const [extracted, setExtracted]     = useState<ExtractedDeal | null>(activeDeal?.isDemo ? null : (activeDeal?.extracted ?? null));
   const [loading, setLoading]         = useState(false);
   const [error, setError]             = useState<string | null>(null);
-  const [askingPrice, setAskingPrice] = useState(activeDeal?.askingPrice ?? 0);
-  const [netProfit, setNetProfit]     = useState(activeDeal?.netProfit ?? 0);
-  const [addBacks, setAddBacks]       = useState(activeDeal?.addBacks ?? 0);
+  const [askingPrice, setAskingPrice] = useState(activeDeal?.isDemo ? 0 : (activeDeal?.askingPrice ?? 0));
+  const [netProfit, setNetProfit]     = useState(activeDeal?.isDemo ? 0 : (activeDeal?.netProfit ?? 0));
+  const [addBacks, setAddBacks]       = useState(activeDeal?.isDemo ? 0 : (activeDeal?.addBacks ?? 0));
   const [equityPct, setEquityPct]     = useState(activeDeal?.equityPct ?? 30);
   const [vendorPct, setVendorPct]     = useState(activeDeal?.vendorPct ?? 20);
   const [bankPct, setBankPct]         = useState(activeDeal?.bankPct ?? 50);
@@ -995,14 +995,16 @@ export default function TriagePage() {
   /* ── Sync active deal → local state when deal switches ── */
   useEffect(() => {
     if (!activeDeal) return;
-    setAskingPrice(activeDeal.askingPrice);
-    setNetProfit(activeDeal.netProfit);
-    setAddBacks(activeDeal.addBacks);
+    // Demo deals: keep financials blank so the user must enter their own data
+    const isDemo = activeDeal.isDemo;
+    setAskingPrice(isDemo ? 0 : activeDeal.askingPrice);
+    setNetProfit(isDemo ? 0 : activeDeal.netProfit);
+    setAddBacks(isDemo ? 0 : activeDeal.addBacks);
     setEquityPct(activeDeal.equityPct);
     setVendorPct(activeDeal.vendorPct);
     setBankPct(activeDeal.bankPct);
-    setRawText(activeDeal.rawText);
-    setExtracted(activeDeal.extracted);
+    setRawText(isDemo ? "" : activeDeal.rawText);
+    setExtracted(isDemo ? null : activeDeal.extracted);
     setMetrics(null);
     setShowTerm(false); setTermLines([]); setTermActive(false);
     setError(null);
@@ -1592,34 +1594,30 @@ export default function TriagePage() {
                 <>
                   <p style={{ fontSize: 11, color: "var(--muted)", margin: "0 0 12px" }}>Enter the key figures from the listing</p>
                   {activeDeal?.isDemo && (
-                    <div style={{ marginBottom: 8, padding: "7px 12px", background: "var(--amber-bg, #fffbeb)", border: "1px solid var(--amber-border, #fde68a)", borderRadius: 8 }}>
-                      <p style={{ fontSize: 11, color: "#92400e", margin: 0 }}>These are sample figures — enter your own deal data below.</p>
+                    <div style={{ marginBottom: 8, padding: "7px 12px", background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 8 }}>
+                      <p style={{ fontSize: 11, color: "#92400e", margin: 0 }}>Sample deal — enter your own figures to begin analysis.</p>
                     </div>
                   )}
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                     {([
-                      ["Asking Price £", askingPrice, setAskingPrice],
-                      ["Net Profit £",   netProfit,   setNetProfit],
-                      ["Norm. Adj. £",   addBacks,    setAddBacks],
-                    ] as [string, number, (n: number) => void][]).map(([label, val, set]) => (
+                      ["Asking Price £", askingPrice, setAskingPrice, activeDeal?.isDemo ? activeDeal.askingPrice : null],
+                      ["Net Profit £",   netProfit,   setNetProfit,   activeDeal?.isDemo ? activeDeal.netProfit  : null],
+                      ["Norm. Adj. £",   addBacks,    setAddBacks,    activeDeal?.isDemo ? activeDeal.addBacks   : null],
+                    ] as [string, number, (n: number) => void, number | null][]).map(([label, val, set, sampleVal]) => (
                       <label key={label} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                         <span style={{ fontSize: 11, color: "var(--muted)", fontWeight: 600 }}>
                           {label === "Norm. Adj. £" ? <GlossaryTerm term="NormalizedAdjustments">Norm. Adj. £</GlossaryTerm> : label}
                         </span>
                         <input
                           type="number"
-                          value={activeDeal?.isDemo ? "" : (val || "")}
-                          placeholder={activeDeal?.isDemo ? val.toLocaleString() : "0"}
+                          value={val || ""}
+                          placeholder={sampleVal != null ? `e.g. ${sampleVal.toLocaleString()}` : "0"}
                           onChange={e => {
-                            if (activeDeal?.isDemo) {
-                              // First real input on a demo deal — clear demo data and mark as real
-                              setAskingPrice(0); setNetProfit(0); setAddBacks(0);
-                              updateDeal(activeDealId, { isDemo: false, status: "In Review" });
-                            }
+                            if (activeDeal?.isDemo) updateDeal(activeDealId, { isDemo: false, status: "In Review" });
                             set(Number(e.target.value));
                           }}
                           className="input"
-                          style={{ padding: "9px 12px", fontSize: 14, color: activeDeal?.isDemo ? "var(--muted)" : undefined }}
+                          style={{ padding: "9px 12px", fontSize: 14 }}
                         />
                       </label>
                     ))}
