@@ -58,7 +58,7 @@ export function SiteNav() {
   return (
     <>
       {/* Floating pill nav */}
-      <div style={{ position: "fixed", top: 16, left: 0, right: 0, zIndex: 100, display: "flex", justifyContent: "center", padding: "0 12px", pointerEvents: "none" }}>
+      <div style={{ position: "fixed", top: 16, left: 0, right: 0, zIndex: 100, display: "flex", justifyContent: "center", padding: "0 12px", pointerEvents: "none", overflow: "hidden" }}>
         <motion.nav
           initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, ease: EXPO }}
           style={{ display: "flex", alignItems: "center", gap: 2, background: "rgba(255,255,255,0.92)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", border: "1px solid #e2e8f0", borderRadius: 9999, padding: "8px 12px", boxShadow: "0 4px 24px rgba(0,0,0,0.08)", maxWidth: "calc(100vw - 24px)", pointerEvents: "all" }}
