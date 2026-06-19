@@ -93,13 +93,15 @@ export function SiteNav() {
             </Link>
           </div>
 
-          {/* Dashboard CTA */}
-          <Link href="/dashboard" style={{ textDecoration: "none", marginLeft: 6 }}>
-            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-              style={{ padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", fontSize: 13, fontWeight: 700, whiteSpace: "nowrap" }}>
-              Dashboard
-            </motion.button>
-          </Link>
+          {/* Dashboard CTA — desktop only */}
+          <div className="nav-desktop-links" style={{ marginLeft: 4 }}>
+            <Link href="/dashboard" style={{ textDecoration: "none" }}>
+              <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
+                style={{ padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", fontSize: 13, fontWeight: 700, whiteSpace: "nowrap" }}>
+                Dashboard
+              </motion.button>
+            </Link>
+          </div>
 
           {/* Hamburger */}
           <button
