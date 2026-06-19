@@ -1267,7 +1267,7 @@ export default function TriagePage() {
   const setVendor = (v: number) => { const r = 100-v, ratio = equityPct+bankPct > 0 ? equityPct/(equityPct+bankPct) : 0.5, ne=Math.round(r*ratio); setVendorPct(v); setEquityPct(ne); setBankPct(r-ne); };
   const setBank   = (v: number) => { const r = 100-v, ratio = equityPct+vendorPct > 0 ? equityPct/(equityPct+vendorPct) : 0.5, ne=Math.round(r*ratio); setBankPct(v); setEquityPct(ne); setVendorPct(r-ne); };
 
-  const hasFinancials = askingPrice > 0 && netProfit > 0;
+  const hasFinancials = askingPrice > 0 && netProfit > 0 && !activeDeal?.isDemo;
 
   const dscrVariant = metrics
     ? metrics.dscr_band === "strong" ? "success" : metrics.dscr_band === "tight" ? "amber" : "danger"
@@ -1591,6 +1591,11 @@ export default function TriagePage() {
               {inputMode === "manual" && (
                 <>
                   <p style={{ fontSize: 11, color: "var(--muted)", margin: "0 0 12px" }}>Enter the key figures from the listing</p>
+                  {activeDeal?.isDemo && (
+                    <div style={{ marginBottom: 8, padding: "7px 12px", background: "var(--amber-bg, #fffbeb)", border: "1px solid var(--amber-border, #fde68a)", borderRadius: 8 }}>
+                      <p style={{ fontSize: 11, color: "#92400e", margin: 0 }}>These are sample figures — enter your own deal data below.</p>
+                    </div>
+                  )}
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                     {([
                       ["Asking Price £", askingPrice, setAskingPrice],
@@ -1601,7 +1606,21 @@ export default function TriagePage() {
                         <span style={{ fontSize: 11, color: "var(--muted)", fontWeight: 600 }}>
                           {label === "Norm. Adj. £" ? <GlossaryTerm term="NormalizedAdjustments">Norm. Adj. £</GlossaryTerm> : label}
                         </span>
-                        <input type="number" value={val || ""} placeholder="0" onChange={e => set(Number(e.target.value))} className="input" style={{ padding: "9px 12px", fontSize: 14 }} />
+                        <input
+                          type="number"
+                          value={activeDeal?.isDemo ? "" : (val || "")}
+                          placeholder={activeDeal?.isDemo ? val.toLocaleString() : "0"}
+                          onChange={e => {
+                            if (activeDeal?.isDemo) {
+                              // First real input on a demo deal — clear demo data and mark as real
+                              setAskingPrice(0); setNetProfit(0); setAddBacks(0);
+                              updateDeal(activeDealId, { isDemo: false, status: "In Review" });
+                            }
+                            set(Number(e.target.value));
+                          }}
+                          className="input"
+                          style={{ padding: "9px 12px", fontSize: 14, color: activeDeal?.isDemo ? "var(--muted)" : undefined }}
+                        />
                       </label>
                     ))}
                   </div>
