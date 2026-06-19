@@ -134,50 +134,57 @@ const VIABILITY = {
 function EditableTitle({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft]     = useState(value);
-  const inputRef              = useRef<HTMLInputElement>(null);
   const committedRef          = useRef(false);
 
+  // Only sync draft from prop when not actively editing
   useEffect(() => { if (!editing) setDraft(value); }, [value, editing]);
-  useEffect(() => { if (editing) { committedRef.current = false; inputRef.current?.focus(); inputRef.current?.select(); } }, [editing]);
+
+  const startEditing = () => { committedRef.current = false; setEditing(true); };
 
   const commit = () => {
     if (committedRef.current) return;
     committedRef.current = true;
-    const name = draft.trim() || value;
-    onChange(name);
+    onChange(draft.trim() || value);
     setEditing(false);
   };
 
   if (editing) {
     return (
       <input
-        ref={inputRef}
+        // autoFocus works within the React commit phase (synchronous with click)
+        // so iOS opens the keyboard — useEffect focus() is too late
+        autoFocus
         value={draft}
         onChange={e => setDraft(e.target.value)}
         onBlur={commit}
-        onKeyDown={e => { if (e.key === "Enter") commit(); if (e.key === "Escape") { setDraft(value); setEditing(false); } }}
+        onKeyDown={e => {
+          if (e.key === "Enter") { e.preventDefault(); commit(); }
+          if (e.key === "Escape") { setDraft(value); setEditing(false); }
+        }}
         style={{
           fontSize: 20, fontWeight: 800, color: "#0f172a",
           background: "#f1f5f9", border: "1.5px solid #4f46e5",
-          borderRadius: 6, padding: "2px 8px", outline: "none",
-          fontFamily: "inherit", letterSpacing: "-0.02em", width: "100%", maxWidth: 420,
+          borderRadius: 6, padding: "4px 10px", outline: "none",
+          fontFamily: "inherit", letterSpacing: "-0.02em",
+          width: "100%", maxWidth: 420, minWidth: 160,
+          WebkitAppearance: "none",
         }}
       />
     );
   }
 
   return (
-    <div
-      onDoubleClick={() => setEditing(true)}
-      style={{ display: "flex", alignItems: "center", gap: 8, cursor: "text" }}
-      title="Double-click to rename"
-    >
-      <h1 style={{ fontSize: 20, fontWeight: 800, color: "#0f172a", margin: 0, letterSpacing: "-0.02em" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+      <h1
+        onClick={startEditing}
+        style={{ fontSize: 20, fontWeight: 800, color: "#0f172a", margin: 0, letterSpacing: "-0.02em", cursor: "pointer" }}
+        title="Tap to rename"
+      >
         {value}
       </h1>
       <button
-        onClick={() => setEditing(true)}
-        style={{ background: "none", border: "none", cursor: "pointer", padding: 4, color: "#94a3b8", display: "flex", alignItems: "center" }}
+        onClick={startEditing}
+        style={{ background: "none", border: "none", cursor: "pointer", padding: 4, color: "#94a3b8", display: "flex", alignItems: "center", flexShrink: 0 }}
         title="Rename deal"
       >
         <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1460,28 +1467,32 @@ export default function TriagePage() {
             value={activeDeal?.name ?? "New Deal Analysis"}
             onChange={name => updateDeal(activeDealId, { name })}
           />
-          {!activeDeal?.isDemo && (
+          {activeDeal && (
             <button
               onClick={() => {
-                const isSaved = activeDeal?.status === "Saved";
-                updateDeal(activeDealId, { status: isSaved ? "In Review" : "Saved" });
+                const isSaved = activeDeal.status === "Saved";
+                // Saving a demo deal promotes it to a real deal
+                updateDeal(activeDealId, {
+                  status: isSaved ? "In Review" : "Saved",
+                  ...(activeDeal.isDemo && !isSaved ? { isDemo: false } : {}),
+                });
               }}
-              title={activeDeal?.status === "Saved" ? "Remove from saved" : "Save for later"}
+              title={activeDeal.status === "Saved" ? "Remove from saved" : "Save for later"}
               style={{
                 flexShrink: 0,
                 display: "flex", alignItems: "center", gap: 5,
                 padding: "5px 11px", borderRadius: 7, cursor: "pointer",
                 fontSize: 12, fontWeight: 600,
-                border: activeDeal?.status === "Saved" ? "1.5px solid #ddd6fe" : "1.5px solid #e2e8f0",
-                background: activeDeal?.status === "Saved" ? "#f5f3ff" : "#fff",
-                color: activeDeal?.status === "Saved" ? "#7c3aed" : "#94a3b8",
+                border: activeDeal.status === "Saved" ? "1.5px solid #ddd6fe" : "1.5px solid #e2e8f0",
+                background: activeDeal.status === "Saved" ? "#f5f3ff" : "#fff",
+                color: activeDeal.status === "Saved" ? "#7c3aed" : "#94a3b8",
                 transition: "all 0.15s",
               }}
             >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill={activeDeal?.status === "Saved" ? "#7c3aed" : "none"} stroke={activeDeal?.status === "Saved" ? "#7c3aed" : "#94a3b8"} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill={activeDeal.status === "Saved" ? "#7c3aed" : "none"} stroke={activeDeal.status === "Saved" ? "#7c3aed" : "#94a3b8"} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
               </svg>
-              {activeDeal?.status === "Saved" ? "Saved" : "Save for later"}
+              {activeDeal.status === "Saved" ? "Saved" : "Save for later"}
             </button>
           )}
         </div>
