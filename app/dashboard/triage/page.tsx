@@ -1301,7 +1301,10 @@ export default function TriagePage() {
     if (n === 2 && step2Reached) setCurrentStep(2);
     if (n === 3 && step3Reached) setCurrentStep(3);
     if (n === 4 && step4Reached) setCurrentStep(4);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // The dashboard main area is overflow:auto — scroll it, not window
+    const main = document.querySelector("main");
+    if (main) main.scrollTo({ top: 0, behavior: "smooth" });
+    else window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   /* ── Step indicator pill (clickable) ── */
