@@ -1,0 +1,326 @@
+@import "tailwindcss";
+
+/* ─── TOKENS ──────────────────────────────────────────────────────────────── */
+:root {
+  --bg:           #f8fafc;   /* slate-50  */
+  --surface:      #ffffff;
+  --border:       #e2e8f0;   /* slate-200 */
+  --border-light: #f1f5f9;   /* slate-100 */
+  --text:         #0f172a;   /* slate-900 */
+  --text-soft:    #334155;   /* slate-700 */
+  --muted:        #64748b;   /* slate-500 */
+  --accent:       #4f46e5;   /* indigo-600 */
+  --accent-light: #eef2ff;   /* indigo-50  */
+  --accent-mid:   #c7d2fe;   /* indigo-200 */
+  --success:      #059669;   /* emerald-600 */
+  --success-bg:   #ecfdf5;   /* emerald-50  */
+  --success-border:#a7f3d0;  /* emerald-200 */
+  --danger:       #dc2626;   /* red-600     */
+  --danger-bg:    #fef2f2;   /* red-50      */
+  --danger-border:#fecaca;   /* red-200     */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { overflow-x: hidden; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+/* ─── CARD / SURFACE ─────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+}
+.card-inset {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+/* ─── BUTTONS ────────────────────────────────────────────────────────────── */
+.btn-primary {
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+  box-shadow: 0 1px 2px rgba(79,70,229,0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+.btn-primary:hover  { background: #4338ca; box-shadow: 0 4px 12px rgba(79,70,229,0.30); }
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text-soft);
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+.btn-secondary:hover { background: var(--bg); border-color: #cbd5e1; }
+
+/* ─── FORM INPUTS ────────────────────────────────────────────────────────── */
+.input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 13px;
+  font-size: 14px;
+  color: var(--text);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+}
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.12);
+}
+.input::placeholder { color: #94a3b8; }
+
+textarea.input { resize: vertical; font-family: inherit; line-height: 1.6; }
+
+/* ─── RANGE SLIDER ───────────────────────────────────────────────────────── */
+/* ─── NATIVE RANGE (guide page & non-triage uses only) ───────────────────── */
+.slider {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 4px; border-radius: 9999px; outline: none; cursor: pointer;
+}
+.slider-indigo { background: linear-gradient(90deg, #4f46e5 var(--val,30%), #e2e8f0 var(--val,30%)); }
+.slider-violet { background: linear-gradient(90deg, #7c3aed var(--val,20%), #e2e8f0 var(--val,20%)); }
+.slider-blue   { background: linear-gradient(90deg, #2563eb var(--val,50%), #e2e8f0 var(--val,50%)); }
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: #fff; border: 2px solid currentColor;
+  box-shadow: 0 0 0 3px #fff, 0 1px 3px rgba(0,0,0,0.12);
+  cursor: grab; transition: transform 0.12s;
+}
+.slider:active::-webkit-slider-thumb { transform: scale(1.15); }
+.slider-indigo::-webkit-slider-thumb { border-color: #4f46e5; }
+.slider-violet::-webkit-slider-thumb { border-color: #7c3aed; }
+.slider-blue::-webkit-slider-thumb   { border-color: #2563eb; }
+.slider::-moz-range-thumb {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: #fff; border: 2px solid currentColor;
+  box-shadow: 0 0 0 3px #fff, 0 1px 3px rgba(0,0,0,0.12); cursor: grab;
+}
+.slider-indigo::-moz-range-thumb { border-color: #4f46e5; }
+.slider-violet::-moz-range-thumb { border-color: #7c3aed; }
+.slider-blue::-moz-range-thumb   { border-color: #2563eb; }
+
+/* ─── TERMINAL ───────────────────────────────────────────────────────────── */
+.terminal-window {
+  background: #1e1e2e;
+  border: 1px solid #313244;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+}
+.terminal-chrome {
+  background: #181825;
+  border-bottom: 1px solid #313244;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.terminal-body {
+  padding: 16px 20px;
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.8;
+  min-height: 180px;
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.terminal-line { animation: fade-in-up 0.25s ease both; }
+
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+.cursor-blink::after {
+  content: "▋";
+  animation: blink 0.9s step-end infinite;
+  color: #7c3aed;
+  margin-left: 2px;
+}
+
+/* ─── GLOW BADGES ────────────────────────────────────────────────────────── */
+@keyframes pulse-success {
+  0%,100% { box-shadow: 0 0 0 0 rgba(5,150,105,0.15); }
+  50%     { box-shadow: 0 0 0 5px rgba(5,150,105,0.0); }
+}
+@keyframes pulse-danger {
+  0%,100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.15); }
+  50%     { box-shadow: 0 0 0 5px rgba(220,38,38,0.0); }
+}
+.pulse-success { animation: pulse-success 2s ease-in-out infinite; }
+.pulse-danger  { animation: pulse-danger  2s ease-in-out infinite; }
+
+/* ─── BADGE VARIANTS ─────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 600; padding: 3px 9px;
+  border-radius: 9999px; letter-spacing: 0.02em;
+}
+.badge-indigo  { background: var(--accent-light); color: var(--accent);  border: 1px solid var(--accent-mid); }
+.badge-success { background: var(--success-bg);   color: var(--success); border: 1px solid var(--success-border); }
+.badge-danger  { background: var(--danger-bg);    color: var(--danger);  border: 1px solid var(--danger-border); }
+.badge-neutral { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+.badge-amber   { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+.badge-blue    { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+
+/* ─── DASHBOARD SIDEBAR ──────────────────────────────────────────────────── */
+.sidebar {
+  background: #ffffff;
+  border-right: 1px solid var(--border);
+  width: 224px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px; border-radius: 8px;
+  font-size: 14px; font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  transition: background 0.12s, color 0.12s;
+  cursor: pointer;
+}
+.nav-item:hover { background: var(--bg); color: var(--text-soft); }
+.nav-item.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+
+/* ─── UTILITY ─────────────────────────────────────────────────────────────── */
+.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+.text-accent  { color: var(--accent); }
+.text-success { color: var(--success); }
+.text-danger  { color: var(--danger); }
+.bg-accent    { background: var(--accent); }
+
+/* ─── RESPONSIVE GRID ────────────────────────────────────────────────────── */
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.bento-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+
+/* ─── MOBILE NAV ──────────────────────────────────────────────────────────── */
+.nav-desktop-links { display: contents; }
+.nav-mobile-btn    { display: none; }
+
+/* ─── DASHBOARD SIDEBAR MOBILE ──────────────────────────────────────────── */
+.dashboard-sidebar {
+  width: 232px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-right: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  transition: transform 0.25s ease;
+  z-index: 100;
+}
+.sidebar-overlay {
+  display: none;
+}
+
+/* ─── AURORA ─────────────────────────────────────────────────────────────── */
+/* On mobile Safari, filter:blur() on animated elements causes GPU stall and
+   blank-page rendering. Strip blur and animation entirely on touch devices. */
+@media (max-width: 768px) {
+  .aurora-orb {
+    filter: none !important;
+    animation: none !important;
+  }
+}
+
+/* ─── MEDIA QUERIES ──────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Grids stack to single column */
+  .grid-2col {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+  .bento-12 {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+  .bento-12 > * {
+    grid-column: auto !important;
+  }
+
+  /* Nav: hide desktop links, show hamburger */
+  .nav-desktop-links { display: none !important; }
+  .nav-mobile-btn    { display: flex !important; }
+
+  /* Dashboard sidebar: slide in from left as overlay */
+  .dashboard-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    box-shadow: 4px 0 24px rgba(0,0,0,0.12);
+  }
+  .dashboard-sidebar.open {
+    transform: translateX(0);
+  }
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 99;
+    backdrop-filter: blur(2px);
+  }
+
+  /* Triage page padding on mobile */
+  .triage-padding {
+    padding: 16px !important;
+  }
+
+  /* Calculator grids */
+  .calc-grid-input {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Forensic audit panel: stack 3 columns to 1 */
+  .forensic-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
