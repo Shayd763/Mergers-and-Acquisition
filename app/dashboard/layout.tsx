@@ -37,9 +37,13 @@ function DealMenu({ deal, onClose, onRename, anchorRect }: MenuProps) {
     return () => { document.removeEventListener("mousedown", handler); document.removeEventListener("keydown", keyHandler); };
   }, [onClose]);
 
-  // Position: try to align below the anchor, flip up if near bottom
-  const top = Math.min(anchorRect.bottom + 4, window.innerHeight - 200);
-  const left = Math.min(anchorRect.left, window.innerWidth - 192);
+  // Position: align below anchor, keep within viewport on all screen sizes
+  const menuWidth = 200;
+  const top = Math.min(anchorRect.bottom + 4, window.innerHeight - 220);
+  const left = Math.min(
+    Math.max(8, anchorRect.left),
+    window.innerWidth - menuWidth - 8
+  );
 
   const items: { icon: string; label: string; danger?: boolean; disabled?: boolean; action: () => void }[] = [
     {
@@ -69,7 +73,7 @@ function DealMenu({ deal, onClose, onRename, anchorRect }: MenuProps) {
         position: "fixed",
         top,
         left,
-        width: 188,
+        width: menuWidth,
         background: "#fff",
         border: "1px solid #e2e8f0",
         borderRadius: 10,
@@ -221,28 +225,25 @@ function DealItem({ deal, isActive, onCloseSidebar }: { deal: StoredDeal; isActi
             </div>
           </div>
 
-          {/* DSCR dot (hidden when options button is visible) */}
-          {!hovered && !menuOpen ? (
-            <div style={{ width: 8, height: 8, borderRadius: "50%", background: dot.color, boxShadow: `0 0 0 3px ${dot.glow}`, flexShrink: 0 }} />
-          ) : (
-            /* Options ⋯ button */
-            <button
-              onClick={openMenu}
-              style={{
-                width: 24, height: 24, borderRadius: 6, border: "1px solid #e2e8f0",
-                background: menuOpen ? "#f1f5f9" : "#fff",
-                cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-                flexShrink: 0, fontSize: 14, color: "#64748b", lineHeight: 1,
-                transition: "background 0.1s, border-color 0.1s",
-              }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#c7d2fe"; (e.currentTarget as HTMLElement).style.color = "#4f46e5"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; (e.currentTarget as HTMLElement).style.color = "#64748b"; }}
-              title="Deal options"
-              aria-label="Deal options"
-            >
-              ···
-            </button>
-          )}
+          {/* Options ⋯ button — always visible on touch, hover-only on desktop */}
+          <button
+            onClick={openMenu}
+            style={{
+              width: 24, height: 24, borderRadius: 6, border: "1px solid #e2e8f0",
+              background: menuOpen ? "#f1f5f9" : "transparent",
+              cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+              flexShrink: 0, fontSize: 14, color: "#64748b", lineHeight: 1,
+              opacity: hovered || menuOpen ? 1 : 0,
+              transition: "opacity 0.1s, background 0.1s",
+            }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#c7d2fe"; (e.currentTarget as HTMLElement).style.color = "#4f46e5"; (e.currentTarget as HTMLElement).style.opacity = "1"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; (e.currentTarget as HTMLElement).style.color = "#64748b"; }}
+            onTouchStart={e => { e.currentTarget.style.opacity = "1"; }}
+            title="Deal options"
+            aria-label="Deal options"
+          >
+            ···
+          </button>
         </div>
       </div>
 
