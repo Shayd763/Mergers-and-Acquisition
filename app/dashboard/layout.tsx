@@ -428,7 +428,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
   }, [createDeal, router]);
 
   return (
-    <div style={{ display: "flex", height: "100vh", overflow: "hidden", background: "#f8fafc" }}>
+    <div style={{ display: "flex", height: "100dvh", overflow: "hidden", background: "#f8fafc" }}>
 
       {/* Overlay for mobile */}
       {sidebarOpen && (
