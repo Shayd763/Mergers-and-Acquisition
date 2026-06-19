@@ -230,6 +230,79 @@ function MetadataPanel({ details, onDismiss }: { details: CompanyDetails; onDism
   );
 }
 
+/* ─── Search input (module-level so React never unmounts it on re-render) ─── */
+
+interface SearchInputProps {
+  inputRef: React.RefObject<HTMLInputElement | null>;
+  value: string;
+  searching: boolean;
+  autoFocus?: boolean;
+  onChange: (v: string) => void;
+  onFocused: () => void;
+  onClear: () => void;
+}
+
+function SearchInput({ inputRef, value, searching, autoFocus, onChange, onFocused, onClear }: SearchInputProps) {
+  return (
+    <div style={{ position: "relative" }}>
+      <div style={{ position: "absolute", left: 13, top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: searching ? "#4f46e5" : "#94a3b8", transition: "color 0.15s" }}>
+        {searching ? (
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} style={{ animation: "spin 0.7s linear infinite" }}>
+            <path strokeLinecap="round" d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+          </svg>
+        ) : (
+          <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        )}
+      </div>
+      <input
+        ref={inputRef as React.RefObject<HTMLInputElement>}
+        type="text"
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        placeholder="Search Companies House…"
+        autoFocus={autoFocus}
+        autoComplete="off"
+        inputMode="search"
+        style={{
+          width: "100%",
+          padding: "11px 40px 11px 38px",
+          background: "#fff",
+          border: "1.5px solid #e2e8f0",
+          borderRadius: 10,
+          fontSize: 16,
+          color: "#0f172a",
+          outline: "none",
+          fontFamily: "inherit",
+          boxSizing: "border-box",
+          transition: "border-color 0.15s, box-shadow 0.15s",
+        }}
+        onFocus={e => {
+          e.currentTarget.style.borderColor = "#4f46e5";
+          e.currentTarget.style.boxShadow = "0 0 0 3px rgba(79,70,229,0.12)";
+          onFocused();
+        }}
+        onBlur={e => {
+          e.currentTarget.style.borderColor = "#e2e8f0";
+          e.currentTarget.style.boxShadow = "none";
+        }}
+      />
+      {value.length > 0 && (
+        <button
+          onPointerDown={e => { e.preventDefault(); onClear(); }}
+          style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#94a3b8", display: "flex", padding: 4, lineHeight: 1, borderRadius: 4 }}
+          aria-label="Clear search"
+        >
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      )}
+    </div>
+  );
+}
+
 /* ─── Main component ─────────────────────────────────────────────────────── */
 
 interface Props {
@@ -353,73 +426,19 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
 
   const showResults = open && (results.length > 0 || (searching && query.length >= 2));
 
-  /* ── Shared search input UI ────────────────────────────────────────────── */
-  const SearchInput = ({ inputRef, autoFocus }: { inputRef: React.RefObject<HTMLInputElement | null>; autoFocus?: boolean }) => (
-    <div style={{ position: "relative" }}>
-      <div style={{ position: "absolute", left: 13, top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: searching ? "#4f46e5" : "#94a3b8", transition: "color 0.15s" }}>
-        {searching ? (
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} style={{ animation: "spin 0.7s linear infinite" }}>
-            <path strokeLinecap="round" d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-          </svg>
-        ) : (
-          <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        )}
-      </div>
-      <input
-        ref={inputRef as React.RefObject<HTMLInputElement>}
-        type="text"
-        value={query}
-        onChange={e => handleInput(e.target.value)}
-        placeholder="Search Companies House…"
-        autoFocus={autoFocus}
-        autoComplete="off"
-        style={{
-          width: "100%",
-          padding: "11px 40px 11px 38px",
-          background: "#fff",
-          border: "1.5px solid #e2e8f0",
-          borderRadius: 10,
-          fontSize: 14,
-          color: "#0f172a",
-          outline: "none",
-          fontFamily: "inherit",
-          boxSizing: "border-box",
-          transition: "border-color 0.15s, box-shadow 0.15s",
-        }}
-        onFocus={e => {
-          e.currentTarget.style.borderColor = "#4f46e5";
-          e.currentTarget.style.boxShadow = "0 0 0 3px rgba(79,70,229,0.12)";
-          if (results.length > 0) setOpen(true);
-        }}
-        onBlur={e => {
-          e.currentTarget.style.borderColor = "#e2e8f0";
-          e.currentTarget.style.boxShadow = "none";
-        }}
-      />
-      {query.length > 0 && (
-        <button
-          onPointerDown={e => { e.preventDefault(); clearSelection(); }}
-          style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#94a3b8", display: "flex", padding: 4, lineHeight: 1, borderRadius: 4 }}
-          aria-label="Clear search"
-        >
-          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      )}
-    </div>
-  );
-
   return (
     <div ref={wrapperRef} style={{ position: "relative" }}>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } } @keyframes overlay-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }`}</style>
 
       {/* Main search input — always visible in page flow */}
-      <div onClick={() => { if (isMobile && query.length >= 2) setOpen(true); }}>
-        <SearchInput inputRef={mainInputRef} />
-      </div>
+      <SearchInput
+        inputRef={mainInputRef}
+        value={query}
+        searching={searching}
+        onChange={handleInput}
+        onFocused={() => { if (results.length > 0) setOpen(true); }}
+        onClear={clearSelection}
+      />
 
       {/* ── Desktop dropdown ──────────────────────────────────────────────── */}
       {!isMobile && showResults && (
@@ -473,7 +492,15 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
 
             {/* Search input — full width, editable */}
             <div style={{ flex: 1 }}>
-              <SearchInput inputRef={sheetInputRef} autoFocus />
+              <SearchInput
+                inputRef={sheetInputRef}
+                value={query}
+                searching={searching}
+                autoFocus
+                onChange={handleInput}
+                onFocused={() => {}}
+                onClear={clearSelection}
+              />
             </div>
           </div>
 
