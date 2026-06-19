@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useSession } from "next-auth/react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import {
   BarChart3, Shield, Zap, FileText, TrendingUp, Users,
@@ -149,10 +150,16 @@ function FAQ({ q, a }: { q: string; a: string }) {
 }
 
 /* ─── Pricing card ───────────────────────────────────────────────────────── */
-function PricingCard({ name, price, desc, features, cta, highlight = false, href }: { name: string; price: string; desc: string; features: string[]; cta: string; highlight?: boolean; href: string }) {
+function PricingCard({ name, price, desc, features, cta, highlight = false, href, isCurrent = false }: { name: string; price: string; desc: string; features: string[]; cta: string; highlight?: boolean; href: string; isCurrent?: boolean }) {
   return (
-    <SpotlightCard style={{ padding: "32px 28px", display: "flex", flexDirection: "column", height: "100%", background: highlight ? "#4f46e5" : "#ffffff", border: highlight ? "1px solid #4338ca" : "1px solid #e2e8f0", boxShadow: highlight ? "0 20px 60px rgba(79,70,229,0.25)" : "0 1px 3px rgba(0,0,0,0.06)" }}>
-      {highlight && <div style={{ alignSelf: "flex-start", marginBottom: 16, background: "rgba(255,255,255,0.2)", color: "#fff", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", padding: "4px 10px", borderRadius: 9999, textTransform: "uppercase" }}>Most Popular</div>}
+    <SpotlightCard style={{ position: "relative", padding: "32px 28px", display: "flex", flexDirection: "column", height: "100%", background: highlight ? "#4f46e5" : "#ffffff", border: isCurrent ? "2px solid #059669" : highlight ? "1px solid #4338ca" : "1px solid #e2e8f0", boxShadow: isCurrent ? "0 0 0 4px rgba(5,150,105,0.1), 0 4px 16px rgba(0,0,0,0.08)" : highlight ? "0 20px 60px rgba(79,70,229,0.25)" : "0 1px 3px rgba(0,0,0,0.06)" }}>
+      {/* Current plan badge */}
+      {isCurrent && (
+        <div style={{ position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)", background: "#059669", color: "#fff", fontSize: 10, fontWeight: 800, letterSpacing: "0.1em", padding: "4px 12px", borderRadius: 9999, textTransform: "uppercase", whiteSpace: "nowrap", boxShadow: "0 2px 8px rgba(5,150,105,0.35)" }}>
+          ✓ Your Current Plan
+        </div>
+      )}
+      {highlight && !isCurrent && <div style={{ alignSelf: "flex-start", marginBottom: 16, background: "rgba(255,255,255,0.2)", color: "#fff", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", padding: "4px 10px", borderRadius: 9999, textTransform: "uppercase" }}>Most Popular</div>}
       <p style={{ fontSize: 12, fontWeight: 600, color: highlight ? "rgba(255,255,255,0.7)" : "#4f46e5", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>{name}</p>
       <p style={{ fontSize: 36, fontWeight: 800, color: highlight ? "#fff" : "#0f172a", margin: "0 0 4px", letterSpacing: "-0.03em" }}>{price}</p>
       <p style={{ fontSize: 13, color: highlight ? "rgba(255,255,255,0.6)" : "#64748b", marginBottom: 28 }}>{desc}</p>
@@ -164,8 +171,10 @@ function PricingCard({ name, price, desc, features, cta, highlight = false, href
           </div>
         ))}
       </div>
-      <Link href={href} style={{ textDecoration: "none" }}>
-        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} style={{ width: "100%", padding: "12px 0", borderRadius: 10, border: highlight ? "none" : "1px solid #e2e8f0", cursor: "pointer", fontWeight: 700, fontSize: 14, background: highlight ? "#ffffff" : "#f8fafc", color: highlight ? "#4f46e5" : "#334155" }}>{cta}</motion.button>
+      <Link href={isCurrent ? "/dashboard/account" : href} style={{ textDecoration: "none" }}>
+        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} style={{ width: "100%", padding: "12px 0", borderRadius: 10, border: isCurrent ? "none" : highlight ? "none" : "1px solid #e2e8f0", cursor: "pointer", fontWeight: 700, fontSize: 14, background: isCurrent ? "#059669" : highlight ? "#ffffff" : "#f8fafc", color: isCurrent ? "#fff" : highlight ? "#4f46e5" : "#334155" }}>
+          {isCurrent ? "Manage Plan →" : cta}
+        </motion.button>
       </Link>
     </SpotlightCard>
   );
@@ -325,25 +334,46 @@ function Ticker() {
   );
 }
 
-/* ─── Portal Login button with sign-up nudge toast after 15s ─────────────── */
+/* ─── Portal button — session-aware ──────────────────────────────────────── */
 function PortalLoginButton() {
+  const { data: session, status } = useSession();
   const [toast, setToast] = useState(false);
+  const isSignedIn = status === "authenticated" && !!session?.user;
 
   const handleClick = () => {
     window.location.href = "/dashboard";
-    setTimeout(() => setToast(true), 15_000);
+    if (!isSignedIn) setTimeout(() => setToast(true), 15_000);
   };
+
+  const displayName = session?.user?.name ?? session?.user?.email ?? "";
+  const initials = displayName.split(" ").map((w: string) => w[0]).join("").slice(0, 2).toUpperCase();
 
   return (
     <>
-      <motion.button
-        onClick={handleClick}
-        whileHover={{ scale: 1.04 }}
-        whileTap={{ scale: 0.96 }}
-        style={{ flexShrink: 0, marginLeft: 6, padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", fontSize: 13, fontWeight: 700, boxShadow: "0 0 16px rgba(79,70,229,0.3)", whiteSpace: "nowrap" }}
-      >
-        Portal Login →
-      </motion.button>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0, marginLeft: 6 }}>
+        {/* Avatar pill when signed in */}
+        {isSignedIn && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            style={{ display: "flex", alignItems: "center", gap: 7, padding: "4px 10px 4px 4px", borderRadius: 9999, background: "#f0fdf4", border: "1px solid #bbf7d0", cursor: "default" }}
+          >
+            <div style={{ width: 22, height: 22, borderRadius: "50%", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 700, color: "#fff", flexShrink: 0 }}>
+              {initials || "U"}
+            </div>
+            <span style={{ fontSize: 11, fontWeight: 600, color: "#15803d", whiteSpace: "nowrap" }}>Signed in</span>
+          </motion.div>
+        )}
+
+        <motion.button
+          onClick={handleClick}
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.96 }}
+          style={{ padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", fontSize: 13, fontWeight: 700, boxShadow: "0 0 16px rgba(79,70,229,0.3)", whiteSpace: "nowrap" }}
+        >
+          {isSignedIn ? "Portal →" : "Portal Login →"}
+        </motion.button>
+      </div>
 
       <AnimatePresence>
         {toast && (
@@ -1034,69 +1064,7 @@ export default function HomePage() {
           </Link>
         </motion.div>
 
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, alignItems: "start" }}>
-          <motion.div variants={fadeUp}><PricingCard
-            name="Explorer"
-            price="£0"
-            desc="Structure deals and run credit checks for free — no card required."
-            features={[
-              "Dynamic deal structuring with live sliders (equity, debt, vendor finance)",
-              "DSCR, levered FCF & equity IRR calculated instantly",
-              "Proprietary credit score linked to live UK databases",
-              "Companies House registry lookup on any UK business",
-              "1 institutional Credit Memo export per month",
-            ]}
-            cta="Start Free"
-            href="/signup"
-          /></motion.div>
-          <motion.div variants={fadeUp}><PricingCard
-            name="Active Searcher"
-            price="£49/mo"
-            desc="Unlimited deal analysis with AI parsing and full enrichment."
-            features={[
-              "Unlimited simultaneous deal workspaces",
-              "AI extraction — paste a listing or upload a PDF, numbers populate instantly",
-              "Full credit score breakdown with per-factor risk flags",
-              "FCA register, VAT, PSC & director enrichment from live sources",
-              "Sector valuation multiples with EV/SDE estimate",
-              "Unlimited Credit Memo PDF exports — lender and investor ready",
-              "Annual Subscription Rebate on Closing (up to £588 cashback)",
-            ]}
-            cta="Upgrade — £49/mo"
-            highlight
-            href="/signup?plan=searcher"
-          /></motion.div>
-          <motion.div variants={fadeUp}><PricingCard
-            name="Deal Broker"
-            price="£149/mo"
-            desc="Present deals under your own brand and route directly to lenders."
-            features={[
-              "Everything in Active Searcher",
-              "White-labelled Credit Memo PDF — your logo, your brand",
-              "Shared investor pipeline dashboards for co-investors",
-              "Priority routing to our pre-approved UK lender network",
-              "Remove all Triage Finance branding from client-facing outputs",
-              "Annual Rebate on Closing (up to £1,788)",
-            ]}
-            cta="Upgrade — £149/mo"
-            href="/signup?plan=broker"
-          /></motion.div>
-          <motion.div variants={fadeUp}><PricingCard
-            name="Institutional"
-            price="Custom"
-            desc="For search funds, family offices and multi-seat teams."
-            features={[
-              "Everything in Deal Broker",
-              "Bulk regional multiples index via API",
-              "Institutional-grade spreadsheet underwriting exports",
-              "Dedicated account manager and onboarding",
-              "Multi-seat team access with role permissions",
-              "Custom SLA and uptime guarantee",
-            ]}
-            cta="Contact Us"
-            href="mailto:hello@triagefinance.co.uk"
-          /></motion.div>
-        </motion.div>
+        <PricingCards />
       </section>
 
       {/* ── FAQ ───────────────────────────────────────────────────────────── */}
@@ -1127,6 +1095,84 @@ export default function HomePage() {
         </p>
         <p style={{ fontSize: 11, color: "#cbd5e1", margin: 0 }}>© {new Date().getFullYear()} Triage Finance Ltd. All rights reserved.</p>
       </footer>
-    </div>
+    </>
   );
 }
+
+function PricingCards() {
+  const { data: session, status } = useSession();
+  const tier = status === "authenticated"
+    ? ((session as unknown as Record<string, unknown>)?.tier as string | undefined) ?? "explorer"
+    : null;
+
+  return (
+        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, alignItems: "start" }}>
+          <motion.div variants={fadeUp}><PricingCard
+            name="Explorer"
+            price="£0"
+            desc="Structure deals and run credit checks for free — no card required."
+            features={[
+              "Dynamic deal structuring with live sliders (equity, debt, vendor finance)",
+              "DSCR, levered FCF & equity IRR calculated instantly",
+              "Proprietary credit score linked to live UK databases",
+              "Companies House registry lookup on any UK business",
+              "1 institutional Credit Memo export per month",
+            ]}
+            cta="Start Free"
+            href="/signup"
+            isCurrent={tier === "explorer"}
+          /></motion.div>
+          <motion.div variants={fadeUp}><PricingCard
+            name="Active Searcher"
+            price="£49/mo"
+            desc="Unlimited deal analysis with AI parsing and full enrichment."
+            features={[
+              "Unlimited simultaneous deal workspaces",
+              "AI extraction — paste a listing or upload a PDF, numbers populate instantly",
+              "Full credit score breakdown with per-factor risk flags",
+              "FCA register, VAT, PSC & director enrichment from live sources",
+              "Sector valuation multiples with EV/SDE estimate",
+              "Unlimited Credit Memo PDF exports — lender and investor ready",
+              "Annual Subscription Rebate on Closing (up to £588 cashback)",
+            ]}
+            cta="Upgrade — £49/mo"
+            highlight
+            href="/signup?plan=searcher"
+            isCurrent={tier === "searcher"}
+          /></motion.div>
+          <motion.div variants={fadeUp}><PricingCard
+            name="Deal Broker"
+            price="£149/mo"
+            desc="Present deals under your own brand and route directly to lenders."
+            features={[
+              "Everything in Active Searcher",
+              "White-labelled Credit Memo PDF — your logo, your brand",
+              "Shared investor pipeline dashboards for co-investors",
+              "Priority routing to our pre-approved UK lender network",
+              "Remove all Triage Finance branding from client-facing outputs",
+              "Annual Rebate on Closing (up to £1,788)",
+            ]}
+            cta="Upgrade — £149/mo"
+            href="/signup?plan=broker"
+            isCurrent={tier === "broker"}
+          /></motion.div>
+          <motion.div variants={fadeUp}><PricingCard
+            name="Institutional"
+            price="Custom"
+            desc="For search funds, family offices and multi-seat teams."
+            features={[
+              "Everything in Deal Broker",
+              "Bulk regional multiples index via API",
+              "Institutional-grade spreadsheet underwriting exports",
+              "Dedicated account manager and onboarding",
+              "Multi-seat team access with role permissions",
+              "Custom SLA and uptime guarantee",
+            ]}
+            cta="Contact Us"
+            href="mailto:hello@triagefinance.co.uk"
+            isCurrent={tier === "institutional"}
+          /></motion.div>
+        </motion.div>
+  );
+}
+

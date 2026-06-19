@@ -45,16 +45,14 @@ function InputRow({ label, value, onChange, placeholder, prefix = "£", min = 0,
   );
 }
 
-const DEMO_DSCR = { sde: 180000, annualDebt: 95000, corpTax: 25 };
-
 export default function DSCRCalculatorPage() {
   const [sde, setSde] = useState("");
   const [annualDebt, setAnnualDebt] = useState("");
   const [corpTax, setCorpTax] = useState("");
 
-  const sdeVal       = sde       === "" ? DEMO_DSCR.sde       : Number(sde);
-  const annualDebtVal = annualDebt === "" ? DEMO_DSCR.annualDebt : Number(annualDebt);
-  const corpTaxVal   = corpTax   === "" ? DEMO_DSCR.corpTax   : Number(corpTax);
+  const sdeVal        = Number(sde)        || 0;
+  const annualDebtVal = Number(annualDebt) || 0;
+  const corpTaxVal    = Number(corpTax)    || 0;
 
   const taxCharge = sdeVal * (corpTaxVal / 100);
   const netCashAfterTax = sdeVal - taxCharge;
@@ -92,11 +90,11 @@ export default function DSCRCalculatorPage() {
               style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "28px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
               <p style={{ fontSize: 13, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 24 }}>Inputs</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-                <InputRow label="Annual SDE (Seller's Discretionary Earnings)" value={sde} onChange={setSde} placeholder={DEMO_DSCR.sde.toLocaleString()} step={5000} hint="Net profit + add-backs" />
-                <InputRow label="Total Annual Debt Service" value={annualDebt} onChange={setAnnualDebt} placeholder={DEMO_DSCR.annualDebt.toLocaleString()} step={1000} hint="Bank repayments + vendor payments" />
+                <InputRow label="Annual SDE (Seller's Discretionary Earnings)" value={sde} onChange={setSde} step={5000} hint="Net profit + add-backs" />
+                <InputRow label="Total Annual Debt Service" value={annualDebt} onChange={setAnnualDebt} step={1000} hint="Bank repayments + vendor payments" />
                 <div>
                   <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 6 }}>Corporation Tax Rate (%)</label>
-                  <input type="number" value={corpTax} min={0} max={50} step={1} placeholder={String(DEMO_DSCR.corpTax)} onChange={e => setCorpTax(e.target.value)}
+                  <input type="number" value={corpTax} min={0} max={50} step={1} onChange={e => setCorpTax(e.target.value)}
                     style={{ width: "100%", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 10, padding: "11px 14px", fontSize: 14, color: "#0f172a", outline: "none", fontFamily: "inherit" }} />
                   <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 5 }}>UK main rate is 25% for profits above £250k</p>
                 </div>

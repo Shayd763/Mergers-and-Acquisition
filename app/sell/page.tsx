@@ -26,13 +26,9 @@ function bankabilityScore(dscr: number): { grade: string; score: number; color: 
   return { grade: "C", score: 28, color: "#dc2626", bg: "#fef2f2", border: "#fecaca", label: "DIFFICULT TO BANK", advice: "A buyer would struggle to secure high-street bank financing at current profitability. Consider improving margins or adjusting your asking price before going to market." };
 }
 
-/* ─── Demo defaults (shown as grey placeholder, not pre-filled) ──────────── */
-const DEMO = { turnover: 820000, netProfit: 120000, addBacks: 63000, askingPrice: 550000, leaseYears: 7 };
-
 export default function SellPage() {
   const [step, setStep] = useState(1);
   const [sector, setSector] = useState("Engineering Consultancy");
-  // Empty string = not yet entered; demo value used for calculations & shown as placeholder
   const [turnover, setTurnover] = useState("");
   const [netProfit, setNetProfit] = useState("");
   const [addBacks, setAddBacks] = useState("");
@@ -42,12 +38,11 @@ export default function SellPage() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  // Resolve to demo value when field is blank
-  const turnoverVal    = turnover    === "" ? DEMO.turnover    : Number(turnover);
-  const netProfitVal   = netProfit   === "" ? DEMO.netProfit   : Number(netProfit);
-  const addBacksVal    = addBacks    === "" ? DEMO.addBacks    : Number(addBacks);
-  const askingPriceVal = askingPrice === "" ? DEMO.askingPrice : Number(askingPrice);
-  const leaseYearsVal  = leaseYears  === "" ? DEMO.leaseYears  : Number(leaseYears);
+  const turnoverVal    = Number(turnover)    || 0;
+  const netProfitVal   = Number(netProfit)   || 0;
+  const addBacksVal    = Number(addBacks)    || 0;
+  const askingPriceVal = Number(askingPrice) || 0;
+  const leaseYearsVal  = Number(leaseYears)  || 0;
 
   const sde = netProfitVal + addBacksVal;
   const multiple = askingPriceVal > 0 && sde > 0 ? askingPriceVal / sde : 0;
@@ -114,10 +109,10 @@ export default function SellPage() {
                     </div>
                     {/* Financials */}
                     {[
-                      { label: "Annual Turnover", val: turnover, set: setTurnover, step: 10000, demo: DEMO.turnover },
-                      { label: "Net Profit (after tax)", val: netProfit, set: setNetProfit, step: 5000, demo: DEMO.netProfit },
-                      { label: "Owner Add-backs / Perks", val: addBacks, set: setAddBacks, step: 1000, demo: DEMO.addBacks },
-                      { label: "Asking Price", val: askingPrice, set: setAskingPrice, step: 10000, demo: DEMO.askingPrice },
+                      { label: "Annual Turnover", val: turnover, set: setTurnover, step: 10000 },
+                      { label: "Net Profit (after tax)", val: netProfit, set: setNetProfit, step: 5000 },
+                      { label: "Owner Add-backs / Perks", val: addBacks, set: setAddBacks, step: 1000 },
+                      { label: "Asking Price", val: askingPrice, set: setAskingPrice, step: 10000 },
                     ].map(f => (
                       <div key={f.label}>
                         <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 6 }}>{f.label}</label>
@@ -125,7 +120,6 @@ export default function SellPage() {
                           <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", fontSize: 14, fontWeight: 600 }}>£</span>
                           <input
                             type="number" value={f.val} step={f.step} min={0}
-                            placeholder={f.demo.toLocaleString()}
                             onChange={e => f.set(e.target.value)}
                             style={inputPound}
                             onFocus={e => { e.currentTarget.style.borderColor = "#059669"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(5,150,105,0.1)"; }}
@@ -138,7 +132,6 @@ export default function SellPage() {
                       <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 6 }}>Lease Years Remaining</label>
                       <input
                         type="number" value={leaseYears} step={1} min={0} max={25}
-                        placeholder={String(DEMO.leaseYears)}
                         onChange={e => setLeaseYears(e.target.value)}
                         style={inputStyle}
                         onFocus={e => { e.currentTarget.style.borderColor = "#059669"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(5,150,105,0.1)"; }}

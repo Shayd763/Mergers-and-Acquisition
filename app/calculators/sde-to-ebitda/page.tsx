@@ -17,8 +17,6 @@ const JSON_LD = {
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
 };
 
-const DEMO_SDE = { netProfit: 120000, ownerSalary: 55000, ownerPerks: 12000, oneOffCosts: 8000, depreciation: 15000, amortisation: 5000, interest: 6000, replacementMgrSalary: 65000 };
-
 export default function SDEToEBITDAPage() {
   const [netProfit, setNetProfit] = useState("");
   const [ownerSalary, setOwnerSalary] = useState("");
@@ -29,15 +27,14 @@ export default function SDEToEBITDAPage() {
   const [interest, setInterest] = useState("");
   const [replacementMgrSalary, setReplacementMgrSalary] = useState("");
 
-  const v = (s: string, d: number) => s === "" ? d : Number(s);
-  const npV   = v(netProfit, DEMO_SDE.netProfit);
-  const osV   = v(ownerSalary, DEMO_SDE.ownerSalary);
-  const opV   = v(ownerPerks, DEMO_SDE.ownerPerks);
-  const ocV   = v(oneOffCosts, DEMO_SDE.oneOffCosts);
-  const depV  = v(depreciation, DEMO_SDE.depreciation);
-  const amoV  = v(amortisation, DEMO_SDE.amortisation);
-  const intV  = v(interest, DEMO_SDE.interest);
-  const rmV   = v(replacementMgrSalary, DEMO_SDE.replacementMgrSalary);
+  const npV  = Number(netProfit)          || 0;
+  const osV  = Number(ownerSalary)        || 0;
+  const opV  = Number(ownerPerks)         || 0;
+  const ocV  = Number(oneOffCosts)        || 0;
+  const depV = Number(depreciation)       || 0;
+  const amoV = Number(amortisation)       || 0;
+  const intV = Number(interest)           || 0;
+  const rmV  = Number(replacementMgrSalary) || 0;
 
   const sde = npV + osV + opV + ocV;
   const ebitda = npV + depV + amoV + intV;
@@ -52,14 +49,14 @@ export default function SDEToEBITDAPage() {
     borderRadius: 10, padding: "11px 14px 11px 28px", fontSize: 14, color: "#0f172a", outline: "none", fontFamily: "inherit",
   };
 
-  const fields: [string, string, (s: string) => void, number][] = [
-    ["Net Profit (after tax)", netProfit, setNetProfit, DEMO_SDE.netProfit],
-    ["Owner / Director Salary", ownerSalary, setOwnerSalary, DEMO_SDE.ownerSalary],
-    ["Personal Perks & Benefits", ownerPerks, setOwnerPerks, DEMO_SDE.ownerPerks],
-    ["One-off / Non-recurring Costs", oneOffCosts, setOneOffCosts, DEMO_SDE.oneOffCosts],
-    ["Depreciation (D&A)", depreciation, setDepreciation, DEMO_SDE.depreciation],
-    ["Amortisation", amortisation, setAmortisation, DEMO_SDE.amortisation],
-    ["Interest Expense", interest, setInterest, DEMO_SDE.interest],
+  const fields: [string, string, (s: string) => void][] = [
+    ["Net Profit (after tax)", netProfit, setNetProfit],
+    ["Owner / Director Salary", ownerSalary, setOwnerSalary],
+    ["Personal Perks & Benefits", ownerPerks, setOwnerPerks],
+    ["One-off / Non-recurring Costs", oneOffCosts, setOneOffCosts],
+    ["Depreciation (D&A)", depreciation, setDepreciation],
+    ["Amortisation", amortisation, setAmortisation],
+    ["Interest Expense", interest, setInterest],
   ];
 
   return (
@@ -85,12 +82,12 @@ export default function SDEToEBITDAPage() {
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.55, ease: EXPO }}
               style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "28px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", display: "flex", flexDirection: "column", gap: 16 }}>
               <p style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 8px" }}>Financial Inputs</p>
-              {fields.map(([label, val, set, demo]) => (
+              {fields.map(([label, val, set]) => (
                 <div key={label}>
                   <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 6 }}>{label}</label>
                   <div style={{ position: "relative" }}>
                     <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", fontSize: 14, fontWeight: 600 }}>£</span>
-                    <input type="number" value={val} step={1000} min={0} placeholder={demo.toLocaleString()} onChange={e => set(e.target.value)} style={inputStyle} />
+                    <input type="number" value={val} step={1000} min={0} onChange={e => set(e.target.value)} style={inputStyle} />
                   </div>
                 </div>
               ))}
@@ -98,7 +95,7 @@ export default function SDEToEBITDAPage() {
                 <label style={{ fontSize: 13, fontWeight: 600, color: "#d97706", display: "block", marginBottom: 6 }}>Replacement Manager Salary</label>
                 <div style={{ position: "relative" }}>
                   <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", fontSize: 14, fontWeight: 600 }}>£</span>
-                  <input type="number" value={replacementMgrSalary} step={1000} min={0} placeholder={DEMO_SDE.replacementMgrSalary.toLocaleString()} onChange={e => setReplacementMgrSalary(e.target.value)} style={inputStyle} />
+                  <input type="number" value={replacementMgrSalary} step={1000} min={0} onChange={e => setReplacementMgrSalary(e.target.value)} style={inputStyle} />
                 </div>
                 <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 5 }}>Cost of hired GM if you don&apos;t plan to work in the business</p>
               </div>

@@ -396,7 +396,7 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
 
       {/* Logo — mobile only center */}
       <div className="nav-mobile-btn" style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
-        <Link href="/dashboard" style={{ display: "flex", alignItems: "center", gap: 7, textDecoration: "none", pointerEvents: "auto" }}>
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 7, textDecoration: "none", pointerEvents: "auto" }}>
           <div style={{ width: 24, height: 24, borderRadius: 6, background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             <BarChart3 size={12} color="#fff" />
           </div>

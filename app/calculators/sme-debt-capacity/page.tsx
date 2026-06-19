@@ -26,18 +26,16 @@ function Num({ label, val, color = "#0f172a", sub, bg = "#f8fafc", border = "#e2
   );
 }
 
-const DEMO_SME = { sde: 180000, minDscr: 1.25, apr: 12, termYears: 5 };
-
 export default function SMEDebtCapacityPage() {
   const [sde, setSde] = useState("");
   const [minDscr, setMinDscr] = useState("");
   const [apr, setApr] = useState("");
   const [termYears, setTermYears] = useState("");
 
-  const sdeVal      = sde      === "" ? DEMO_SME.sde      : Number(sde);
-  const minDscrVal  = minDscr  === "" ? DEMO_SME.minDscr  : Number(minDscr);
-  const aprVal      = apr      === "" ? DEMO_SME.apr      : Number(apr);
-  const termYearsVal = termYears === "" ? DEMO_SME.termYears : Number(termYears);
+  const sdeVal       = Number(sde)       || 0;
+  const minDscrVal   = Number(minDscr)   || 1;
+  const aprVal       = Number(apr)       || 0;
+  const termYearsVal = Number(termYears) || 1;
 
   const maxAnnualService = sdeVal / minDscrVal;
   const r = aprVal / 100;
@@ -72,17 +70,16 @@ export default function SMEDebtCapacityPage() {
               <p style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 24 }}>Inputs</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
                 {[
-                  { label: "Annual SDE / EBITDA", val: sde, set: setSde, step: 5000, demo: DEMO_SME.sde, pound: true },
-                  { label: "Minimum DSCR Required", val: minDscr, set: setMinDscr, step: 0.05, min: 0.5, max: 5, demo: DEMO_SME.minDscr, pound: false },
-                  { label: "Bank APR (%)", val: apr, set: setApr, step: 0.5, min: 1, max: 25, demo: DEMO_SME.apr, pound: false },
-                  { label: "Loan Term (years)", val: termYears, set: setTermYears, step: 1, min: 1, max: 25, demo: DEMO_SME.termYears, pound: false },
+                  { label: "Annual SDE / EBITDA", val: sde, set: setSde, step: 5000, pound: true },
+                  { label: "Minimum DSCR Required", val: minDscr, set: setMinDscr, step: 0.05, min: 0.5, max: 5, pound: false },
+                  { label: "Bank APR (%)", val: apr, set: setApr, step: 0.5, min: 1, max: 25, pound: false },
+                  { label: "Loan Term (years)", val: termYears, set: setTermYears, step: 1, min: 1, max: 25, pound: false },
                 ].map(f => (
                   <div key={f.label}>
                     <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 6 }}>{f.label}</label>
                     <div style={{ position: "relative" }}>
                       {f.pound && <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", fontSize: 14, fontWeight: 600 }}>£</span>}
                       <input type="number" value={f.val} step={f.step} min={f.min ?? 0} max={f.max ?? 10000000}
-                        placeholder={String(f.demo)}
                         onChange={e => f.set(e.target.value)}
                         style={{ ...inputStyle, paddingLeft: f.pound ? 28 : 14 }} />
                     </div>

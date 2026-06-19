@@ -17,19 +17,16 @@ const JSON_LD = {
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
 };
 
-const DEMO_CI = { initial: 112500, annualReturn: 25, annualDist: 15000, years: 5 };
-
 export default function CompoundInterestPage() {
   const [initial, setInitial]           = useState("");
   const [annualReturn, setAnnualReturn] = useState("");
   const [annualDist, setAnnualDist]     = useState("");
   const [years, setYears]               = useState("");
 
-  const v = (s: string, d: number) => s === "" ? d : Number(s);
-  const initialVal      = v(initial, DEMO_CI.initial);
-  const annualReturnVal = v(annualReturn, DEMO_CI.annualReturn);
-  const annualDistVal   = v(annualDist, DEMO_CI.annualDist);
-  const yearsVal        = v(years, DEMO_CI.years);
+  const initialVal      = Number(initial)      || 0;
+  const annualReturnVal = Number(annualReturn) || 0;
+  const annualDistVal   = Number(annualDist)   || 0;
+  const yearsVal        = Number(years)        || 1;
 
   const schedule = useMemo(() => {
     const rows: { year: number; value: number; growth: number; distribution: number; total: number }[] = [];
@@ -77,10 +74,10 @@ export default function CompoundInterestPage() {
               style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "28px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", display: "flex", flexDirection: "column", gap: 18 }}>
               <p style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em" }}>Inputs</p>
               {[
-                { label: "Initial Equity Investment", val: initial, set: setInitial, demo: DEMO_CI.initial, pound: true, step: 5000, hint: "Your personal equity stake" },
-                { label: "Annual Return Rate (%)", val: annualReturn, set: setAnnualReturn, demo: DEMO_CI.annualReturn, pound: false, step: 1, hint: "IRR target or historical growth" },
-                { label: "Annual Distribution (£)", val: annualDist, set: setAnnualDist, demo: DEMO_CI.annualDist, pound: true, step: 1000, hint: "Levered FCF you take home annually" },
-                { label: "Hold Period (years)", val: years, set: setYears, demo: DEMO_CI.years, pound: false, step: 1, hint: "Typical ETA hold: 3–7 years" },
+                { label: "Initial Equity Investment", val: initial, set: setInitial, pound: true, step: 5000, hint: "Your personal equity stake" },
+                { label: "Annual Return Rate (%)", val: annualReturn, set: setAnnualReturn, pound: false, step: 1, hint: "IRR target or historical growth" },
+                { label: "Annual Distribution (£)", val: annualDist, set: setAnnualDist, pound: true, step: 1000, hint: "Levered FCF you take home annually" },
+                { label: "Hold Period (years)", val: years, set: setYears, pound: false, step: 1, hint: "Typical ETA hold: 3–7 years" },
               ].map(f => (
                 <div key={f.label}>
                   <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 4 }}>{f.label}</label>
@@ -88,7 +85,6 @@ export default function CompoundInterestPage() {
                   <div style={{ position: "relative" }}>
                     {f.pound && <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", fontSize: 14, fontWeight: 600 }}>£</span>}
                     <input type="number" value={f.val} step={f.step} min={0}
-                      placeholder={String(f.demo)}
                       onChange={e => f.set(e.target.value)}
                       style={f.pound ? inputStylePound : inputStyle} />
                   </div>

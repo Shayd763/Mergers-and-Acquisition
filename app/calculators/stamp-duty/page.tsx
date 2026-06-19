@@ -29,8 +29,6 @@ function calcSDLT(price: number, isResidential: boolean): number {
   }
 }
 
-const DEMO_SD = { price: 500000, propertyValue: 200000 };
-
 export default function StampDutyPage() {
   const [price, setPrice] = useState("");
   const [dealType, setDealType] = useState<"shares" | "assets">("assets");
@@ -38,8 +36,8 @@ export default function StampDutyPage() {
   const [propertyValue, setPropertyValue] = useState("");
   const [isResidential, setIsResidential] = useState(false);
 
-  const priceVal         = price         === "" ? DEMO_SD.price         : Number(price);
-  const propertyValueVal = propertyValue === "" ? DEMO_SD.propertyValue : Number(propertyValue);
+  const priceVal         = Number(price)         || 0;
+  const propertyValueVal = Number(propertyValue) || 0;
 
   const sharesDuty  = dealType === "shares" ? priceVal * 0.005 : 0;
   const propertyDuty = dealType === "assets" && includesProperty ? calcSDLT(propertyValueVal, isResidential) : 0;
@@ -93,7 +91,7 @@ export default function StampDutyPage() {
                 <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 6 }}>Total Purchase Price</label>
                 <div style={{ position: "relative" }}>
                   <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", fontSize: 14, fontWeight: 600 }}>£</span>
-                  <input type="number" value={price} step={10000} min={0} placeholder={DEMO_SD.price.toLocaleString()} onChange={e => setPrice(e.target.value)} style={inputStyle} />
+                  <input type="number" value={price} step={10000} min={0} onChange={e => setPrice(e.target.value)} style={inputStyle} />
                 </div>
               </div>
 
@@ -111,7 +109,7 @@ export default function StampDutyPage() {
                       <div>
                         <div style={{ position: "relative", marginBottom: 10 }}>
                           <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", fontSize: 14, fontWeight: 600 }}>£</span>
-                          <input type="number" value={propertyValue} step={10000} min={0} placeholder={DEMO_SD.propertyValue.toLocaleString()} onChange={e => setPropertyValue(e.target.value)} style={{ ...inputStyle, padding: "10px 14px 10px 28px" }} />
+                          <input type="number" value={propertyValue} step={10000} min={0} onChange={e => setPropertyValue(e.target.value)} style={{ ...inputStyle, padding: "10px 14px 10px 28px" }} />
                         </div>
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                           {(["commercial", "residential"] as const).map(t => (
