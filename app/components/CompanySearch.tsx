@@ -1,6 +1,14 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useSyncExternalStore } from "react";
+
+function useIsMobile() {
+  return useSyncExternalStore(
+    cb => { window.addEventListener("resize", cb); return () => window.removeEventListener("resize", cb); },
+    () => window.innerWidth <= 768,
+    () => false,
+  );
+}
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
@@ -210,6 +218,7 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
   const [searchError, setSearchError] = useState<string | null>(null);
   const debounceRef                 = useRef<ReturnType<typeof setTimeout> | null>(null);
   const wrapperRef                  = useRef<HTMLDivElement>(null);
+  const isMobile                    = useIsMobile();
 
   /* Sync when parent restores persisted details (e.g. after localStorage hydration) */
   useEffect(() => {
@@ -345,56 +354,110 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
       {/* Spinner keyframe (injected once) */}
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
 
-      {/* Dropdown results */}
+      {/* Results — full-screen modal on mobile, dropdown on desktop */}
       {open && (results.length > 0 || (searching && query.length >= 3)) && (
-        <div style={{
-          position: "absolute",
-          left: 0, right: 0,
-          top: "calc(100% + 6px)",
-          zIndex: 200,
-          background: "#fff",
-          border: "1px solid #e2e8f0",
-          borderRadius: 12,
-          boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
-          overflow: "hidden",
-        }}>
-          {searching && results.length === 0 && (
-            <div style={{ padding: "14px 16px", fontSize: 13, color: "#94a3b8", textAlign: "center" }}>
-              Searching Companies House…
+        isMobile ? (
+          <div style={{
+            position: "fixed", inset: 0, zIndex: 1000,
+            background: "#fff", display: "flex", flexDirection: "column",
+          }}>
+            {/* Mobile header */}
+            <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 16px", borderBottom: "1px solid #e2e8f0", flexShrink: 0 }}>
+              <button onClick={() => setOpen(false)} style={{ background: "none", border: "none", cursor: "pointer", padding: 4, color: "#64748b", display: "flex", alignItems: "center" }}>
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <span style={{ fontSize: 15, fontWeight: 700, color: "#0f172a" }}>Select Company</span>
             </div>
-          )}
-          {results.map(r => (
-            <button
-              key={r.company_number}
-              onMouseDown={() => handleSelect(r)}
-              style={{
-                width: "100%", background: "none", border: "none", cursor: "pointer",
-                padding: "11px 16px", textAlign: "left", display: "flex", justifyContent: "space-between",
-                alignItems: "flex-start", gap: 12, borderBottom: "1px solid #f1f5f9",
-                transition: "background 0.1s",
-              }}
-              onMouseEnter={e => (e.currentTarget.style.background = "#f8fafc")}
-              onMouseLeave={e => (e.currentTarget.style.background = "none")}
-            >
-              <div style={{ minWidth: 0, flex: 1 }}>
-                <p style={{ fontSize: 13, fontWeight: 700, color: "#0f172a", margin: "0 0 2px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                  {r.company_name}
-                </p>
-                <p style={{ fontSize: 11, color: "#94a3b8", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                  {r.address_snippet}
-                </p>
+            {/* Results list */}
+            <div style={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch" as never }}>
+              {searching && results.length === 0 && (
+                <div style={{ padding: "24px 16px", fontSize: 14, color: "#94a3b8", textAlign: "center" }}>
+                  Searching Companies House…
+                </div>
+              )}
+              {results.map(r => (
+                <button
+                  key={r.company_number}
+                  onMouseDown={() => handleSelect(r)}
+                  onClick={() => handleSelect(r)}
+                  style={{
+                    width: "100%", background: "none", border: "none", cursor: "pointer",
+                    padding: "14px 16px", textAlign: "left", display: "flex", justifyContent: "space-between",
+                    alignItems: "flex-start", gap: 12, borderBottom: "1px solid #f1f5f9",
+                  }}
+                >
+                  <div style={{ minWidth: 0, flex: 1 }}>
+                    <p style={{ fontSize: 14, fontWeight: 700, color: "#0f172a", margin: "0 0 3px" }}>
+                      {r.company_name}
+                    </p>
+                    <p style={{ fontSize: 12, color: "#94a3b8", margin: 0 }}>
+                      {r.address_snippet}
+                    </p>
+                  </div>
+                  <span style={{
+                    fontSize: 11, fontWeight: 700, color: "#4f46e5",
+                    background: "#eef2ff", border: "1px solid #c7d2fe",
+                    borderRadius: 6, padding: "3px 8px", whiteSpace: "nowrap", flexShrink: 0,
+                    fontFamily: "monospace",
+                  }}>
+                    #{r.company_number}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div style={{
+            position: "absolute",
+            left: 0, right: 0,
+            top: "calc(100% + 6px)",
+            zIndex: 200,
+            background: "#fff",
+            border: "1px solid #e2e8f0",
+            borderRadius: 12,
+            boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+            overflow: "hidden",
+          }}>
+            {searching && results.length === 0 && (
+              <div style={{ padding: "14px 16px", fontSize: 13, color: "#94a3b8", textAlign: "center" }}>
+                Searching Companies House…
               </div>
-              <span style={{
-                fontSize: 10, fontWeight: 700, color: "#4f46e5",
-                background: "#eef2ff", border: "1px solid #c7d2fe",
-                borderRadius: 6, padding: "2px 8px", whiteSpace: "nowrap", flexShrink: 0,
-                fontFamily: "monospace",
-              }}>
-                #{r.company_number}
-              </span>
-            </button>
-          ))}
-        </div>
+            )}
+            {results.map(r => (
+              <button
+                key={r.company_number}
+                onMouseDown={() => handleSelect(r)}
+                style={{
+                  width: "100%", background: "none", border: "none", cursor: "pointer",
+                  padding: "11px 16px", textAlign: "left", display: "flex", justifyContent: "space-between",
+                  alignItems: "flex-start", gap: 12, borderBottom: "1px solid #f1f5f9",
+                  transition: "background 0.1s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.background = "#f8fafc")}
+                onMouseLeave={e => (e.currentTarget.style.background = "none")}
+              >
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <p style={{ fontSize: 13, fontWeight: 700, color: "#0f172a", margin: "0 0 2px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    {r.company_name}
+                  </p>
+                  <p style={{ fontSize: 11, color: "#94a3b8", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    {r.address_snippet}
+                  </p>
+                </div>
+                <span style={{
+                  fontSize: 10, fontWeight: 700, color: "#4f46e5",
+                  background: "#eef2ff", border: "1px solid #c7d2fe",
+                  borderRadius: 6, padding: "2px 8px", whiteSpace: "nowrap", flexShrink: 0,
+                  fontFamily: "monospace",
+                }}>
+                  #{r.company_number}
+                </span>
+              </button>
+            ))}
+          </div>
+        )
       )}
 
       {/* Error */}
