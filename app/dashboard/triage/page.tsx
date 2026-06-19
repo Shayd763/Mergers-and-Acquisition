@@ -134,12 +134,19 @@ const VIABILITY = {
 function EditableTitle({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft]     = useState(value);
+  const inputRef              = useRef<HTMLInputElement>(null);
   const committedRef          = useRef(false);
 
-  // Only sync draft from prop when not actively editing
   useEffect(() => { if (!editing) setDraft(value); }, [value, editing]);
 
-  const startEditing = () => { committedRef.current = false; setEditing(true); };
+  // Call focus() synchronously in the click handler (before React re-renders)
+  // so iOS treats it as within the user gesture and opens the keyboard.
+  const startEditing = () => {
+    committedRef.current = false;
+    setEditing(true);
+    // input is always in DOM (visibility toggled), so focus() works immediately
+    requestAnimationFrame(() => { inputRef.current?.focus(); inputRef.current?.select(); });
+  };
 
   const commit = () => {
     if (committedRef.current) return;
@@ -148,12 +155,21 @@ function EditableTitle({ value, onChange }: { value: string; onChange: (v: strin
     setEditing(false);
   };
 
-  if (editing) {
-    return (
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+      {/* Title — hidden while editing */}
+      {!editing && (
+        <h1
+          onClick={startEditing}
+          style={{ fontSize: 20, fontWeight: 800, color: "#0f172a", margin: 0, letterSpacing: "-0.02em", cursor: "pointer" }}
+          title="Tap to rename"
+        >
+          {value}
+        </h1>
+      )}
+      {/* Input — always mounted so focus() works synchronously on iOS */}
       <input
-        // autoFocus works within the React commit phase (synchronous with click)
-        // so iOS opens the keyboard — useEffect focus() is too late
-        autoFocus
+        ref={inputRef}
         value={draft}
         onChange={e => setDraft(e.target.value)}
         onBlur={commit}
@@ -162,6 +178,7 @@ function EditableTitle({ value, onChange }: { value: string; onChange: (v: strin
           if (e.key === "Escape") { setDraft(value); setEditing(false); }
         }}
         style={{
+          display: editing ? "block" : "none",
           fontSize: 20, fontWeight: 800, color: "#0f172a",
           background: "#f1f5f9", border: "1.5px solid #4f46e5",
           borderRadius: 6, padding: "4px 10px", outline: "none",
@@ -170,27 +187,17 @@ function EditableTitle({ value, onChange }: { value: string; onChange: (v: strin
           WebkitAppearance: "none",
         }}
       />
-    );
-  }
-
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-      <h1
-        onClick={startEditing}
-        style={{ fontSize: 20, fontWeight: 800, color: "#0f172a", margin: 0, letterSpacing: "-0.02em", cursor: "pointer" }}
-        title="Tap to rename"
-      >
-        {value}
-      </h1>
-      <button
-        onClick={startEditing}
-        style={{ background: "none", border: "none", cursor: "pointer", padding: 4, color: "#94a3b8", display: "flex", alignItems: "center", flexShrink: 0 }}
-        title="Rename deal"
-      >
-        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-        </svg>
-      </button>
+      {!editing && (
+        <button
+          onClick={startEditing}
+          style={{ background: "none", border: "none", cursor: "pointer", padding: 4, color: "#94a3b8", display: "flex", alignItems: "center", flexShrink: 0 }}
+          title="Rename deal"
+        >
+          <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+          </svg>
+        </button>
+      )}
     </div>
   );
 }
@@ -1467,32 +1474,32 @@ export default function TriagePage() {
             value={activeDeal?.name ?? "New Deal Analysis"}
             onChange={name => updateDeal(activeDealId, { name })}
           />
-          {activeDeal && (
+          {activeDealId && (
             <button
               onClick={() => {
+                if (!activeDeal) return;
                 const isSaved = activeDeal.status === "Saved";
-                // Saving a demo deal promotes it to a real deal
                 updateDeal(activeDealId, {
                   status: isSaved ? "In Review" : "Saved",
                   ...(activeDeal.isDemo && !isSaved ? { isDemo: false } : {}),
                 });
               }}
-              title={activeDeal.status === "Saved" ? "Remove from saved" : "Save for later"}
+              title={activeDeal?.status === "Saved" ? "Remove from saved" : "Save for later"}
               style={{
                 flexShrink: 0,
                 display: "flex", alignItems: "center", gap: 5,
                 padding: "5px 11px", borderRadius: 7, cursor: "pointer",
                 fontSize: 12, fontWeight: 600,
-                border: activeDeal.status === "Saved" ? "1.5px solid #ddd6fe" : "1.5px solid #e2e8f0",
-                background: activeDeal.status === "Saved" ? "#f5f3ff" : "#fff",
-                color: activeDeal.status === "Saved" ? "#7c3aed" : "#94a3b8",
+                border: activeDeal?.status === "Saved" ? "1.5px solid #ddd6fe" : "1.5px solid #e2e8f0",
+                background: activeDeal?.status === "Saved" ? "#f5f3ff" : "#fff",
+                color: activeDeal?.status === "Saved" ? "#7c3aed" : "#94a3b8",
                 transition: "all 0.15s",
               }}
             >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill={activeDeal.status === "Saved" ? "#7c3aed" : "none"} stroke={activeDeal.status === "Saved" ? "#7c3aed" : "#94a3b8"} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill={activeDeal?.status === "Saved" ? "#7c3aed" : "none"} stroke={activeDeal?.status === "Saved" ? "#7c3aed" : "#94a3b8"} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
               </svg>
-              {activeDeal.status === "Saved" ? "Saved" : "Save for later"}
+              {activeDeal?.status === "Saved" ? "Saved" : "Save for later"}
             </button>
           )}
         </div>
