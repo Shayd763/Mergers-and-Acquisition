@@ -6,7 +6,10 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 
 export default function LoginPage() {
-  const [loading, setLoading] = useState<"google" | "linkedin" | null>(null);
+  const [loading, setLoading] = useState<"google" | "linkedin" | "credentials" | null>(null);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleGoogle = async () => {
     setLoading("google");
@@ -16,6 +19,24 @@ export default function LoginPage() {
   const handleLinkedIn = async () => {
     setLoading("linkedin");
     await signIn("linkedin", { callbackUrl: "/dashboard" });
+  };
+
+  const handleCredentials = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setLoading("credentials");
+    const result = await signIn("credentials", {
+      username,
+      password,
+      callbackUrl: "/dashboard",
+      redirect: false,
+    });
+    if (result?.error) {
+      setError("Invalid username or password.");
+      setLoading(null);
+    } else if (result?.url) {
+      window.location.href = result.url;
+    }
   };
 
   return (
@@ -61,11 +82,51 @@ export default function LoginPage() {
         </div>
 
         {/* Divider */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
           <hr className="divider" style={{ flex: 1 }} />
-          <span style={{ fontSize: 12, color: "#94a3b8", whiteSpace: "nowrap" }}>more sign-in options coming soon</span>
+          <span style={{ fontSize: 12, color: "#94a3b8", whiteSpace: "nowrap" }}>or sign in with username</span>
           <hr className="divider" style={{ flex: 1 }} />
         </div>
+
+        {/* Credentials form */}
+        <form onSubmit={handleCredentials} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-soft)" }}>Username</span>
+            <input
+              type="text"
+              placeholder="username"
+              className="input"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              required
+            />
+          </label>
+
+          <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-soft)" }}>Password</span>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="input"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
+          </label>
+
+          {error && (
+            <p style={{ fontSize: 13, color: "#dc2626", margin: 0 }}>{error}</p>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading !== null}
+            className="btn-primary"
+            style={{ width: "100%", justifyContent: "center", padding: "11px 16px", fontSize: 14, marginTop: 4, opacity: loading === "credentials" ? 0.7 : 1 }}
+          >
+            {loading === "credentials" ? "Signing in…" : "Sign in"}
+          </button>
+        </form>
 
         <p style={{ textAlign: "center", fontSize: 13, color: "var(--muted)", marginTop: 24 }}>
           Don&apos;t have an account?{" "}
