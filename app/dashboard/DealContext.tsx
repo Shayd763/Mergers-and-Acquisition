@@ -1,6 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
+import { useSession } from "next-auth/react";
 import type { CompanyDetails } from "@/app/components/CompanySearch";
 import type { ReconciliationResult } from "@/app/components/ForensicAuditPanel";
 import type { CreditProfile } from "@/app/components/CreditProfileBadge";
@@ -125,30 +126,45 @@ interface DealContextValue {
 const DealContext = createContext<DealContextValue | null>(null);
 
 export function DealProvider({ children }: { children: React.ReactNode }) {
+  const { data: session, status } = useSession();
   const [deals, setDeals] = useState<StoredDeal[]>(DEFAULT_DEALS);
   const [activeDealId, setActiveDealIdRaw] = useState<string>(DEFAULT_DEALS[0].id);
   const [hydrated, setHydrated] = useState(false);
+  const loadedForRef = useRef<string | null>(null);
 
-  /* Load from localStorage once on mount */
+  // Derive a per-user storage key — guests share a guest key
+  const storageKey = status === "authenticated" && session?.user?.email
+    ? `triage_finance_deals_${session.user.email}`
+    : "triage_finance_deals_guest";
+
+  /* Re-load from localStorage whenever the user changes */
   useEffect(() => {
+    if (status === "loading") return;
+    if (loadedForRef.current === storageKey) return;
+    loadedForRef.current = storageKey;
     try {
-      const saved = localStorage.getItem("triage_finance_deals");
+      const saved = localStorage.getItem(storageKey);
       if (saved) {
         const parsed: StoredDeal[] = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
           setDeals(parsed);
           setActiveDealIdRaw(parsed[0].id);
+          setHydrated(true);
+          return;
         }
       }
     } catch {}
+    // No saved data for this user — reset to defaults
+    setDeals(DEFAULT_DEALS);
+    setActiveDealIdRaw(DEFAULT_DEALS[0].id);
     setHydrated(true);
-  }, []);
+  }, [storageKey, status]);
 
   /* Persist to localStorage whenever deals change (after hydration) */
   useEffect(() => {
-    if (!hydrated) return;
-    try { localStorage.setItem("triage_finance_deals", JSON.stringify(deals)); } catch {}
-  }, [deals, hydrated]);
+    if (!hydrated || loadedForRef.current !== storageKey) return;
+    try { localStorage.setItem(storageKey, JSON.stringify(deals)); } catch {}
+  }, [deals, hydrated, storageKey]);
 
   const setActiveDealId = useCallback((id: string) => setActiveDealIdRaw(id), []);
 
