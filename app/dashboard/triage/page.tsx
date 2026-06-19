@@ -1249,6 +1249,11 @@ export default function TriagePage() {
   };
 
   const handleCompanySelect = (d: CompanyDetails) => {
+    // Logged-in users skip the email gate entirely
+    if (authStatus === "authenticated") {
+      doCompanySelect(d);
+      return;
+    }
     if (!emailCaptured) {
       pendingCompanyRef.current = d;
       setCaptureOpen(true);
