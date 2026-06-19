@@ -109,15 +109,15 @@ export default function SDEToEBITDAPage() {
               <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "24px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
                 <p style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 18 }}>Reconciliation Bridge</p>
                 {[
-                  { label: "Net Profit",         val: netProfit,                                    color: "#334155" },
-                  { label: "+ Owner Salary",      val: ownerSalary,                                  color: "#059669" },
-                  { label: "+ Owner Perks",       val: ownerPerks,                                   color: "#059669" },
-                  { label: "+ One-off Costs",     val: oneOffCosts,                                  color: "#059669" },
-                  { label: "= SDE",               val: sde,                                          color: "#4f46e5", bold: true },
-                  { label: "− Replacement Mgr",   val: -replacementMgrSalary,                        color: "#dc2626" },
-                  { label: "= Adjusted SDE",      val: adjustedEbitda,                               color: "#7c3aed", bold: true },
-                  { label: "+ D&A + Interest",    val: depreciation + amortisation + interest,       color: "#d97706" },
-                  { label: "= EBITDA",            val: ebitda,                                       color: "#d97706", bold: true },
+                  { label: "Net Profit",         val: npV,                                    color: "#334155" },
+                  { label: "+ Owner Salary",      val: osV,                                   color: "#059669" },
+                  { label: "+ Owner Perks",       val: opV,                                   color: "#059669" },
+                  { label: "+ One-off Costs",     val: ocV,                                   color: "#059669" },
+                  { label: "= SDE",               val: sde,                                   color: "#4f46e5", bold: true },
+                  { label: "− Replacement Mgr",   val: -rmV,                                  color: "#dc2626" },
+                  { label: "= Adjusted SDE",      val: adjustedEbitda,                        color: "#7c3aed", bold: true },
+                  { label: "+ D&A + Interest",    val: depV + amoV + intV,                   color: "#d97706" },
+                  { label: "= EBITDA",            val: ebitda,                                color: "#d97706", bold: true },
                 ].map(r => (
                   <div key={r.label} style={{ display: "flex", justifyContent: "space-between", padding: "7px 0", borderBottom: r.bold ? "2px solid #e2e8f0" : "1px solid #f1f5f9" }}>
                     <span style={{ fontSize: 13, color: r.bold ? "#334155" : "#64748b", fontWeight: r.bold ? 700 : 400 }}>{r.label}</span>

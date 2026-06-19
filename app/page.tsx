@@ -1095,7 +1095,7 @@ export default function HomePage() {
         </p>
         <p style={{ fontSize: 11, color: "#cbd5e1", margin: 0 }}>© {new Date().getFullYear()} Triage Finance Ltd. All rights reserved.</p>
       </footer>
-    </>
+    </div>
   );
 }
 

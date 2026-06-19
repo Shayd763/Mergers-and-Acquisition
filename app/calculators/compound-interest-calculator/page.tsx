@@ -116,8 +116,8 @@ export default function CompoundInterestPage() {
               <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "24px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
                 <p style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 20 }}>Total Value Over Time</p>
                 <div style={{ display: "flex", alignItems: "flex-end", gap: 10, height: 140 }}>
-                  {[{ year: 0, total: initial }, ...schedule].map((r, i) => {
-                    const maxVal = Math.max(initial, ...(schedule.map(s => s.total)));
+                  {[{ year: 0, total: initialVal }, ...schedule].map((r, i) => {
+                    const maxVal = Math.max(initialVal, ...(schedule.map(s => s.total)));
                     const heightPct = maxVal > 0 ? (r.total / maxVal) * 100 : 0;
                     return (
                       <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>

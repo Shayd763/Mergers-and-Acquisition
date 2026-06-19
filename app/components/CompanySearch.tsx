@@ -513,7 +513,6 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
               </div>
             )}
           </div>
-          </div>
         </div>
       )}
 
