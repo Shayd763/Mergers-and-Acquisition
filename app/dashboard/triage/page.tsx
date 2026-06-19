@@ -1326,7 +1326,7 @@ export default function TriagePage() {
           </svg>
         ) : n}
       </div>
-      <span style={{
+      <span className="step-label" style={{
         fontSize: 12, fontWeight: active ? 700 : 500,
         color: done ? "#059669" : active ? "#4f46e5" : reached ? "#475569" : "#cbd5e1",
         whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
@@ -1445,7 +1445,7 @@ export default function TriagePage() {
       </div>
 
       {/* ── Step progress bar ── */}
-      <div style={{
+      <div className="step-bar" style={{
         display: "flex", alignItems: "center",
         background: "#fff", border: "1px solid #e2e8f0",
         borderRadius: 14, padding: "12px 20px",
@@ -1453,11 +1453,11 @@ export default function TriagePage() {
         gap: 4,
       }}>
         <StepPill n={1} label="Verify Company"   done={step1Done}  active={currentStep === 1} reached={step1Reached} />
-        <div style={{ height: 2, flex: "0 0 32px", background: step1Done ? "#a7f3d0" : "#e2e8f0", borderRadius: 9999 }} />
+        <div className="step-connector" style={{ height: 2, flex: "0 0 32px", background: step1Done ? "#a7f3d0" : "#e2e8f0", borderRadius: 9999 }} />
         <StepPill n={2} label="Enter Financials" done={step2Done}  active={currentStep === 2} reached={step2Reached} />
-        <div style={{ height: 2, flex: "0 0 32px", background: step2Done ? "#a7f3d0" : "#e2e8f0", borderRadius: 9999 }} />
+        <div className="step-connector" style={{ height: 2, flex: "0 0 32px", background: step2Done ? "#a7f3d0" : "#e2e8f0", borderRadius: 9999 }} />
         <StepPill n={3} label="Deal Analysis"    done={step3Done}  active={currentStep === 3} reached={step3Reached} />
-        <div style={{ height: 2, flex: "0 0 32px", background: step3Done ? "#a7f3d0" : "#e2e8f0", borderRadius: 9999 }} />
+        <div className="step-connector" style={{ height: 2, flex: "0 0 32px", background: step3Done ? "#a7f3d0" : "#e2e8f0", borderRadius: 9999 }} />
         <StepPill n={4} label="Submit & Export"  done={false}      active={currentStep === 4} reached={step4Reached} />
       </div>
 

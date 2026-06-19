@@ -340,6 +340,11 @@ textarea.input { resize: vertical; font-family: inherit; line-height: 1.6; }
   /* Plan grid: 1 column on mobile */
   .plan-grid       { grid-template-columns: 1fr !important; }
 
+  /* Step progress bar: hide labels, show numbers only */
+  .step-label      { display: none !important; }
+  .step-bar        { padding: 10px 12px !important; gap: 2px !important; }
+  .step-connector  { flex: 0 0 16px !important; }
+
   /* Triage page padding on mobile */
   .triage-padding {
     padding: 16px !important;
