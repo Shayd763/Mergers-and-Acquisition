@@ -267,7 +267,7 @@ export default function AccountPage() {
             <p style={{ fontSize: 13, color: "var(--muted)", margin: 0 }}>{userEmail}</p>
           </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+        <div className="triage-metrics-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
           {([
             ["First name", firstName],
             ["Last name", lastName],

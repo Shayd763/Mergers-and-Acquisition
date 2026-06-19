@@ -359,4 +359,45 @@ textarea.input { resize: vertical; font-family: inherit; line-height: 1.6; }
   .forensic-grid {
     grid-template-columns: 1fr !important;
   }
+
+  /* ─── TRIAGE PAGE GRIDS ──────────────────────────────────────────────── */
+
+  /* Steps 1+2 side-by-side panels → stack */
+  .triage-steps-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Extracted data 6-col → 3-col */
+  .triage-extracted-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* Override inputs 3-col → 1-col */
+  .triage-override-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Metrics cards 2-col → 1-col */
+  .triage-metrics-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Bottom CTA 2-col → 1-col */
+  .triage-cta-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Terminal tag labels: shrink on mobile */
+  .terminal-body .terminal-line span[style*="minWidth"] {
+    min-width: 60px !important;
+  }
+
+  /* Prevent any element from overflowing viewport */
+  * {
+    max-width: 100%;
+  }
+  img, video, canvas, svg {
+    max-width: 100%;
+    height: auto;
+  }
 }

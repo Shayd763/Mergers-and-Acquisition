@@ -197,7 +197,7 @@ export function CreditProfileBadge({ profile, loading, onViewReport }: Props) {
           </div>
 
           {/* 3-up headline figures */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
+          <div className="triage-override-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
             <div>
               <div style={{ fontSize: 9, fontWeight: 700, color: "#334155", letterSpacing: "0.09em", marginBottom: 2 }}>CREDIT LIMIT</div>
               <div style={{ fontSize: 13, fontWeight: 800, color: "#f1f5f9", fontVariantNumeric: "tabular-nums" }}>{fmtGbp(profile.credit_limit_gbp)}</div>

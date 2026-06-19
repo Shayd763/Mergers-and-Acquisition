@@ -1479,7 +1479,7 @@ export default function TriagePage() {
 
       {currentStep <= 2 && (
         <div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 0, alignItems: "start" }}>
+          <div className="triage-steps-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 0, alignItems: "start" }}>
 
             {/* ── Left: Company Search ── */}
             <div className="card" style={{ padding: 22 }}>
@@ -1619,7 +1619,7 @@ export default function TriagePage() {
                   {extracted.raw_confidence} confidence
                 </span>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 8, marginBottom: 16 }}>
+              <div className="triage-extracted-grid" style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 8, marginBottom: 16 }}>
                 {[
                   ["Asking", fmt(extracted.asking_price)],
                   ["Turnover", fmt(extracted.turnover)],
@@ -1636,7 +1636,7 @@ export default function TriagePage() {
               </div>
               <div style={{ borderTop: "1px solid var(--border)", paddingTop: 12 }}>
                 <p style={{ fontSize: 11, fontWeight: 700, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>Override values</p>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
+                <div className="triage-override-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
                   {([
                     ["Asking Price £", askingPrice, setAskingPrice],
                     ["Net Profit £",   netProfit,   setNetProfit],
@@ -1761,7 +1761,7 @@ export default function TriagePage() {
                   </div>
                   <p style={{ fontSize: 10, color: "#94a3b8", margin: "3px 0 0" }}>Bank of England rate as of June 2026 · updates manually</p>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                <div className="triage-metrics-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                   <div>
                     <label style={{ fontSize: 11, fontWeight: 600, color: "var(--muted)", display: "block", marginBottom: 5 }}>Lender Spread (% above BoE)</label>
                     <input type="number" min={1} max={20} step={0.25} value={boeSpread} onChange={e => setBoeSpread(Number(e.target.value))} className="input" style={{ fontSize: 13 }} />
@@ -1780,7 +1780,7 @@ export default function TriagePage() {
           {metrics && (
             <div className="card" style={{ padding: 24, marginBottom: 16 }}>
               <h2 style={{ fontSize: 15, fontWeight: 700, color: "var(--text)", margin: "0 0 16px" }}>Deal Metrics</h2>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
+              <div className="triage-metrics-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
                 <MetricCard label={<GlossaryTerm term="SDE" />} value={fmt(metrics.sde)} sub="Seller's Discretionary Earnings" />
                 <MetricCard label={<GlossaryTerm term="ValuationMultiple">Valuation Multiple</GlossaryTerm>} value={`${metrics.valuation_multiple}×`} sub="Asking Price ÷ SDE" variant={metrics.valuation_multiple <= 4 ? "success" : "default"} />
                 <MetricCard label={<GlossaryTerm term="DebtService">Monthly Bank Repayment</GlossaryTerm>} value={bankPct === 0 ? "£0" : fmt(metrics.monthly_bank_payment)} sub={bankPct === 0 ? "No bank debt" : `${fmt(metrics.annual_bank_debt_service)}/yr · ${loanTermYears}yr @ ${(BOE_BASE_RATE + boeSpread).toFixed(2)}% APR`} />
@@ -1799,7 +1799,7 @@ export default function TriagePage() {
                     <h2 style={{ fontSize: 15, fontWeight: 700, color: "var(--text)", margin: 0 }}>Investment Banking Deal Metrics</h2>
                     <span className="badge badge-indigo">IB Grade</span>
                   </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                  <div className="triage-metrics-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                     <MetricCard label={<GlossaryTerm term="DSCR" />} value={`${metrics.dscr === Infinity ? "∞" : metrics.dscr.toFixed(2)}×`} sub={dscrBandLabel} variant={dscrVariant} />
                     <MetricCard label={<GlossaryTerm term="LeveredFCF">Levered FCF</GlossaryTerm>} value={fmt(metrics.levered_fcf)} sub="Annual equity cash flow" variant={metrics.levered_fcf >= 0 ? "success" : "danger"} />
                     <MetricCard label={<GlossaryTerm term="IRR">5-Year IRR</GlossaryTerm>} value={fmtPct(metrics.equity_irr)} sub="5-year equity hold" variant={!isFinite(metrics.equity_irr) || isNaN(metrics.equity_irr) ? "default" : metrics.equity_irr >= 0.25 ? "success" : "default"} />
@@ -1873,7 +1873,7 @@ export default function TriagePage() {
             </div>
           )}
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+          <div className="triage-cta-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
 
             {/* Lender routing */}
             <div style={{

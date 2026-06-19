@@ -514,11 +514,11 @@ export function AcquisitionInsightsCard({
       <div style={{ padding: "18px 20px", display: "flex", flexDirection: "column", gap: 18 }}>
 
         {/* ── Four-column comparison table ── */}
-        <div>
+        <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" as never }}>
           <div style={{
             display: "grid", gridTemplateColumns: "1.2fr 1fr 1fr 1fr",
             gap: 6, marginBottom: 10, paddingBottom: 8,
-            borderBottom: "2px solid #f1f5f9",
+            borderBottom: "2px solid #f1f5f9", minWidth: 320,
           }}>
             <span style={{ fontSize: 10, fontWeight: 700, color: "#94a3b8", letterSpacing: "0.09em" }}>METRIC</span>
             <span style={{ fontSize: 10, fontWeight: 700, color: "#6366f1", letterSpacing: "0.09em", textAlign: "center" }}>
