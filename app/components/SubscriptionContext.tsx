@@ -39,8 +39,6 @@ const Context = createContext<SubCtx>({
   incrementPdfExport: () => {},
 });
 
-const STORAGE_KEY = "triage_finance_sub_state";
-
 // ─── Provider ─────────────────────────────────────────────────────────────── //
 
 export function SubscriptionProvider({ children }: { children: React.ReactNode }) {
@@ -49,37 +47,47 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
   const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
   const [triggeredFeature, setTriggeredFeature] = useState<string | null>(null);
   const [pdfExportCount, setPdfExportCount] = useState(0);
-  const initialized = useRef(false);
+  const lastEmailRef = useRef<string | null>(null);
 
-  // On first mount, hydrate from localStorage
+  // Per-user localStorage key so switching accounts doesn't leak tier
+  const storageKey = session?.user?.email
+    ? `triage_sub_${session.user.email}`
+    : "triage_sub_guest";
+
+  // When session loads, prefer the DB-backed tier from the session
   useEffect(() => {
-    if (initialized.current) return;
-    initialized.current = true;
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const { tier: t } = JSON.parse(stored) as { tier: Tier };
-        if (["explorer", "searcher", "broker", "institutional"].includes(t)) {
-          setTierState(t);
-        }
+    if (status === "loading") return;
+    if (status === "authenticated") {
+      const email = session?.user?.email ?? null;
+      // Reset to explorer whenever the logged-in user changes
+      if (email !== lastEmailRef.current) {
+        lastEmailRef.current = email;
+        setTierState("explorer");
       }
-    } catch {}
-  }, []);
-
-  // When session loads, prefer the DB-backed tier from the session over localStorage
-  useEffect(() => {
-    if (status !== "authenticated") return;
-    const sessionTier = (session as unknown as Record<string, unknown>)?.tier as Tier | undefined;
-    if (sessionTier && ["explorer", "searcher", "broker", "institutional"].includes(sessionTier)) {
-      setTierState(sessionTier);
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ tier: sessionTier })); } catch {}
+      const sessionTier = (session as unknown as Record<string, unknown>)?.tier as Tier | undefined;
+      if (sessionTier && ["explorer", "searcher", "broker", "institutional"].includes(sessionTier)) {
+        setTierState(sessionTier);
+        try { localStorage.setItem(storageKey, JSON.stringify({ tier: sessionTier })); } catch {}
+      }
+    } else {
+      // Unauthenticated — try guest localStorage
+      lastEmailRef.current = null;
+      try {
+        const stored = localStorage.getItem("triage_sub_guest");
+        if (stored) {
+          const { tier: t } = JSON.parse(stored) as { tier: Tier };
+          if (["explorer", "searcher", "broker", "institutional"].includes(t)) setTierState(t);
+        } else {
+          setTierState("explorer");
+        }
+      } catch {}
     }
-  }, [session, status]);
+  }, [session, status, storageKey]);
 
   const setTier = useCallback((t: Tier) => {
     setTierState(t);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ tier: t })); } catch {}
-  }, []);
+    try { localStorage.setItem(storageKey, JSON.stringify({ tier: t })); } catch {}
+  }, [storageKey]);
 
   const isAtLeast = useCallback((required: Tier) => {
     return TIER_RANK[tier] >= TIER_RANK[required];

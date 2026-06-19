@@ -343,6 +343,22 @@ export default function DashboardPage() {
 
   if (!hydrated) return null;
 
+  if (deals.length === 0) {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "60vh", gap: 16, padding: "40px 24px", textAlign: "center" }}>
+        <div style={{ fontSize: 48 }}>📋</div>
+        <h2 style={{ fontSize: 20, fontWeight: 700, color: "#1e293b", margin: 0 }}>No deals yet</h2>
+        <p style={{ fontSize: 14, color: "#64748b", margin: 0, maxWidth: 340 }}>
+          Run your first deal analysis to start building your acquisition pipeline.
+        </p>
+        <Link href="/dashboard/triage" style={{
+          textDecoration: "none", padding: "10px 20px",
+          background: "#6366f1", color: "#fff", borderRadius: 8, fontSize: 13, fontWeight: 700,
+        }}>+ Analyse a deal</Link>
+      </div>
+    );
+  }
+
   return (
     <div className="dash-pad" style={{ maxWidth: 1200, margin: "0 auto" }}>
       <style>{`@keyframes toast-in { from { opacity:0; transform:translateX(-50%) translateY(10px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }`}</style>

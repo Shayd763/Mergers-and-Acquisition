@@ -19,6 +19,14 @@ async function ensureTable() {
       tier              TEXT NOT NULL DEFAULT 'explorer',
       created_at        BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM NOW())
     );
+    CREATE TABLE IF NOT EXISTS deals (
+      id         TEXT NOT NULL,
+      user_email TEXT NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+      data       JSONB NOT NULL,
+      created_at BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM NOW()),
+      updated_at BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM NOW()),
+      PRIMARY KEY (id, user_email)
+    );
   `);
   tableReady = true;
 }
@@ -70,6 +78,34 @@ export const userDb = {
   async setTier(email: string, tier: Tier): Promise<void> {
     await ensureTable();
     await pool.query("UPDATE users SET tier = $1 WHERE email = $2", [tier, email]);
+  },
+};
+
+export const dealDb = {
+  async list(userEmail: string): Promise<unknown[]> {
+    await ensureTable();
+    const { rows } = await pool.query(
+      "SELECT data FROM deals WHERE user_email = $1 ORDER BY created_at ASC",
+      [userEmail]
+    );
+    return rows.map(r => r.data);
+  },
+
+  async upsert(userEmail: string, deal: { id: string; [key: string]: unknown }): Promise<void> {
+    await ensureTable();
+    await pool.query(
+      `INSERT INTO deals (id, user_email, data, updated_at)
+       VALUES ($1, $2, $3, EXTRACT(EPOCH FROM NOW()))
+       ON CONFLICT (id, user_email) DO UPDATE SET
+         data = EXCLUDED.data,
+         updated_at = EXCLUDED.updated_at`,
+      [deal.id, userEmail, JSON.stringify(deal)]
+    );
+  },
+
+  async delete(userEmail: string, id: string): Promise<void> {
+    await ensureTable();
+    await pool.query("DELETE FROM deals WHERE id = $1 AND user_email = $2", [id, userEmail]);
   },
 };
 

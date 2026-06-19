@@ -125,52 +125,144 @@ interface DealContextValue {
 
 const DealContext = createContext<DealContextValue | null>(null);
 
+/* ─── Guest localStorage helpers ─────────────────────────────────────────── */
+
+const GUEST_KEY = "triage_finance_deals_guest";
+
+function loadGuest(): StoredDeal[] | null {
+  try {
+    const s = localStorage.getItem(GUEST_KEY);
+    if (!s) return null;
+    const parsed = JSON.parse(s);
+    return Array.isArray(parsed) && parsed.length > 0 ? parsed : null;
+  } catch { return null; }
+}
+
+function saveGuest(deals: StoredDeal[]) {
+  try { localStorage.setItem(GUEST_KEY, JSON.stringify(deals)); } catch {}
+}
+
+/* ─── Provider ───────────────────────────────────────────────────────────── */
+
 export function DealProvider({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
   const [deals, setDeals] = useState<StoredDeal[]>(DEFAULT_DEALS);
   const [activeDealId, setActiveDealIdRaw] = useState<string>(DEFAULT_DEALS[0].id);
   const [hydrated, setHydrated] = useState(false);
   const loadedForRef = useRef<string | null>(null);
+  // Track deals that need to be persisted (for authenticated debounce)
+  const pendingSaveRef = useRef<Map<string, StoredDeal>>(new Map());
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Derive a per-user storage key — guests share a guest key
-  const storageKey = status === "authenticated" && session?.user?.email
-    ? `triage_finance_deals_${session.user.email}`
-    : "triage_finance_deals_guest";
+  const isAuth = status === "authenticated" && !!session?.user?.email;
+  const userEmail = session?.user?.email ?? null;
 
-  /* Re-load from localStorage whenever the user changes */
+  /* ── Load deals on auth state change ─────────────────────────────────── */
   useEffect(() => {
     if (status === "loading") return;
-    if (loadedForRef.current === storageKey) return;
-    loadedForRef.current = storageKey;
-    try {
-      const saved = localStorage.getItem(storageKey);
-      if (saved) {
-        const parsed: StoredDeal[] = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setDeals(parsed);
-          setActiveDealIdRaw(parsed[0].id);
-          setHydrated(true);
-          return;
-        }
-      }
-    } catch {}
-    // No saved data for this user — reset to defaults
-    setDeals(DEFAULT_DEALS);
-    setActiveDealIdRaw(DEFAULT_DEALS[0].id);
-    setHydrated(true);
-  }, [storageKey, status]);
 
-  /* Persist to localStorage whenever deals change (after hydration) */
-  useEffect(() => {
-    if (!hydrated || loadedForRef.current !== storageKey) return;
-    try { localStorage.setItem(storageKey, JSON.stringify(deals)); } catch {}
-  }, [deals, hydrated, storageKey]);
+    const key = isAuth ? `auth:${userEmail}` : "guest";
+    if (loadedForRef.current === key) return;
+    loadedForRef.current = key;
+
+    if (isAuth) {
+      // Fetch from server
+      fetch("/api/deals")
+        .then(r => r.json())
+        .then((serverDeals: StoredDeal[]) => {
+          if (Array.isArray(serverDeals) && serverDeals.length > 0) {
+            setDeals(serverDeals);
+            setActiveDealIdRaw(serverDeals[0].id);
+          } else {
+            // First login — no server deals yet, start fresh (no demo deals for real users)
+            setDeals([]);
+            setActiveDealIdRaw("");
+          }
+          setHydrated(true);
+        })
+        .catch(() => {
+          // Fallback to demo deals if API fails
+          setDeals(DEFAULT_DEALS);
+          setActiveDealIdRaw(DEFAULT_DEALS[0].id);
+          setHydrated(true);
+        });
+    } else {
+      // Guest: use localStorage
+      const saved = loadGuest();
+      if (saved) {
+        setDeals(saved);
+        setActiveDealIdRaw(saved[0].id);
+      } else {
+        setDeals(DEFAULT_DEALS);
+        setActiveDealIdRaw(DEFAULT_DEALS[0].id);
+      }
+      setHydrated(true);
+    }
+  }, [status, isAuth, userEmail]);
+
+  /* ── Persist deals whenever they change ──────────────────────────────── */
+  const persistDeals = useCallback((nextDeals: StoredDeal[]) => {
+    if (!hydrated) return;
+    if (!isAuth) {
+      saveGuest(nextDeals);
+      return;
+    }
+    // For authenticated users, queue a debounced save for changed deals
+    // (individual mutations also fire immediately via helper below)
+  }, [hydrated, isAuth]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { persistDeals(deals); }, [deals]);
+
+  /* ── Server mutation helpers ──────────────────────────────────────────── */
+
+  const serverUpsert = useCallback((deal: StoredDeal) => {
+    if (!isAuth) return;
+    // Debounce rapid updates (e.g. typing in notes field)
+    pendingSaveRef.current.set(deal.id, deal);
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(() => {
+      const toSave = Array.from(pendingSaveRef.current.values());
+      pendingSaveRef.current.clear();
+      toSave.forEach(d => {
+        fetch(`/api/deals/${d.id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(d),
+        }).catch(() => {});
+      });
+    }, 800);
+  }, [isAuth]);
+
+  const serverDelete = useCallback((id: string) => {
+    if (!isAuth) return;
+    fetch(`/api/deals/${id}`, { method: "DELETE" }).catch(() => {});
+  }, [isAuth]);
+
+  const serverCreate = useCallback((deal: StoredDeal) => {
+    if (!isAuth) return;
+    fetch("/api/deals", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(deal),
+    }).catch(() => {});
+  }, [isAuth]);
+
+  /* ── CRUD operations ─────────────────────────────────────────────────── */
 
   const setActiveDealId = useCallback((id: string) => setActiveDealIdRaw(id), []);
 
   const updateDeal = useCallback((id: string, patch: Partial<StoredDeal>) => {
-    setDeals(prev => prev.map(d => d.id === id ? { ...d, ...patch } : d));
-  }, []);
+    setDeals(prev => {
+      const next = prev.map(d => {
+        if (d.id !== id) return d;
+        const updated = { ...d, ...patch };
+        serverUpsert(updated);
+        return updated;
+      });
+      return next;
+    });
+  }, [serverUpsert]);
 
   const createDeal = useCallback((): string => {
     const id = `d${Date.now()}`;
@@ -179,41 +271,48 @@ export function DealProvider({ children }: { children: React.ReactNode }) {
       askingPrice: 0, netProfit: 0, addBacks: 0,
       equityPct: 30, vendorPct: 20, bankPct: 50,
       rawText: "", extracted: null,
+      status: "In Review",
+      date: new Date().toISOString().slice(0, 10),
     };
     setDeals(prev => [fresh, ...prev]);
     setActiveDealIdRaw(id);
+    serverCreate(fresh);
     return id;
-  }, []);
+  }, [serverCreate]);
 
   const deleteDeal = useCallback((id: string) => {
+    serverDelete(id);
     setDeals(prev => {
       const next = prev.filter(d => d.id !== id);
-      // If we deleted the active deal, switch to the first remaining one
       if (id === activeDealId) {
         const fallback = next[0];
         if (fallback) setActiveDealIdRaw(fallback.id);
+        else setActiveDealIdRaw("");
       }
-      // Always keep at least one deal
       if (next.length === 0) {
         const fresh: StoredDeal = {
           id: `d${Date.now()}`, name: "Untitled Deal",
           askingPrice: 0, netProfit: 0, addBacks: 0,
           equityPct: 30, vendorPct: 20, bankPct: 50,
           rawText: "", extracted: null,
+          status: "In Review",
+          date: new Date().toISOString().slice(0, 10),
         };
+        serverCreate(fresh);
         setActiveDealIdRaw(fresh.id);
         return [fresh];
       }
       return next;
     });
-  }, [activeDealId]);
+  }, [activeDealId, serverDelete, serverCreate]);
 
   const duplicateDeal = useCallback((id: string): string => {
     const newId = `d${Date.now()}`;
     setDeals(prev => {
       const src = prev.find(d => d.id === id);
       if (!src) return prev;
-      const copy: StoredDeal = { ...src, id: newId, name: `${src.name} (copy)` };
+      const copy: StoredDeal = { ...src, id: newId, name: `${src.name} (copy)`, isDemo: false };
+      serverCreate(copy);
       const idx = prev.findIndex(d => d.id === id);
       const next = [...prev];
       next.splice(idx + 1, 0, copy);
@@ -221,7 +320,7 @@ export function DealProvider({ children }: { children: React.ReactNode }) {
     });
     setActiveDealIdRaw(newId);
     return newId;
-  }, []);
+  }, [serverCreate]);
 
   const activeDeal = deals.find(d => d.id === activeDealId);
 
