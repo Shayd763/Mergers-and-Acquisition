@@ -421,6 +421,12 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Prevent body scroll + horizontal drift when sidebar is open on mobile
+  useEffect(() => {
+    document.body.style.overflow = sidebarOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [sidebarOpen]);
+
   const handleNewDeal = useCallback(() => {
     createDeal();
     setSidebarOpen(false);
@@ -513,7 +519,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Main content */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, overflow: "hidden" }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, maxWidth: "100%", overflow: "hidden" }}>
         {/* Top bar */}
         <header style={{
           height: 52, background: "#fff", borderBottom: "1px solid #e2e8f0",
