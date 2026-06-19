@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
+import { SiteNav } from "@/app/components/SiteNav";
 import { GlossaryTerm } from "@/app/components/GlossaryTerm";
 
 // ─── Sector data ──────────────────────────────────────────────────────────── //
@@ -415,50 +416,9 @@ export default function GuidePage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#050a14", color: "#f1f5f9" }}>
-      {/* Top nav */}
-      <nav style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-        borderBottom: "1px solid #1e293b",
-        background: "rgba(5,10,20,0.92)",
-        backdropFilter: "blur(12px)",
-        padding: "0 32px",
-        display: "flex",
-        alignItems: "center",
-        height: 56,
-        gap: 16,
-      }}>
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
-          <div style={{ width: 28, height: 28, borderRadius: 7, background: "linear-gradient(135deg, #6366f1, #8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, color: "#fff" }}>T</div>
-          <span style={{ fontSize: 14, fontWeight: 700, color: "#f1f5f9" }}>Triage Finance</span>
-        </Link>
-        <span style={{ color: "#1e293b" }}>·</span>
-        <span style={{ fontSize: 13, color: "#475569" }}>Industry Valuation Guide</span>
-        <div style={{ flex: 1 }} />
-        <Link href="/dashboard/triage" style={{ textDecoration: "none" }}>
-          <button style={{
-            background: "#6366f1",
-            color: "#fff",
-            border: "none",
-            borderRadius: 8,
-            padding: "8px 16px",
-            fontSize: 12,
-            fontWeight: 700,
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-          }}>
-            Open Triage Workspace
-            <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </button>
-        </Link>
-      </nav>
+      <SiteNav />
 
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 32px 80px" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "100px 32px 80px" }}>
         {/* Hero */}
         <div style={{ marginBottom: 40, maxWidth: 720 }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.25)", borderRadius: 20, padding: "4px 12px", fontSize: 11, fontWeight: 700, color: "#a5b4fc", letterSpacing: "0.07em", marginBottom: 16 }}>

@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { BarChart3, ArrowRight, CheckCircle, TrendingUp, Shield, Users, AlertTriangle, Info } from "lucide-react";
+import { ArrowRight, CheckCircle, TrendingUp, Shield, Users, AlertTriangle, Info } from "lucide-react";
+import { SiteNav } from "@/app/components/SiteNav";
 
 const EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EXPO } } };
@@ -54,15 +55,7 @@ export default function SellPage() {
     <div style={{ background: "#f8fafc", minHeight: "100vh", color: "#0f172a", fontFamily: "'Inter','Segoe UI',system-ui,sans-serif" }}>
       <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", backgroundImage: "linear-gradient(rgba(148,163,184,0.15) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,0.15) 1px,transparent 1px)", backgroundSize: "64px 64px", maskImage: "radial-gradient(ellipse 80% 50% at 50% 0%,transparent 20%,#f8fafc 75%)", WebkitMaskImage: "radial-gradient(ellipse 80% 50% at 50% 0%,transparent 20%,#f8fafc 75%)" }} />
 
-      {/* Nav */}
-      <nav style={{ position: "fixed", top: 16, left: "50%", transform: "translateX(-50%)", zIndex: 100, display: "flex", alignItems: "center", gap: 8, padding: "8px 16px", background: "rgba(255,255,255,0.9)", backdropFilter: "blur(20px)", border: "1px solid #e2e8f0", borderRadius: 9999, boxShadow: "0 4px 20px rgba(0,0,0,0.07)" }}>
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 7, textDecoration: "none" }}>
-          <div style={{ width: 22, height: 22, borderRadius: 6, background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center" }}><BarChart3 size={12} color="#fff" /></div>
-          <span style={{ fontSize: 13, fontWeight: 700, color: "#0f172a" }}>Triage Finance</span>
-        </Link>
-        <span style={{ color: "#e2e8f0" }}>·</span>
-        <span style={{ fontSize: 12, color: "#64748b" }}>Sell-Side Valuation Engine</span>
-      </nav>
+      <SiteNav />
 
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "100px 24px 80px", position: "relative", zIndex: 1 }}>
         {/* Header */}
