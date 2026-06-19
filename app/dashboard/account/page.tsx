@@ -300,7 +300,7 @@ export default function AccountPage() {
           )}
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+        <div className="plan-grid">
           {TIER_DEFS.map(td => (
             <PlanCard
               key={td.id}

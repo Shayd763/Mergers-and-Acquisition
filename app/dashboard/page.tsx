@@ -344,7 +344,7 @@ export default function DashboardPage() {
   if (!hydrated) return null;
 
   return (
-    <div style={{ padding: "20px 28px 32px", maxWidth: 1200, margin: "0 auto" }}>
+    <div className="dash-pad" style={{ maxWidth: 1200, margin: "0 auto" }}>
       <style>{`@keyframes toast-in { from { opacity:0; transform:translateX(-50%) translateY(10px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }`}</style>
 
       {/* Demo banner */}
@@ -418,7 +418,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Stats strip */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 14 }}>
+      <div className="dash-stats">
         {[
           { label: "Total Deals",      value: String(deals.length) },
           { label: "Avg Multiple",     value: `${avgMultiple}×` },
@@ -436,7 +436,7 @@ export default function DashboardPage() {
       <div className="card" style={{ padding: 0, overflow: "visible" }}>
 
         {/* Table toolbar */}
-        <div style={{ padding: "10px 16px", borderBottom: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+        <div className="dash-toolbar">
           <div>
             <span style={{ fontSize: 13, fontWeight: 700, color: "var(--text)" }}>Deal Comparison</span>
             <span style={{ fontSize: 11, color: "var(--muted)", marginLeft: 10 }}>Click status to change · ⋯ to edit or remove</span>
@@ -448,7 +448,8 @@ export default function DashboardPage() {
           />
         </div>
 
-        <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
+        <div className="dash-table-wrap">
+        <table style={{ width: "100%", minWidth: 640, borderCollapse: "collapse", tableLayout: "fixed" }}>
           <colgroup>
             <col style={{ width: "22%" }} />
             <col style={{ width: "10%" }} />
@@ -466,22 +467,22 @@ export default function DashboardPage() {
               <th style={{ padding: "8px 12px", textAlign: "left" }}>
                 <ColHeader label="Business" sortKey="name" currentSort={sortKey} currentDir={sortDir} onSort={onSort} />
               </th>
-              <th style={{ padding: "8px 10px", textAlign: "left" }}>
+              <th className="dash-col-hide" style={{ padding: "8px 10px", textAlign: "left" }}>
                 <ColHeader label="Location" currentSort={sortKey} currentDir={sortDir} onSort={onSort} />
               </th>
-              <th style={{ padding: "8px 10px", textAlign: "left" }}>
+              <th className="dash-col-hide" style={{ padding: "8px 10px", textAlign: "left" }}>
                 <ColHeader label="Sector" currentSort={sortKey} currentDir={sortDir} onSort={onSort} />
               </th>
               <th style={{ padding: "8px 10px", textAlign: "left" }}>
                 <ColHeader label="Price" sortKey="askingPrice" currentSort={sortKey} currentDir={sortDir} onSort={onSort} />
               </th>
-              <th style={{ padding: "8px 10px", textAlign: "left" }}>
+              <th className="dash-col-hide" style={{ padding: "8px 10px", textAlign: "left" }}>
                 <ColHeader label="Multi" sortKey="multiple" currentSort={sortKey} currentDir={sortDir} onSort={onSort} />
               </th>
               <th style={{ padding: "8px 10px", textAlign: "left" }}>
                 <ColHeader label={<GlossaryTerm term="DSCR" />} sortKey="dscr" currentSort={sortKey} currentDir={sortDir} onSort={onSort} />
               </th>
-              <th style={{ padding: "8px 10px", textAlign: "left" }}>
+              <th className="dash-col-hide" style={{ padding: "8px 10px", textAlign: "left" }}>
                 <ColHeader
                   label="Bankable" currentSort={sortKey} currentDir={sortDir} onSort={onSort}
                   filterOptions={["Yes", "No"]} filterValue={filterBankable} onFilter={setFilterBankable}
@@ -493,7 +494,7 @@ export default function DashboardPage() {
                   filterOptions={ALL_STATUSES} filterValue={filterStatus} onFilter={setFilterStatus}
                 />
               </th>
-              <th style={{ padding: "8px 10px", textAlign: "left" }}>
+              <th className="dash-col-hide" style={{ padding: "8px 10px", textAlign: "left" }}>
                 <ColHeader label="Date" sortKey="date" currentSort={sortKey} currentDir={sortDir} onSort={onSort} />
               </th>
               <th style={{ padding: "8px 10px" }} />
@@ -525,11 +526,11 @@ export default function DashboardPage() {
                     </div>
                   </td>
                   {/* Location */}
-                  <td style={{ padding: "10px 10px" }}>
+                  <td className="dash-col-hide" style={{ padding: "10px 10px" }}>
                     <span style={{ fontSize: 11, color: "var(--muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "block" }}>{dealLocation(deal)}</span>
                   </td>
                   {/* Sector */}
-                  <td style={{ padding: "10px 10px" }}>
+                  <td className="dash-col-hide" style={{ padding: "10px 10px" }}>
                     <span style={{ fontSize: 11, color: "var(--muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "block" }}>{dealSector(deal)}</span>
                   </td>
                   {/* Asking price */}
@@ -539,7 +540,7 @@ export default function DashboardPage() {
                     </span>
                   </td>
                   {/* Multiple */}
-                  <td style={{ padding: "10px 10px" }}>
+                  <td className="dash-col-hide" style={{ padding: "10px 10px" }}>
                     <span style={{ fontSize: 12, fontWeight: 700, color: multiple > 0 ? (multiple <= 3.5 ? "var(--success)" : "#d97706") : "var(--muted)", fontVariantNumeric: "tabular-nums" }}>
                       {multiple > 0 ? `${multiple.toFixed(1)}×` : "—"}
                     </span>
@@ -551,7 +552,7 @@ export default function DashboardPage() {
                     </span>
                   </td>
                   {/* Bankable */}
-                  <td style={{ padding: "10px 10px" }}>
+                  <td className="dash-col-hide" style={{ padding: "10px 10px" }}>
                     {dscr > 0
                       ? dscr >= 1.25
                         ? <span style={{ fontSize: 10, fontWeight: 700, color: "#059669", background: "#ecfdf5", border: "1px solid #a7f3d0", borderRadius: 4, padding: "2px 6px" }}>✓ Yes</span>
@@ -564,7 +565,7 @@ export default function DashboardPage() {
                     <StatusCell status={status} onChange={s => updateStatus(deal.id, s)} />
                   </td>
                   {/* Date */}
-                  <td style={{ padding: "10px 10px" }}>
+                  <td className="dash-col-hide" style={{ padding: "10px 10px" }}>
                     <span style={{ fontSize: 11, color: "#94a3b8", whiteSpace: "nowrap" }}>{date ? fmtDate(date) : "—"}</span>
                   </td>
                   {/* Actions */}
@@ -581,6 +582,7 @@ export default function DashboardPage() {
             })}
           </tbody>
         </table>
+        </div>{/* end dash-table-wrap */}
       </div>
 
       {/* Notes modal */}
