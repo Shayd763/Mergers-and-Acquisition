@@ -17,30 +17,38 @@ const JSON_LD = {
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
 };
 
+const DEMO_CI = { initial: 112500, annualReturn: 25, annualDist: 15000, years: 5 };
+
 export default function CompoundInterestPage() {
-  const [initial, setInitial]         = useState(112500);
-  const [annualReturn, setAnnualReturn] = useState(25);
-  const [annualDist, setAnnualDist]   = useState(15000);
-  const [years, setYears]             = useState(5);
+  const [initial, setInitial]           = useState("");
+  const [annualReturn, setAnnualReturn] = useState("");
+  const [annualDist, setAnnualDist]     = useState("");
+  const [years, setYears]               = useState("");
+
+  const v = (s: string, d: number) => s === "" ? d : Number(s);
+  const initialVal      = v(initial, DEMO_CI.initial);
+  const annualReturnVal = v(annualReturn, DEMO_CI.annualReturn);
+  const annualDistVal   = v(annualDist, DEMO_CI.annualDist);
+  const yearsVal        = v(years, DEMO_CI.years);
 
   const schedule = useMemo(() => {
     const rows: { year: number; value: number; growth: number; distribution: number; total: number }[] = [];
-    let value = initial;
+    let value = initialVal;
     let totalDist = 0;
-    for (let y = 1; y <= years; y++) {
-      const growth = value * (annualReturn / 100);
-      const newValue = value + growth - annualDist;
-      totalDist += annualDist;
-      rows.push({ year: y, value: Math.max(0, newValue), growth, distribution: annualDist, total: Math.max(0, newValue) + totalDist });
+    for (let y = 1; y <= yearsVal; y++) {
+      const growth = value * (annualReturnVal / 100);
+      const newValue = value + growth - annualDistVal;
+      totalDist += annualDistVal;
+      rows.push({ year: y, value: Math.max(0, newValue), growth, distribution: annualDistVal, total: Math.max(0, newValue) + totalDist });
       value = Math.max(0, newValue);
     }
     return rows;
-  }, [initial, annualReturn, annualDist, years]);
+  }, [initialVal, annualReturnVal, annualDistVal, yearsVal]);
 
   const finalRow   = schedule[schedule.length - 1];
-  const totalReturn = finalRow ? finalRow.total - initial : 0;
-  const moic       = finalRow && initial > 0 ? finalRow.total / initial : 1;
-  const totalDist  = annualDist * years;
+  const totalReturn = finalRow ? finalRow.total - initialVal : 0;
+  const moic       = finalRow && initialVal > 0 ? finalRow.total / initialVal : 1;
+  const totalDist  = annualDistVal * yearsVal;
 
   const inputStyle: React.CSSProperties = { width: "100%", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 10, padding: "11px 14px", fontSize: 14, color: "#0f172a", outline: "none", fontFamily: "inherit" };
   const inputStylePound: React.CSSProperties = { ...inputStyle, paddingLeft: 28 };
@@ -69,10 +77,10 @@ export default function CompoundInterestPage() {
               style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "28px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", display: "flex", flexDirection: "column", gap: 18 }}>
               <p style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em" }}>Inputs</p>
               {[
-                { label: "Initial Equity Investment", val: initial, set: setInitial, pound: true, step: 5000, hint: "Your personal equity stake" },
-                { label: "Annual Return Rate (%)", val: annualReturn, set: setAnnualReturn, pound: false, step: 1, hint: "IRR target or historical growth" },
-                { label: "Annual Distribution (£)", val: annualDist, set: setAnnualDist, pound: true, step: 1000, hint: "Levered FCF you take home annually" },
-                { label: "Hold Period (years)", val: years, set: setYears, pound: false, step: 1, hint: "Typical ETA hold: 3–7 years" },
+                { label: "Initial Equity Investment", val: initial, set: setInitial, demo: DEMO_CI.initial, pound: true, step: 5000, hint: "Your personal equity stake" },
+                { label: "Annual Return Rate (%)", val: annualReturn, set: setAnnualReturn, demo: DEMO_CI.annualReturn, pound: false, step: 1, hint: "IRR target or historical growth" },
+                { label: "Annual Distribution (£)", val: annualDist, set: setAnnualDist, demo: DEMO_CI.annualDist, pound: true, step: 1000, hint: "Levered FCF you take home annually" },
+                { label: "Hold Period (years)", val: years, set: setYears, demo: DEMO_CI.years, pound: false, step: 1, hint: "Typical ETA hold: 3–7 years" },
               ].map(f => (
                 <div key={f.label}>
                   <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 4 }}>{f.label}</label>
@@ -80,7 +88,8 @@ export default function CompoundInterestPage() {
                   <div style={{ position: "relative" }}>
                     {f.pound && <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", fontSize: 14, fontWeight: 600 }}>£</span>}
                     <input type="number" value={f.val} step={f.step} min={0}
-                      onChange={e => f.set(Number(e.target.value) as never)}
+                      placeholder={String(f.demo)}
+                      onChange={e => f.set(e.target.value)}
                       style={f.pound ? inputStylePound : inputStyle} />
                   </div>
                 </div>

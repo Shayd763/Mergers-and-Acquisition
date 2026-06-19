@@ -419,6 +419,22 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
         </Link>
       </div>
 
+      {/* Home button — mobile only */}
+      <Link
+        href="/"
+        className="nav-mobile-btn"
+        aria-label="Homepage"
+        style={{
+          width: 32, height: 32, borderRadius: 8, border: "1px solid #e2e8f0",
+          background: "transparent", display: "flex", alignItems: "center", justifyContent: "center",
+          flexShrink: 0, color: "#64748b", textDecoration: "none",
+        }}
+      >
+        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l9-9 9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9" />
+        </svg>
+      </Link>
+
       {/* Right side — mobile: user avatar */}
       <div className="nav-mobile-btn" style={{ flexShrink: 0 }}>
         {isLoggedIn ? (

@@ -18,8 +18,8 @@ const JSON_LD = {
   "operatingSystem": "Web",
 };
 
-function InputRow({ label, value, onChange, prefix = "£", min = 0, max = 10000000, step = 1000, hint }: {
-  label: string; value: number; onChange: (n: number) => void;
+function InputRow({ label, value, onChange, placeholder, prefix = "£", min = 0, max = 10000000, step = 1000, hint }: {
+  label: string; value: string; onChange: (s: string) => void; placeholder?: string;
   prefix?: string; min?: number; max?: number; step?: number; hint?: string;
 }) {
   return (
@@ -32,7 +32,8 @@ function InputRow({ label, value, onChange, prefix = "£", min = 0, max = 100000
         {prefix && <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", fontSize: 14, fontWeight: 600 }}>{prefix}</span>}
         <input
           type="number" value={value} min={min} max={max} step={step}
-          onChange={e => onChange(Number(e.target.value))}
+          placeholder={placeholder}
+          onChange={e => onChange(e.target.value)}
           style={{
             width: "100%", background: "#f8fafc", border: "1px solid #e2e8f0",
             borderRadius: 10, padding: prefix ? "11px 14px 11px 28px" : "11px 14px",
@@ -44,15 +45,21 @@ function InputRow({ label, value, onChange, prefix = "£", min = 0, max = 100000
   );
 }
 
-export default function DSCRCalculatorPage() {
-  const [sde, setSde] = useState(180000);
-  const [annualDebt, setAnnualDebt] = useState(95000);
-  const [corpTax, setCorpTax] = useState(25);
+const DEMO_DSCR = { sde: 180000, annualDebt: 95000, corpTax: 25 };
 
-  const taxCharge = sde * (corpTax / 100);
-  const netCashAfterTax = sde - taxCharge;
-  const dscr = annualDebt > 0 ? netCashAfterTax / annualDebt : 99;
-  const dscrRaw = annualDebt > 0 ? sde / annualDebt : 99;
+export default function DSCRCalculatorPage() {
+  const [sde, setSde] = useState("");
+  const [annualDebt, setAnnualDebt] = useState("");
+  const [corpTax, setCorpTax] = useState("");
+
+  const sdeVal       = sde       === "" ? DEMO_DSCR.sde       : Number(sde);
+  const annualDebtVal = annualDebt === "" ? DEMO_DSCR.annualDebt : Number(annualDebt);
+  const corpTaxVal   = corpTax   === "" ? DEMO_DSCR.corpTax   : Number(corpTax);
+
+  const taxCharge = sdeVal * (corpTaxVal / 100);
+  const netCashAfterTax = sdeVal - taxCharge;
+  const dscr = annualDebtVal > 0 ? netCashAfterTax / annualDebtVal : 99;
+  const dscrRaw = annualDebtVal > 0 ? sdeVal / annualDebtVal : 99;
 
   const band =
     dscr >= 1.5  ? { label: "STRONG",     color: "#059669", bg: "#ecfdf5", border: "#a7f3d0", text: "Excellent debt service. Most mainstream commercial lenders will approve at this level." }
@@ -85,11 +92,11 @@ export default function DSCRCalculatorPage() {
               style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "28px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
               <p style={{ fontSize: 13, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 24 }}>Inputs</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-                <InputRow label="Annual SDE (Seller's Discretionary Earnings)" value={sde} onChange={setSde} step={5000} hint="Net profit + add-backs" />
-                <InputRow label="Total Annual Debt Service" value={annualDebt} onChange={setAnnualDebt} step={1000} hint="Bank repayments + vendor payments" />
+                <InputRow label="Annual SDE (Seller's Discretionary Earnings)" value={sde} onChange={setSde} placeholder={DEMO_DSCR.sde.toLocaleString()} step={5000} hint="Net profit + add-backs" />
+                <InputRow label="Total Annual Debt Service" value={annualDebt} onChange={setAnnualDebt} placeholder={DEMO_DSCR.annualDebt.toLocaleString()} step={1000} hint="Bank repayments + vendor payments" />
                 <div>
                   <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 6 }}>Corporation Tax Rate (%)</label>
-                  <input type="number" value={corpTax} min={0} max={50} step={1} onChange={e => setCorpTax(Number(e.target.value))}
+                  <input type="number" value={corpTax} min={0} max={50} step={1} placeholder={String(DEMO_DSCR.corpTax)} onChange={e => setCorpTax(e.target.value)}
                     style={{ width: "100%", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 10, padding: "11px 14px", fontSize: 14, color: "#0f172a", outline: "none", fontFamily: "inherit" }} />
                   <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 5 }}>UK main rate is 25% for profits above £250k</p>
                 </div>
@@ -113,10 +120,10 @@ export default function DSCRCalculatorPage() {
               <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "24px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
                 <p style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 16 }}>Breakdown</p>
                 {[
-                  { label: "SDE (pre-tax)", val: `£${sde.toLocaleString()}`, color: "#334155" },
-                  { label: `Corp. Tax (${corpTax}%)`, val: `−£${Math.round(taxCharge).toLocaleString()}`, color: "#dc2626" },
+                  { label: "SDE (pre-tax)", val: `£${sdeVal.toLocaleString()}`, color: "#334155" },
+                  { label: `Corp. Tax (${corpTaxVal}%)`, val: `−£${Math.round(taxCharge).toLocaleString()}`, color: "#dc2626" },
                   { label: "Net Cash Available", val: `£${Math.round(netCashAfterTax).toLocaleString()}`, color: "#059669" },
-                  { label: "Annual Debt Service", val: `£${annualDebt.toLocaleString()}`, color: "#d97706" },
+                  { label: "Annual Debt Service", val: `£${annualDebtVal.toLocaleString()}`, color: "#d97706" },
                   { label: "DSCR (pre-tax)", val: `${dscrRaw.toFixed(2)}×`, color: "#4f46e5" },
                   { label: "DSCR (post-tax)", val: `${dscr > 50 ? "∞" : dscr.toFixed(2)}×`, color: band.color, bold: true },
                 ].map(r => (

@@ -26,21 +26,32 @@ function bankabilityScore(dscr: number): { grade: string; score: number; color: 
   return { grade: "C", score: 28, color: "#dc2626", bg: "#fef2f2", border: "#fecaca", label: "DIFFICULT TO BANK", advice: "A buyer would struggle to secure high-street bank financing at current profitability. Consider improving margins or adjusting your asking price before going to market." };
 }
 
+/* ─── Demo defaults (shown as grey placeholder, not pre-filled) ──────────── */
+const DEMO = { turnover: 820000, netProfit: 120000, addBacks: 63000, askingPrice: 550000, leaseYears: 7 };
+
 export default function SellPage() {
   const [step, setStep] = useState(1);
   const [sector, setSector] = useState("Engineering Consultancy");
-  const [turnover, setTurnover] = useState(820000);
-  const [netProfit, setNetProfit] = useState(120000);
-  const [addBacks, setAddBacks] = useState(63000);
-  const [askingPrice, setAskingPrice] = useState(550000);
-  const [leaseYears, setLeaseYears] = useState(7);
+  // Empty string = not yet entered; demo value used for calculations & shown as placeholder
+  const [turnover, setTurnover] = useState("");
+  const [netProfit, setNetProfit] = useState("");
+  const [addBacks, setAddBacks] = useState("");
+  const [askingPrice, setAskingPrice] = useState("");
+  const [leaseYears, setLeaseYears] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const sde = netProfit + addBacks;
-  const multiple = askingPrice > 0 && sde > 0 ? askingPrice / sde : 0;
-  const totalCost = askingPrice * 1.05;
+  // Resolve to demo value when field is blank
+  const turnoverVal    = turnover    === "" ? DEMO.turnover    : Number(turnover);
+  const netProfitVal   = netProfit   === "" ? DEMO.netProfit   : Number(netProfit);
+  const addBacksVal    = addBacks    === "" ? DEMO.addBacks    : Number(addBacks);
+  const askingPriceVal = askingPrice === "" ? DEMO.askingPrice : Number(askingPrice);
+  const leaseYearsVal  = leaseYears  === "" ? DEMO.leaseYears  : Number(leaseYears);
+
+  const sde = netProfitVal + addBacksVal;
+  const multiple = askingPriceVal > 0 && sde > 0 ? askingPriceVal / sde : 0;
+  const totalCost = askingPriceVal * 1.05;
   const bankLoan = totalCost * 0.55;
   const annualDebt = bankLoan * (0.12 / (1 - Math.pow(1.06, -5)));
   const dscr = annualDebt > 0 ? sde / annualDebt : 99;
@@ -103,16 +114,19 @@ export default function SellPage() {
                     </div>
                     {/* Financials */}
                     {[
-                      { label: "Annual Turnover", val: turnover, set: setTurnover, step: 10000 },
-                      { label: "Net Profit (after tax)", val: netProfit, set: setNetProfit, step: 5000 },
-                      { label: "Owner Add-backs / Perks", val: addBacks, set: setAddBacks, step: 1000 },
-                      { label: "Asking Price", val: askingPrice, set: setAskingPrice, step: 10000 },
+                      { label: "Annual Turnover", val: turnover, set: setTurnover, step: 10000, demo: DEMO.turnover },
+                      { label: "Net Profit (after tax)", val: netProfit, set: setNetProfit, step: 5000, demo: DEMO.netProfit },
+                      { label: "Owner Add-backs / Perks", val: addBacks, set: setAddBacks, step: 1000, demo: DEMO.addBacks },
+                      { label: "Asking Price", val: askingPrice, set: setAskingPrice, step: 10000, demo: DEMO.askingPrice },
                     ].map(f => (
                       <div key={f.label}>
                         <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 6 }}>{f.label}</label>
                         <div style={{ position: "relative" }}>
                           <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", fontSize: 14, fontWeight: 600 }}>£</span>
-                          <input type="number" value={f.val} step={f.step} min={0} onChange={e => f.set(Number(e.target.value))}
+                          <input
+                            type="number" value={f.val} step={f.step} min={0}
+                            placeholder={f.demo.toLocaleString()}
+                            onChange={e => f.set(e.target.value)}
                             style={inputPound}
                             onFocus={e => { e.currentTarget.style.borderColor = "#059669"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(5,150,105,0.1)"; }}
                             onBlur={e => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.boxShadow = "none"; }}
@@ -122,7 +136,11 @@ export default function SellPage() {
                     ))}
                     <div>
                       <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 6 }}>Lease Years Remaining</label>
-                      <input type="number" value={leaseYears} step={1} min={0} max={25} onChange={e => setLeaseYears(Number(e.target.value))} style={inputStyle}
+                      <input
+                        type="number" value={leaseYears} step={1} min={0} max={25}
+                        placeholder={String(DEMO.leaseYears)}
+                        onChange={e => setLeaseYears(e.target.value)}
+                        style={inputStyle}
                         onFocus={e => { e.currentTarget.style.borderColor = "#059669"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(5,150,105,0.1)"; }}
                         onBlur={e => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.boxShadow = "none"; }}
                       />
@@ -132,7 +150,7 @@ export default function SellPage() {
                   {/* Quick preview */}
                   <div style={{ marginTop: 28, padding: "18px 20px", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 14, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
                     {[
-                      { label: "SDE", val: `£${((netProfit + addBacks) / 1000).toFixed(0)}k`, color: "#4f46e5" },
+                      { label: "SDE", val: `£${((netProfitVal + addBacksVal) / 1000).toFixed(0)}k`, color: "#4f46e5" },
                       { label: "Implied Multiple", val: sde > 0 ? `${multiple.toFixed(1)}×` : "—", color: "#7c3aed" },
                       { label: "Sector Avg Multiple", val: `${sectorMultiple}×`, color: "#059669" },
                     ].map(m => (
@@ -143,11 +161,11 @@ export default function SellPage() {
                     ))}
                   </div>
 
-                  {suggestedValuation > 0 && Math.abs(suggestedValuation - askingPrice) / askingPrice > 0.15 && (
+                  {suggestedValuation > 0 && Math.abs(suggestedValuation - askingPriceVal) / askingPriceVal > 0.15 && (
                     <div style={{ marginTop: 16, padding: "12px 16px", borderRadius: 12, background: "#fffbeb", border: "1px solid #fde68a", display: "flex", gap: 10 }}>
                       <Info size={13} color="#d97706" style={{ flexShrink: 0, marginTop: 2 }} />
                       <p style={{ fontSize: 12, color: "#92400e", margin: 0, lineHeight: 1.65 }}>
-                        Based on sector benchmarks, {sector} businesses typically trade at {sectorMultiple}× SDE — suggesting a valuation of <strong>£{(suggestedValuation / 1000).toFixed(0)}k</strong>. Your asking price is {askingPrice > suggestedValuation ? "above" : "below"} this benchmark.
+                        Based on sector benchmarks, {sector} businesses typically trade at {sectorMultiple}× SDE — suggesting a valuation of <strong>£{(suggestedValuation / 1000).toFixed(0)}k</strong>. Your asking price is {askingPriceVal > suggestedValuation ? "above" : "below"} this benchmark.
                       </p>
                     </div>
                   )}
@@ -168,10 +186,10 @@ export default function SellPage() {
                     <p style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 20 }}>Financial Summary</p>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
                       {[
-                        { label: "Turnover", val: `£${(turnover / 1000).toFixed(0)}k` },
-                        { label: "Net Profit", val: `£${(netProfit / 1000).toFixed(0)}k`, color: "#059669" },
+                        { label: "Turnover", val: `£${(turnoverVal / 1000).toFixed(0)}k` },
+                        { label: "Net Profit", val: `£${(netProfitVal / 1000).toFixed(0)}k`, color: "#059669" },
                         { label: "SDE", val: `£${(sde / 1000).toFixed(0)}k`, color: "#4f46e5" },
-                        { label: "Asking Price", val: `£${(askingPrice / 1000).toFixed(0)}k` },
+                        { label: "Asking Price", val: `£${(askingPriceVal / 1000).toFixed(0)}k` },
                         { label: "Your Multiple", val: `${multiple.toFixed(1)}×`, color: multiple <= sectorMultiple ? "#059669" : "#d97706" },
                         { label: "Sector Benchmark", val: `${sectorMultiple}×`, color: "#64748b" },
                       ].map(m => (
@@ -205,10 +223,10 @@ export default function SellPage() {
                         </div>
                       ))}
                     </div>
-                    {leaseYears < 5 && (
+                    {leaseYearsVal < 5 && (
                       <div style={{ padding: "10px 14px", borderRadius: 10, background: "#fffbeb", border: "1px solid #fde68a", display: "flex", gap: 8 }}>
                         <AlertTriangle size={13} color="#d97706" style={{ flexShrink: 0, marginTop: 2 }} />
-                        <p style={{ fontSize: 12, color: "#92400e", margin: 0 }}>Short lease ({leaseYears} years remaining) will reduce buyer appetite and lender confidence significantly.</p>
+                        <p style={{ fontSize: 12, color: "#92400e", margin: 0 }}>Short lease ({leaseYearsVal} years remaining) will reduce buyer appetite and lender confidence significantly.</p>
                       </div>
                     )}
                   </div>
