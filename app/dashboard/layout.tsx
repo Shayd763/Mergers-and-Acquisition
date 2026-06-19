@@ -549,7 +549,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
 
       {/* Global upgrade modal */}
       <UpgradeModal />
-      {process.env.NODE_ENV === "development" && <DevTierSwitcher />}
+      <DevTierSwitcher />
     </div>
   );
 }

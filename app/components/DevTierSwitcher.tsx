@@ -1,18 +1,22 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import { useSubscription, type Tier } from "./SubscriptionContext";
 
+const OWNER_EMAIL = "shailendavdra@gmail.com";
+
 const TIERS: { id: Tier; label: string; color: string }[] = [
-  { id: "explorer",      label: "Explorer",    color: "#64748b" },
-  { id: "searcher",      label: "Searcher",    color: "#4f46e5" },
-  { id: "broker",        label: "Broker",      color: "#7c3aed" },
+  { id: "explorer",      label: "Explorer",      color: "#64748b" },
+  { id: "searcher",      label: "Searcher",      color: "#4f46e5" },
+  { id: "broker",        label: "Broker",        color: "#7c3aed" },
   { id: "institutional", label: "Institutional", color: "#0891b2" },
 ];
 
 export function DevTierSwitcher() {
+  const { data: session } = useSession();
   const { tier, setTier } = useSubscription();
 
-  if (process.env.NODE_ENV !== "development") return null;
+  if (session?.user?.email !== OWNER_EMAIL) return null;
 
   return (
     <div style={{
