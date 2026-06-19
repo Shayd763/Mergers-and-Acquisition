@@ -21,7 +21,7 @@ export interface ExtractedDeal {
   raw_confidence: "low" | "medium" | "high";
 }
 
-export type DealStatus = "Demo" | "In Review" | "Rejected" | "Pursuing" | "Analysed";
+export type DealStatus = "Demo" | "In Review" | "Saved" | "Pursuing" | "Analysed" | "Rejected";
 
 export interface StoredDeal {
   id: string;
@@ -52,10 +52,11 @@ export interface StoredDeal {
 export function simpleDscr(deal: StoredDeal): number {
   const sde = deal.netProfit + deal.addBacks;
   if (sde <= 0 || deal.askingPrice <= 0 || deal.bankPct <= 0) return 0;
-  const bankLoan = deal.askingPrice * 1.05 * (deal.bankPct / 100);
-  const r = 0.12;
-  const n = 5;
-  const annualService = bankLoan * (r / (1 - Math.pow(1 + r, -n)));
+  const bankLoan = deal.askingPrice * (deal.bankPct / 100);
+  const mr = 0.12 / 12;
+  const nm = 5 * 12;
+  const monthlyPayment = bankLoan * (mr * Math.pow(1 + mr, nm)) / (Math.pow(1 + mr, nm) - 1);
+  const annualService = monthlyPayment * 12;
   return annualService > 0 ? sde / annualService : 99;
 }
 

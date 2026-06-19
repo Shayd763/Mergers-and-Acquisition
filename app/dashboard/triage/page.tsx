@@ -118,8 +118,8 @@ function buildFileScript(filename: string): TerminalLine[] {
 /* ─── Deal viability score ───────────────────────────────────────────────── */
 
 function viabilityScore(dscr: number, fcf: number): "strong" | "marginal" | "unbankable" {
-  if (dscr >= 1.35 && fcf > 0) return "strong";
-  if (dscr >= 1.20)             return "marginal";
+  if (dscr > 1.50 && fcf > 0) return "strong";
+  if (dscr >= 1.25)            return "marginal";
   return "unbankable";
 }
 
@@ -135,11 +135,18 @@ function EditableTitle({ value, onChange }: { value: string; onChange: (v: strin
   const [editing, setEditing] = useState(false);
   const [draft, setDraft]     = useState(value);
   const inputRef              = useRef<HTMLInputElement>(null);
+  const committedRef          = useRef(false);
 
-  useEffect(() => { setDraft(value); }, [value]);
-  useEffect(() => { if (editing) { inputRef.current?.focus(); inputRef.current?.select(); } }, [editing]);
+  useEffect(() => { if (!editing) setDraft(value); }, [value, editing]);
+  useEffect(() => { if (editing) { committedRef.current = false; inputRef.current?.focus(); inputRef.current?.select(); } }, [editing]);
 
-  const commit = () => { const name = draft.trim() || value; onChange(name); setEditing(false); };
+  const commit = () => {
+    if (committedRef.current) return;
+    committedRef.current = true;
+    const name = draft.trim() || value;
+    onChange(name);
+    setEditing(false);
+  };
 
   if (editing) {
     return (
@@ -1235,8 +1242,11 @@ export default function TriagePage() {
   const doCompanySelect = (d: CompanyDetails) => {
     const derivedLocation = addressToCity(d);
     const derivedSector   = d.sic_description || sicToSector(d.sic_codes);
+    const formattedName   = d.company_name
+      .toLowerCase()
+      .replace(/\b([a-z])/g, (_: string, c: string) => c.toUpperCase());
     updateDeal(activeDealId, {
-      name: d.company_name,
+      name: formattedName,
       companyDetails: d,
       ...(derivedLocation ? { location: derivedLocation } : {}),
       ...(derivedSector   ? { sector:   derivedSector   } : {}),
@@ -1445,10 +1455,36 @@ export default function TriagePage() {
 
       {/* ── Page title ── */}
       <div style={{ marginBottom: 24 }}>
-        <EditableTitle
-          value={activeDeal?.name ?? "New Deal Analysis"}
-          onChange={name => updateDeal(activeDealId, { name })}
-        />
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <EditableTitle
+            value={activeDeal?.name ?? "New Deal Analysis"}
+            onChange={name => updateDeal(activeDealId, { name })}
+          />
+          {!activeDeal?.isDemo && (
+            <button
+              onClick={() => {
+                const isSaved = activeDeal?.status === "Saved";
+                updateDeal(activeDealId, { status: isSaved ? "In Review" : "Saved" });
+              }}
+              title={activeDeal?.status === "Saved" ? "Remove from saved" : "Save for later"}
+              style={{
+                flexShrink: 0,
+                display: "flex", alignItems: "center", gap: 5,
+                padding: "5px 11px", borderRadius: 7, cursor: "pointer",
+                fontSize: 12, fontWeight: 600,
+                border: activeDeal?.status === "Saved" ? "1.5px solid #ddd6fe" : "1.5px solid #e2e8f0",
+                background: activeDeal?.status === "Saved" ? "#f5f3ff" : "#fff",
+                color: activeDeal?.status === "Saved" ? "#7c3aed" : "#94a3b8",
+                transition: "all 0.15s",
+              }}
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill={activeDeal?.status === "Saved" ? "#7c3aed" : "none"} stroke={activeDeal?.status === "Saved" ? "#7c3aed" : "#94a3b8"} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
+              </svg>
+              {activeDeal?.status === "Saved" ? "Saved" : "Save for later"}
+            </button>
+          )}
+        </div>
         <p style={{ fontSize: 14, color: "var(--muted)", margin: "6px 0 0" }}>
           Search the company register and enter financials to begin your analysis.
         </p>

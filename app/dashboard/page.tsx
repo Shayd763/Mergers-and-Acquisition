@@ -8,10 +8,11 @@ import { useDealStore, simpleDscr, StoredDeal, DealStatus } from "./DealContext"
 type SortKey = "name" | "askingPrice" | "multiple" | "dscr" | "date";
 type SortDir = "asc" | "desc";
 
-const ALL_STATUSES: DealStatus[] = ["Pursuing", "In Review", "Analysed", "Rejected", "Demo"];
+const ALL_STATUSES: DealStatus[] = ["Pursuing", "Saved", "In Review", "Analysed", "Rejected", "Demo"];
 
 const STATUS_STYLE: Record<DealStatus, { bg: string; color: string; border: string }> = {
   Pursuing:    { bg: "#ecfdf5", color: "#059669", border: "#a7f3d0" },
+  Saved:       { bg: "#f5f3ff", color: "#7c3aed", border: "#ddd6fe" },
   "In Review": { bg: "#eff6ff", color: "#3b82f6", border: "#bfdbfe" },
   Analysed:    { bg: "#f8fafc", color: "#64748b", border: "#e2e8f0" },
   Rejected:    { bg: "#fef2f2", color: "#ef4444", border: "#fecaca" },

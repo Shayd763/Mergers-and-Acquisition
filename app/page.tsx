@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useSyncExternalStore } from "react";
 import { useSession } from "next-auth/react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   BarChart3, Shield, Zap, FileText, TrendingUp, Users,
   ChevronDown, ArrowRight, CheckCircle, Star, Building2,
@@ -11,29 +11,48 @@ import {
   Target, Wallet, Briefcase, LineChart,
 } from "lucide-react";
 
+/* ─── Mobile detection ───────────────────────────────────────────────────── */
+function subscribe(cb: () => void) {
+  const mq = typeof window !== "undefined" ? window.matchMedia("(hover: none)") : null;
+  mq?.addEventListener("change", cb);
+  return () => mq?.removeEventListener("change", cb);
+}
+function useIsTouch() {
+  return useSyncExternalStore(
+    subscribe,
+    () => typeof window !== "undefined" && window.matchMedia("(hover: none)").matches,
+    () => false,
+  );
+}
+
 /* ─── Variants ───────────────────────────────────────────────────────────── */
 const EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EXPO } },
+  hidden: { opacity: 0, y: 32 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: EXPO } },
 };
-const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
+const stagger = { visible: { transition: { staggerChildren: 0.14 } } };
 
 /* ─── Spotlight card ─────────────────────────────────────────────────────── */
 function SpotlightCard({ children, style = {} }: { children: React.ReactNode; style?: React.CSSProperties }) {
   const ref = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [inside, setInside] = useState(false);
+  const isTouch = useIsTouch();
   const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
     const r = ref.current.getBoundingClientRect();
     setPos({ x: e.clientX - r.left, y: e.clientY - r.top });
   }, []);
   return (
-    <motion.div ref={ref} onMouseMove={onMove} onMouseEnter={() => setInside(true)} onMouseLeave={() => setInside(false)}
-      whileHover={{ scale: 1.015 }} transition={{ type: "spring", stiffness: 300, damping: 28 }}
+    <motion.div ref={ref}
+      onMouseMove={isTouch ? undefined : onMove}
+      onMouseEnter={isTouch ? undefined : () => setInside(true)}
+      onMouseLeave={isTouch ? undefined : () => setInside(false)}
+      whileHover={isTouch ? undefined : { scale: 1.015 }}
+      transition={{ type: "spring", stiffness: 300, damping: 28 }}
       style={{ position: "relative", overflow: "hidden", borderRadius: 24, border: "1px solid #e2e8f0", background: "#ffffff", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", ...style }}>
-      {inside && <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(260px circle at ${pos.x}px ${pos.y}px, rgba(79,70,229,0.05), transparent 70%)`, zIndex: 0 }} />}
+      {inside && !isTouch && <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(260px circle at ${pos.x}px ${pos.y}px, rgba(79,70,229,0.05), transparent 70%)`, zIndex: 0 }} />}
       <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
     </motion.div>
   );
@@ -45,10 +64,12 @@ function DealSlider() {
   const ASKING = 450000;
   const vendor = Math.max(0, Math.min(40, 100 - equity - 35));
   const bank = 100 - equity - vendor;
-  const equityAmt = Math.round((ASKING * 1.05 * equity) / 100);
-  const bankAmt = Math.round((ASKING * 1.05 * bank) / 100);
-  const vendorAmt = Math.round((ASKING * 1.05 * vendor) / 100);
-  const annualDebt = bankAmt * (0.12 / (1 - Math.pow(1.06, -5)));
+  const equityAmt = Math.round((ASKING * equity) / 100);
+  const bankAmt = Math.round((ASKING * bank) / 100);
+  const vendorAmt = Math.round((ASKING * vendor) / 100);
+  const mr = 0.12 / 12;
+  const nm = 60;
+  const annualDebt = bankAmt * (mr * Math.pow(1 + mr, nm)) / (Math.pow(1 + mr, nm) - 1) * 12;
   const sde = 183000;
   const dscr = annualDebt > 0 ? sde / annualDebt : 99;
   const dscrOk = dscr >= 1.25;
@@ -267,6 +288,33 @@ function ArbitrageStep({ n, icon, title, body, accent }: { n: number; icon: Reac
   );
 }
 
+/* ─── Count-up stat ─────────────────────────────────────────────────────── */
+function StatNumber({ val, suffix = "", prefix = "" }: { val: number; suffix?: string; prefix?: string }) {
+  const [displayed, setDisplayed] = useState(0);
+  const ref = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      let start: number | null = null;
+      const duration = 1200;
+      const step = (ts: number) => {
+        if (!start) start = ts;
+        const progress = Math.min((ts - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setDisplayed(Math.round(eased * val));
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }, { threshold: 0.5 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [val]);
+  return <p ref={ref} style={{ fontSize: 30, fontWeight: 800, color: "#0f172a", letterSpacing: "-0.04em", margin: "0 0 6px" }}>{prefix}{displayed}{suffix}</p>;
+}
+
 /* ─── Ticker / marquee ───────────────────────────────────────────────────── */
 const TICKER_ITEMS = [
   "Companies House Registry Verified",
@@ -300,10 +348,10 @@ function Ticker() {
       {/* Fade edges */}
       <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 80, background: "linear-gradient(90deg, #f8fafc, transparent)", zIndex: 2, pointerEvents: "none" }} />
       <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 80, background: "linear-gradient(-90deg, #f8fafc, transparent)", zIndex: 2, pointerEvents: "none" }} />
-      <div style={{
+      <div className="ticker-inner" style={{
         display: "flex",
         gap: 0,
-        animation: "ticker-scroll 38s linear infinite",
+        animation: "ticker-scroll 22s linear infinite",
         width: "max-content",
       }}>
         {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
@@ -328,6 +376,14 @@ function Ticker() {
           0%   { background-position: 0% 50%; }
           50%  { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
+        }
+        @media (hover: none) {
+          .ticker-inner { animation: none !important; }
+          .hero-phrase-gradient { animation: none !important; background-position: 0% 50% !important; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .ticker-inner { animation: none !important; }
+          .hero-phrase-gradient { animation: none !important; }
         }
       `}</style>
     </div>
@@ -422,16 +478,10 @@ function PortalLoginButton() {
 /* PAGE                                                                         */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 export default function HomePage() {
-  const [ready, setReady] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [track, setTrack] = useState<"buyer" | "seller">("buyer");
   const [phraseIdx, setPhraseIdx] = useState(0);
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 60]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
-  useEffect(() => { setReady(true); }, []);
 
   // Reset phrase on track switch, then cycle every 3.5s
   useEffect(() => {
@@ -453,57 +503,57 @@ export default function HomePage() {
 
       {/* ── Aurora background ──────────────────────────────────────────────── */}
       <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none" }}>
-        {/* Orb 1 — indigo, top-left drift */}
-        <div className="aurora-orb" style={{
+        {/* Only 2 orbs on mobile; 5 on desktop. All use will-change:transform for GPU promotion. */}
+        <div className="aurora-orb orb1" style={{
           position: "absolute", width: 900, height: 900, borderRadius: "50%",
           background: "radial-gradient(circle, rgba(99,102,241,0.13) 0%, transparent 65%)",
           top: "-20%", left: "-15%",
-          filter: "blur(60px)",
-          animation: "orb1 18s ease-in-out infinite",
+          willChange: "transform",
         }} />
-        {/* Orb 2 — violet, top-right */}
-        <div className="aurora-orb" style={{
+        <div className="aurora-orb orb2" style={{
           position: "absolute", width: 750, height: 750, borderRadius: "50%",
           background: "radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 65%)",
           top: "-10%", right: "-10%",
-          filter: "blur(70px)",
-          animation: "orb2 22s ease-in-out infinite",
+          willChange: "transform",
         }} />
-        {/* Orb 3 — sky-blue, mid-left */}
-        <div className="aurora-orb" style={{
+        <div className="aurora-orb orb3 desktop-orb" style={{
           position: "absolute", width: 600, height: 600, borderRadius: "50%",
           background: "radial-gradient(circle, rgba(14,165,233,0.07) 0%, transparent 65%)",
           top: "40%", left: "-5%",
-          filter: "blur(80px)",
-          animation: "orb3 26s ease-in-out infinite",
+          willChange: "transform",
         }} />
-        {/* Orb 4 — emerald, bottom-right */}
-        <div className="aurora-orb" style={{
+        <div className="aurora-orb orb4 desktop-orb" style={{
           position: "absolute", width: 700, height: 700, borderRadius: "50%",
           background: "radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 65%)",
           bottom: "-10%", right: "-5%",
-          filter: "blur(90px)",
-          animation: "orb4 30s ease-in-out infinite",
+          willChange: "transform",
         }} />
-        {/* Orb 5 — rose, bottom-left accent */}
-        <div className="aurora-orb" style={{
+        <div className="aurora-orb orb5 desktop-orb" style={{
           position: "absolute", width: 500, height: 500, borderRadius: "50%",
           background: "radial-gradient(circle, rgba(244,114,182,0.05) 0%, transparent 65%)",
           bottom: "15%", left: "20%",
-          filter: "blur(80px)",
-          animation: "orb5 20s ease-in-out infinite",
-        }} />
-        {/* Noise overlay — adds organic grain so it doesn't look like flat gradients */}
-        <div style={{
-          position: "absolute", inset: 0,
-          backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E\")",
-          backgroundRepeat: "repeat",
-          backgroundSize: "160px 160px",
-          opacity: 0.6,
+          willChange: "transform",
         }} />
       </div>
 
       <style>{`
+        /* Desktop: full blur + animation */
+        @media (hover: hover) {
+          .orb1 { filter: blur(60px); animation: orb1 18s ease-in-out infinite; }
+          .orb2 { filter: blur(70px); animation: orb2 22s ease-in-out infinite; }
+          .orb3 { filter: blur(80px); animation: orb3 26s ease-in-out infinite; }
+          .orb4 { filter: blur(90px); animation: orb4 30s ease-in-out infinite; }
+          .orb5 { filter: blur(80px); animation: orb5 20s ease-in-out infinite; }
+        }
+        /* Mobile: lighter blur, no animation, hide extra orbs */
+        @media (hover: none) {
+          .orb1 { filter: blur(30px); }
+          .orb2 { filter: blur(35px); }
+          .desktop-orb { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .aurora-orb { animation: none !important; }
+        }
         @keyframes orb1 {
           0%,100% { transform: translate(0,   0)   scale(1);    }
           33%      { transform: translate(80px, 60px) scale(1.08); }
@@ -634,13 +684,16 @@ export default function HomePage() {
       </AnimatePresence>
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section ref={heroRef} style={{ minHeight: "100svh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "100px 20px 60px", position: "relative", zIndex: 1, textAlign: "center" }}>
+      <section style={{ minHeight: "100svh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "100px 20px 60px", position: "relative", zIndex: 1, textAlign: "center" }}>
         {/* Breathing ambient glow behind the headline */}
-        <div style={{ position: "absolute", top: "35%", left: "50%", transform: "translate(-50%,-50%)", width: 700, height: 420, borderRadius: "50%", background: `radial-gradient(ellipse, ${track === "buyer" ? "rgba(79,70,229,0.13)" : "rgba(5,150,105,0.10)"} 0%, transparent 70%)`, pointerEvents: "none", transition: "background 0.6s", animation: "hero-glow-breathe 5s ease-in-out infinite" }} />
+        <div className="hero-glow" style={{ position: "absolute", top: "35%", left: "50%", transform: "translate(-50%,-50%)", width: 700, height: 420, borderRadius: "50%", background: `radial-gradient(ellipse, ${track === "buyer" ? "rgba(79,70,229,0.13)" : "rgba(5,150,105,0.10)"} 0%, transparent 70%)`, pointerEvents: "none", transition: "background 0.6s", animation: "hero-glow-breathe 5s ease-in-out infinite" }} />
         <style>{`
           @keyframes hero-glow-breathe {
             0%, 100% { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
             50%       { opacity: 1;   transform: translate(-50%,-50%) scale(1.18); }
+          }
+          @media (hover: none) {
+            .hero-glow { animation: none !important; opacity: 0.8; }
           }
         `}</style>
 
@@ -686,10 +739,11 @@ export default function HomePage() {
               <AnimatePresence mode="wait">
                 <motion.span
                   key={track + "-" + phraseIdx}
-                  initial={{ opacity: 0, y: 16, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, y: -12, filter: "blur(6px)" }}
-                  transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  className="hero-phrase-gradient"
                   style={{
                     position: "absolute",
                     inset: 0,
@@ -760,9 +814,17 @@ export default function HomePage() {
       {/* ── Stats bar ────────────────────────────────────────────────────── */}
       <motion.section variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} style={{ padding: "0 24px 80px", display: "flex", justifyContent: "center" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 1, maxWidth: 860, width: "100%", background: "#e2e8f0", borderRadius: 16, border: "1px solid #e2e8f0", overflow: "hidden" }}>
-          {[{ val: "< 1s", label: "AI extraction speed" }, { val: "19", label: "IB-grade metrics" }, { val: "1%", label: "referral on debt closure" }, { val: "4 lenders", label: "in the network" }].map((s, i) => (
+          {[
+            { val: "< 1s",     label: "AI extraction speed",    num: null },
+            { val: "19",       label: "IB-grade metrics",        num: 19 },
+            { val: "1%",       label: "referral on debt closure", num: 1, suffix: "%" },
+            { val: "4 lenders",label: "in the network",          num: 4, suffix: " lenders" },
+          ].map((s, i) => (
             <motion.div key={s.label} variants={fadeUp} style={{ padding: "28px 24px", textAlign: "center", background: "#fff", borderRight: i < 3 ? "1px solid #e2e8f0" : "none" }}>
-              <p style={{ fontSize: 30, fontWeight: 800, color: "#0f172a", letterSpacing: "-0.04em", margin: "0 0 6px" }}>{s.val}</p>
+              {s.num !== null && s.num !== undefined
+                ? <StatNumber val={s.num} suffix={s.suffix ?? ""} />
+                : <p style={{ fontSize: 30, fontWeight: 800, color: "#0f172a", letterSpacing: "-0.04em", margin: "0 0 6px" }}>{s.val}</p>
+              }
               <p style={{ fontSize: 12, color: "#94a3b8", fontWeight: 500, margin: 0 }}>{s.label}</p>
             </motion.div>
           ))}
