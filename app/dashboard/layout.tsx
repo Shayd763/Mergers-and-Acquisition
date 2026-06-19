@@ -351,6 +351,103 @@ function UserAccountPanel() {
   );
 }
 
+/* ─── Top bar ────────────────────────────────────────────────────────────── */
+
+const PAGE_TITLES: Record<string, string> = {
+  "/dashboard": "Overview",
+  "/dashboard/triage": "Deal Analysis",
+  "/dashboard/account": "Account",
+};
+
+function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathname: string }) {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  const isLoggedIn = status === "authenticated" && !!session?.user;
+  const userName = session?.user?.name ?? "";
+  const userEmail = session?.user?.email ?? "";
+  const initials = userName
+    ? userName.split(" ").map((w: string) => w[0]).join("").toUpperCase().slice(0, 2)
+    : userEmail.slice(0, 2).toUpperCase();
+  const pageTitle = PAGE_TITLES[pathname] ?? "Dashboard";
+
+  return (
+    <header style={{
+      height: 52, background: "#fff", borderBottom: "1px solid #e2e8f0",
+      display: "flex", alignItems: "center",
+      padding: "0 12px", gap: 10, flexShrink: 0,
+    }}>
+      {/* Hamburger — mobile only */}
+      <button
+        className="nav-mobile-btn"
+        onClick={onOpenSidebar}
+        aria-label="Open menu"
+        style={{
+          width: 36, height: 36, borderRadius: 8,
+          border: "1px solid #e2e8f0", background: "transparent",
+          cursor: "pointer", display: "flex", flexDirection: "column",
+          gap: 4, alignItems: "center", justifyContent: "center", flexShrink: 0,
+        }}
+      >
+        <span style={{ width: 15, height: 1.5, background: "#475569", borderRadius: 1, display: "block" }} />
+        <span style={{ width: 15, height: 1.5, background: "#475569", borderRadius: 1, display: "block" }} />
+        <span style={{ width: 10, height: 1.5, background: "#475569", borderRadius: 1, display: "block" }} />
+      </button>
+
+      {/* Logo — mobile only center */}
+      <div className="nav-mobile-btn" style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
+        <Link href="/dashboard" style={{ display: "flex", alignItems: "center", gap: 7, textDecoration: "none", pointerEvents: "auto" }}>
+          <div style={{ width: 24, height: 24, borderRadius: 6, background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <BarChart3 size={12} color="#fff" />
+          </div>
+          <span style={{ fontWeight: 700, fontSize: 13, color: "#0f172a", letterSpacing: "-0.02em" }}>Triage Finance</span>
+        </Link>
+      </div>
+
+      {/* Page title — desktop only */}
+      <div className="nav-desktop-links" style={{ flex: 1 }}>
+        <p style={{ fontSize: 14, fontWeight: 700, color: "#0f172a", margin: 0 }}>{pageTitle}</p>
+      </div>
+
+      {/* Right side — desktop: BETA + back to site */}
+      <div className="nav-desktop-links" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <span style={{ fontSize: 10, fontWeight: 700, color: "#4f46e5", background: "#eef2ff", border: "1px solid #c7d2fe", borderRadius: 9999, padding: "2px 8px", letterSpacing: "0.07em" }}>
+          BETA
+        </span>
+        <Link href="/" style={{ fontSize: 12, fontWeight: 600, color: "#64748b", textDecoration: "none", padding: "5px 10px", borderRadius: 7, border: "1px solid #e2e8f0", whiteSpace: "nowrap", transition: "background 0.1s" }}>
+          ← Site
+        </Link>
+      </div>
+
+      {/* Right side — mobile: user avatar */}
+      <div className="nav-mobile-btn" style={{ flexShrink: 0 }}>
+        {isLoggedIn ? (
+          <button
+            onClick={() => router.push("/dashboard/account")}
+            aria-label="Account"
+            style={{ width: 32, height: 32, borderRadius: "50%", border: "2px solid #e2e8f0", background: "transparent", padding: 0, cursor: "pointer", overflow: "hidden", flexShrink: 0 }}
+          >
+            {session.user?.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={session.user.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            ) : (
+              <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, color: "#fff" }}>
+                {initials}
+              </div>
+            )}
+          </button>
+        ) : (
+          <button
+            onClick={() => router.push("/login")}
+            style={{ fontSize: 11, fontWeight: 700, padding: "6px 12px", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", cursor: "pointer" }}>
+            Sign in
+          </button>
+        )}
+      </div>
+    </header>
+  );
+}
+
 /* ─── Page transition wrapper ────────────────────────────────────────────── */
 
 function PageTransition({ children }: { children: React.ReactNode }) {
@@ -522,33 +619,8 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
       {/* Main content */}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, maxWidth: "100%", overflow: "hidden" }}>
         {/* Top bar */}
-        <header style={{
-          height: 52, background: "#fff", borderBottom: "1px solid #e2e8f0",
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          padding: "0 16px 0 16px", gap: 10, flexShrink: 0,
-        }}>
-          {/* Hamburger — mobile only */}
-          <button
-            className="nav-mobile-btn"
-            onClick={() => setSidebarOpen(o => !o)}
-            style={{ padding: "7px 10px", borderRadius: 8, border: "1px solid #e2e8f0", background: "#f8fafc", cursor: "pointer", flexDirection: "column", gap: 3, alignItems: "center", justifyContent: "center", flexShrink: 0 }}
-          >
-            <span style={{ width: 16, height: 2, background: "#334155", borderRadius: 1, display: "block" }} />
-            <span style={{ width: 16, height: 2, background: "#334155", borderRadius: 1, display: "block" }} />
-            <span style={{ width: 12, height: 2, background: "#334155", borderRadius: 1, display: "block" }} />
-          </button>
-          <span style={{ fontSize: 11, fontWeight: 700, color: "#4f46e5", background: "#eef2ff", border: "1px solid #c7d2fe", borderRadius: 9999, padding: "3px 10px", letterSpacing: "0.06em" }}>
-            BETA
-          </span>
-          <Link href="/" style={{
-            fontSize: 13, fontWeight: 600, color: "#64748b",
-            textDecoration: "none", padding: "6px 12px", borderRadius: 8,
-            border: "1px solid #e2e8f0", background: "#fff",
-            transition: "background 0.12s",
-          }}>
-            ← Homepage
-          </Link>
-        </header>
+        <TopBar onOpenSidebar={() => setSidebarOpen(o => !o)} pathname={pathname} />
+
 
         <FoundingMemberBanner />
         <PageTransition>{children}</PageTransition>
