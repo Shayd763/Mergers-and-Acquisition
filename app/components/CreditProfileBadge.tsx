@@ -28,6 +28,7 @@ export interface CreditProfile {
   data_sources_used?: string[];
   enrichment?: Record<string, unknown> | null;
   valuation?: ValuationEstimate | null;
+  credit_limit_breakdown?: CreditLimitBreakdown | null;
 }
 
 export interface DetailedFactor {
@@ -64,8 +65,26 @@ export interface ValuationEstimate {
   ev_low?: number | null;
   ev_mid?: number | null;
   ev_high?: number | null;
+  sector_net_margin_low: number;
+  sector_net_margin_high: number;
   valuation_note: string;
   methodology: string;
+}
+
+export interface CreditLimitBreakdown {
+  earnings_used: number;
+  earnings_label: string;
+  age_base: number;
+  earnings_base: number;
+  base_before_multipliers: number;
+  charge_multiplier: number;
+  score_multiplier: number;
+  raw_limit: number;
+  ceiling_applied: number;
+  conservative_limit: number;
+  max_limit: number;
+  charges_count: number;
+  credit_score: number;
 }
 
 export interface ImprovementAction {

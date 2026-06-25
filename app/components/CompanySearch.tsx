@@ -73,6 +73,8 @@ export interface CompanyDetails {
   outstanding_charges: OutstandingCharge[];
   total_charges: number;
   psc_list: PSCEntry[];
+  last_accounts_made_up_to: string | null;
+  accounts_next_due: string | null;
 }
 
 /* ─── Helpers ────────────────────────────────────────────────────────────── */

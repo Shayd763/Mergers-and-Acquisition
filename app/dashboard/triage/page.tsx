@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 import { Lock } from "lucide-react";
 import { CompanySearch, CompanyDetails, Officer, PSCEntry } from "@/app/components/CompanySearch";
 import { ForensicAuditPanel, ReconciliationResult } from "@/app/components/ForensicAuditPanel";
-import { CreditProfileBadge, CreditProfile } from "@/app/components/CreditProfileBadge";
+import { CreditProfileBadge, CreditProfile, ValuationEstimate } from "@/app/components/CreditProfileBadge";
 import { CreditReportDrawer } from "@/app/components/CreditReportDrawer";
 import { AcquisitionInsightsCard } from "@/app/components/AcquisitionInsightsCard";
 import { PremiumGate } from "@/app/components/PremiumGate";
@@ -575,6 +575,140 @@ const SECTOR_LABELS: Record<string, string> = {
   ecommerce: "E-commerce / D2C",
   general: "General SME",
 };
+
+/* ─── Sector Benchmarks Card ────────────────────────────────────────────── */
+
+function fmtBenchmark(v: number): string {
+  if (v >= 1_000_000) return `£${(v / 1_000_000).toFixed(1)}m`;
+  if (v >= 1_000) return `£${(v / 1_000).toFixed(0)}k`;
+  return `£${v}`;
+}
+
+function SectorBenchmarksCard({
+  val,
+  sde,
+  askingPrice,
+  hasFinancials,
+  lastAccountsDate,
+  onViewCreditLimit,
+}: {
+  val: ValuationEstimate;
+  sde: number;
+  askingPrice: number;
+  hasFinancials: boolean;
+  lastAccountsDate: string | null;
+  onViewCreditLimit: () => void;
+}) {
+  const impliedLow = sde > 0 ? Math.round(sde * val.adjusted_multiple_low) : null;
+  const impliedMid = sde > 0 ? Math.round(sde * val.adjusted_multiple_mid) : null;
+  const impliedHigh = sde > 0 ? Math.round(sde * val.adjusted_multiple_high) : null;
+
+  const priceDelta = impliedMid && askingPrice > 0
+    ? ((askingPrice - impliedMid) / impliedMid) * 100
+    : null;
+  const priceDeltaSign = priceDelta !== null ? (priceDelta > 0 ? "+" : "") : "";
+
+  return (
+    <div className="card" style={{ padding: 20, marginBottom: 16, borderLeft: "3px solid #4f46e5" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 }}>
+        <div>
+          <h2 style={{ fontSize: 14, fontWeight: 700, color: "var(--text)", margin: "0 0 2px" }}>
+            Sector Benchmarks
+          </h2>
+          <p style={{ fontSize: 11, color: "var(--muted)", margin: 0 }}>
+            {val.sector_label} · from Companies House SIC data
+          </p>
+        </div>
+        {lastAccountsDate && (
+          <span style={{ fontSize: 10, fontWeight: 600, color: "#64748b", background: "#f1f5f9", border: "1px solid #e2e8f0", borderRadius: 5, padding: "3px 8px", whiteSpace: "nowrap" }}>
+            Accounts to {new Date(lastAccountsDate).toLocaleDateString("en-GB", { month: "short", year: "numeric" })}
+          </span>
+        )}
+      </div>
+
+      {/* Three benchmark columns */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 14 }}>
+        {/* EV multiple */}
+        <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 12px" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", letterSpacing: "0.09em", marginBottom: 5 }}>EV / SDE MULTIPLE</div>
+          <div style={{ fontSize: 16, fontWeight: 800, color: "#4f46e5" }}>
+            {val.adjusted_multiple_low.toFixed(1)}×–{val.adjusted_multiple_high.toFixed(1)}×
+          </div>
+          <div style={{ fontSize: 10, color: "var(--muted)", marginTop: 2 }}>
+            Mid: {val.adjusted_multiple_mid.toFixed(1)}× (credit-adj.)
+          </div>
+        </div>
+
+        {/* Net margin */}
+        <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 12px" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", letterSpacing: "0.09em", marginBottom: 5 }}>TYPICAL NET MARGIN</div>
+          <div style={{ fontSize: 16, fontWeight: 800, color: "#0891b2" }}>
+            {val.sector_net_margin_low.toFixed(0)}%–{val.sector_net_margin_high.toFixed(0)}%
+          </div>
+          <div style={{ fontSize: 10, color: "var(--muted)", marginTop: 2 }}>
+            of turnover (sector avg)
+          </div>
+        </div>
+
+        {/* Implied asking price */}
+        <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 12px" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", letterSpacing: "0.09em", marginBottom: 5 }}>IMPLIED ASKING PRICE</div>
+          {impliedMid ? (
+            <>
+              <div style={{ fontSize: 16, fontWeight: 800, color: "#059669" }}>
+                {fmtBenchmark(impliedLow!)}–{fmtBenchmark(impliedHigh!)}
+              </div>
+              <div style={{ fontSize: 10, color: "var(--muted)", marginTop: 2 }}>
+                Based on SDE × adjusted multiple
+              </div>
+            </>
+          ) : (
+            <>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#94a3b8" }}>Enter profit to calculate</div>
+              <div style={{ fontSize: 10, color: "var(--muted)", marginTop: 2 }}>
+                SDE × {val.adjusted_multiple_low.toFixed(1)}×–{val.adjusted_multiple_high.toFixed(1)}×
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Price vs benchmark callout */}
+      {priceDelta !== null && hasFinancials && (
+        <div style={{
+          display: "flex", alignItems: "center", gap: 8,
+          padding: "8px 12px", borderRadius: 7,
+          background: Math.abs(priceDelta) <= 15 ? "#f0fdf4" : priceDelta > 15 ? "#fef3c7" : "#f0fdf4",
+          border: `1px solid ${Math.abs(priceDelta) <= 15 ? "#a7f3d0" : priceDelta > 15 ? "#fcd34d" : "#a7f3d0"}`,
+          marginBottom: 10,
+        }}>
+          <span style={{ fontSize: 13 }}>
+            {Math.abs(priceDelta) <= 15 ? "✅" : priceDelta > 15 ? "⚠️" : "✅"}
+          </span>
+          <span style={{ fontSize: 11, fontWeight: 600, color: Math.abs(priceDelta) <= 15 ? "#059669" : priceDelta > 15 ? "#92400e" : "#059669" }}>
+            Asking price is {priceDeltaSign}{priceDelta.toFixed(1)}% vs sector mid ({fmtBenchmark(impliedMid!)})
+            {Math.abs(priceDelta) <= 15 ? " — within normal range." : priceDelta > 15 ? " — above benchmark, negotiate or validate premium." : " — below benchmark, strong value."}
+          </span>
+        </div>
+      )}
+
+      {/* Benchmark explanation row */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <p style={{ fontSize: 10, color: "#94a3b8", margin: 0, lineHeight: 1.5 }}>
+          Multiples are credit-score adjusted from base sector range ({val.base_multiple_low.toFixed(1)}×–{val.base_multiple_high.toFixed(1)}×).
+          Net margins from UK SME benchmarks (BDO/ICAEW).
+        </p>
+        <button
+          onClick={onViewCreditLimit}
+          style={{ fontSize: 10, fontWeight: 600, color: "#4f46e5", background: "none", border: "none", cursor: "pointer", padding: 0, whiteSpace: "nowrap", textDecoration: "underline" }}
+        >
+          View credit limit calc →
+        </button>
+      </div>
+    </div>
+  );
+}
+
 
 /* ─── Estimated Valuation Card ──────────────────────────────────────────── */
 
@@ -1867,6 +2001,18 @@ export default function TriagePage() {
               </div>
               <DSCRBanner dscr={metrics.dscr} warn={metrics.dscr_warning} />
             </div>
+          )}
+
+          {/* ── Sector Benchmarks ── */}
+          {creditProfile?.valuation && (
+            <SectorBenchmarksCard
+              val={creditProfile.valuation}
+              sde={metrics?.sde ?? 0}
+              askingPrice={askingPrice}
+              hasFinancials={hasFinancials}
+              lastAccountsDate={companyDetails?.last_accounts_made_up_to ?? null}
+              onViewCreditLimit={() => setCreditReportOpen(true)}
+            />
           )}
 
           {/* ── IB metrics (premium) ── */}

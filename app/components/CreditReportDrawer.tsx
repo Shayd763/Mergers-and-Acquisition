@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import type { CreditProfile, DetailedFactor, ImprovementAction, ValuationEstimate, ValuationAdjustment } from "./CreditProfileBadge";
+import type { CreditProfile, DetailedFactor, ImprovementAction, ValuationEstimate, ValuationAdjustment, CreditLimitBreakdown } from "./CreditProfileBadge";
 
 // ─── Props ────────────────────────────────────────────────────────────────── //
 
@@ -426,10 +426,168 @@ function ValuationTab({ val, creditBand, p }: { val: ValuationEstimate | null; c
   );
 }
 
+// ─── Credit limit breakdown tab ───────────────────────────────────────────── //
+
+function StepRow({ step, label, value, formula, highlight }: { step: number; label: string; value: string; formula?: string; highlight?: boolean }) {
+  return (
+    <div style={{
+      display: "grid", gridTemplateColumns: "28px 1fr auto", gap: 12, alignItems: "flex-start",
+      padding: "12px 14px",
+      background: highlight ? "rgba(99,102,241,0.08)" : "#0a0f1e",
+      border: `1px solid ${highlight ? "rgba(99,102,241,0.25)" : "#1e293b"}`,
+      borderRadius: 8, marginBottom: 6,
+    }}>
+      <div style={{ width: 24, height: 24, borderRadius: "50%", background: highlight ? "#4f46e5" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, color: highlight ? "#fff" : "#475569", flexShrink: 0 }}>
+        {step}
+      </div>
+      <div>
+        <div style={{ fontSize: 12, fontWeight: 600, color: "#e2e8f0" }}>{label}</div>
+        {formula && <div style={{ fontSize: 10, color: "#475569", marginTop: 3, fontFamily: "monospace" }}>{formula}</div>}
+      </div>
+      <div style={{ fontSize: 14, fontWeight: 800, color: highlight ? "#a5b4fc" : "#94a3b8", whiteSpace: "nowrap", textAlign: "right" }}>{value}</div>
+    </div>
+  );
+}
+
+function CreditLimitTab({ breakdown, p }: { breakdown: CreditLimitBreakdown | null; p: { arc: string; dim: string } }) {
+  if (!breakdown) {
+    return (
+      <div style={{ textAlign: "center", padding: "40px 0", color: "#475569", fontSize: 13 }}>
+        Credit limit breakdown not available for this profile.
+      </div>
+    );
+  }
+
+  const b = breakdown;
+  const earningsProvided = b.earnings_used > 0;
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      <SectionHeader
+        title="Credit Limit Calculation"
+        sub="Step-by-step derivation of the recommended trade credit limit"
+      />
+
+      {/* Result banner */}
+      <div style={{ background: "linear-gradient(135deg, rgba(99,102,241,0.15), rgba(99,102,241,0.05))", border: "1px solid rgba(99,102,241,0.3)", borderRadius: 12, padding: "20px 24px", textAlign: "center" }}>
+        <div style={{ fontSize: 10, fontWeight: 700, color: "#818cf8", letterSpacing: "0.1em", marginBottom: 8 }}>RECOMMENDED TRADE CREDIT LIMIT</div>
+        <div style={{ fontSize: 36, fontWeight: 900, color: "#a5b4fc", letterSpacing: "-0.03em" }}>
+          {fmtM(b.conservative_limit)}
+        </div>
+        <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>
+          Conservative limit · up to {fmtM(b.max_limit)} maximum
+        </div>
+      </div>
+
+      {/* Step-by-step */}
+      <div>
+        <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 10 }}>CALCULATION STEPS</div>
+
+        <StepRow
+          step={1}
+          label="Age-Based Baseline"
+          value={fmtM(b.age_base)}
+          formula={`£3,000 + (${Math.round((b.age_base - 3000) / 3000)} yrs × £3,000) = ${fmtM(b.age_base)}`}
+        />
+
+        {earningsProvided ? (
+          <StepRow
+            step={2}
+            label={`Earnings Baseline (${b.earnings_label})`}
+            value={fmtM(b.earnings_base)}
+            formula={`${fmtM(b.earnings_used)} earnings × 25% (3-month buffer) = ${fmtM(b.earnings_base)}`}
+          />
+        ) : (
+          <StepRow
+            step={2}
+            label="Earnings Baseline"
+            value="No data"
+            formula="No SDE or net profit provided — age baseline used"
+          />
+        )}
+
+        <StepRow
+          step={3}
+          label="Base (higher of age or earnings)"
+          value={fmtM(b.base_before_multipliers)}
+          formula={`max(${fmtM(b.age_base)}, ${fmtM(b.earnings_base)}) = ${fmtM(b.base_before_multipliers)}`}
+        />
+
+        <StepRow
+          step={4}
+          label="Charge Multiplier"
+          value={`×${b.charge_multiplier.toFixed(3)}`}
+          formula={`1.0 − (${b.charges_count} charges × 0.20) = ${b.charge_multiplier.toFixed(3)}`}
+        />
+
+        <StepRow
+          step={5}
+          label="Credit Score Multiplier"
+          value={`×${b.score_multiplier.toFixed(3)}`}
+          formula={`(${b.credit_score} ÷ 100)^1.3 = ${b.score_multiplier.toFixed(3)} (convex — high scores earn proportionally more)`}
+        />
+
+        <StepRow
+          step={6}
+          label="Raw Limit"
+          value={fmtM(b.raw_limit)}
+          formula={`${fmtM(b.base_before_multipliers)} × ${b.charge_multiplier.toFixed(3)} × ${b.score_multiplier.toFixed(3)} = ${fmtM(b.raw_limit)}`}
+        />
+
+        <StepRow
+          step={7}
+          label="Ceiling Cap Applied"
+          value={fmtM(b.ceiling_applied)}
+          formula={earningsProvided ? `max(£500k, ${fmtM(b.earnings_used)} × 2.5) = ${fmtM(b.ceiling_applied)}` : "£250,000 (no earnings data)"}
+        />
+
+        <StepRow
+          step={8}
+          label="Conservative Limit (final)"
+          value={fmtM(b.conservative_limit)}
+          formula={`min(raw, ceiling) = ${fmtM(b.conservative_limit)}, floored at £500`}
+          highlight
+        />
+
+        <StepRow
+          step={9}
+          label="Maximum Limit"
+          value={fmtM(b.max_limit)}
+          formula={`Conservative × 2.5 = ${fmtM(b.max_limit)}`}
+        />
+      </div>
+
+      {/* Key inputs summary */}
+      <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: "14px 16px" }}>
+        <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 10 }}>KEY INPUTS</div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+          {[
+            { label: "Credit Score", value: `${b.credit_score} / 100` },
+            { label: "Registered Charges", value: b.charges_count === 0 ? "None" : `${b.charges_count}` },
+            { label: "Earnings Source", value: b.earnings_label },
+            { label: "Earnings Used", value: b.earnings_used > 0 ? fmtM(b.earnings_used) : "Not provided" },
+          ].map(item => (
+            <div key={item.label}>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "#475569", letterSpacing: "0.08em", marginBottom: 3 }}>{item.label.toUpperCase()}</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#94a3b8" }}>{item.value}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ fontSize: 10, color: "#334155", lineHeight: 1.6, padding: "10px 14px", background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 8 }}>
+        ⚠ This is a trade credit recommendation for suppliers and counterparties, not an acquisition financing limit.
+        The limit scales with business earnings and is reduced by outstanding debt charges and lower credit scores.
+        Provide SDE or net profit to improve accuracy.
+      </div>
+    </div>
+  );
+}
+
 // ─── Main drawer ──────────────────────────────────────────────────────────── //
 
 export function CreditReportDrawer({ isOpen, onClose, profile, companyName, companyNumber }: Props) {
-  const [tab, setTab] = useState<"overview" | "breakdown" | "indicators" | "improvements" | "valuation" | "sources">("overview");
+  const [tab, setTab] = useState<"overview" | "breakdown" | "indicators" | "improvements" | "valuation" | "credit-limit" | "sources">("overview");
   const p = PALETTE[profile.risk_color];
   const bandInfo = BAND_EXPLAIN[profile.credit_band] ?? { color: "#94a3b8", description: "" };
 
@@ -452,8 +610,9 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
     { id: "breakdown",    label: "Score Breakdown" },
     { id: "indicators",   label: "Indicators" },
     { id: "improvements", label: "Improvements" + (sortedActions.length > 0 ? ` (${sortedActions.length})` : "") },
-    { id: "valuation",    label: "Valuation" },
-    { id: "sources",      label: "Data Sources" + (sourceCount > 0 ? ` (${sourceCount})` : "") },
+    { id: "valuation",     label: "Valuation" },
+    { id: "credit-limit",  label: "Credit Limit" },
+    { id: "sources",       label: "Data Sources" + (sourceCount > 0 ? ` (${sourceCount})` : "") },
   ] as const;
 
   return (
@@ -743,6 +902,11 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
           {/* ═══ VALUATION ═══ */}
           {tab === "valuation" && (
             <ValuationTab val={profile.valuation ?? null} creditBand={profile.credit_band} p={p} />
+          )}
+
+          {/* ═══ CREDIT LIMIT ═══ */}
+          {tab === "credit-limit" && (
+            <CreditLimitTab breakdown={profile.credit_limit_breakdown ?? null} p={p} />
           )}
 
           {/* ═══ DATA SOURCES ═══ */}
