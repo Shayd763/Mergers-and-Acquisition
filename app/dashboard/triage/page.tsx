@@ -643,7 +643,7 @@ function SectorBenchmarksCard({
         <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 12px" }}>
           <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", letterSpacing: "0.09em", marginBottom: 5 }}>TYPICAL NET MARGIN</div>
           <div style={{ fontSize: 16, fontWeight: 800, color: "#0891b2" }}>
-            {val.sector_net_margin_low.toFixed(0)}%–{val.sector_net_margin_high.toFixed(0)}%
+            {(val.sector_net_margin_low ?? 6).toFixed(0)}%–{(val.sector_net_margin_high ?? 15).toFixed(0)}%
           </div>
           <div style={{ fontSize: 10, color: "var(--muted)", marginTop: 2 }}>
             of turnover (sector avg)
@@ -1336,7 +1336,7 @@ export default function TriagePage() {
           company_name: details.company_name,
           date_of_creation: details.date_of_creation ?? null,
           company_status: details.company_status ?? "active",
-          accounts_next_due: null,
+          accounts_next_due: details.accounts_next_due ?? null,
           confirmation_next_due: null,
           outstanding_charges_count: details.outstanding_charges?.length ?? 0,
           total_charges_count: details.total_charges ?? 0,
