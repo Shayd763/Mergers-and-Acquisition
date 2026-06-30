@@ -101,7 +101,7 @@ function ResultRow({ r, onSelect, compact }: { r: CompanySearchResult; onSelect:
 
   return (
     <button
-      onPointerDown={e => { e.preventDefault(); onSelect(); }}
+      onClick={onSelect}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -453,7 +453,7 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
           {searching && results.length === 0 && (
             <div style={{ padding: "14px 16px", fontSize: 13, color: "#a8a29e", textAlign: "center" }}>Searching Companies House…</div>
           )}
-          <div ref={listRef} style={{ overflowY: "auto", flex: 1 }}>
+          <div ref={listRef} onMouseDown={e => e.preventDefault()} style={{ overflowY: "auto", flex: 1 }}>
             {results.map(r => (
               <ResultRow key={r.company_number} r={r} onSelect={() => handleSelect(r)} compact />
             ))}
