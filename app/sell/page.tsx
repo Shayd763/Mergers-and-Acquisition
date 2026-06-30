@@ -96,14 +96,14 @@ export default function SellPage() {
           ))}
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: step < 2 ? "1fr" : "1fr 380px", gap: 24, alignItems: "start" }}>
+        <div className="sell-main-grid" style={{ display: "grid", gridTemplateColumns: step < 2 ? "1fr" : "1fr 380px", gap: 24, alignItems: "start" }}>
           {/* Left: Input form */}
           <AnimatePresence mode="wait">
             {step === 1 && (
               <motion.div key="step1" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.35, ease: EXPO }}>
-                <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 20, padding: "36px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
+                <div className="sell-card" style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 20, padding: "36px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
                   <p style={{ fontSize: 13, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 28 }}>Your Business Details</p>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+                  <div className="sell-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
                     {/* Sector */}
                     <div style={{ gridColumn: "1 / 3" }}>
                       <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 6 }}>Sector</label>

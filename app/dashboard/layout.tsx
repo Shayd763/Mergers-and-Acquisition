@@ -229,7 +229,7 @@ function DealItem({ deal, isActive, onCloseSidebar }: { deal: StoredDeal; isActi
           <button
             onClick={openMenu}
             style={{
-              width: 24, height: 24, borderRadius: 6, border: "1px solid #e2e8f0",
+              width: 32, height: 32, borderRadius: 6, border: "1px solid #e2e8f0",
               background: menuOpen ? "#f1f5f9" : "transparent",
               cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
               flexShrink: 0, fontSize: 14, color: "#64748b", lineHeight: 1,
@@ -325,8 +325,9 @@ function UserAccountPanel() {
             </div>
             <button
               onClick={() => router.push("/dashboard/account")}
-              style={{ fontSize: 10, color: "#2563eb", background: "none", border: "none", cursor: "pointer", padding: "3px 6px", borderRadius: 5, fontWeight: 600 }}
-              title="Account settings">
+              style={{ fontSize: 14, color: "#2563eb", background: "none", border: "none", cursor: "pointer", padding: "8px", borderRadius: 8, fontWeight: 600, minWidth: 36, minHeight: 36, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1 }}
+              title="Account settings"
+              aria-label="Account settings">
               ⚙
             </button>
           </div>
@@ -335,14 +336,14 @@ function UserAccountPanel() {
             {!isPremium && (
               <button
                 onClick={() => openUpgradeModal()}
-                style={{ fontSize: 10, fontWeight: 700, color: "#2563eb", background: "none", border: "none", cursor: "pointer", padding: 0, textDecoration: "underline" }}>
+                style={{ fontSize: 10, fontWeight: 700, color: "#2563eb", background: "none", border: "none", cursor: "pointer", padding: "4px 8px", textDecoration: "underline", minHeight: 32 }}>
                 Upgrade ↗
               </button>
             )}
           </div>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
-            style={{ width: "100%", fontSize: 11, fontWeight: 600, padding: "6px 0", borderRadius: 7, border: "1px solid #fee2e2", background: "transparent", color: "#dc2626", cursor: "pointer" }}>
+            style={{ width: "100%", fontSize: 11, fontWeight: 600, padding: "10px 0", borderRadius: 7, border: "1px solid #fee2e2", background: "transparent", color: "#dc2626", cursor: "pointer", minHeight: 40 }}>
             Sign out
           </button>
         </div>
@@ -521,7 +522,7 @@ function FoundingMemberBanner() {
           style={{ fontSize: 11, fontWeight: 700, padding: "5px 13px", borderRadius: 6, border: "none", background: "#fff", color: "#2563eb", cursor: "pointer", whiteSpace: "nowrap" }}>
           Claim offer →
         </button>
-        <button onClick={dismiss} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: 16, lineHeight: 1, padding: "2px 4px" }}>
+        <button onClick={dismiss} aria-label="Dismiss" style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: 16, lineHeight: 1, padding: "8px", minWidth: 36, minHeight: 36, display: "flex", alignItems: "center", justifyContent: "center" }}>
           ✕
         </button>
       </div>

@@ -407,11 +407,12 @@ function PortalLoginButton() {
   return (
     <>
       <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0, marginLeft: 6 }}>
-        {/* Avatar pill when signed in */}
+        {/* Avatar pill when signed in — hidden on mobile to prevent nav overflow */}
         {isSignedIn && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
+            className="nav-desktop-links"
             style={{ display: "flex", alignItems: "center", gap: 7, padding: "4px 10px 4px 4px", borderRadius: 9999, background: "#f0fdf4", border: "1px solid #bbf7d0", cursor: "default" }}
           >
             <div style={{ width: 22, height: 22, borderRadius: "50%", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 700, color: "#fff", flexShrink: 0 }}>
@@ -799,6 +800,7 @@ export default function HomePage() {
 
         {/* Hero card */}
         <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55, duration: 0.8, ease: EXPO }}
+          className="hero-demo-card"
           style={{ width: "100%", maxWidth: 440, marginTop: 56, position: "relative", zIndex: 2 }}>
           <div style={{ position: "absolute", inset: -24, borderRadius: 48, background: "radial-gradient(ellipse at center, rgba(37,99,235,0.12) 0%, transparent 70%)", filter: "blur(20px)", pointerEvents: "none" }} />
           <SpotlightCard style={{ overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.1)" }}>
@@ -847,7 +849,7 @@ export default function HomePage() {
 
           {/* OPM callout box */}
           <motion.div variants={fadeUp}>
-            <div style={{ display: "inline-flex", flexWrap: "wrap", gap: 20, justifyContent: "center", background: "#fff", border: "1px solid #e2e8f0", borderRadius: 20, padding: "24px 36px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", marginBottom: 48 }}>
+            <div className="opm-callout" style={{ display: "inline-flex", flexWrap: "wrap", gap: 20, justifyContent: "center", background: "#fff", border: "1px solid #e2e8f0", borderRadius: 20, padding: "24px 36px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", marginBottom: 48 }}>
               {[
                 { label: "Bank Debt", pct: "60%", amt: "£360k", color: "#2563eb" },
                 { label: "Vendor Finance", pct: "20%", amt: "£120k", color: "#1e3a8a" },
@@ -887,6 +889,7 @@ export default function HomePage() {
 
         {/* Outcome strip */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
+          className="outcome-strip"
           style={{ marginTop: 24, background: "linear-gradient(135deg,#0f172a,#1e293b)", borderRadius: 20, padding: "32px 36px", display: "flex", flexWrap: "wrap", gap: 32, alignItems: "center", justifyContent: "space-between" }}>
           <div>
             <p style={{ fontSize: 11, fontWeight: 700, color: "#94a3b8", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>The Numbers on a £600k Deal</p>

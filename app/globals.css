@@ -352,6 +352,48 @@ textarea:focus-visible,
 }
 
 /* ─── MEDIA QUERIES ──────────────────────────────────────────────────────── */
+
+/* ─── SELL PAGE ──────────────────────────────────────────────────────────── */
+
+/* Sell page step 2+: right-column score card stacks below on mobile */
+@media (max-width: 768px) {
+  .sell-main-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .sell-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .sell-form-grid > * {
+    grid-column: auto !important;
+  }
+  .sell-card {
+    padding: 24px 20px !important;
+    border-radius: 16px !important;
+  }
+}
+
+/* ─── SMALL PHONE (< 480px) ─────────────────────────────────────────────── */
+@media (max-width: 479px) {
+  /* Plan grid: 2-col is too narrow on phones — collapse to 1 */
+  .plan-grid { grid-template-columns: 1fr !important; }
+
+  /* Triage extracted-data grid: 3-col → 2-col */
+  .triage-extracted-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* Dashboard overview stats: 2-col → 1-col on tiny screens */
+  .dash-stats { grid-template-columns: 1fr !important; }
+
+  /* Tighter dashboard padding on tiny phones */
+  .dash-pad { padding: 10px 10px 24px !important; }
+
+  /* OPM callout and outcome strip: reduce side padding */
+  .opm-callout { padding: 20px 16px !important; }
+  .outcome-strip { padding: 24px 20px !important; }
+
+  /* Hero card: remove top margin so it doesn't push below fold */
+  .hero-demo-card { margin-top: 32px !important; }
+}
+
 @media (max-width: 768px) {
   /* Grids stack to single column */
   .grid-2col {
@@ -427,6 +469,18 @@ textarea:focus-visible,
     opacity: 1 !important;
     border-color: #e2e8f0 !important;
     background: transparent !important;
+    /* Enlarge touch target to 44×44 without changing visual size */
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  /* Enlarge small icon buttons to meet 44px touch target minimum */
+  .touch-target-min {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   /* ─── TRIAGE PAGE GRIDS ──────────────────────────────────────────────── */
