@@ -24,8 +24,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, user }) {
       const email = user?.email ?? (token.email as string | undefined);
       if (email) {
-        const row = await userDb.getByEmail(email);
-        token.tier = row?.tier ?? "explorer";
+        const adminEmails = (process.env.ADMIN_EMAILS ?? "").split(",").map(e => e.trim()).filter(Boolean);
+        if (adminEmails.includes(email)) {
+          token.tier = "institutional";
+        } else {
+          const row = await userDb.getByEmail(email);
+          token.tier = row?.tier ?? "explorer";
+        }
         token.email = email;
       }
       return token;
@@ -33,8 +38,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     async session({ session, token }) {
       if (session.user?.email) {
-        const row = await userDb.getByEmail(session.user.email);
-        (session as unknown as Record<string, unknown>).tier = row?.tier ?? token.tier ?? "explorer";
+        const adminEmails = (process.env.ADMIN_EMAILS ?? "").split(",").map(e => e.trim()).filter(Boolean);
+        if (adminEmails.includes(session.user.email)) {
+          (session as unknown as Record<string, unknown>).tier = "institutional";
+        } else {
+          const row = await userDb.getByEmail(session.user.email);
+          (session as unknown as Record<string, unknown>).tier = row?.tier ?? token.tier ?? "explorer";
+        }
       }
       return session;
     },

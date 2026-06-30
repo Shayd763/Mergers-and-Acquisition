@@ -217,9 +217,26 @@ export function DealProvider({ children }: { children: React.ReactNode }) {
 
   /* ── Server mutation helpers ──────────────────────────────────────────── */
 
+  const flushPendingSaves = useCallback(() => {
+    const toSave = Array.from(pendingSaveRef.current.values());
+    if (toSave.length === 0) return;
+    pendingSaveRef.current.clear();
+    if (saveTimerRef.current) { clearTimeout(saveTimerRef.current); saveTimerRef.current = null; }
+    toSave.forEach(d => {
+      // sendBeacon works during beforeunload; fall back to fetch otherwise
+      const body = JSON.stringify(d);
+      const url = `/api/deals/${d.id}`;
+      if (typeof navigator !== "undefined" && navigator.sendBeacon) {
+        navigator.sendBeacon(url, new Blob([body], { type: "application/json" }));
+      } else {
+        fetch(url, { method: "PATCH", headers: { "Content-Type": "application/json" }, body }).catch(() => {});
+      }
+    });
+  }, []);
+
   const serverUpsert = useCallback((deal: StoredDeal) => {
     if (!isAuth) return;
-    // Debounce rapid updates (e.g. typing in notes field)
+    // Queue deal for save; debounce rapid updates (e.g. slider dragging)
     pendingSaveRef.current.set(deal.id, deal);
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
     saveTimerRef.current = setTimeout(() => {
@@ -232,8 +249,16 @@ export function DealProvider({ children }: { children: React.ReactNode }) {
           body: JSON.stringify(d),
         }).catch(() => {});
       });
-    }, 800);
+    }, 400);
   }, [isAuth]);
+
+  // Flush pending saves on tab close / navigation so nothing is lost
+  useEffect(() => {
+    if (!isAuth) return;
+    const handler = () => flushPendingSaves();
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [isAuth, flushPendingSaves]);
 
   const serverDelete = useCallback((id: string) => {
     if (!isAuth) return;

@@ -1335,12 +1335,12 @@ export default function TriagePage() {
     runReconcile(companyDetails, im);
     // Also refresh credit profile so it reflects current financials
     const sde = (netProfit || 0) + (addBacks || 0);
-    runCredit(companyDetails, { net_profit: netProfit || null, add_backs: addBacks || null, sde: sde > 0 ? sde : null });
+    runCredit(companyDetails, { net_profit: netProfit || null, add_backs: addBacks || null, sde: sde > 0 ? sde : null, turnover: extracted?.turnover ?? null });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [extracted, askingPrice, netProfit, addBacks]);
 
   /* ── Credit profile ── */
-  const runCredit = async (details: CompanyDetails, financials?: { net_profit?: number | null; add_backs?: number | null; sde?: number | null }) => {
+  const runCredit = async (details: CompanyDetails, financials?: { net_profit?: number | null; add_backs?: number | null; sde?: number | null; turnover?: number | null }) => {
     setCreditLoading(true); setCreditProfile(null);
     try {
       const res = await fetch(`${API}/api/credit`, {
@@ -1370,6 +1370,7 @@ export default function TriagePage() {
           net_profit: financials?.net_profit ?? null,
           add_backs: financials?.add_backs ?? null,
           sde: financials?.sde ?? null,
+          turnover: financials?.turnover ?? null,
         }),
       });
       if (res.ok) {
@@ -1420,6 +1421,7 @@ export default function TriagePage() {
       net_profit: extracted?.net_profit,
       add_backs: extracted?.add_backs,
       sde: extracted?.net_profit && extracted?.add_backs ? extracted.net_profit + extracted.add_backs : null,
+      turnover: extracted?.turnover ?? null,
     });
   };
 
