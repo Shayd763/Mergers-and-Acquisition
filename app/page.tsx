@@ -51,8 +51,8 @@ function SpotlightCard({ children, style = {} }: { children: React.ReactNode; st
       onMouseLeave={isTouch ? undefined : () => setInside(false)}
       whileHover={isTouch ? undefined : { scale: 1.015 }}
       transition={{ type: "spring", stiffness: 300, damping: 28 }}
-      style={{ position: "relative", overflow: "hidden", borderRadius: 24, border: "1px solid #e2e8f0", background: "#ffffff", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", ...style }}>
-      {inside && !isTouch && <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(260px circle at ${pos.x}px ${pos.y}px, rgba(37,99,235,0.05), transparent 70%)`, zIndex: 0 }} />}
+      style={{ position: "relative", overflow: "hidden", borderRadius: 24, border: "1px solid #d6d3d1", background: "#ffffff", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", ...style }}>
+      {inside && !isTouch && <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(260px circle at ${pos.x}px ${pos.y}px, rgba(28,25,23,0.05), transparent 70%)`, zIndex: 0 }} />}
       <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
     </motion.div>
   );
@@ -76,26 +76,26 @@ function DealSlider() {
   const pct = ((equity - 10) / 60) * 100;
   return (
     <div style={{ padding: "20px 24px" }}>
-      <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", color: "#94a3b8", textTransform: "uppercase", marginBottom: 14 }}>Live Preview — Manchester Consultancy · £450k</p>
-      <div style={{ height: 7, borderRadius: 9999, overflow: "hidden", display: "flex", background: "#f1f5f9", marginBottom: 18, border: "1px solid #e2e8f0" }}>
-        <div style={{ width: `${equity}%`, background: "linear-gradient(90deg,#1e3a8a,#2563eb)", transition: "width 0.2s" }} />
-        <div style={{ width: `${vendor}%`, background: "linear-gradient(90deg,#1e3a8a,#a855f7)", transition: "width 0.2s" }} />
+      <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", color: "#a8a29e", textTransform: "uppercase", marginBottom: 14 }}>Live Preview — Manchester Consultancy · £450k</p>
+      <div style={{ height: 7, borderRadius: 9999, overflow: "hidden", display: "flex", background: "#e7e5e4", marginBottom: 18, border: "1px solid #d6d3d1" }}>
+        <div style={{ width: `${equity}%`, background: "linear-gradient(90deg,#292524,#1c1917)", transition: "width 0.2s" }} />
+        <div style={{ width: `${vendor}%`, background: "linear-gradient(90deg,#292524,#a855f7)", transition: "width 0.2s" }} />
         <div style={{ width: `${bank}%`, background: "linear-gradient(90deg,#d97706,#f59e0b)", transition: "width 0.2s" }} />
       </div>
       <div style={{ marginBottom: 16 }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-          <span style={{ fontSize: 12, color: "#64748b" }}>Buyer Equity</span>
-          <span style={{ fontSize: 12, fontWeight: 700, color: "#2563eb" }}>{equity}% · £{equityAmt.toLocaleString()}</span>
+          <span style={{ fontSize: 12, color: "#78716c" }}>Buyer Equity</span>
+          <span style={{ fontSize: 12, fontWeight: 700, color: "#1c1917" }}>{equity}% · £{equityAmt.toLocaleString()}</span>
         </div>
         <div style={{ position: "relative", height: 5 }}>
-          <div style={{ position: "absolute", inset: 0, borderRadius: 9999, background: `linear-gradient(90deg, #2563eb ${pct}%, #e2e8f0 ${pct}%)` }} />
+          <div style={{ position: "absolute", inset: 0, borderRadius: 9999, background: `linear-gradient(90deg, #1c1917 ${pct}%, #d6d3d1 ${pct}%)` }} />
           <input type="range" min={10} max={70} value={equity} onChange={e => setEquity(Number(e.target.value))} style={{ position: "absolute", inset: 0, width: "100%", opacity: 0, cursor: "pointer", height: "100%" }} />
         </div>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
-        {[{ label: "Bank Loan", val: `£${(bankAmt/1000).toFixed(0)}k`, color: "#d97706" }, { label: "Vendor Finance", val: `£${(vendorAmt/1000).toFixed(0)}k`, color: "#1e3a8a" }, { label: "DSCR", val: dscr > 50 ? "∞" : `${dscr.toFixed(2)}×`, color: dscrOk ? "#059669" : "#dc2626" }].map(s => (
-          <div key={s.label} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 10, padding: "9px 10px", textAlign: "center" }}>
-            <p style={{ fontSize: 9, color: "#94a3b8", marginBottom: 3, textTransform: "uppercase", letterSpacing: "0.08em" }}>{s.label}</p>
+        {[{ label: "Bank Loan", val: `£${(bankAmt/1000).toFixed(0)}k`, color: "#d97706" }, { label: "Vendor Finance", val: `£${(vendorAmt/1000).toFixed(0)}k`, color: "#292524" }, { label: "DSCR", val: dscr > 50 ? "∞" : `${dscr.toFixed(2)}×`, color: dscrOk ? "#059669" : "#dc2626" }].map(s => (
+          <div key={s.label} style={{ background: "#faf9f7", border: "1px solid #d6d3d1", borderRadius: 10, padding: "9px 10px", textAlign: "center" }}>
+            <p style={{ fontSize: 9, color: "#a8a29e", marginBottom: 3, textTransform: "uppercase", letterSpacing: "0.08em" }}>{s.label}</p>
             <p style={{ fontSize: 14, fontWeight: 700, color: s.color, margin: 0 }}>{s.val}</p>
           </div>
         ))}
@@ -127,20 +127,20 @@ function CalcDropdown() {
   }, []);
   return (
     <div ref={ref} style={{ position: "relative" }}>
-      <button onClick={() => setOpen(o => !o)} style={{ display: "flex", alignItems: "center", gap: 5, padding: "6px 14px", borderRadius: 9999, fontSize: 13, color: open ? "#0f172a" : "#64748b", fontWeight: 500, background: "none", border: "none", cursor: "pointer" }}
-        onMouseEnter={e => (e.currentTarget.style.color = "#0f172a")} onMouseLeave={e => { if (!open) e.currentTarget.style.color = "#64748b"; }}>
+      <button onClick={() => setOpen(o => !o)} style={{ display: "flex", alignItems: "center", gap: 5, padding: "6px 14px", borderRadius: 9999, fontSize: 13, color: open ? "#1c1917" : "#78716c", fontWeight: 500, background: "none", border: "none", cursor: "pointer" }}
+        onMouseEnter={e => (e.currentTarget.style.color = "#1c1917")} onMouseLeave={e => { if (!open) e.currentTarget.style.color = "#78716c"; }}>
         Calculators
         <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.18 }} style={{ display: "flex" }}><ChevronDown size={13} /></motion.span>
       </button>
       <AnimatePresence>
         {open && (
           <motion.div initial={{ opacity: 0, y: 6, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 4, scale: 0.97 }} transition={{ duration: 0.18, ease: EXPO }}
-            style={{ position: "absolute", top: "calc(100% + 10px)", left: "50%", transform: "translateX(-50%)", background: "rgba(255,255,255,0.97)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", border: "1px solid #e2e8f0", borderRadius: 16, boxShadow: "0 16px 48px rgba(0,0,0,0.12)", width: 280, padding: "8px", zIndex: 200 }}>
+            style={{ position: "absolute", top: "calc(100% + 10px)", left: "50%", transform: "translateX(-50%)", background: "rgba(255,255,255,0.97)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", border: "1px solid #d6d3d1", borderRadius: 16, boxShadow: "0 16px 48px rgba(0,0,0,0.12)", width: 280, padding: "8px", zIndex: 200 }}>
             {CALC_LINKS.map(l => (
               <Link key={l.href} href={l.href} onClick={() => setOpen(false)} style={{ display: "block", textDecoration: "none", padding: "10px 14px", borderRadius: 10, transition: "background 0.12s" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "#f8fafc")} onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
-                <p style={{ fontSize: 13, fontWeight: 600, color: "#0f172a", margin: "0 0 2px" }}>{l.label}</p>
-                <p style={{ fontSize: 11, color: "#94a3b8", margin: 0 }}>{l.sub}</p>
+                onMouseEnter={e => (e.currentTarget.style.background = "#faf9f7")} onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
+                <p style={{ fontSize: 13, fontWeight: 600, color: "#1c1917", margin: "0 0 2px" }}>{l.label}</p>
+                <p style={{ fontSize: 11, color: "#a8a29e", margin: 0 }}>{l.sub}</p>
               </Link>
             ))}
           </motion.div>
@@ -154,15 +154,15 @@ function CalcDropdown() {
 function FAQ({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{ borderBottom: "1px solid #f1f5f9" }}>
+    <div style={{ borderBottom: "1px solid #e7e5e4" }}>
       <button onClick={() => setOpen(!open)} style={{ width: "100%", background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "20px 0", textAlign: "left" }}>
-        <span style={{ fontSize: 15, fontWeight: 600, color: "#0f172a" }}>{q}</span>
-        <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }}><ChevronDown size={16} color="#94a3b8" /></motion.span>
+        <span style={{ fontSize: 15, fontWeight: 600, color: "#1c1917" }}>{q}</span>
+        <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }}><ChevronDown size={16} color="#a8a29e" /></motion.span>
       </button>
       <AnimatePresence initial={false}>
         {open && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25, ease: EXPO }} style={{ overflow: "hidden" }}>
-            <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.75, paddingBottom: 16, margin: 0 }}>{a}</p>
+            <p style={{ fontSize: 14, color: "#78716c", lineHeight: 1.75, paddingBottom: 16, margin: 0 }}>{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -173,7 +173,7 @@ function FAQ({ q, a }: { q: string; a: string }) {
 /* ─── Pricing card ───────────────────────────────────────────────────────── */
 function PricingCard({ name, price, desc, features, cta, highlight = false, href, isCurrent = false }: { name: string; price: string; desc: string; features: string[]; cta: string; highlight?: boolean; href: string; isCurrent?: boolean }) {
   return (
-    <SpotlightCard style={{ position: "relative", padding: "32px 28px", display: "flex", flexDirection: "column", height: "100%", background: highlight ? "#2563eb" : "#ffffff", border: isCurrent ? "2px solid #059669" : highlight ? "1px solid #1d4ed8" : "1px solid #e2e8f0", boxShadow: isCurrent ? "0 0 0 4px rgba(5,150,105,0.1), 0 4px 16px rgba(0,0,0,0.08)" : highlight ? "0 20px 60px rgba(37,99,235,0.25)" : "0 1px 3px rgba(0,0,0,0.06)" }}>
+    <SpotlightCard style={{ position: "relative", padding: "32px 28px", display: "flex", flexDirection: "column", height: "100%", background: highlight ? "#1c1917" : "#ffffff", border: isCurrent ? "2px solid #059669" : highlight ? "1px solid #0c0a09" : "1px solid #d6d3d1", boxShadow: isCurrent ? "0 0 0 4px rgba(5,150,105,0.1), 0 4px 16px rgba(0,0,0,0.08)" : highlight ? "0 20px 60px rgba(28,25,23,0.25)" : "0 1px 3px rgba(0,0,0,0.06)" }}>
       {/* Current plan badge */}
       {isCurrent && (
         <div style={{ position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)", background: "#059669", color: "#fff", fontSize: 10, fontWeight: 800, letterSpacing: "0.1em", padding: "4px 12px", borderRadius: 9999, textTransform: "uppercase", whiteSpace: "nowrap", boxShadow: "0 2px 8px rgba(5,150,105,0.35)" }}>
@@ -181,19 +181,19 @@ function PricingCard({ name, price, desc, features, cta, highlight = false, href
         </div>
       )}
       {highlight && !isCurrent && <div style={{ alignSelf: "flex-start", marginBottom: 16, background: "rgba(255,255,255,0.2)", color: "#fff", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", padding: "4px 10px", borderRadius: 9999, textTransform: "uppercase" }}>Most Popular</div>}
-      <p style={{ fontSize: 12, fontWeight: 600, color: highlight ? "rgba(255,255,255,0.7)" : "#2563eb", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>{name}</p>
-      <p style={{ fontSize: 36, fontWeight: 800, color: highlight ? "#fff" : "#0f172a", margin: "0 0 4px", letterSpacing: "-0.03em" }}>{price}</p>
-      <p style={{ fontSize: 13, color: highlight ? "rgba(255,255,255,0.6)" : "#64748b", marginBottom: 28 }}>{desc}</p>
+      <p style={{ fontSize: 12, fontWeight: 600, color: highlight ? "rgba(255,255,255,0.7)" : "#1c1917", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>{name}</p>
+      <p style={{ fontSize: 36, fontWeight: 800, color: highlight ? "#fff" : "#1c1917", margin: "0 0 4px", letterSpacing: "-0.03em" }}>{price}</p>
+      <p style={{ fontSize: 13, color: highlight ? "rgba(255,255,255,0.6)" : "#78716c", marginBottom: 28 }}>{desc}</p>
       <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
         {features.map(f => (
           <div key={f} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
             <CheckCircle size={14} color={highlight ? "rgba(255,255,255,0.8)" : "#059669"} style={{ marginTop: 2, flexShrink: 0 }} />
-            <span style={{ fontSize: 13, color: highlight ? "rgba(255,255,255,0.75)" : "#64748b" }}>{f}</span>
+            <span style={{ fontSize: 13, color: highlight ? "rgba(255,255,255,0.75)" : "#78716c" }}>{f}</span>
           </div>
         ))}
       </div>
       <Link href={isCurrent ? "/dashboard/account" : href} style={{ textDecoration: "none" }}>
-        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} style={{ width: "100%", padding: "12px 0", borderRadius: 10, border: isCurrent ? "none" : highlight ? "none" : "1px solid #e2e8f0", cursor: "pointer", fontWeight: 700, fontSize: 14, background: isCurrent ? "#059669" : highlight ? "#ffffff" : "#f8fafc", color: isCurrent ? "#fff" : highlight ? "#2563eb" : "#334155" }}>
+        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} style={{ width: "100%", padding: "12px 0", borderRadius: 10, border: isCurrent ? "none" : highlight ? "none" : "1px solid #d6d3d1", cursor: "pointer", fontWeight: 700, fontSize: 14, background: isCurrent ? "#059669" : highlight ? "#ffffff" : "#faf9f7", color: isCurrent ? "#fff" : highlight ? "#1c1917" : "#44403c" }}>
           {isCurrent ? "Manage Plan →" : cta}
         </motion.button>
       </Link>
@@ -206,9 +206,9 @@ function BentoCell({ icon, label, value, sub, iconBg }: { icon: React.ReactNode;
   return (
     <SpotlightCard style={{ padding: "28px 24px" }}>
       <div style={{ width: 40, height: 40, borderRadius: 12, background: iconBg, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>{icon}</div>
-      <p style={{ fontSize: 12, color: "#94a3b8", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 8 }}>{label}</p>
-      <p style={{ fontSize: 28, fontWeight: 800, color: "#0f172a", letterSpacing: "-0.03em", margin: "0 0 4px" }}>{value}</p>
-      <p style={{ fontSize: 12, color: "#94a3b8", margin: 0 }}>{sub}</p>
+      <p style={{ fontSize: 12, color: "#a8a29e", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 8 }}>{label}</p>
+      <p style={{ fontSize: 28, fontWeight: 800, color: "#1c1917", letterSpacing: "-0.03em", margin: "0 0 4px" }}>{value}</p>
+      <p style={{ fontSize: 12, color: "#a8a29e", margin: 0 }}>{sub}</p>
     </SpotlightCard>
   );
 }
@@ -256,8 +256,8 @@ const HERO_CONTENT = {
     sub: "Analyse and audit any target for validity and assurance — from Companies House registry checks and credit scoring to deal structuring and direct financing with our lender partners. One platform, every step.",
     cta1: { label: "Audit a Deal — Free", href: "/dashboard/triage" },
     cta2: { label: "Read the Deal Sourcing Guide", href: "/deal-sourcing-guide" },
-    accent: "#1e3a8a",
-    accentEnd: "#2563eb",
+    accent: "#292524",
+    accentEnd: "#1c1917",
     phrases: BUYER_PHRASES,
   },
   seller: {
@@ -282,8 +282,8 @@ function ArbitrageStep({ n, icon, title, body, accent }: { n: number; icon: Reac
         </div>
         <span style={{ fontSize: 11, fontWeight: 800, color: accent, letterSpacing: "0.1em" }}>STEP {n}</span>
       </div>
-      <h4 style={{ fontSize: 15, fontWeight: 700, color: "#0f172a", margin: "0 0 10px", letterSpacing: "-0.02em" }}>{title}</h4>
-      <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.7, margin: 0 }}>{body}</p>
+      <h4 style={{ fontSize: 15, fontWeight: 700, color: "#1c1917", margin: "0 0 10px", letterSpacing: "-0.02em" }}>{title}</h4>
+      <p style={{ fontSize: 13, color: "#78716c", lineHeight: 1.7, margin: 0 }}>{body}</p>
     </SpotlightCard>
   );
 }
@@ -312,7 +312,7 @@ function StatNumber({ val, suffix = "", prefix = "" }: { val: number; suffix?: s
     observer.observe(el);
     return () => observer.disconnect();
   }, [val]);
-  return <p ref={ref} style={{ fontSize: 30, fontWeight: 800, color: "#0f172a", letterSpacing: "-0.04em", margin: "0 0 6px" }}>{prefix}{displayed}{suffix}</p>;
+  return <p ref={ref} style={{ fontSize: 30, fontWeight: 800, color: "#1c1917", letterSpacing: "-0.04em", margin: "0 0 6px" }}>{prefix}{displayed}{suffix}</p>;
 }
 
 /* ─── Ticker / marquee ───────────────────────────────────────────────────── */
@@ -339,15 +339,15 @@ function Ticker() {
   return (
     <div style={{
       overflow: "hidden",
-      borderTop: "1px solid #e2e8f0",
-      borderBottom: "1px solid #e2e8f0",
-      background: "#f8fafc",
+      borderTop: "1px solid #d6d3d1",
+      borderBottom: "1px solid #d6d3d1",
+      background: "#faf9f7",
       padding: "11px 0",
       position: "relative",
     }}>
       {/* Fade edges */}
-      <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 80, background: "linear-gradient(90deg, #f8fafc, transparent)", zIndex: 2, pointerEvents: "none" }} />
-      <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 80, background: "linear-gradient(-90deg, #f8fafc, transparent)", zIndex: 2, pointerEvents: "none" }} />
+      <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 80, background: "linear-gradient(90deg, #faf9f7, transparent)", zIndex: 2, pointerEvents: "none" }} />
+      <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 80, background: "linear-gradient(-90deg, #faf9f7, transparent)", zIndex: 2, pointerEvents: "none" }} />
       <div className="ticker-inner" style={{
         display: "flex",
         gap: 0,
@@ -357,7 +357,7 @@ function Ticker() {
         {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
           <span key={i} style={{
             fontSize: 11.5, fontWeight: 600,
-            color: i % 4 === 0 ? "#2563eb" : i % 4 === 1 ? "#0891b2" : i % 4 === 2 ? "#059669" : "#64748b",
+            color: i % 4 === 0 ? "#1c1917" : i % 4 === 1 ? "#0891b2" : i % 4 === 2 ? "#059669" : "#78716c",
             whiteSpace: "nowrap",
             padding: "0 28px",
             display: "flex", alignItems: "center", gap: 8,
@@ -415,7 +415,7 @@ function PortalLoginButton() {
             className="nav-desktop-links"
             style={{ display: "flex", alignItems: "center", gap: 7, padding: "4px 10px 4px 4px", borderRadius: 9999, background: "#f0fdf4", border: "1px solid #bbf7d0", cursor: "default" }}
           >
-            <div style={{ width: 22, height: 22, borderRadius: "50%", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 700, color: "#fff", flexShrink: 0 }}>
+            <div style={{ width: 22, height: 22, borderRadius: "50%", background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 700, color: "#fff", flexShrink: 0 }}>
               {initials || "U"}
             </div>
             <span style={{ fontSize: 11, fontWeight: 600, color: "#15803d", whiteSpace: "nowrap" }}>Signed in</span>
@@ -426,7 +426,7 @@ function PortalLoginButton() {
           onClick={handleClick}
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
-          style={{ padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff", fontSize: 13, fontWeight: 700, boxShadow: "0 0 16px rgba(37,99,235,0.3)", whiteSpace: "nowrap" }}
+          style={{ padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff", fontSize: 13, fontWeight: 700, boxShadow: "0 0 16px rgba(28,25,23,0.3)", whiteSpace: "nowrap" }}
         >
           {isSignedIn ? "Portal →" : "Portal Login →"}
         </motion.button>
@@ -440,7 +440,7 @@ function PortalLoginButton() {
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             style={{
               position: "fixed", bottom: 24, right: 24, zIndex: 9999,
-              background: "#0f172a", border: "1px solid rgba(99,102,241,0.35)",
+              background: "#1c1917", border: "1px solid rgba(99,102,241,0.35)",
               borderRadius: 14, padding: "16px 20px", maxWidth: 320,
               boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
               display: "flex", flexDirection: "column", gap: 10,
@@ -458,7 +458,7 @@ function PortalLoginButton() {
             </div>
             <div style={{ display: "flex", gap: 8 }}>
               <Link href="/signup" style={{ flex: 1, textDecoration: "none" }}>
-                <button style={{ width: "100%", padding: "8px 0", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
+                <button style={{ width: "100%", padding: "8px 0", background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
                   Create free account →
                 </button>
               </Link>
@@ -500,7 +500,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div style={{ background: "#fafbff", minHeight: "100vh", color: "#0f172a", fontFamily: "'Inter','Segoe UI',system-ui,sans-serif" }}>
+    <div style={{ background: "#efece6", minHeight: "100vh", color: "#1c1917", fontFamily: "'Inter','Segoe UI',system-ui,sans-serif" }}>
 
       {/* ── Aurora background ──────────────────────────────────────────────── */}
       <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none" }}>
@@ -586,41 +586,41 @@ export default function HomePage() {
       <div style={{ position: "fixed", top: 16, left: 0, right: 0, zIndex: 100, display: "flex", justifyContent: "center", padding: "0 12px", pointerEvents: "none" }}>
         <motion.nav
           initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, ease: EXPO }}
-          style={{ display: "flex", alignItems: "center", gap: 2, background: "rgba(255,255,255,0.92)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", border: "1px solid #e2e8f0", borderRadius: 9999, padding: "8px 12px", boxShadow: "0 4px 24px rgba(0,0,0,0.08)", maxWidth: "calc(100vw - 24px)", pointerEvents: "all" }}>
+          style={{ display: "flex", alignItems: "center", gap: 2, background: "rgba(255,255,255,0.92)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", border: "1px solid #d6d3d1", borderRadius: 9999, padding: "8px 12px", boxShadow: "0 4px 24px rgba(0,0,0,0.08)", maxWidth: "calc(100vw - 24px)", pointerEvents: "all" }}>
           {/* Logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, padding: "4px 10px 4px 4px", textDecoration: "none", flexShrink: 0 }}>
-            <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", flexShrink: 0 }}><BarChart3 size={13} color="#fff" /></div>
-            <span style={{ fontSize: 14, fontWeight: 700, color: "#0f172a", letterSpacing: "-0.02em", whiteSpace: "nowrap" }}>Triage Finance</span>
+            <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#292524,#1c1917)", flexShrink: 0 }}><BarChart3 size={13} color="#fff" /></div>
+            <span style={{ fontSize: 14, fontWeight: 700, color: "#1c1917", letterSpacing: "-0.02em", whiteSpace: "nowrap" }}>Triage Finance</span>
           </Link>
           {/* Desktop links */}
           <div className="nav-desktop-links" style={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <div style={{ width: 1, height: 20, background: "#e2e8f0", margin: "0 6px" }} />
+            <div style={{ width: 1, height: 20, background: "#d6d3d1", margin: "0 6px" }} />
             {[{ label: "Features", href: "#features" }, { label: "Pricing", href: "#pricing" }].map(l => (
-              <motion.a key={l.label} href={l.href} whileHover={{ scale: 1.04 }} style={{ padding: "6px 13px", borderRadius: 9999, fontSize: 13, color: "#64748b", fontWeight: 500, textDecoration: "none" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#0f172a")} onMouseLeave={e => (e.currentTarget.style.color = "#64748b")}>{l.label}</motion.a>
+              <motion.a key={l.label} href={l.href} whileHover={{ scale: 1.04 }} style={{ padding: "6px 13px", borderRadius: 9999, fontSize: 13, color: "#78716c", fontWeight: 500, textDecoration: "none" }}
+                onMouseEnter={e => (e.currentTarget.style.color = "#1c1917")} onMouseLeave={e => (e.currentTarget.style.color = "#78716c")}>{l.label}</motion.a>
             ))}
             <CalcDropdown />
             {[{ label: "Valuation Guide", href: "/guide" }, { label: "Deal Guide", href: "/deal-sourcing-guide" }].map(l => (
               <Link key={l.href} href={l.href} style={{ textDecoration: "none" }}>
-                <motion.span whileHover={{ scale: 1.04 }} style={{ display: "inline-block", padding: "6px 13px", borderRadius: 9999, fontSize: 13, color: "#64748b", fontWeight: 500, cursor: "pointer" }}
-                  onMouseEnter={e => (e.currentTarget.style.color = "#0f172a")} onMouseLeave={e => (e.currentTarget.style.color = "#64748b")}>{l.label}</motion.span>
+                <motion.span whileHover={{ scale: 1.04 }} style={{ display: "inline-block", padding: "6px 13px", borderRadius: 9999, fontSize: 13, color: "#78716c", fontWeight: 500, cursor: "pointer" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = "#1c1917")} onMouseLeave={e => (e.currentTarget.style.color = "#78716c")}>{l.label}</motion.span>
               </Link>
             ))}
-            <motion.a href="#faq" whileHover={{ scale: 1.04 }} style={{ padding: "6px 13px", borderRadius: 9999, fontSize: 13, color: "#64748b", fontWeight: 500, textDecoration: "none" }}
-              onMouseEnter={e => (e.currentTarget.style.color = "#0f172a")} onMouseLeave={e => (e.currentTarget.style.color = "#64748b")}>FAQ</motion.a>
-            <div style={{ width: 1, height: 20, background: "#e2e8f0", margin: "0 6px" }} />
+            <motion.a href="#faq" whileHover={{ scale: 1.04 }} style={{ padding: "6px 13px", borderRadius: 9999, fontSize: 13, color: "#78716c", fontWeight: 500, textDecoration: "none" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#1c1917")} onMouseLeave={e => (e.currentTarget.style.color = "#78716c")}>FAQ</motion.a>
+            <div style={{ width: 1, height: 20, background: "#d6d3d1", margin: "0 6px" }} />
             <Link href="/sell" style={{ textDecoration: "none" }}>
-              <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} style={{ padding: "7px 14px", borderRadius: 9999, border: "1px solid #e2e8f0", cursor: "pointer", background: "#f8fafc", color: "#334155", fontSize: 13, fontWeight: 600 }}>Sell a Business</motion.button>
+              <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} style={{ padding: "7px 14px", borderRadius: 9999, border: "1px solid #d6d3d1", cursor: "pointer", background: "#faf9f7", color: "#44403c", fontSize: 13, fontWeight: 600 }}>Sell a Business</motion.button>
             </Link>
           </div>
           {/* Primary CTA — always visible */}
           <PortalLoginButton />
           {/* Hamburger */}
           <button className="nav-mobile-btn" onClick={() => setMobileNavOpen(o => !o)}
-            style={{ marginLeft: 6, width: 36, height: 36, borderRadius: 10, border: "1px solid #e2e8f0", background: mobileNavOpen ? "#0f172a" : "#f8fafc", cursor: "pointer", display: "flex", flexDirection: "column", gap: 4, alignItems: "center", justifyContent: "center", transition: "background 0.2s", flexShrink: 0 }}>
-            <span style={{ width: 14, height: 1.5, background: mobileNavOpen ? "#fff" : "#334155", borderRadius: 1, transform: mobileNavOpen ? "rotate(45deg) translate(4px, 4px)" : "none", transition: "transform 0.22s, background 0.2s" }} />
-            <span style={{ width: 14, height: 1.5, background: mobileNavOpen ? "#fff" : "#334155", borderRadius: 1, opacity: mobileNavOpen ? 0 : 1, transition: "opacity 0.18s, background 0.2s" }} />
-            <span style={{ width: 14, height: 1.5, background: mobileNavOpen ? "#fff" : "#334155", borderRadius: 1, transform: mobileNavOpen ? "rotate(-45deg) translate(4px, -4px)" : "none", transition: "transform 0.22s, background 0.2s" }} />
+            style={{ marginLeft: 6, width: 36, height: 36, borderRadius: 10, border: "1px solid #d6d3d1", background: mobileNavOpen ? "#1c1917" : "#faf9f7", cursor: "pointer", display: "flex", flexDirection: "column", gap: 4, alignItems: "center", justifyContent: "center", transition: "background 0.2s", flexShrink: 0 }}>
+            <span style={{ width: 14, height: 1.5, background: mobileNavOpen ? "#fff" : "#44403c", borderRadius: 1, transform: mobileNavOpen ? "rotate(45deg) translate(4px, 4px)" : "none", transition: "transform 0.22s, background 0.2s" }} />
+            <span style={{ width: 14, height: 1.5, background: mobileNavOpen ? "#fff" : "#44403c", borderRadius: 1, opacity: mobileNavOpen ? 0 : 1, transition: "opacity 0.18s, background 0.2s" }} />
+            <span style={{ width: 14, height: 1.5, background: mobileNavOpen ? "#fff" : "#44403c", borderRadius: 1, transform: mobileNavOpen ? "rotate(-45deg) translate(4px, -4px)" : "none", transition: "transform 0.22s, background 0.2s" }} />
           </button>
         </motion.nav>
       </div>
@@ -630,7 +630,7 @@ export default function HomePage() {
         {mobileNavOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.28, ease: EXPO }}
             style={{ position: "fixed", inset: 0, zIndex: 98, background: "#07070f", display: "flex", flexDirection: "column", padding: "100px 32px 48px", overflowY: "auto" }}>
-            <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", width: 500, height: 300, borderRadius: "50%", background: "radial-gradient(ellipse, rgba(37,99,235,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", width: 500, height: 300, borderRadius: "50%", background: "radial-gradient(ellipse, rgba(28,25,23,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
             <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", marginBottom: 18 }}>Platform</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 2, marginBottom: 40 }}>
               {[
@@ -671,7 +671,7 @@ export default function HomePage() {
             </div>
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.4, ease: EXPO }} style={{ marginTop: "auto" }}>
               <Link href="/dashboard" onClick={() => setMobileNavOpen(false)} style={{ textDecoration: "none", display: "block" }}>
-                <div style={{ background: "linear-gradient(135deg,#1e3a8a,#2563eb)", borderRadius: 16, padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 0 40px rgba(37,99,235,0.3)" }}>
+                <div style={{ background: "linear-gradient(135deg,#292524,#1c1917)", borderRadius: 16, padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 0 40px rgba(28,25,23,0.3)" }}>
                   <div>
                     <p style={{ fontSize: 16, fontWeight: 700, color: "#fff", margin: "0 0 3px" }}>Start for free</p>
                     <p style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", margin: 0 }}>Triage your first deal in 60 seconds</p>
@@ -687,7 +687,7 @@ export default function HomePage() {
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section style={{ minHeight: "100svh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "100px 20px 60px", position: "relative", zIndex: 1, textAlign: "center" }}>
         {/* Breathing ambient glow behind the headline */}
-        <div className="hero-glow" style={{ position: "absolute", top: "35%", left: "50%", transform: "translate(-50%,-50%)", width: 700, height: 420, borderRadius: "50%", background: `radial-gradient(ellipse, ${track === "buyer" ? "rgba(37,99,235,0.13)" : "rgba(5,150,105,0.10)"} 0%, transparent 70%)`, pointerEvents: "none", transition: "background 0.6s", animation: "hero-glow-breathe 5s ease-in-out infinite" }} />
+        <div className="hero-glow" style={{ position: "absolute", top: "35%", left: "50%", transform: "translate(-50%,-50%)", width: 700, height: 420, borderRadius: "50%", background: `radial-gradient(ellipse, ${track === "buyer" ? "rgba(28,25,23,0.13)" : "rgba(5,150,105,0.10)"} 0%, transparent 70%)`, pointerEvents: "none", transition: "background 0.6s", animation: "hero-glow-breathe 5s ease-in-out infinite" }} />
         <style>{`
           @keyframes hero-glow-breathe {
             0%, 100% { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
@@ -701,12 +701,12 @@ export default function HomePage() {
         <div style={{ position: "relative", zIndex: 1 }}>
           {/* ── Buyer / Seller toggle ─────────────────────────────────── */}
           <motion.div initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.05, duration: 0.45 }}
-            style={{ display: "inline-flex", background: "#fff", border: "1px solid #e2e8f0", borderRadius: 9999, padding: 4, marginBottom: 36, boxShadow: "0 2px 12px rgba(0,0,0,0.06)", maxWidth: "calc(100vw - 48px)" }}>
+            style={{ display: "inline-flex", background: "#fff", border: "1px solid #d6d3d1", borderRadius: 9999, padding: 4, marginBottom: 36, boxShadow: "0 2px 12px rgba(0,0,0,0.06)", maxWidth: "calc(100vw - 48px)" }}>
             {(["buyer", "seller"] as const).map(t => (
               <button key={t} onClick={() => setTrack(t)} style={{
                 padding: "9px 22px", borderRadius: 9999, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600, transition: "all 0.2s",
-                background: track === t ? (t === "buyer" ? "linear-gradient(135deg,#1e3a8a,#2563eb)" : "linear-gradient(135deg,#059669,#10b981)") : "transparent",
-                color: track === t ? "#fff" : "#64748b",
+                background: track === t ? (t === "buyer" ? "linear-gradient(135deg,#292524,#1c1917)" : "linear-gradient(135deg,#059669,#10b981)") : "transparent",
+                color: track === t ? "#fff" : "#78716c",
                 boxShadow: track === t ? "0 2px 10px rgba(0,0,0,0.15)" : "none",
               }}>
                 {t === "buyer" ? <><span className="nav-desktop-links">🔍 </span>Buy a business</> : <><span className="nav-desktop-links">🏢 </span>Sell my business</>}
@@ -717,9 +717,9 @@ export default function HomePage() {
           {/* Badge */}
           <AnimatePresence mode="popLayout">
             <motion.div key={track + "-badge"} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}
-              style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 28, background: track === "buyer" ? "#eff6ff" : "#ecfdf5", border: `1px solid ${track === "buyer" ? "#bfdbfe" : "#a7f3d0"}`, borderRadius: 9999, padding: "6px 14px" }}>
-              <Activity size={12} color={track === "buyer" ? "#2563eb" : "#059669"} />
-              <span style={{ fontSize: 12, color: track === "buyer" ? "#2563eb" : "#059669", fontWeight: 600, letterSpacing: "0.04em" }}>{hero.badge}</span>
+              style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 28, background: track === "buyer" ? "#e7e5e4" : "#ecfdf5", border: `1px solid ${track === "buyer" ? "#d6d3d1" : "#a7f3d0"}`, borderRadius: 9999, padding: "6px 14px" }}>
+              <Activity size={12} color={track === "buyer" ? "#1c1917" : "#059669"} />
+              <span style={{ fontSize: 12, color: track === "buyer" ? "#1c1917" : "#059669", fontWeight: 600, letterSpacing: "0.04em" }}>{hero.badge}</span>
             </motion.div>
           </AnimatePresence>
 
@@ -728,7 +728,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.22, ease: EXPO }}
             style={{ fontSize: "clamp(40px, 6.5vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.1, margin: "0 0 22px", maxWidth: 820 }}>
             {/* Static first line */}
-            <span style={{ color: "#0f172a" }}>{hero.headline1}</span>
+            <span style={{ color: "#1c1917" }}>{hero.headline1}</span>
             <br />
             {/* Fixed-height container prevents layout shift when phrases swap */}
             <span style={{
@@ -766,7 +766,7 @@ export default function HomePage() {
           {/* Sub */}
           <AnimatePresence mode="popLayout">
             <motion.p key={track + "-sub"} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.2, ease: EXPO }}
-              style={{ fontSize: "clamp(15px, 2vw, 19px)", color: "#64748b", maxWidth: 560, margin: "0 auto 40px", lineHeight: 1.7 }}>
+              style={{ fontSize: "clamp(15px, 2vw, 19px)", color: "#78716c", maxWidth: 560, margin: "0 auto 40px", lineHeight: 1.7 }}>
               {hero.sub}
             </motion.p>
           </AnimatePresence>
@@ -776,13 +776,13 @@ export default function HomePage() {
             <motion.div key={track + "-ctas"} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25, delay: 0.08 }}
               style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
               <Link href={hero.cta1.href} style={{ textDecoration: "none" }}>
-                <motion.button whileHover={{ scale: 1.04, boxShadow: `0 8px 30px ${track === "buyer" ? "rgba(37,99,235,0.35)" : "rgba(5,150,105,0.3)"}` }} whileTap={{ scale: 0.97 }}
-                  style={{ padding: "14px 28px", borderRadius: 12, border: "none", cursor: "pointer", background: `linear-gradient(135deg,${hero.accent},${track === "buyer" ? "#2563eb" : "#10b981"})`, color: "#fff", fontSize: 15, fontWeight: 700, boxShadow: `0 4px 20px ${track === "buyer" ? "rgba(37,99,235,0.25)" : "rgba(5,150,105,0.2)"}`, display: "flex", alignItems: "center", gap: 8 }}>
+                <motion.button whileHover={{ scale: 1.04, boxShadow: `0 8px 30px ${track === "buyer" ? "rgba(28,25,23,0.35)" : "rgba(5,150,105,0.3)"}` }} whileTap={{ scale: 0.97 }}
+                  style={{ padding: "14px 28px", borderRadius: 12, border: "none", cursor: "pointer", background: `linear-gradient(135deg,${hero.accent},${track === "buyer" ? "#1c1917" : "#10b981"})`, color: "#fff", fontSize: 15, fontWeight: 700, boxShadow: `0 4px 20px ${track === "buyer" ? "rgba(28,25,23,0.25)" : "rgba(5,150,105,0.2)"}`, display: "flex", alignItems: "center", gap: 8 }}>
                   {hero.cta1.label} <ArrowRight size={16} />
                 </motion.button>
               </Link>
               <Link href={hero.cta2.href} style={{ textDecoration: "none" }}>
-                <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} style={{ padding: "14px 28px", borderRadius: 12, cursor: "pointer", background: "#ffffff", border: "1px solid #e2e8f0", color: "#334155", fontSize: 15, fontWeight: 600, boxShadow: "0 1px 3px rgba(0,0,0,0.06)", display: "flex", alignItems: "center", gap: 8 }}>
+                <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} style={{ padding: "14px 28px", borderRadius: 12, cursor: "pointer", background: "#ffffff", border: "1px solid #d6d3d1", color: "#44403c", fontSize: 15, fontWeight: 600, boxShadow: "0 1px 3px rgba(0,0,0,0.06)", display: "flex", alignItems: "center", gap: 8 }}>
                   {hero.cta2.label}
                 </motion.button>
               </Link>
@@ -793,7 +793,7 @@ export default function HomePage() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7, duration: 0.6 }}
             style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 28, marginTop: 48, flexWrap: "wrap" }}>
             {[{ icon: <Building2 size={13} />, text: "240+ deals triaged" }, { icon: <Lock size={13} />, text: "Bank-grade encryption" }, { icon: <Globe size={13} />, text: "UK SME market focused" }].map(s => (
-              <div key={s.text} style={{ display: "flex", alignItems: "center", gap: 7, color: "#94a3b8", fontSize: 12, fontWeight: 500 }}>{s.icon}<span>{s.text}</span></div>
+              <div key={s.text} style={{ display: "flex", alignItems: "center", gap: 7, color: "#a8a29e", fontSize: 12, fontWeight: 500 }}>{s.icon}<span>{s.text}</span></div>
             ))}
           </motion.div>
         </div>
@@ -802,11 +802,11 @@ export default function HomePage() {
         <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55, duration: 0.8, ease: EXPO }}
           className="hero-demo-card"
           style={{ width: "100%", maxWidth: 440, marginTop: 56, position: "relative", zIndex: 2 }}>
-          <div style={{ position: "absolute", inset: -24, borderRadius: 48, background: "radial-gradient(ellipse at center, rgba(37,99,235,0.12) 0%, transparent 70%)", filter: "blur(20px)", pointerEvents: "none" }} />
+          <div style={{ position: "absolute", inset: -24, borderRadius: 48, background: "radial-gradient(ellipse at center, rgba(28,25,23,0.12) 0%, transparent 70%)", filter: "blur(20px)", pointerEvents: "none" }} />
           <SpotlightCard style={{ overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.1)" }}>
-            <div style={{ padding: "11px 16px", borderBottom: "1px solid #f1f5f9", display: "flex", alignItems: "center", gap: 8 }}>
+            <div style={{ padding: "11px 16px", borderBottom: "1px solid #e7e5e4", display: "flex", alignItems: "center", gap: 8 }}>
               <div style={{ display: "flex", gap: 6 }}>{["#ef4444","#f59e0b","#22c55e"].map(c => <div key={c} style={{ width: 10, height: 10, borderRadius: "50%", background: c, opacity: 0.8 }} />)}</div>
-              <span style={{ fontSize: 11, color: "#94a3b8", fontWeight: 500, marginLeft: 4 }}>Triage — Capital Structure</span>
+              <span style={{ fontSize: 11, color: "#a8a29e", fontWeight: 500, marginLeft: 4 }}>Triage — Capital Structure</span>
             </div>
             <DealSlider />
           </SpotlightCard>
@@ -815,19 +815,19 @@ export default function HomePage() {
 
       {/* ── Stats bar ────────────────────────────────────────────────────── */}
       <motion.section variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} style={{ padding: "0 24px 80px", display: "flex", justifyContent: "center" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 1, maxWidth: 860, width: "100%", background: "#e2e8f0", borderRadius: 16, border: "1px solid #e2e8f0", overflow: "hidden" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 1, maxWidth: 860, width: "100%", background: "#d6d3d1", borderRadius: 16, border: "1px solid #d6d3d1", overflow: "hidden" }}>
           {[
             { val: "< 1s",     label: "AI extraction speed",    num: null },
             { val: "19",       label: "IB-grade metrics",        num: 19 },
             { val: "1%",       label: "referral on debt closure", num: 1, suffix: "%" },
             { val: "4 lenders",label: "in the network",          num: 4, suffix: " lenders" },
           ].map((s, i) => (
-            <motion.div key={s.label} variants={fadeUp} style={{ padding: "28px 24px", textAlign: "center", background: "#fff", borderRight: i < 3 ? "1px solid #e2e8f0" : "none" }}>
+            <motion.div key={s.label} variants={fadeUp} style={{ padding: "28px 24px", textAlign: "center", background: "#fff", borderRight: i < 3 ? "1px solid #d6d3d1" : "none" }}>
               {s.num !== null && s.num !== undefined
                 ? <StatNumber val={s.num} suffix={s.suffix ?? ""} />
-                : <p style={{ fontSize: 30, fontWeight: 800, color: "#0f172a", letterSpacing: "-0.04em", margin: "0 0 6px" }}>{s.val}</p>
+                : <p style={{ fontSize: 30, fontWeight: 800, color: "#1c1917", letterSpacing: "-0.04em", margin: "0 0 6px" }}>{s.val}</p>
               }
-              <p style={{ fontSize: 12, color: "#94a3b8", fontWeight: 500, margin: 0 }}>{s.label}</p>
+              <p style={{ fontSize: 12, color: "#a8a29e", fontWeight: 500, margin: 0 }}>{s.label}</p>
             </motion.div>
           ))}
         </div>
@@ -840,34 +840,34 @@ export default function HomePage() {
             <DollarSign size={13} color="#d97706" />
             <span style={{ fontSize: 12, fontWeight: 700, color: "#d97706", letterSpacing: "0.08em", textTransform: "uppercase" }}>The Golden Angle</span>
           </motion.div>
-          <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(28px, 4.5vw, 52px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#0f172a", margin: "0 0 16px", lineHeight: 1.1 }}>
+          <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(28px, 4.5vw, 52px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#1c1917", margin: "0 0 16px", lineHeight: 1.1 }}>
             The Deal Arbitrage Playbook.
           </motion.h2>
-          <motion.p variants={fadeUp} style={{ fontSize: 16, color: "#64748b", maxWidth: 580, margin: "0 auto 48px", lineHeight: 1.7 }}>
+          <motion.p variants={fadeUp} style={{ fontSize: 16, color: "#78716c", maxWidth: 580, margin: "0 auto 48px", lineHeight: 1.7 }}>
             Acquire UK businesses with zero personal capital. Structure acquisitions using bank debt, vendor finance, and raised equity — then keep the difference.
           </motion.p>
 
           {/* OPM callout box */}
           <motion.div variants={fadeUp}>
-            <div className="opm-callout" style={{ display: "inline-flex", flexWrap: "wrap", gap: 20, justifyContent: "center", background: "#fff", border: "1px solid #e2e8f0", borderRadius: 20, padding: "24px 36px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", marginBottom: 48 }}>
+            <div className="opm-callout" style={{ display: "inline-flex", flexWrap: "wrap", gap: 20, justifyContent: "center", background: "#fff", border: "1px solid #d6d3d1", borderRadius: 20, padding: "24px 36px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", marginBottom: 48 }}>
               {[
-                { label: "Bank Debt", pct: "60%", amt: "£360k", color: "#2563eb" },
-                { label: "Vendor Finance", pct: "20%", amt: "£120k", color: "#1e3a8a" },
+                { label: "Bank Debt", pct: "60%", amt: "£360k", color: "#1c1917" },
+                { label: "Vendor Finance", pct: "20%", amt: "£120k", color: "#292524" },
                 { label: "Investor Equity", pct: "20%", amt: "£120k", color: "#059669" },
               ].map(s => (
                 <div key={s.label} style={{ textAlign: "center", minWidth: 120 }}>
-                  <p style={{ fontSize: 10, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 4px", fontWeight: 600 }}>{s.label}</p>
+                  <p style={{ fontSize: 10, color: "#a8a29e", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 4px", fontWeight: 600 }}>{s.label}</p>
                   <p style={{ fontSize: 28, fontWeight: 800, color: s.color, margin: "0 0 2px", letterSpacing: "-0.03em" }}>{s.pct}</p>
-                  <p style={{ fontSize: 12, color: "#94a3b8", margin: 0 }}>of {s.amt}</p>
+                  <p style={{ fontSize: 12, color: "#a8a29e", margin: 0 }}>of {s.amt}</p>
                 </div>
               ))}
-              <div style={{ display: "flex", alignItems: "center", padding: "0 8px", color: "#94a3b8" }}>
+              <div style={{ display: "flex", alignItems: "center", padding: "0 8px", color: "#a8a29e" }}>
                 <span style={{ fontSize: 24, fontWeight: 300 }}>=</span>
               </div>
               <div style={{ textAlign: "center", minWidth: 140 }}>
-                <p style={{ fontSize: 10, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 4px", fontWeight: 600 }}>Your Capital In</p>
+                <p style={{ fontSize: 10, color: "#a8a29e", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 4px", fontWeight: 600 }}>Your Capital In</p>
                 <p style={{ fontSize: 28, fontWeight: 800, color: "#dc2626", margin: "0 0 2px", letterSpacing: "-0.03em" }}>£0</p>
-                <p style={{ fontSize: 12, color: "#94a3b8", margin: 0 }}>personal cash required</p>
+                <p style={{ fontSize: 12, color: "#a8a29e", margin: 0 }}>personal cash required</p>
               </div>
             </div>
           </motion.div>
@@ -877,8 +877,8 @@ export default function HomePage() {
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }}
           style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14 }}>
           {[
-            { n: 1, icon: <Target size={16} />, title: "Source the Target", body: "Find a UK retirement-sale business with stable SDE (e.g., engineering firm at £200k SDE, asking £600k from a retiring founder).", accent: "#2563eb" },
-            { n: 2, icon: <BarChart3 size={16} />, title: "Audit the Deal", body: "Drop the numbers into Triage Finance. Structure 60% bank / 20% vendor / 20% investor equity. Verify DSCR ≥ 1.35× and IRR ≥ 30%.", accent: "#1e3a8a" },
+            { n: 1, icon: <Target size={16} />, title: "Source the Target", body: "Find a UK retirement-sale business with stable SDE (e.g., engineering firm at £200k SDE, asking £600k from a retiring founder).", accent: "#1c1917" },
+            { n: 2, icon: <BarChart3 size={16} />, title: "Audit the Deal", body: "Drop the numbers into Triage Finance. Structure 60% bank / 20% vendor / 20% investor equity. Verify DSCR ≥ 1.35× and IRR ≥ 30%.", accent: "#292524" },
             { n: 3, icon: <FileText size={16} />, title: "Export Credit Memo", body: "Download the 3-page institutional-grade Deal Credit Memo PDF. This is your proof of concept — lender and investor ready on Day 1.", accent: "#059669" },
             { n: 4, icon: <Users size={16} />, title: "Pitch Passive Investors", body: "Approach HNWs: 'I have a pre-underwritten UK deal with an institutional credit memo. I need £120k equity — the business pays it off.' Close in days.", accent: "#d97706" },
             { n: 5, icon: <Wallet size={16} />, title: "Pocket the Arbitrage", body: "Take a 2–4% deal sourcing fee (£12k–£24k cash on Day 1). Retain 15–30% sweat equity as deal architect. Zero personal capital deployed.", accent: "#dc2626" },
@@ -890,9 +890,9 @@ export default function HomePage() {
         {/* Outcome strip */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
           className="outcome-strip"
-          style={{ marginTop: 24, background: "linear-gradient(135deg,#0f172a,#1e293b)", borderRadius: 20, padding: "32px 36px", display: "flex", flexWrap: "wrap", gap: 32, alignItems: "center", justifyContent: "space-between" }}>
+          style={{ marginTop: 24, background: "linear-gradient(135deg,#1c1917,#1e293b)", borderRadius: 20, padding: "32px 36px", display: "flex", flexWrap: "wrap", gap: 32, alignItems: "center", justifyContent: "space-between" }}>
           <div>
-            <p style={{ fontSize: 11, fontWeight: 700, color: "#94a3b8", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>The Numbers on a £600k Deal</p>
+            <p style={{ fontSize: 11, fontWeight: 700, color: "#a8a29e", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>The Numbers on a £600k Deal</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 24 }}>
               {[
                 { label: "Day 1 sourcing fee", val: "£12–24k", color: "#fbbf24" },
@@ -901,7 +901,7 @@ export default function HomePage() {
                 { label: "Projected 5yr IRR", val: "35–45%", color: "#c084fc" },
               ].map(m => (
                 <div key={m.label}>
-                  <p style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 3px" }}>{m.label}</p>
+                  <p style={{ fontSize: 10, color: "#78716c", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 3px" }}>{m.label}</p>
                   <p style={{ fontSize: 22, fontWeight: 800, color: m.color, margin: 0, letterSpacing: "-0.03em" }}>{m.val}</p>
                 </div>
               ))}
@@ -924,30 +924,30 @@ export default function HomePage() {
       {/* ── Features bento ───────────────────────────────────────────────── */}
       <section id="features" style={{ padding: "80px 24px 120px", maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} style={{ textAlign: "center", marginBottom: 64 }}>
-          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>Platform Features</motion.p>
-          <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#0f172a", margin: "0 0 16px", lineHeight: 1.1 }}>Everything a serious buyer needs.</motion.h2>
-          <motion.p variants={fadeUp} style={{ fontSize: 16, color: "#64748b", maxWidth: 520, margin: "0 auto" }}>From raw listing text to a credit memo ready for your lender — in under a minute.</motion.p>
+          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#1c1917", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>Platform Features</motion.p>
+          <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#1c1917", margin: "0 0 16px", lineHeight: 1.1 }}>Everything a serious buyer needs.</motion.h2>
+          <motion.p variants={fadeUp} style={{ fontSize: 16, color: "#78716c", maxWidth: 520, margin: "0 auto" }}>From raw listing text to a credit memo ready for your lender — in under a minute.</motion.p>
         </motion.div>
 
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }}
           className="bento-12">
           {[
-            { col: "1 / 8", icon: <Zap size={20} color="#2563eb" />, iconBg: "#eff6ff", title: "AI-Powered Extraction", desc: "Paste any broker listing and our AI strips out the numbers instantly — asking price, SDE, turnover, add-backs, and lease data — with zero manual entry.", badge: "< 1 second" },
-            { col: "8 / 13", icon: <TrendingUp size={20} color="#1e3a8a" />, iconBg: "#eff6ff", title: "19 IB-Grade Metrics", desc: "DSCR, 5-year Equity IRR, Levered FCF, CoC ROI, DSCR bands, total acquisition cost — the full suite institutional buyers expect.", badge: "Goldman-standard" },
+            { col: "1 / 8", icon: <Zap size={20} color="#1c1917" />, iconBg: "#e7e5e4", title: "AI-Powered Extraction", desc: "Paste any broker listing and our AI strips out the numbers instantly — asking price, SDE, turnover, add-backs, and lease data — with zero manual entry.", badge: "< 1 second" },
+            { col: "8 / 13", icon: <TrendingUp size={20} color="#292524" />, iconBg: "#e7e5e4", title: "19 IB-Grade Metrics", desc: "DSCR, 5-year Equity IRR, Levered FCF, CoC ROI, DSCR bands, total acquisition cost — the full suite institutional buyers expect.", badge: "Goldman-standard" },
           ].map(c => (
             <motion.div key={c.title} variants={fadeUp} style={{ gridColumn: c.col }}>
               <SpotlightCard style={{ padding: "36px 32px", height: "100%" }}>
                 <div style={{ width: 44, height: 44, borderRadius: 12, background: c.iconBg, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24 }}>{c.icon}</div>
-                <div style={{ display: "inline-block", marginBottom: 16, background: "#eff6ff", border: "1px solid #bfdbfe", borderRadius: 9999, padding: "3px 10px", fontSize: 10, fontWeight: 700, color: "#2563eb", letterSpacing: "0.06em", textTransform: "uppercase" }}>{c.badge}</div>
-                <h3 style={{ fontSize: 20, fontWeight: 700, color: "#0f172a", margin: "0 0 12px", letterSpacing: "-0.02em" }}>{c.title}</h3>
-                <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.7, margin: 0 }}>{c.desc}</p>
+                <div style={{ display: "inline-block", marginBottom: 16, background: "#e7e5e4", border: "1px solid #d6d3d1", borderRadius: 9999, padding: "3px 10px", fontSize: 10, fontWeight: 700, color: "#1c1917", letterSpacing: "0.06em", textTransform: "uppercase" }}>{c.badge}</div>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: "#1c1917", margin: "0 0 12px", letterSpacing: "-0.02em" }}>{c.title}</h3>
+                <p style={{ fontSize: 14, color: "#78716c", lineHeight: 1.7, margin: 0 }}>{c.desc}</p>
               </SpotlightCard>
             </motion.div>
           ))}
           {[
             { col: "1 / 5", icon: <FileText size={18} color="#059669" />, iconBg: "#ecfdf5", label: "3-Page Credit Memo", val: "PDF", sub: "Institutional lender-ready output" },
             { col: "5 / 9", icon: <Shield size={18} color="#d97706" />, iconBg: "#fffbeb", label: "Deal Viability Score", val: "STRONG", sub: "Real-time DSCR threshold rating" },
-            { col: "9 / 13", icon: <Users size={18} color="#2563eb" />, iconBg: "#eff6ff", label: "Lender Network", val: "4", sub: "Pre-approved UK commercial lenders" },
+            { col: "9 / 13", icon: <Users size={18} color="#1c1917" />, iconBg: "#e7e5e4", label: "Lender Network", val: "4", sub: "Pre-approved UK commercial lenders" },
           ].map(c => (
             <motion.div key={c.label} variants={fadeUp} style={{ gridColumn: c.col }}>
               <BentoCell icon={c.icon} label={c.label} value={c.val} sub={c.sub} iconBg={c.iconBg} />
@@ -958,21 +958,21 @@ export default function HomePage() {
               <div className="grid-2col" style={{ gap: 48, alignItems: "center" }}>
                 <div>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-                    <Layers size={18} color="#2563eb" />
-                    <span style={{ fontSize: 12, fontWeight: 700, color: "#2563eb", letterSpacing: "0.1em", textTransform: "uppercase" }}>Document Upload</span>
+                    <Layers size={18} color="#1c1917" />
+                    <span style={{ fontSize: 12, fontWeight: 700, color: "#1c1917", letterSpacing: "0.1em", textTransform: "uppercase" }}>Document Upload</span>
                   </div>
-                  <h3 style={{ fontSize: 22, fontWeight: 700, color: "#0f172a", margin: "0 0 12px" }}>PDF & CIM parsing built in.</h3>
-                  <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.75, margin: "0 0 24px" }}>Upload PDFs, DOCX, or PPTX files directly. The platform populates your triage workspace from raw CIM documents automatically.</p>
+                  <h3 style={{ fontSize: 22, fontWeight: 700, color: "#1c1917", margin: "0 0 12px" }}>PDF & CIM parsing built in.</h3>
+                  <p style={{ fontSize: 14, color: "#78716c", lineHeight: 1.75, margin: "0 0 24px" }}>Upload PDFs, DOCX, or PPTX files directly. The platform populates your triage workspace from raw CIM documents automatically.</p>
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                     {["PDF Confidential Information Memorandums","Word document broker packs","PowerPoint investor presentations"].map(f => (
-                      <div key={f} style={{ display: "flex", alignItems: "center", gap: 10 }}><CheckCircle size={13} color="#059669" /><span style={{ fontSize: 13, color: "#64748b" }}>{f}</span></div>
+                      <div key={f} style={{ display: "flex", alignItems: "center", gap: 10 }}><CheckCircle size={13} color="#059669" /><span style={{ fontSize: 13, color: "#78716c" }}>{f}</span></div>
                     ))}
                   </div>
                 </div>
-                <div style={{ background: "#f8fafc", borderRadius: 14, padding: "20px 24px", border: "1px solid #e2e8f0", display: "flex", flexDirection: "column", gap: 10 }}>
-                  {[{ tag: "SCANNING", text: "Reading document structure…", color: "#94a3b8" }, { tag: "EXTRACTED", text: "Turnover: £820,000  |  Net Profit: £120,000", color: "#2563eb" }, { tag: "VERIFIED", text: "DSCR: 2.90×  ✓  Passes 1.25× threshold", color: "#059669" }, { tag: "SUCCESS", text: "Triage workspace populated in 0.4s.", color: "#059669" }].map((l, i) => (
+                <div style={{ background: "#faf9f7", borderRadius: 14, padding: "20px 24px", border: "1px solid #d6d3d1", display: "flex", flexDirection: "column", gap: 10 }}>
+                  {[{ tag: "SCANNING", text: "Reading document structure…", color: "#a8a29e" }, { tag: "EXTRACTED", text: "Turnover: £820,000  |  Net Profit: £120,000", color: "#1c1917" }, { tag: "VERIFIED", text: "DSCR: 2.90×  ✓  Passes 1.25× threshold", color: "#059669" }, { tag: "SUCCESS", text: "Triage workspace populated in 0.4s.", color: "#059669" }].map((l, i) => (
                     <motion.div key={l.tag} initial={{ opacity: 0, x: -8 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.12 }} viewport={{ once: true }} style={{ display: "flex", gap: 10 }}>
-                      <span style={{ fontSize: 10, color: "#2563eb", fontWeight: 700, fontFamily: "monospace", minWidth: 72 }}>{l.tag}</span>
+                      <span style={{ fontSize: 10, color: "#1c1917", fontWeight: 700, fontFamily: "monospace", minWidth: 72 }}>{l.tag}</span>
                       <span style={{ fontSize: 12, color: l.color, fontFamily: "monospace" }}>{l.text}</span>
                     </motion.div>
                   ))}
@@ -984,11 +984,11 @@ export default function HomePage() {
 
         {/* Calculator links */}
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ marginTop: 24 }}>
-          <motion.div variants={fadeUp} style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 20, padding: "28px 32px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "#2563eb", letterSpacing: "0.09em", textTransform: "uppercase", marginBottom: 16 }}>Free M&A Calculators</p>
+          <motion.div variants={fadeUp} style={{ background: "#fff", border: "1px solid #d6d3d1", borderRadius: 20, padding: "28px 32px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "#1c1917", letterSpacing: "0.09em", textTransform: "uppercase", marginBottom: 16 }}>Free M&A Calculators</p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               {CALC_LINKS.map(l => (
-                <Link key={l.href} href={l.href} style={{ padding: "9px 18px", borderRadius: 9999, background: "#f8fafc", border: "1px solid #e2e8f0", color: "#2563eb", fontSize: 13, textDecoration: "none", fontWeight: 600 }}>{l.label}</Link>
+                <Link key={l.href} href={l.href} style={{ padding: "9px 18px", borderRadius: 9999, background: "#faf9f7", border: "1px solid #d6d3d1", color: "#1c1917", fontSize: 13, textDecoration: "none", fontWeight: 600 }}>{l.label}</Link>
               ))}
             </div>
           </motion.div>
@@ -1002,22 +1002,22 @@ export default function HomePage() {
             <LineChart size={13} color="#059669" />
             <span style={{ fontSize: 12, fontWeight: 700, color: "#059669", letterSpacing: "0.08em", textTransform: "uppercase" }}>How We Generate Revenue</span>
           </motion.div>
-          <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#0f172a", margin: "0 0 16px" }}>Free at the top. High-value at the bottom.</motion.h2>
-          <motion.p variants={fadeUp} style={{ fontSize: 16, color: "#64748b", maxWidth: 540, margin: "0 auto" }}>No paywalls. Unlimited top-of-funnel volume. Revenue generated only when we create real value for the user.</motion.p>
+          <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#1c1917", margin: "0 0 16px" }}>Free at the top. High-value at the bottom.</motion.h2>
+          <motion.p variants={fadeUp} style={{ fontSize: 16, color: "#78716c", maxWidth: 540, margin: "0 auto" }}>No paywalls. Unlimited top-of-funnel volume. Revenue generated only when we create real value for the user.</motion.p>
         </motion.div>
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }}
           style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 16 }}>
           {[
-            { icon: <Briefcase size={20} color="#2563eb" />, iconBg: "#eff6ff", title: "Lender Referral Commission", body: "When a buyer's deal closes with one of our lending partners, we receive a 1% referral fee on the originated loan. A typical UK acquisition loan of £200k–£500k generates £2,000–£5,000 per transaction from a user who used our free tool for 15 minutes.", tag: "1% per loan originated" },
+            { icon: <Briefcase size={20} color="#1c1917" />, iconBg: "#e7e5e4", title: "Lender Referral Commission", body: "When a buyer's deal closes with one of our lending partners, we receive a 1% referral fee on the originated loan. A typical UK acquisition loan of £200k–£500k generates £2,000–£5,000 per transaction from a user who used our free tool for 15 minutes.", tag: "1% per loan originated" },
             { icon: <Users size={20} color="#059669" />, iconBg: "#ecfdf5", title: "Buy-Side Buyer Database", body: "Every business seller who uses our tool opts into our proprietary buyer network — a live database of active UK searchers and ETA buyers. Brokers and M&A advisors pay a premium subscription to access this curated deal-flow pipeline.", tag: "Proprietary data asset" },
             { icon: <Activity size={20} color="#d97706" />, iconBg: "#fffbeb", title: "The Transaction Data Moat", body: "Every free triage logs target sectors, price ranges, and financial margins. We are building the largest proprietary database of active UK micro-cap M&A activity — a data asset with significant independent value.", tag: "Largest UK micro-cap dataset" },
           ].map(m => (
             <motion.div key={m.title} variants={fadeUp}>
               <SpotlightCard style={{ padding: "32px 28px", height: "100%" }}>
                 <div style={{ width: 44, height: 44, borderRadius: 12, background: m.iconBg, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>{m.icon}</div>
-                <div style={{ display: "inline-block", marginBottom: 14, fontSize: 10, fontWeight: 700, color: "#64748b", letterSpacing: "0.09em", textTransform: "uppercase", background: "#f8fafc", border: "1px solid #e2e8f0", padding: "3px 10px", borderRadius: 9999 }}>{m.tag}</div>
-                <h3 style={{ fontSize: 17, fontWeight: 700, color: "#0f172a", margin: "0 0 12px", letterSpacing: "-0.02em" }}>{m.title}</h3>
-                <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.7, margin: 0 }}>{m.body}</p>
+                <div style={{ display: "inline-block", marginBottom: 14, fontSize: 10, fontWeight: 700, color: "#78716c", letterSpacing: "0.09em", textTransform: "uppercase", background: "#faf9f7", border: "1px solid #d6d3d1", padding: "3px 10px", borderRadius: 9999 }}>{m.tag}</div>
+                <h3 style={{ fontSize: 17, fontWeight: 700, color: "#1c1917", margin: "0 0 12px", letterSpacing: "-0.02em" }}>{m.title}</h3>
+                <p style={{ fontSize: 14, color: "#78716c", lineHeight: 1.7, margin: 0 }}>{m.body}</p>
               </SpotlightCard>
             </motion.div>
           ))}
@@ -1027,18 +1027,18 @@ export default function HomePage() {
       {/* ── Testimonials ──────────────────────────────────────────────────── */}
       <section style={{ padding: "0 24px 120px", maxWidth: 1100, margin: "0 auto" }}>
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} style={{ textAlign: "center", marginBottom: 56 }}>
-          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>Testimonials</motion.p>
-          <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#0f172a", margin: 0 }}>Trusted by acquisition professionals.</motion.h2>
+          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#1c1917", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>Testimonials</motion.p>
+          <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#1c1917", margin: 0 }}>Trusted by acquisition professionals.</motion.h2>
         </motion.div>
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
           {TESTIMONIALS.map(t => (
             <motion.div key={t.name} variants={fadeUp}>
               <SpotlightCard style={{ padding: "28px 24px", height: "100%", display: "flex", flexDirection: "column" }}>
                 <div style={{ display: "flex", gap: 2, marginBottom: 16 }}>{Array.from({ length: t.rating }).map((_, i) => <Star key={i} size={13} color="#f59e0b" fill="#f59e0b" />)}</div>
-                <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.75, margin: "0 0 20px", flex: 1 }}>"{t.quote}"</p>
+                <p style={{ fontSize: 14, color: "#78716c", lineHeight: 1.75, margin: "0 0 20px", flex: 1 }}>"{t.quote}"</p>
                 <div>
-                  <p style={{ fontSize: 13, fontWeight: 700, color: "#0f172a", margin: "0 0 2px" }}>{t.name}</p>
-                  <p style={{ fontSize: 11, color: "#94a3b8", margin: 0 }}>{t.role}</p>
+                  <p style={{ fontSize: 13, fontWeight: 700, color: "#1c1917", margin: "0 0 2px" }}>{t.name}</p>
+                  <p style={{ fontSize: 11, color: "#a8a29e", margin: 0 }}>{t.role}</p>
                 </div>
               </SpotlightCard>
             </motion.div>
@@ -1052,13 +1052,13 @@ export default function HomePage() {
           className="grid-2col" style={{ gap: 16 }}>
           {/* Buyer CTA */}
           <motion.div variants={fadeUp}>
-            <div style={{ background: "linear-gradient(135deg,#1e3a8a,#2563eb)", borderRadius: 24, padding: "52px 40px", position: "relative", overflow: "hidden", height: "100%", display: "flex", flexDirection: "column" }}>
+            <div style={{ background: "linear-gradient(135deg,#292524,#1c1917)", borderRadius: 24, padding: "52px 40px", position: "relative", overflow: "hidden", height: "100%", display: "flex", flexDirection: "column" }}>
               <div style={{ position: "absolute", top: -60, right: -60, width: 200, height: 200, borderRadius: "50%", background: "rgba(255,255,255,0.07)", pointerEvents: "none" }} />
               <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.6)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>For Buyers</p>
               <h3 style={{ fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "#fff", margin: "0 0 14px", letterSpacing: "-0.03em", lineHeight: 1.15 }}>Audit a deal in under 30 seconds.</h3>
               <p style={{ fontSize: 14, color: "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: "0 0 32px", flex: 1 }}>No spreadsheets. No manual modelling. Paste a listing, adjust sliders, get bank-grade metrics and a credit memo instantly.</p>
               <Link href="/dashboard/triage" style={{ textDecoration: "none" }}>
-                <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} style={{ padding: "13px 24px", borderRadius: 12, border: "none", cursor: "pointer", background: "#fff", color: "#2563eb", fontSize: 14, fontWeight: 800, display: "inline-flex", alignItems: "center", gap: 8 }}>
+                <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} style={{ padding: "13px 24px", borderRadius: 12, border: "none", cursor: "pointer", background: "#fff", color: "#1c1917", fontSize: 14, fontWeight: 800, display: "inline-flex", alignItems: "center", gap: 8 }}>
                   Audit a Deal — Free <ArrowRight size={15} />
                 </motion.button>
               </Link>
@@ -1084,9 +1084,9 @@ export default function HomePage() {
       {/* ── Pricing ──────────────────────────────────────────────────────── */}
       <section id="pricing" style={{ padding: "0 24px 120px", maxWidth: 1200, margin: "0 auto" }}>
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} style={{ textAlign: "center", marginBottom: 56 }}>
-          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>Pricing</motion.p>
-          <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#0f172a", margin: "0 0 12px" }}>Aligned with every stage of the deal journey.</motion.h2>
-          <motion.p variants={fadeUp} style={{ fontSize: 15, color: "#64748b", maxWidth: 540, margin: "0 auto" }}>Start free. Upgrade when you need more firepower — and get every subscription fee back when you close.</motion.p>
+          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#1c1917", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>Pricing</motion.p>
+          <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#1c1917", margin: "0 0 12px" }}>Aligned with every stage of the deal journey.</motion.h2>
+          <motion.p variants={fadeUp} style={{ fontSize: 15, color: "#78716c", maxWidth: 540, margin: "0 auto" }}>Start free. Upgrade when you need more firepower — and get every subscription fee back when you close.</motion.p>
         </motion.div>
 
         {/* Debt Offset Guarantee banner */}
@@ -1096,7 +1096,7 @@ export default function HomePage() {
           display: "flex", alignItems: "center", gap: 18,
           marginBottom: 28, flexWrap: "wrap",
         }}>
-          <div style={{ width: 40, height: 40, borderRadius: 10, flexShrink: 0, background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>🔄</div>
+          <div style={{ width: 40, height: 40, borderRadius: 10, flexShrink: 0, background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>🔄</div>
           <div style={{ flex: 1, minWidth: 240 }}>
             <p style={{ fontSize: 13, fontWeight: 800, color: "#c4b5fd", margin: "0 0 3px", letterSpacing: "0.04em" }}>THE DEBT OFFSET GUARANTEE — UP TO £588 CASHBACK</p>
             <p style={{ fontSize: 12.5, color: "rgba(255,255,255,0.6)", margin: 0, lineHeight: 1.6 }}>
@@ -1104,7 +1104,7 @@ export default function HomePage() {
             </p>
           </div>
           <Link href="/dashboard/triage" style={{ textDecoration: "none", flexShrink: 0 }}>
-            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} style={{ padding: "9px 18px", borderRadius: 9, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff", fontSize: 13, fontWeight: 700, whiteSpace: "nowrap" }}>
+            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} style={{ padding: "9px 18px", borderRadius: 9, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff", fontSize: 13, fontWeight: 700, whiteSpace: "nowrap" }}>
               Start Free →
             </motion.button>
           </Link>
@@ -1135,30 +1135,30 @@ export default function HomePage() {
       {/* ── FAQ ───────────────────────────────────────────────────────────── */}
       <section id="faq" style={{ padding: "80px 24px 120px", maxWidth: 720, margin: "0 auto" }}>
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} style={{ textAlign: "center", marginBottom: 56 }}>
-          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>FAQ</motion.p>
-          <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#0f172a", margin: 0 }}>Common questions.</motion.h2>
+          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#1c1917", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>FAQ</motion.p>
+          <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#1c1917", margin: 0 }}>Common questions.</motion.h2>
         </motion.div>
-        <div style={{ border: "1px solid #e2e8f0", borderRadius: 20, padding: "0 28px", background: "#ffffff", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
+        <div style={{ border: "1px solid #d6d3d1", borderRadius: 20, padding: "0 28px", background: "#ffffff", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
           {FAQS.map(f => <FAQ key={f.q} {...f} />)}
         </div>
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
-      <footer style={{ borderTop: "1px solid #e2e8f0", padding: "48px 24px", display: "flex", flexDirection: "column", alignItems: "center", gap: 20, background: "#fff" }}>
+      <footer style={{ borderTop: "1px solid #d6d3d1", padding: "48px 24px", display: "flex", flexDirection: "column", alignItems: "center", gap: 20, background: "#fff" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#1e3a8a,#2563eb)" }}><BarChart3 size={13} color="#fff" /></div>
-          <span style={{ fontSize: 14, fontWeight: 700, color: "#0f172a" }}>Triage Finance</span>
+          <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#292524,#1c1917)" }}><BarChart3 size={13} color="#fff" /></div>
+          <span style={{ fontSize: 14, fontWeight: 700, color: "#1c1917" }}>Triage Finance</span>
         </div>
         <div style={{ display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center" }}>
           {[{ href: "/dashboard/triage", label: "Audit a Deal" }, { href: "/sell", label: "Value My Business" }, { href: "/deal-sourcing-guide", label: "Deal Sourcing Guide" }, { href: "/calculators/dscr-calculator", label: "DSCR Calculator" }, { href: "#pricing", label: "Pricing" }].map(l => (
-            <Link key={l.href} href={l.href} style={{ fontSize: 13, color: "#64748b", textDecoration: "none" }}
-              onMouseEnter={e => (e.currentTarget.style.color = "#0f172a")} onMouseLeave={e => (e.currentTarget.style.color = "#64748b")}>{l.label}</Link>
+            <Link key={l.href} href={l.href} style={{ fontSize: 13, color: "#78716c", textDecoration: "none" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#1c1917")} onMouseLeave={e => (e.currentTarget.style.color = "#78716c")}>{l.label}</Link>
           ))}
         </div>
-        <p style={{ fontSize: 12, color: "#94a3b8", maxWidth: 520, textAlign: "center", lineHeight: 1.65 }}>
+        <p style={{ fontSize: 12, color: "#a8a29e", maxWidth: 520, textAlign: "center", lineHeight: 1.65 }}>
           Triage Finance is a deal screening utility for educational and analytical purposes. Not authorised by the FCA. Not financial advice. Always engage a qualified accountant and solicitor before proceeding with any acquisition.
         </p>
-        <p style={{ fontSize: 11, color: "#cbd5e1", margin: 0 }}>© {new Date().getFullYear()} Triage Finance Ltd. All rights reserved.</p>
+        <p style={{ fontSize: 11, color: "#d6d3d1", margin: 0 }}>© {new Date().getFullYear()} Triage Finance Ltd. All rights reserved.</p>
       </footer>
     </div>
   );

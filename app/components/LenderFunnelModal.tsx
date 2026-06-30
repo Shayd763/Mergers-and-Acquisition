@@ -56,7 +56,7 @@ const TIMELINES = ["< 30 Days", "30 – 90 Days", "90+ Days", "Exploring options
 
 const TRANSMIT_LINES = [
   { tag: "PACKAGING",  text: "Compiling Deal Credit Memo PDF…",       color: "#a5b4fc" },
-  { tag: "CONNECTING", text: "Establishing secure routing node…",      color: "#94a3b8" },
+  { tag: "CONNECTING", text: "Establishing secure routing node…",      color: "#a8a29e" },
   { tag: "ENCRYPTING", text: "Signing package with deal reference…",   color: "#a5b4fc" },
   { tag: "SUCCESS",    text: "Deal package dispatched to {n} partner{s}.", color: "#34d399" },
 ];
@@ -145,7 +145,7 @@ export function LenderFunnelModal({
 
         {/* ── Header ── */}
         <div style={{
-          background: "#0f172a",
+          background: "#1c1917",
           padding: "20px 24px 16px",
           flexShrink: 0,
         }}>
@@ -154,24 +154,24 @@ export function LenderFunnelModal({
             {[1, 2, 3].map(s => (
               <div key={s} style={{
                 height: 4, flex: 1, borderRadius: 9999,
-                background: s <= step ? "#2563eb" : "#1e293b",
+                background: s <= step ? "#1c1917" : "#1e293b",
                 transition: "background 0.3s",
               }} />
             ))}
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div>
-              <p style={{ fontSize: 11, color: "#64748b", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.10em", margin: "0 0 4px" }}>
+              <p style={{ fontSize: 11, color: "#78716c", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.10em", margin: "0 0 4px" }}>
                 {step === 1 ? "Step 1 of 3" : step === 2 ? "Step 2 of 3" : "Transmitting"}
               </p>
-              <h2 style={{ fontSize: 17, fontWeight: 800, color: "#f1f5f9", margin: 0, letterSpacing: "-0.02em" }}>
+              <h2 style={{ fontSize: 17, fontWeight: 800, color: "#e7e5e4", margin: 0, letterSpacing: "-0.02em" }}>
                 {step === 1 ? "Select Financing Partners"
                  : step === 2 ? "Your Contact Details"
                  : done     ? "Submission Complete"
                  :             "Routing Deal Package"}
               </h2>
               {step === 1 && (
-                <p style={{ fontSize: 12, color: "#64748b", margin: "4px 0 0" }}>
+                <p style={{ fontSize: 12, color: "#78716c", margin: "4px 0 0" }}>
                   Your compiled Credit Memo will be sent to selected partners · Deal ref: <span style={{ color: "#a5b4fc", fontFamily: "monospace", fontSize: 11 }}>{dealId}</span>
                 </p>
               )}
@@ -181,7 +181,7 @@ export function LenderFunnelModal({
               style={{
                 background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.10)",
                 borderRadius: 7, padding: "5px 10px", cursor: "pointer",
-                color: "#94a3b8", fontSize: 16, lineHeight: 1, flexShrink: 0,
+                color: "#a8a29e", fontSize: 16, lineHeight: 1, flexShrink: 0,
               }}>
               ✕
             </button>
@@ -203,35 +203,35 @@ export function LenderFunnelModal({
                     style={{
                       display: "flex", alignItems: "center", gap: 14,
                       padding: "14px 16px", borderRadius: 12, border: "none", cursor: "pointer",
-                      background: on ? "#eff6ff" : "#f8fafc",
-                      outline: on ? "2px solid #2563eb" : "2px solid transparent",
+                      background: on ? "#e7e5e4" : "#faf9f7",
+                      outline: on ? "2px solid #1c1917" : "2px solid transparent",
                       transition: "all 0.15s", textAlign: "left", width: "100%",
                     }}>
                     <div style={{
                       width: 42, height: 42, borderRadius: 10, flexShrink: 0,
-                      background: on ? color : "#e2e8f0",
+                      background: on ? color : "#d6d3d1",
                       display: "flex", alignItems: "center", justifyContent: "center",
-                      color: on ? "#fff" : "#94a3b8", fontWeight: 800, fontSize: 13,
+                      color: on ? "#fff" : "#a8a29e", fontWeight: 800, fontSize: 13,
                       transition: "background 0.2s, color 0.2s",
                     }}>
                       {initials}
                     </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
-                        <span style={{ fontSize: 14, fontWeight: 700, color: "#0f172a" }}>{name}</span>
+                        <span style={{ fontSize: 14, fontWeight: 700, color: "#1c1917" }}>{name}</span>
                         <span style={{
                           fontSize: 10, fontWeight: 600, padding: "1px 7px", borderRadius: 9999,
-                          background: on ? "#ede9fe" : "#f1f5f9",
-                          color: on ? "#1e3a8a" : "#94a3b8",
-                          border: `1px solid ${on ? "#bfdbfe" : "#e2e8f0"}`,
+                          background: on ? "#ede9fe" : "#e7e5e4",
+                          color: on ? "#292524" : "#a8a29e",
+                          border: `1px solid ${on ? "#d6d3d1" : "#d6d3d1"}`,
                         }}>{badge}</span>
                       </div>
-                      <p style={{ fontSize: 12, color: "#64748b", margin: 0, lineHeight: 1.4 }}>{desc}</p>
+                      <p style={{ fontSize: 12, color: "#78716c", margin: 0, lineHeight: 1.4 }}>{desc}</p>
                     </div>
                     <div style={{
                       width: 22, height: 22, borderRadius: "50%", flexShrink: 0,
-                      border: `2px solid ${on ? "#2563eb" : "#cbd5e1"}`,
-                      background: on ? "#2563eb" : "transparent",
+                      border: `2px solid ${on ? "#1c1917" : "#d6d3d1"}`,
+                      background: on ? "#1c1917" : "transparent",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       color: "#fff", fontSize: 12, fontWeight: 700,
                       transition: "all 0.15s",
@@ -248,13 +248,13 @@ export function LenderFunnelModal({
           {step === 2 && (
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {/* Selected lenders summary */}
-              <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 10, padding: "12px 14px" }}>
-                <p style={{ fontSize: 11, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 6px" }}>Sending to</p>
+              <div style={{ background: "#faf9f7", border: "1px solid #d6d3d1", borderRadius: 10, padding: "12px 14px" }}>
+                <p style={{ fontSize: 11, fontWeight: 700, color: "#a8a29e", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 6px" }}>Sending to</p>
                 <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                   {LENDERS.filter(l => selected.has(l.id)).map(l => (
                     <span key={l.id} style={{
-                      fontSize: 12, fontWeight: 600, color: "#334155",
-                      background: "#fff", border: "1px solid #e2e8f0",
+                      fontSize: 12, fontWeight: 600, color: "#44403c",
+                      background: "#fff", border: "1px solid #d6d3d1",
                       borderRadius: 6, padding: "3px 10px",
                     }}>{l.name}</span>
                   ))}
@@ -262,7 +262,7 @@ export function LenderFunnelModal({
               </div>
 
               <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                <span style={{ fontSize: 12, fontWeight: 700, color: "#334155" }}>Full Name *</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#44403c" }}>Full Name *</span>
                 <input
                   type="text"
                   placeholder="James Whitmore"
@@ -274,7 +274,7 @@ export function LenderFunnelModal({
               </label>
 
               <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                <span style={{ fontSize: 12, fontWeight: 700, color: "#334155" }}>Contact Email *</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#44403c" }}>Contact Email *</span>
                 <input
                   type="email"
                   placeholder="james@searchfund.co.uk"
@@ -286,7 +286,7 @@ export function LenderFunnelModal({
               </label>
 
               <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                <span style={{ fontSize: 12, fontWeight: 700, color: "#334155" }}>Target Completion Timeline *</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#44403c" }}>Target Completion Timeline *</span>
                 <select
                   value={timeline}
                   onChange={e => setTimeline(e.target.value)}
@@ -298,14 +298,14 @@ export function LenderFunnelModal({
               </label>
 
               {/* Deal summary chip */}
-              <div style={{ background: "#eff6ff", border: "1px solid #bfdbfe", borderRadius: 10, padding: "12px 14px", display: "flex", gap: 16 }}>
+              <div style={{ background: "#e7e5e4", border: "1px solid #d6d3d1", borderRadius: 10, padding: "12px 14px", display: "flex", gap: 16 }}>
                 {[
                   ["Total Deal Size", `£${(totalCost / 1000).toFixed(0)}k`],
                   ["DSCR", `${dscr.toFixed(2)}×`],
                   ["Sector", sector ?? "SME"],
                 ].map(([l, v]) => (
                   <div key={l}>
-                    <p style={{ fontSize: 10, color: "#2563eb", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>{l}</p>
+                    <p style={{ fontSize: 10, color: "#1c1917", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>{l}</p>
                     <p style={{ fontSize: 14, fontWeight: 700, color: "#1e1b4b", margin: 0 }}>{v}</p>
                   </div>
                 ))}
@@ -360,16 +360,16 @@ export function LenderFunnelModal({
         </div>
 
         {/* ── Footer ── */}
-        <div style={{ padding: "16px 24px", borderTop: "1px solid #f1f5f9", flexShrink: 0, background: "#fafafa" }}>
+        <div style={{ padding: "16px 24px", borderTop: "1px solid #e7e5e4", flexShrink: 0, background: "#fafafa" }}>
           {/* Navigation buttons */}
           {step === 1 && (
             <button
               onClick={() => setStep(2)}
               style={{
-                width: "100%", background: "#2563eb", color: "#fff",
+                width: "100%", background: "#1c1917", color: "#fff",
                 border: "none", borderRadius: 9, padding: "13px 0",
                 fontSize: 14, fontWeight: 700, cursor: "pointer",
-                boxShadow: "0 4px 14px rgba(37,99,235,0.30)",
+                boxShadow: "0 4px 14px rgba(28,25,23,0.30)",
               }}>
               Continue with {nSelected} partner{nSelected !== 1 ? "s" : ""} →
             </button>
@@ -380,8 +380,8 @@ export function LenderFunnelModal({
               <button
                 onClick={() => setStep(1)}
                 style={{
-                  flex: 0, background: "#f8fafc", color: "#475569",
-                  border: "1px solid #e2e8f0", borderRadius: 9, padding: "12px 18px",
+                  flex: 0, background: "#faf9f7", color: "#475569",
+                  border: "1px solid #d6d3d1", borderRadius: 9, padding: "12px 18px",
                   fontSize: 14, fontWeight: 600, cursor: "pointer",
                 }}>
                 ← Back
@@ -390,11 +390,11 @@ export function LenderFunnelModal({
                 onClick={runTransmit}
                 disabled={!name.trim() || !email.includes("@") || !timeline}
                 style={{
-                  flex: 1, background: "#2563eb", color: "#fff",
+                  flex: 1, background: "#1c1917", color: "#fff",
                   border: "none", borderRadius: 9, padding: "12px 0",
                   fontSize: 14, fontWeight: 700, cursor: (!name.trim() || !email.includes("@") || !timeline) ? "not-allowed" : "pointer",
                   opacity: (!name.trim() || !email.includes("@") || !timeline) ? 0.5 : 1,
-                  boxShadow: "0 4px 14px rgba(37,99,235,0.28)",
+                  boxShadow: "0 4px 14px rgba(28,25,23,0.28)",
                 }}>
                 Submit to Lenders 🚀
               </button>
@@ -405,7 +405,7 @@ export function LenderFunnelModal({
             <button
               onClick={onClose}
               style={{
-                width: "100%", background: "#0f172a", color: "#fff",
+                width: "100%", background: "#1c1917", color: "#fff",
                 border: "none", borderRadius: 9, padding: "13px 0",
                 fontSize: 14, fontWeight: 700, cursor: "pointer",
               }}>
@@ -414,7 +414,7 @@ export function LenderFunnelModal({
           )}
 
           {/* Commission disclaimer */}
-          <p style={{ fontSize: 10, color: "#94a3b8", textAlign: "center", margin: "10px 0 0", lineHeight: 1.6 }}>
+          <p style={{ fontSize: 10, color: "#a8a29e", textAlign: "center", margin: "10px 0 0", lineHeight: 1.6 }}>
             Triage Finance is a commercial matching utility. We receive a standard referral commission from our
             lending partners upon successful loan origination at no additional cost to you.
             Introductions do not constitute financial advice. Loans subject to lender credit assessment.

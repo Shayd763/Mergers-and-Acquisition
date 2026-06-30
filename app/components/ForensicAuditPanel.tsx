@@ -67,7 +67,7 @@ function fmtDate(d: string | null | undefined): string {
 
 function scoreColor(score: string) {
   if (score === "ALERT") return { bg: "#7f1d1d", text: "#fca5a5", dot: "#ef4444" };
-  if (score === "REVIEW") return { bg: "#1e3a5f", text: "#93c5fd", dot: "#3b82f6" };
+  if (score === "REVIEW") return { bg: "#1e3a5f", text: "#a8a29e", dot: "#3b82f6" };
   return { bg: "#14532d", text: "#86efac", dot: "#22c55e" };
 }
 
@@ -75,7 +75,7 @@ function flagColors(status: string) {
   if (status === "AMBER" || status === "RED")
     return { border: "#d97706", bg: "rgba(217,119,6,0.08)", badge: "#92400e", badgeText: "#fbbf24" };
   if (status === "BLUE")
-    return { border: "#3b82f6", bg: "rgba(59,130,246,0.08)", badge: "#1e3a5f", badgeText: "#93c5fd" };
+    return { border: "#3b82f6", bg: "rgba(59,130,246,0.08)", badge: "#1e3a5f", badgeText: "#a8a29e" };
   return { border: "#22c55e", bg: "rgba(34,197,94,0.08)", badge: "#14532d", badgeText: "#86efac" };
 }
 
@@ -114,10 +114,10 @@ function FlagCard({ flag }: { flag: ReconciliationFlag }) {
           {flag.status}
         </span>
         <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: 600, fontSize: 13, color: "#f1f5f9", marginBottom: 4 }}>
+          <div style={{ fontWeight: 600, fontSize: 13, color: "#e7e5e4", marginBottom: 4 }}>
             {flag.title}
           </div>
-          <div style={{ fontSize: 12, color: "#94a3b8", lineHeight: 1.55 }}>
+          <div style={{ fontSize: 12, color: "#a8a29e", lineHeight: 1.55 }}>
             {flag.message}
           </div>
           {expanded && flag.detail && (
@@ -128,7 +128,7 @@ function FlagCard({ flag }: { flag: ReconciliationFlag }) {
                 background: "rgba(255,255,255,0.04)",
                 borderRadius: 5,
                 fontSize: 11.5,
-                color: "#cbd5e1",
+                color: "#d6d3d1",
                 lineHeight: 1.6,
               }}
             >
@@ -157,7 +157,7 @@ export function ForensicAuditPanel({ result, extracted }: Props) {
   return (
     <div
       style={{
-        background: "#0f172a",
+        background: "#1c1917",
         borderRadius: 12,
         overflow: "hidden",
         border: "1px solid #1e293b",
@@ -180,7 +180,7 @@ export function ForensicAuditPanel({ result, extracted }: Props) {
           <div style={{ fontSize: 11, color: "#475569", fontWeight: 600, letterSpacing: "0.08em", marginBottom: 2 }}>
             FORENSIC AUDIT · RECONCILIATION ENGINE
           </div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: "#f1f5f9" }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: "#e7e5e4" }}>
             {result.registry_company_name || "Unknown Company"}
             <span style={{ fontSize: 12, color: "#475569", marginLeft: 8, fontWeight: 400 }}>
               #{result.registry_company_number}
@@ -224,7 +224,7 @@ export function ForensicAuditPanel({ result, extracted }: Props) {
           background: "#111827",
           borderBottom: "1px solid #1e293b",
           fontSize: 12.5,
-          color: "#94a3b8",
+          color: "#a8a29e",
         }}
       >
         {result.summary}
@@ -307,24 +307,24 @@ export function ForensicAuditPanel({ result, extracted }: Props) {
               padding: "10px 12px",
             }}
           >
-            <div style={{ fontSize: 10, color: "#2563eb", fontWeight: 700, letterSpacing: "0.08em", marginBottom: 8 }}>
+            <div style={{ fontSize: 10, color: "#1c1917", fontWeight: 700, letterSpacing: "0.08em", marginBottom: 8 }}>
               <GlossaryTerm term="ValuationMultiple">MULTIPLE ADJUSTMENT</GlossaryTerm>
             </div>
             <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
-              <span style={{ fontSize: 18, fontWeight: 700, color: "#f1f5f9" }}>
+              <span style={{ fontSize: 18, fontWeight: 700, color: "#e7e5e4" }}>
                 {adj.adjusted_max_multiple.toFixed(2)}×
               </span>
-              <span style={{ fontSize: 12, color: "#94a3b8" }}>
+              <span style={{ fontSize: 12, color: "#a8a29e" }}>
                 max <GlossaryTerm term="SDE">SDE</GlossaryTerm> multiple
               </span>
             </div>
-            <div style={{ fontSize: 11, color: "#64748b", marginTop: 4 }}>
+            <div style={{ fontSize: 11, color: "#78716c", marginTop: 4 }}>
               Base {adj.base_max_multiple}× &nbsp;·&nbsp;
               <span style={{ color: adj.adjustment_pct >= 0 ? "#86efac" : "#fca5a5" }}>
                 {adjPct}
               </span>
             </div>
-            <div style={{ fontSize: 11, color: "#64748b", marginTop: 6, lineHeight: 1.5 }}>
+            <div style={{ fontSize: 11, color: "#78716c", marginTop: 6, lineHeight: 1.5 }}>
               {adj.adjustment_reason}
             </div>
           </div>
@@ -382,7 +382,7 @@ function DataRow({
         style={{
           fontSize: 12,
           fontWeight: 600,
-          color: valueColor ?? "#cbd5e1",
+          color: valueColor ?? "#d6d3d1",
           textAlign: "right",
         }}
       >

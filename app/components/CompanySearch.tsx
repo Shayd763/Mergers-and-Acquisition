@@ -105,28 +105,28 @@ function ResultRow({ r, onSelect, compact }: { r: CompanySearchResult; onSelect:
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        width: "100%", background: hovered ? "#f8fafc" : "transparent",
+        width: "100%", background: hovered ? "#faf9f7" : "transparent",
         border: "none", cursor: "pointer",
         padding: compact ? "11px 16px" : "14px 16px",
         textAlign: "left", display: "flex", justifyContent: "space-between",
         alignItems: "flex-start", gap: 12,
-        borderBottom: "1px solid #f1f5f9",
+        borderBottom: "1px solid #e7e5e4",
         transition: "background 0.1s",
       }}
     >
       <div style={{ minWidth: 0, flex: 1 }}>
-        <p style={{ fontSize: compact ? 13 : 14, fontWeight: 700, color: "#0f172a", margin: "0 0 3px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        <p style={{ fontSize: compact ? 13 : 14, fontWeight: 700, color: "#1c1917", margin: "0 0 3px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {r.company_name}
         </p>
-        <p style={{ fontSize: compact ? 11 : 12, color: "#94a3b8", margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        <p style={{ fontSize: compact ? 11 : 12, color: "#a8a29e", margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {r.address_snippet}
         </p>
       </div>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4, flexShrink: 0 }}>
-        <span style={{ fontSize: 10, fontWeight: 700, color: "#2563eb", background: "#eff6ff", border: "1px solid #bfdbfe", borderRadius: 6, padding: "2px 7px", fontFamily: "monospace" }}>
+        <span style={{ fontSize: 10, fontWeight: 700, color: "#1c1917", background: "#e7e5e4", border: "1px solid #d6d3d1", borderRadius: 6, padding: "2px 7px", fontFamily: "monospace" }}>
           #{r.company_number}
         </span>
-        <span style={{ fontSize: 9, fontWeight: 700, color: isActive ? "#059669" : "#94a3b8", background: isActive ? "#ecfdf5" : "#f8fafc", border: `1px solid ${isActive ? "#a7f3d0" : "#e2e8f0"}`, borderRadius: 4, padding: "1px 5px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+        <span style={{ fontSize: 9, fontWeight: 700, color: isActive ? "#059669" : "#a8a29e", background: isActive ? "#ecfdf5" : "#faf9f7", border: `1px solid ${isActive ? "#a7f3d0" : "#d6d3d1"}`, borderRadius: 4, padding: "1px 5px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
           {r.company_status ?? "Unknown"}
         </span>
       </div>
@@ -140,7 +140,7 @@ function MetadataPanel({ details, onDismiss }: { details: CompanyDetails; onDism
   const hasOutstanding = details.outstanding_charges.length > 0 || details.has_charges;
 
   return (
-    <div style={{ background: "#0f172a", border: "1px solid #1e293b", borderRadius: 14, overflow: "hidden", boxShadow: "0 8px 32px rgba(0,0,0,0.2)", marginTop: 12 }}>
+    <div style={{ background: "#1c1917", border: "1px solid #1e293b", borderRadius: 14, overflow: "hidden", boxShadow: "0 8px 32px rgba(0,0,0,0.2)", marginTop: 12 }}>
       {/* Header */}
       <div style={{ padding: "16px 20px", borderBottom: "1px solid #1e293b", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
         <div>
@@ -150,10 +150,10 @@ function MetadataPanel({ details, onDismiss }: { details: CompanyDetails; onDism
               Companies House · Verified Active
             </span>
           </div>
-          <p style={{ fontSize: 16, fontWeight: 800, color: "#f8fafc", margin: "0 0 2px", letterSpacing: "-0.02em" }}>
+          <p style={{ fontSize: 16, fontWeight: 800, color: "#faf9f7", margin: "0 0 2px", letterSpacing: "-0.02em" }}>
             {details.company_name}
           </p>
-          <p style={{ fontSize: 12, color: "#64748b", margin: 0, fontFamily: "monospace" }}>
+          <p style={{ fontSize: 12, color: "#78716c", margin: 0, fontFamily: "monospace" }}>
             #{details.company_number}
             {details.registered_office_address && ` · ${details.registered_office_address}`}
           </p>
@@ -165,12 +165,12 @@ function MetadataPanel({ details, onDismiss }: { details: CompanyDetails; onDism
       <div style={{ padding: "14px 20px", borderBottom: "1px solid #1e293b", display: "flex", gap: 16, flexWrap: "wrap" }}>
         <div>
           <p style={{ fontSize: 9, fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 3px" }}>Business Age</p>
-          <p style={{ fontSize: 12, fontWeight: 600, color: "#94a3b8", margin: 0 }}>{yearsActive(details.date_of_creation)}</p>
+          <p style={{ fontSize: 12, fontWeight: 600, color: "#a8a29e", margin: 0 }}>{yearsActive(details.date_of_creation)}</p>
         </div>
         {details.sic_codes.length > 0 && (
           <div>
             <p style={{ fontSize: 9, fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 3px" }}>SIC Codes</p>
-            <p style={{ fontSize: 12, fontWeight: 600, color: "#94a3b8", margin: 0 }}>{details.sic_codes.slice(0, 2).join(", ")}</p>
+            <p style={{ fontSize: 12, fontWeight: 600, color: "#a8a29e", margin: 0 }}>{details.sic_codes.slice(0, 2).join(", ")}</p>
           </div>
         )}
       </div>
@@ -216,7 +216,7 @@ function MetadataPanel({ details, onDismiss }: { details: CompanyDetails; onDism
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             {details.officers.slice(0, 5).map((o, i) => (
               <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 12, fontWeight: 600, color: "#e2e8f0" }}>{o.name}</span>
+                <span style={{ fontSize: 12, fontWeight: 600, color: "#d6d3d1" }}>{o.name}</span>
                 <span style={{ fontSize: 9, fontWeight: 700, color: "#818cf8", background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: 9999, padding: "2px 8px", whiteSpace: "nowrap", textTransform: "uppercase", letterSpacing: "0.06em" }}>
                   {fmtRole(o.role)}
                 </span>
@@ -247,7 +247,7 @@ interface SearchInputProps {
 function SearchInput({ inputRef, value, searching, autoFocus, onChange, onFocused, onClear }: SearchInputProps) {
   return (
     <div style={{ position: "relative" }}>
-      <div style={{ position: "absolute", left: 13, top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: searching ? "#2563eb" : "#94a3b8", transition: "color 0.15s" }}>
+      <div style={{ position: "absolute", left: 13, top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: searching ? "#1c1917" : "#a8a29e", transition: "color 0.15s" }}>
         {searching ? (
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} style={{ animation: "spin 0.7s linear infinite" }}>
             <path strokeLinecap="round" d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
@@ -271,29 +271,29 @@ function SearchInput({ inputRef, value, searching, autoFocus, onChange, onFocuse
           width: "100%",
           padding: "11px 40px 11px 38px",
           background: "#fff",
-          border: "1.5px solid #e2e8f0",
+          border: "1.5px solid #d6d3d1",
           borderRadius: 10,
           fontSize: 16,
-          color: "#0f172a",
+          color: "#1c1917",
           outline: "none",
           fontFamily: "inherit",
           boxSizing: "border-box",
           transition: "border-color 0.15s, box-shadow 0.15s",
         }}
         onFocus={e => {
-          e.currentTarget.style.borderColor = "#2563eb";
-          e.currentTarget.style.boxShadow = "0 0 0 3px rgba(37,99,235,0.12)";
+          e.currentTarget.style.borderColor = "#1c1917";
+          e.currentTarget.style.boxShadow = "0 0 0 3px rgba(28,25,23,0.12)";
           onFocused();
         }}
         onBlur={e => {
-          e.currentTarget.style.borderColor = "#e2e8f0";
+          e.currentTarget.style.borderColor = "#d6d3d1";
           e.currentTarget.style.boxShadow = "none";
         }}
       />
       {value.length > 0 && (
         <button
           onPointerDown={e => { e.preventDefault(); onClear(); }}
-          style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#94a3b8", display: "flex", padding: 4, lineHeight: 1, borderRadius: 4 }}
+          style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#a8a29e", display: "flex", padding: 4, lineHeight: 1, borderRadius: 4 }}
           aria-label="Clear search"
         >
           <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -446,12 +446,12 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
       {!isMobile && showResults && (
         <div style={{
           position: "absolute", left: 0, right: 0, top: "calc(100% + 6px)", zIndex: 200,
-          background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12,
+          background: "#fff", border: "1px solid #d6d3d1", borderRadius: 12,
           boxShadow: "0 8px 32px rgba(0,0,0,0.12)", overflow: "hidden",
           maxHeight: 320, display: "flex", flexDirection: "column",
         }}>
           {searching && results.length === 0 && (
-            <div style={{ padding: "14px 16px", fontSize: 13, color: "#94a3b8", textAlign: "center" }}>Searching Companies House…</div>
+            <div style={{ padding: "14px 16px", fontSize: 13, color: "#a8a29e", textAlign: "center" }}>Searching Companies House…</div>
           )}
           <div ref={listRef} style={{ overflowY: "auto", flex: 1 }}>
             {results.map(r => (
@@ -459,8 +459,8 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
             ))}
           </div>
           {results.length > 0 && (
-            <div style={{ padding: "7px 14px", borderTop: "1px solid #f1f5f9", background: "#f8fafc" }}>
-              <p style={{ fontSize: 10, color: "#94a3b8", margin: 0 }}>{results.length} result{results.length !== 1 ? "s" : ""} from Companies House</p>
+            <div style={{ padding: "7px 14px", borderTop: "1px solid #e7e5e4", background: "#faf9f7" }}>
+              <p style={{ fontSize: 10, color: "#a8a29e", margin: 0 }}>{results.length} result{results.length !== 1 ? "s" : ""} from Companies House</p>
             </div>
           )}
         </div>
@@ -479,7 +479,7 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
           {/* Top bar: cancel + search input */}
           <div style={{
             padding: "12px 16px 10px",
-            borderBottom: "1px solid #f1f5f9",
+            borderBottom: "1px solid #e7e5e4",
             display: "flex", alignItems: "center", gap: 10,
             flexShrink: 0,
             background: "#fff",
@@ -487,7 +487,7 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
             {/* Cancel */}
             <button
               onPointerDown={() => setOpen(false)}
-              style={{ background: "none", border: "none", cursor: "pointer", color: "#2563eb", fontSize: 14, fontWeight: 600, padding: "4px 0", whiteSpace: "nowrap", flexShrink: 0 }}
+              style={{ background: "none", border: "none", cursor: "pointer", color: "#1c1917", fontSize: 14, fontWeight: 600, padding: "4px 0", whiteSpace: "nowrap", flexShrink: 0 }}
             >
               Cancel
             </button>
@@ -507,16 +507,16 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
           </div>
 
           {/* Status row: result count / loading */}
-          <div style={{ padding: "8px 16px", background: "#f8fafc", borderBottom: "1px solid #f1f5f9", flexShrink: 0, minHeight: 34, display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ padding: "8px 16px", background: "#faf9f7", borderBottom: "1px solid #e7e5e4", flexShrink: 0, minHeight: 34, display: "flex", alignItems: "center", gap: 8 }}>
             {searching ? (
               <>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth={2.5} style={{ animation: "spin 0.7s linear infinite", flexShrink: 0 }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1c1917" strokeWidth={2.5} style={{ animation: "spin 0.7s linear infinite", flexShrink: 0 }}>
                   <path strokeLinecap="round" d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
                 </svg>
-                <span style={{ fontSize: 11, color: "#64748b" }}>Searching Companies House…</span>
+                <span style={{ fontSize: 11, color: "#78716c" }}>Searching Companies House…</span>
               </>
             ) : results.length > 0 ? (
-              <span style={{ fontSize: 11, color: "#64748b" }}>{results.length} result{results.length !== 1 ? "s" : ""} — tap to select</span>
+              <span style={{ fontSize: 11, color: "#78716c" }}>{results.length} result{results.length !== 1 ? "s" : ""} — tap to select</span>
             ) : null}
           </div>
 
@@ -524,8 +524,8 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
           <div ref={listRef} style={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch" as never, overscrollBehavior: "contain", minHeight: 0 }}>
             {!searching && results.length === 0 && query.length >= 2 && (
               <div style={{ padding: "48px 16px", textAlign: "center" }}>
-                <p style={{ fontSize: 14, fontWeight: 600, color: "#334155", margin: "0 0 6px" }}>No companies found</p>
-                <p style={{ fontSize: 12, color: "#94a3b8", margin: 0 }}>Try a different name or company number</p>
+                <p style={{ fontSize: 14, fontWeight: 600, color: "#44403c", margin: "0 0 6px" }}>No companies found</p>
+                <p style={{ fontSize: 12, color: "#a8a29e", margin: 0 }}>Try a different name or company number</p>
               </div>
             )}
 
@@ -536,9 +536,9 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
             {results.length > 0 && (
               <div style={{ padding: "24px 16px 32px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
                 {results.length === 1 && (
-                  <p style={{ fontSize: 13, color: "#64748b", margin: 0 }}>1 company matched — tap to view details</p>
+                  <p style={{ fontSize: 13, color: "#78716c", margin: 0 }}>1 company matched — tap to view details</p>
                 )}
-                <p style={{ fontSize: 11, color: "#cbd5e1", margin: 0 }}>Data sourced from Companies House · {new Date().getFullYear()}</p>
+                <p style={{ fontSize: 11, color: "#d6d3d1", margin: 0 }}>Data sourced from Companies House · {new Date().getFullYear()}</p>
               </div>
             )}
           </div>
@@ -557,11 +557,11 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
 
       {/* Loading details */}
       {loadingDetails && (
-        <div style={{ marginTop: 10, padding: "12px 16px", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 10, display: "flex", alignItems: "center", gap: 10 }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth={2.5} style={{ animation: "spin 0.7s linear infinite", flexShrink: 0 }}>
+        <div style={{ marginTop: 10, padding: "12px 16px", background: "#faf9f7", border: "1px solid #d6d3d1", borderRadius: 10, display: "flex", alignItems: "center", gap: 10 }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1c1917" strokeWidth={2.5} style={{ animation: "spin 0.7s linear infinite", flexShrink: 0 }}>
             <path strokeLinecap="round" d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
           </svg>
-          <span style={{ fontSize: 12, color: "#64748b" }}>Fetching official company record, directors & charges…</span>
+          <span style={{ fontSize: 12, color: "#78716c" }}>Fetching official company record, directors & charges…</span>
         </div>
       )}
 

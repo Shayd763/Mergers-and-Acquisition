@@ -60,7 +60,7 @@ export function EmailCaptureModal({ isOpen, onCaptured, onClose, headline, subli
       }}>
         {/* Header */}
         <div style={{
-          background: "linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%)",
+          background: "linear-gradient(135deg, #1c1917 0%, #292524 100%)",
           padding: "28px 28px 22px",
         }}>
           <div style={{ fontSize: 28, marginBottom: 10 }}>🔒</div>
@@ -73,13 +73,13 @@ export function EmailCaptureModal({ isOpen, onCaptured, onClose, headline, subli
         </div>
 
         {/* Social proof bar */}
-        <div style={{ background: "#f0f4ff", borderBottom: "1px solid #bfdbfe", padding: "8px 28px", display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ background: "#f0f4ff", borderBottom: "1px solid #d6d3d1", padding: "8px 28px", display: "flex", alignItems: "center", gap: 8 }}>
           <div style={{ display: "flex", gap: -4 }}>
-            {["#2563eb","#1e3a8a","#06b6d4","#059669","#d97706"].map((c, i) => (
+            {["#1c1917","#292524","#06b6d4","#059669","#d97706"].map((c, i) => (
               <div key={i} style={{ width: 18, height: 18, borderRadius: "50%", background: c, border: "2px solid #f0f4ff", marginLeft: i > 0 ? -5 : 0, flexShrink: 0 }} />
             ))}
           </div>
-          <span style={{ fontSize: 11, color: "#2563eb", fontWeight: 600 }}>
+          <span style={{ fontSize: 11, color: "#1c1917", fontWeight: 600 }}>
             3,241+ deal analysts already on Triage Finance
           </span>
         </div>
@@ -90,38 +90,38 @@ export function EmailCaptureModal({ isOpen, onCaptured, onClose, headline, subli
             <div style={{ textAlign: "center", padding: "16px 0" }}>
               <div style={{ fontSize: 38, marginBottom: 10 }}>✅</div>
               <p style={{ fontSize: 15, fontWeight: 700, color: "#059669", margin: "0 0 4px" }}>You&apos;re in!</p>
-              <p style={{ fontSize: 12, color: "#64748b", margin: 0 }}>Unlocking your analysis now…</p>
+              <p style={{ fontSize: 12, color: "#78716c", margin: 0 }}>Unlocking your analysis now…</p>
             </div>
           ) : (
             <>
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <label style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: "#334155" }}>Your name</span>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: "#44403c" }}>Your name</span>
                   <input
                     type="text" placeholder="James Smith" value={name}
                     onChange={e => setName(e.target.value)}
                     onKeyDown={e => { if (e.key === "Enter" && ready) handleSubmit(); }}
                     autoFocus
                     style={{
-                      padding: "10px 14px", borderRadius: 9, border: "1.5px solid #e2e8f0",
+                      padding: "10px 14px", borderRadius: 9, border: "1.5px solid #d6d3d1",
                       fontSize: 14, outline: "none", fontFamily: "inherit",
                     }}
-                    onFocus={e => { e.currentTarget.style.borderColor = "#2563eb"; }}
-                    onBlur={e => { e.currentTarget.style.borderColor = "#e2e8f0"; }}
+                    onFocus={e => { e.currentTarget.style.borderColor = "#1c1917"; }}
+                    onBlur={e => { e.currentTarget.style.borderColor = "#d6d3d1"; }}
                   />
                 </label>
                 <label style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: "#334155" }}>Work email</span>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: "#44403c" }}>Work email</span>
                   <input
                     type="email" placeholder="james@searchfund.co.uk" value={email}
                     onChange={e => setEmail(e.target.value)}
                     onKeyDown={e => { if (e.key === "Enter" && ready) handleSubmit(); }}
                     style={{
-                      padding: "10px 14px", borderRadius: 9, border: "1.5px solid #e2e8f0",
+                      padding: "10px 14px", borderRadius: 9, border: "1.5px solid #d6d3d1",
                       fontSize: 14, outline: "none", fontFamily: "inherit",
                     }}
-                    onFocus={e => { e.currentTarget.style.borderColor = "#2563eb"; }}
-                    onBlur={e => { e.currentTarget.style.borderColor = "#e2e8f0"; }}
+                    onFocus={e => { e.currentTarget.style.borderColor = "#1c1917"; }}
+                    onBlur={e => { e.currentTarget.style.borderColor = "#d6d3d1"; }}
                   />
                 </label>
               </div>
@@ -131,22 +131,22 @@ export function EmailCaptureModal({ isOpen, onCaptured, onClose, headline, subli
                 disabled={!ready}
                 style={{
                   marginTop: 16, width: "100%", padding: "13px 0",
-                  background: ready ? "linear-gradient(135deg,#2563eb,#1e3a8a)" : "#e2e8f0",
-                  color: ready ? "#fff" : "#94a3b8",
+                  background: ready ? "linear-gradient(135deg,#1c1917,#292524)" : "#d6d3d1",
+                  color: ready ? "#fff" : "#a8a29e",
                   border: "none", borderRadius: 10, fontSize: 14, fontWeight: 700,
                   cursor: ready ? "pointer" : "not-allowed",
-                  boxShadow: ready ? "0 4px 14px rgba(37,99,235,0.30)" : "none",
+                  boxShadow: ready ? "0 4px 14px rgba(28,25,23,0.30)" : "none",
                   transition: "all 0.2s",
                 }}>
                 Unlock for free →
               </button>
 
-              <p style={{ fontSize: 11, color: "#94a3b8", textAlign: "center", margin: "10px 0 0", lineHeight: 1.55 }}>
+              <p style={{ fontSize: 11, color: "#a8a29e", textAlign: "center", margin: "10px 0 0", lineHeight: 1.55 }}>
                 No payment required · Cancel anytime · Data never sold
               </p>
               <button onClick={onClose} style={{
                 display: "block", width: "100%", marginTop: 6,
-                fontSize: 11, color: "#94a3b8", background: "none",
+                fontSize: 11, color: "#a8a29e", background: "none",
                 border: "none", cursor: "pointer", textAlign: "center",
                 textDecoration: "underline",
               }}>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useRef, useCallback } from "react";
 
 /* ─── Glossary data ──────────────────────────────────────────────────────── */
@@ -429,14 +429,14 @@ export function GlossaryTerm({ term, children }: Props) {
             wordBreak: "break-word",
           }}
         >
-          <p style={{ fontSize: 12, fontWeight: 800, color: "#f1f5f9", margin: "0 0 2px", letterSpacing: "-0.01em" }}>
+          <p style={{ fontSize: 12, fontWeight: 800, color: "#e7e5e4", margin: "0 0 2px", letterSpacing: "-0.01em" }}>
             {entry.fullName}
           </p>
           <div style={{ height: 1, background: "rgba(255,255,255,0.08)", margin: "8px 0" }} />
-          <p style={{ fontSize: 12, color: "#cbd5e1", margin: "0 0 10px", lineHeight: 1.65 }}>
+          <p style={{ fontSize: 12, color: "#d6d3d1", margin: "0 0 10px", lineHeight: 1.65 }}>
             {entry.definition}
           </p>
-          <p style={{ fontSize: 11, color: "#94a3b8", margin: 0, lineHeight: 1.6 }}>
+          <p style={{ fontSize: 11, color: "#a8a29e", margin: 0, lineHeight: 1.6 }}>
             <span style={{ fontWeight: 700, color: "#a5b4fc" }}>In practice: </span>
             <span style={{ fontStyle: "italic" }}>{entry.usage}</span>
           </p>

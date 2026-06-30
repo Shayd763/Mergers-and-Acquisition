@@ -44,7 +44,7 @@ const TIMEFRAME_COLOR: Record<string, string> = {
   Immediate:    "#a5b4fc",
   "1–3 months": "#34d399",
   "3–12 months":"#fcd34d",
-  "Long-term":  "#94a3b8",
+  "Long-term":  "#a8a29e",
 };
 
 const BAND_EXPLAIN: Record<string, { color: string; description: string }> = {
@@ -60,7 +60,7 @@ const BAND_EXPLAIN: Record<string, { color: string; description: string }> = {
 function SectionHeader({ title, sub }: { title: string; sub?: string }) {
   return (
     <div style={{ marginBottom: 16 }}>
-      <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.12em", textTransform: "uppercase" }}>{title}</div>
+      <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.12em", textTransform: "uppercase" }}>{title}</div>
       {sub && <div style={{ fontSize: 11, color: "#475569", marginTop: 3 }}>{sub}</div>}
     </div>
   );
@@ -158,7 +158,7 @@ function FactorRow({ factor }: { factor: DetailedFactor }) {
   const pct = factor.max_score > 0 ? Math.max(0, (factor.earned / factor.max_score)) * 100 : 0;
 
   return (
-    <div style={{ borderBottom: "1px solid #0f172a" }}>
+    <div style={{ borderBottom: "1px solid #1c1917" }}>
       <button
         onClick={() => setOpen(o => !o)}
         style={{
@@ -168,13 +168,13 @@ function FactorRow({ factor }: { factor: DetailedFactor }) {
         }}
       >
         <div style={{ textAlign: "left" }}>
-          <div style={{ fontSize: 12.5, fontWeight: 600, color: "#e2e8f0" }}>{factor.name}</div>
+          <div style={{ fontSize: 12.5, fontWeight: 600, color: "#d6d3d1" }}>{factor.name}</div>
           <div style={{ fontSize: 11, color: "#475569", marginTop: 2 }}>{factor.finding}</div>
         </div>
 
         {/* Progress bar */}
         <div>
-          <div style={{ height: 5, background: "#0f172a", borderRadius: 9999, overflow: "hidden" }}>
+          <div style={{ height: 5, background: "#1c1917", borderRadius: 9999, overflow: "hidden" }}>
             <div style={{ width: `${pct}%`, height: "100%", background: sc.bar, borderRadius: 9999, transition: "width 0.6s ease" }} />
           </div>
         </div>
@@ -187,17 +187,17 @@ function FactorRow({ factor }: { factor: DetailedFactor }) {
         </div>
 
         {/* Chevron */}
-        <span style={{ color: "#334155", fontSize: 12, transition: "transform 0.2s", display: "inline-block", transform: open ? "rotate(180deg)" : "none" }}>▾</span>
+        <span style={{ color: "#44403c", fontSize: 12, transition: "transform 0.2s", display: "inline-block", transform: open ? "rotate(180deg)" : "none" }}>▾</span>
       </button>
 
       {open && (
         <div style={{ padding: "0 16px 14px 16px", background: sc.bg }}>
-          <p style={{ fontSize: 12, color: "#94a3b8", lineHeight: 1.7, margin: 0 }}>{factor.detail}</p>
+          <p style={{ fontSize: 12, color: "#a8a29e", lineHeight: 1.7, margin: 0 }}>{factor.detail}</p>
           <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
-            <span style={{ fontSize: 10, color: "#475569", background: "#0f172a", padding: "2px 8px", borderRadius: 4 }}>
+            <span style={{ fontSize: 10, color: "#475569", background: "#1c1917", padding: "2px 8px", borderRadius: 4 }}>
               Category: {factor.category}
             </span>
-            <span style={{ fontSize: 10, color: "#475569", background: "#0f172a", padding: "2px 8px", borderRadius: 4 }}>
+            <span style={{ fontSize: 10, color: "#475569", background: "#1c1917", padding: "2px 8px", borderRadius: 4 }}>
               Weight: {factor.weight}
             </span>
           </div>
@@ -211,8 +211,8 @@ function FactorRow({ factor }: { factor: DetailedFactor }) {
 
 function ActionCard({ action, rank }: { action: ImprovementAction; rank: number }) {
   const [open, setOpen] = useState(false);
-  const diffColor = DIFFICULTY_COLOR[action.difficulty] ?? "#94a3b8";
-  const tfColor = TIMEFRAME_COLOR[action.timeframe] ?? "#94a3b8";
+  const diffColor = DIFFICULTY_COLOR[action.difficulty] ?? "#a8a29e";
+  const tfColor = TIMEFRAME_COLOR[action.timeframe] ?? "#a8a29e";
 
   return (
     <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 9, overflow: "hidden", marginBottom: 10 }}>
@@ -226,7 +226,7 @@ function ActionCard({ action, rank }: { action: ImprovementAction; rank: number 
         </div>
 
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "#e2e8f0", marginBottom: 6 }}>{action.title}</div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "#d6d3d1", marginBottom: 6 }}>{action.title}</div>
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             <span style={{ fontSize: 10, fontWeight: 700, color: "#22c55e", background: "rgba(34,197,94,0.1)", padding: "2px 8px", borderRadius: 4 }}>
               +{action.potential_gain} pts potential
@@ -240,13 +240,13 @@ function ActionCard({ action, rank }: { action: ImprovementAction; rank: number 
           </div>
         </div>
 
-        <span style={{ color: "#334155", fontSize: 14, flexShrink: 0, marginTop: 4, transform: open ? "rotate(180deg)" : "none", display: "inline-block", transition: "transform 0.2s" }}>▾</span>
+        <span style={{ color: "#44403c", fontSize: 14, flexShrink: 0, marginTop: 4, transform: open ? "rotate(180deg)" : "none", display: "inline-block", transition: "transform 0.2s" }}>▾</span>
       </button>
 
       {open && (
         <div style={{ padding: "0 16px 14px 56px", borderTop: "1px solid #1e293b" }}>
-          <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginTop: 12, marginBottom: 6 }}>HOW TO IMPROVE</div>
-          <p style={{ fontSize: 12, color: "#94a3b8", lineHeight: 1.7, margin: 0 }}>{action.how}</p>
+          <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", marginTop: 12, marginBottom: 6 }}>HOW TO IMPROVE</div>
+          <p style={{ fontSize: 12, color: "#a8a29e", lineHeight: 1.7, margin: 0 }}>{action.how}</p>
         </div>
       )}
     </div>
@@ -264,20 +264,20 @@ function fmtM(v: number): string {
 function MultipleBracket({ low, mid, high, label, dimColor }: { low: number; mid: number; high: number; label: string; dimColor: string }) {
   return (
     <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: "14px 18px" }}>
-      <div style={{ fontSize: 9, fontWeight: 700, color: "#334155", letterSpacing: "0.12em", marginBottom: 10 }}>{label}</div>
+      <div style={{ fontSize: 9, fontWeight: 700, color: "#44403c", letterSpacing: "0.12em", marginBottom: 10 }}>{label}</div>
       <div style={{ display: "flex", alignItems: "flex-end", gap: 6 }}>
         <div style={{ textAlign: "center", flex: 1 }}>
           <div style={{ fontSize: 10, color: "#475569", marginBottom: 3 }}>LOW</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: "#94a3b8" }}>{low.toFixed(1)}×</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: "#a8a29e" }}>{low.toFixed(1)}×</div>
         </div>
         <div style={{ textAlign: "center", flex: 1 }}>
           <div style={{ fontSize: 10, color: "#475569", marginBottom: 3 }}>MID</div>
           <div style={{ fontSize: 28, fontWeight: 900, color: dimColor, lineHeight: 1 }}>{mid.toFixed(1)}×</div>
-          <div style={{ fontSize: 9, color: "#334155", marginTop: 2 }}>POINT ESTIMATE</div>
+          <div style={{ fontSize: 9, color: "#44403c", marginTop: 2 }}>POINT ESTIMATE</div>
         </div>
         <div style={{ textAlign: "center", flex: 1 }}>
           <div style={{ fontSize: 10, color: "#475569", marginBottom: 3 }}>HIGH</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: "#94a3b8" }}>{high.toFixed(1)}×</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: "#a8a29e" }}>{high.toFixed(1)}×</div>
         </div>
       </div>
     </div>
@@ -289,14 +289,14 @@ function ValuationTab({ val, creditBand, p }: { val: ValuationEstimate | null; c
     return (
       <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: 32, textAlign: "center" }}>
         <div style={{ fontSize: 14, fontWeight: 700, color: "#475569", marginBottom: 8 }}>No valuation data</div>
-        <div style={{ fontSize: 12, color: "#334155" }}>Valuation estimate could not be generated.</div>
+        <div style={{ fontSize: 12, color: "#44403c" }}>Valuation estimate could not be generated.</div>
       </div>
     );
   }
 
   const hasEV = val.ev_low != null && val.ev_mid != null && val.ev_high != null;
   const adjDir = val.total_adjustment_pct > 0 ? "premium" : val.total_adjustment_pct < 0 ? "discount" : "inline";
-  const adjColor = val.total_adjustment_pct > 0 ? "#22c55e" : val.total_adjustment_pct < 0 ? "#ef4444" : "#94a3b8";
+  const adjColor = val.total_adjustment_pct > 0 ? "#22c55e" : val.total_adjustment_pct < 0 ? "#ef4444" : "#a8a29e";
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
@@ -317,9 +317,9 @@ function ValuationTab({ val, creditBand, p }: { val: ValuationEstimate | null; c
             {val.total_adjustment_pct > 0 ? "+" : ""}{val.total_adjustment_pct.toFixed(0)}%
           </div>
         </div>
-        <div style={{ flex: 1, fontSize: 12, color: "#94a3b8", lineHeight: 1.5 }}>
+        <div style={{ flex: 1, fontSize: 12, color: "#a8a29e", lineHeight: 1.5 }}>
           This company trades at a <strong style={{ color: adjColor }}>{Math.abs(val.total_adjustment_pct).toFixed(0)}% {adjDir}</strong> to
-          the {val.sector_label} sector baseline of <strong style={{ color: "#f1f5f9" }}>{val.base_multiple_mid.toFixed(1)}×</strong>,
+          the {val.sector_label} sector baseline of <strong style={{ color: "#e7e5e4" }}>{val.base_multiple_mid.toFixed(1)}×</strong>,
           driven by credit quality, governance, and ownership structure signals.
         </div>
       </div>
@@ -331,7 +331,7 @@ function ValuationTab({ val, creditBand, p }: { val: ValuationEstimate | null; c
           label="BASE SECTOR MULTIPLE (UNADJUSTED)"
           dimColor="#475569"
         />
-        <div style={{ textAlign: "center", fontSize: 10, color: "#334155" }}>▼ credit &amp; governance adjustment applied ▼</div>
+        <div style={{ textAlign: "center", fontSize: 10, color: "#44403c" }}>▼ credit &amp; governance adjustment applied ▼</div>
         <MultipleBracket
           low={val.adjusted_multiple_low} mid={val.adjusted_multiple_mid} high={val.adjusted_multiple_high}
           label="CREDIT-ADJUSTED MULTIPLE"
@@ -342,24 +342,24 @@ function ValuationTab({ val, creditBand, p }: { val: ValuationEstimate | null; c
       {/* EV range — only if earnings were provided */}
       {hasEV && val.ev_low != null && val.ev_mid != null && val.ev_high != null && (
         <div style={{ background: "#0a0f1e", border: `1px solid ${p.arc}33`, borderRadius: 10, padding: "16px 20px" }}>
-          <div style={{ fontSize: 9, fontWeight: 700, color: "#334155", letterSpacing: "0.12em", marginBottom: 12 }}>
+          <div style={{ fontSize: 9, fontWeight: 700, color: "#44403c", letterSpacing: "0.12em", marginBottom: 12 }}>
             ESTIMATED ENTERPRISE VALUE · BASED ON {val.earnings_label?.toUpperCase()} OF {fmtM(val.earnings_used!)}
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
             <div style={{ textAlign: "center" }}>
               <div style={{ fontSize: 10, color: "#475569", marginBottom: 4 }}>CONSERVATIVE</div>
-              <div style={{ fontSize: 20, fontWeight: 800, color: "#94a3b8" }}>{fmtM(val.ev_low)}</div>
-              <div style={{ fontSize: 9, color: "#334155" }}>{val.adjusted_multiple_low.toFixed(1)}× {val.earnings_label}</div>
+              <div style={{ fontSize: 20, fontWeight: 800, color: "#a8a29e" }}>{fmtM(val.ev_low)}</div>
+              <div style={{ fontSize: 9, color: "#44403c" }}>{val.adjusted_multiple_low.toFixed(1)}× {val.earnings_label}</div>
             </div>
             <div style={{ textAlign: "center", borderLeft: "1px solid #1e293b", borderRight: "1px solid #1e293b", padding: "0 12px" }}>
               <div style={{ fontSize: 10, color: "#475569", marginBottom: 4 }}>CENTRAL</div>
               <div style={{ fontSize: 28, fontWeight: 900, color: p.arc, lineHeight: 1 }}>{fmtM(val.ev_mid)}</div>
-              <div style={{ fontSize: 9, color: "#334155", marginTop: 3 }}>{val.adjusted_multiple_mid.toFixed(1)}× {val.earnings_label}</div>
+              <div style={{ fontSize: 9, color: "#44403c", marginTop: 3 }}>{val.adjusted_multiple_mid.toFixed(1)}× {val.earnings_label}</div>
             </div>
             <div style={{ textAlign: "center" }}>
               <div style={{ fontSize: 10, color: "#475569", marginBottom: 4 }}>OPTIMISTIC</div>
-              <div style={{ fontSize: 20, fontWeight: 800, color: "#94a3b8" }}>{fmtM(val.ev_high)}</div>
-              <div style={{ fontSize: 9, color: "#334155" }}>{val.adjusted_multiple_high.toFixed(1)}× {val.earnings_label}</div>
+              <div style={{ fontSize: 20, fontWeight: 800, color: "#a8a29e" }}>{fmtM(val.ev_high)}</div>
+              <div style={{ fontSize: 9, color: "#44403c" }}>{val.adjusted_multiple_high.toFixed(1)}× {val.earnings_label}</div>
             </div>
           </div>
         </div>
@@ -368,7 +368,7 @@ function ValuationTab({ val, creditBand, p }: { val: ValuationEstimate | null; c
       {!hasEV && (
         <div style={{ background: "rgba(99,102,241,0.06)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: 8, padding: "12px 16px" }}>
           <div style={{ fontSize: 11, fontWeight: 700, color: "#a5b4fc", marginBottom: 4 }}>Enterprise value not calculated</div>
-          <div style={{ fontSize: 11, color: "#2563eb" }}>
+          <div style={{ fontSize: 11, color: "#1c1917" }}>
             Paste an Information Memorandum with net profit or SDE figures to unlock the full EV estimate range.
           </div>
         </div>
@@ -376,7 +376,7 @@ function ValuationTab({ val, creditBand, p }: { val: ValuationEstimate | null; c
 
       {/* Adjustment waterfall */}
       <div>
-        <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 10 }}>ADJUSTMENT WATERFALL</div>
+        <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", marginBottom: 10 }}>ADJUSTMENT WATERFALL</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
           {val.adjustments.map((adj: ValuationAdjustment, i: number) => (
             <div key={i} style={{
@@ -385,12 +385,12 @@ function ValuationTab({ val, creditBand, p }: { val: ValuationEstimate | null; c
             }}>
               <span style={{
                 fontSize: 11, fontWeight: 800, minWidth: 52, textAlign: "right", flexShrink: 0,
-                color: adj.direction === "positive" ? "#22c55e" : adj.direction === "negative" ? "#ef4444" : "#94a3b8",
+                color: adj.direction === "positive" ? "#22c55e" : adj.direction === "negative" ? "#ef4444" : "#a8a29e",
               }}>
                 {adj.pct > 0 ? "+" : ""}{adj.pct.toFixed(0)}%
               </span>
               <div>
-                <div style={{ fontSize: 11, fontWeight: 700, color: "#f1f5f9", marginBottom: 2 }}>{adj.factor}</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: "#e7e5e4", marginBottom: 2 }}>{adj.factor}</div>
                 <div style={{ fontSize: 10, color: "#475569", lineHeight: 1.5 }}>{adj.note}</div>
               </div>
             </div>
@@ -410,15 +410,15 @@ function ValuationTab({ val, creditBand, p }: { val: ValuationEstimate | null; c
 
       {/* Valuation note */}
       <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: "14px 16px" }}>
-        <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 8 }}>ANALYST NOTE</div>
-        <p style={{ fontSize: 11, color: "#64748b", lineHeight: 1.65, margin: 0 }}>{val.valuation_note}</p>
+        <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", marginBottom: 8 }}>ANALYST NOTE</div>
+        <p style={{ fontSize: 11, color: "#78716c", lineHeight: 1.65, margin: 0 }}>{val.valuation_note}</p>
       </div>
 
       {/* Methodology */}
       <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: "14px 16px" }}>
-        <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 8 }}>METHODOLOGY</div>
+        <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", marginBottom: 8 }}>METHODOLOGY</div>
         <p style={{ fontSize: 10, color: "#475569", lineHeight: 1.65, margin: 0 }}>{val.methodology}</p>
-        <div style={{ fontSize: 9, color: "#334155", marginTop: 10, paddingTop: 8, borderTop: "1px solid #1e293b" }}>
+        <div style={{ fontSize: 9, color: "#44403c", marginTop: 10, paddingTop: 8, borderTop: "1px solid #1e293b" }}>
           ⚠ This estimate is indicative only and does not constitute a formal valuation. Always commission a qualified accountant or M&amp;A adviser for deal pricing.
         </div>
       </div>
@@ -437,14 +437,14 @@ function StepRow({ step, label, value, formula, highlight }: { step: number; lab
       border: `1px solid ${highlight ? "rgba(99,102,241,0.25)" : "#1e293b"}`,
       borderRadius: 8, marginBottom: 6,
     }}>
-      <div style={{ width: 24, height: 24, borderRadius: "50%", background: highlight ? "#2563eb" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, color: highlight ? "#fff" : "#475569", flexShrink: 0 }}>
+      <div style={{ width: 24, height: 24, borderRadius: "50%", background: highlight ? "#1c1917" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, color: highlight ? "#fff" : "#475569", flexShrink: 0 }}>
         {step}
       </div>
       <div>
-        <div style={{ fontSize: 12, fontWeight: 600, color: "#e2e8f0" }}>{label}</div>
+        <div style={{ fontSize: 12, fontWeight: 600, color: "#d6d3d1" }}>{label}</div>
         {formula && <div style={{ fontSize: 10, color: "#475569", marginTop: 3, fontFamily: "monospace" }}>{formula}</div>}
       </div>
-      <div style={{ fontSize: 14, fontWeight: 800, color: highlight ? "#a5b4fc" : "#94a3b8", whiteSpace: "nowrap", textAlign: "right" }}>{value}</div>
+      <div style={{ fontSize: 14, fontWeight: 800, color: highlight ? "#a5b4fc" : "#a8a29e", whiteSpace: "nowrap", textAlign: "right" }}>{value}</div>
     </div>
   );
 }
@@ -474,14 +474,14 @@ function CreditLimitTab({ breakdown, p }: { breakdown: CreditLimitBreakdown | nu
         <div style={{ fontSize: 36, fontWeight: 900, color: "#a5b4fc", letterSpacing: "-0.03em" }}>
           {fmtM(b.conservative_limit)}
         </div>
-        <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>
+        <div style={{ fontSize: 13, color: "#78716c", marginTop: 4 }}>
           Conservative limit · up to {fmtM(b.max_limit)} maximum
         </div>
       </div>
 
       {/* Step-by-step */}
       <div>
-        <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 10 }}>CALCULATION STEPS</div>
+        <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", marginBottom: 10 }}>CALCULATION STEPS</div>
 
         <StepRow
           step={1}
@@ -559,7 +559,7 @@ function CreditLimitTab({ breakdown, p }: { breakdown: CreditLimitBreakdown | nu
 
       {/* Key inputs summary */}
       <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: "14px 16px" }}>
-        <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 10 }}>KEY INPUTS</div>
+        <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", marginBottom: 10 }}>KEY INPUTS</div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
           {[
             { label: "Credit Score", value: `${b.credit_score} / 100` },
@@ -569,13 +569,13 @@ function CreditLimitTab({ breakdown, p }: { breakdown: CreditLimitBreakdown | nu
           ].map(item => (
             <div key={item.label}>
               <div style={{ fontSize: 9, fontWeight: 700, color: "#475569", letterSpacing: "0.08em", marginBottom: 3 }}>{item.label.toUpperCase()}</div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "#94a3b8" }}>{item.value}</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#a8a29e" }}>{item.value}</div>
             </div>
           ))}
         </div>
       </div>
 
-      <div style={{ fontSize: 10, color: "#334155", lineHeight: 1.6, padding: "10px 14px", background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 8 }}>
+      <div style={{ fontSize: 10, color: "#44403c", lineHeight: 1.6, padding: "10px 14px", background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 8 }}>
         ⚠ This is a trade credit recommendation for suppliers and counterparties, not an acquisition financing limit.
         The limit scales with business earnings and is reduced by outstanding debt charges and lower credit scores.
         Provide SDE or net profit to improve accuracy.
@@ -589,7 +589,7 @@ function CreditLimitTab({ breakdown, p }: { breakdown: CreditLimitBreakdown | nu
 export function CreditReportDrawer({ isOpen, onClose, profile, companyName, companyNumber }: Props) {
   const [tab, setTab] = useState<"overview" | "breakdown" | "indicators" | "improvements" | "valuation" | "credit-limit" | "sources">("overview");
   const p = PALETTE[profile.risk_color];
-  const bandInfo = BAND_EXPLAIN[profile.credit_band] ?? { color: "#94a3b8", description: "" };
+  const bandInfo = BAND_EXPLAIN[profile.credit_band] ?? { color: "#a8a29e", description: "" };
 
   // Sort improvements by potential gain desc
   const sortedActions = [...profile.improvement_actions].sort((a, b) => b.potential_gain - a.potential_gain);
@@ -636,22 +636,22 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
         <div style={{ background: "#0a0f1e", borderBottom: "1px solid #1e293b", padding: "16px 24px", flexShrink: 0 }}>
           <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.12em", marginBottom: 4 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.12em", marginBottom: 4 }}>
                 CREDIT REPORT · COMPANIES HOUSE DATA
               </div>
-              <div style={{ fontSize: 16, fontWeight: 800, color: "#f1f5f9", marginBottom: 2 }}>{companyName}</div>
+              <div style={{ fontSize: 16, fontWeight: 800, color: "#e7e5e4", marginBottom: 2 }}>{companyName}</div>
               <div style={{ fontSize: 11, color: "#475569" }}>Company #{companyNumber} · Generated {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</div>
             </div>
             <button
               onClick={onClose}
-              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid #1e293b", color: "#64748b", cursor: "pointer", borderRadius: 7, padding: "6px 10px", fontSize: 16, lineHeight: 1, flexShrink: 0, transition: "background 0.15s" }}
+              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid #1e293b", color: "#78716c", cursor: "pointer", borderRadius: 7, padding: "6px 10px", fontSize: 16, lineHeight: 1, flexShrink: 0, transition: "background 0.15s" }}
               onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.10)")}
               onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.05)")}
             >✕</button>
           </div>
 
           {/* Tab bar */}
-          <div style={{ display: "flex", gap: 2, marginTop: 14, background: "#0f172a", borderRadius: 8, padding: 3 }}>
+          <div style={{ display: "flex", gap: 2, marginTop: 14, background: "#1c1917", borderRadius: 8, padding: 3 }}>
             {TABS.map(t => (
               <button
                 key={t.id}
@@ -660,7 +660,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                   flex: 1, padding: "7px 8px", borderRadius: 6, border: "none", cursor: "pointer",
                   fontSize: 11, fontWeight: 600,
                   background: tab === t.id ? "#1e293b" : "transparent",
-                  color: tab === t.id ? "#f1f5f9" : "#475569",
+                  color: tab === t.id ? "#e7e5e4" : "#475569",
                   transition: "all 0.15s",
                   whiteSpace: "nowrap",
                 }}
@@ -687,21 +687,21 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                     {profile.insolvency_risk} RISK
                   </span>
                 </div>
-                <p style={{ fontSize: 12, color: "#64748b", margin: "8px 0 0", lineHeight: 1.6 }}>{bandInfo.description}</p>
+                <p style={{ fontSize: 12, color: "#78716c", margin: "8px 0 0", lineHeight: 1.6 }}>{bandInfo.description}</p>
               </div>
 
               {/* 6-up headline grid */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
                 {[
                   { label: "Credit Score",       value: `${profile.open_credit_score} / 100`, sub: `Top ${100 - profile.score_percentile}% of UK SMEs`, color: p.arc },
-                  { label: "Credit Opinion",      value: profile.credit_opinion, sub: profile.credit_band_label, color: ({ Recommend: "#22c55e", Review: "#a5b4fc", Caution: "#f59e0b", Decline: "#ef4444" } as Record<string,string>)[profile.credit_opinion] ?? "#94a3b8" },
+                  { label: "Credit Opinion",      value: profile.credit_opinion, sub: profile.credit_band_label, color: ({ Recommend: "#22c55e", Review: "#a5b4fc", Caution: "#f59e0b", Decline: "#ef4444" } as Record<string,string>)[profile.credit_opinion] ?? "#a8a29e" },
                   { label: "Payment Behaviour",   value: profile.payment_behaviour, sub: "Filing compliance proxy", color: "#a5b4fc" },
-                  { label: "Trade Credit Limit",  value: fmtGbp(profile.credit_limit_gbp), sub: `Up to ${fmtGbp(profile.max_credit_gbp)}`, color: "#f1f5f9" },
-                  { label: "Payment Terms",       value: `Net ${profile.recommended_payment_days} days`, sub: "Recommended maximum", color: "#f1f5f9" },
+                  { label: "Trade Credit Limit",  value: fmtGbp(profile.credit_limit_gbp), sub: `Up to ${fmtGbp(profile.max_credit_gbp)}`, color: "#e7e5e4" },
+                  { label: "Payment Terms",       value: `Net ${profile.recommended_payment_days} days`, sub: "Recommended maximum", color: "#e7e5e4" },
                   { label: "Industry Risk",       value: profile.industry_risk, sub: profile.industry_label, color: profile.industry_risk === "Low" ? "#22c55e" : profile.industry_risk === "Moderate" ? "#f59e0b" : "#ef4444" },
                 ].map(item => (
                   <div key={item.label} style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 9, padding: "12px 14px" }}>
-                    <div style={{ fontSize: 9, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 4 }}>{item.label.toUpperCase()}</div>
+                    <div style={{ fontSize: 9, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", marginBottom: 4 }}>{item.label.toUpperCase()}</div>
                     <div style={{ fontSize: 15, fontWeight: 800, color: item.color, fontVariantNumeric: "tabular-nums", marginBottom: 2 }}>{item.value}</div>
                     <div style={{ fontSize: 10, color: "#475569" }}>{item.sub}</div>
                   </div>
@@ -723,7 +723,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                         borderRadius: 7,
                       }}>
                         <span style={{ fontSize: 16, fontWeight: 900, color: info.color, width: 20, flexShrink: 0 }}>{band}</span>
-                        <span style={{ fontSize: 11, color: isCurrent ? "#e2e8f0" : "#64748b", lineHeight: 1.5 }}>{info.description}</span>
+                        <span style={{ fontSize: 11, color: isCurrent ? "#d6d3d1" : "#78716c", lineHeight: 1.5 }}>{info.description}</span>
                         {isCurrent && <span style={{ marginLeft: "auto", fontSize: 9, fontWeight: 700, color: info.color, letterSpacing: "0.08em", flexShrink: 0 }}>THIS COMPANY</span>}
                       </div>
                     );
@@ -734,7 +734,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
               {/* Analyst notes */}
               <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: "16px 18px" }}>
                 <SectionHeader title="Analyst Summary" sub="Automated assessment based on Companies House data" />
-                <p style={{ fontSize: 12.5, color: "#94a3b8", lineHeight: 1.75, margin: 0 }}>{profile.analyst_notes}</p>
+                <p style={{ fontSize: 12.5, color: "#a8a29e", lineHeight: 1.75, margin: 0 }}>{profile.analyst_notes}</p>
               </div>
 
               {/* Methodology */}
@@ -749,8 +749,8 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                     ["Regulatory Note", "This profile is provided for information purposes and does not constitute a regulated credit reference report under the Consumer Credit Act 1974."],
                   ].map(([k, v]) => (
                     <div key={k} style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 12, alignItems: "flex-start" }}>
-                      <span style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.06em" }}>{k}</span>
-                      <span style={{ fontSize: 11, color: "#64748b", lineHeight: 1.6 }}>{v}</span>
+                      <span style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.06em" }}>{k}</span>
+                      <span style={{ fontSize: 11, color: "#78716c", lineHeight: 1.6 }}>{v}</span>
                     </div>
                   ))}
                 </div>
@@ -764,10 +764,10 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
               {/* Score meter bar */}
               <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: "16px 18px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: "#94a3b8" }}>Total Score</span>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: "#a8a29e" }}>Total Score</span>
                   <span style={{ fontSize: 22, fontWeight: 900, color: p.arc, fontVariantNumeric: "tabular-nums" }}>{profile.open_credit_score} / 100</span>
                 </div>
-                <div style={{ height: 8, background: "#0f172a", borderRadius: 9999, overflow: "hidden" }}>
+                <div style={{ height: 8, background: "#1c1917", borderRadius: 9999, overflow: "hidden" }}>
                   <div style={{ width: `${profile.open_credit_score}%`, height: "100%", background: `linear-gradient(90deg, #ef4444 0%, #f59e0b 40%, #22c55e 80%)`, borderRadius: 9999, transition: "width 0.8s ease" }} />
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", marginTop: 4, fontSize: 9, color: "#1e293b" }}>
@@ -779,9 +779,9 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
               <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, overflow: "hidden" }}>
                 {/* Table header */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 120px 80px 24px", gap: 12, padding: "10px 16px", borderBottom: "1px solid #1e293b", background: "#070d18" }}>
-                  <span style={{ fontSize: 9, fontWeight: 700, color: "#334155", letterSpacing: "0.1em" }}>FACTOR</span>
-                  <span style={{ fontSize: 9, fontWeight: 700, color: "#334155", letterSpacing: "0.1em" }}>SCORE</span>
-                  <span style={{ fontSize: 9, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", textAlign: "right" }}>POINTS</span>
+                  <span style={{ fontSize: 9, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em" }}>FACTOR</span>
+                  <span style={{ fontSize: 9, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em" }}>SCORE</span>
+                  <span style={{ fontSize: 9, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", textAlign: "right" }}>POINTS</span>
                   <span />
                 </div>
                 {profile.detailed_factors.map(f => <FactorRow key={f.id} factor={f} />)}
@@ -827,9 +827,9 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                     <span style={{ fontSize: 10, fontWeight: 700, color: "#22c55e", letterSpacing: "0.1em" }}>POSITIVE INDICATORS ({profile.positive_indicators.length})</span>
                   </div>
                   {profile.positive_indicators.map((ind, i) => (
-                    <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "12px 16px", borderBottom: i < profile.positive_indicators.length - 1 ? "1px solid #0f172a" : "none" }}>
+                    <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "12px 16px", borderBottom: i < profile.positive_indicators.length - 1 ? "1px solid #1c1917" : "none" }}>
                       <div style={{ width: 20, height: 20, borderRadius: "50%", background: "#14532d", color: "#22c55e", fontSize: 11, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>✓</div>
-                      <span style={{ fontSize: 12.5, color: "#94a3b8", lineHeight: 1.6 }}>{ind}</span>
+                      <span style={{ fontSize: 12.5, color: "#a8a29e", lineHeight: 1.6 }}>{ind}</span>
                     </div>
                   ))}
                 </div>
@@ -843,9 +843,9 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                     <span style={{ fontSize: 10, fontWeight: 700, color: "#f87171", letterSpacing: "0.1em" }}>RISK INDICATORS ({profile.negative_indicators.length})</span>
                   </div>
                   {profile.negative_indicators.map((ind, i) => (
-                    <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "12px 16px", borderBottom: i < profile.negative_indicators.length - 1 ? "1px solid #0f172a" : "none" }}>
+                    <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "12px 16px", borderBottom: i < profile.negative_indicators.length - 1 ? "1px solid #1c1917" : "none" }}>
                       <div style={{ width: 20, height: 20, borderRadius: "50%", background: "#7f1d1d", color: "#ef4444", fontSize: 11, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>!</div>
-                      <span style={{ fontSize: 12.5, color: "#94a3b8", lineHeight: 1.6 }}>{ind}</span>
+                      <span style={{ fontSize: 12.5, color: "#a8a29e", lineHeight: 1.6 }}>{ind}</span>
                     </div>
                   ))}
                 </div>
@@ -860,7 +860,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
               {/* Industry context */}
               <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: "16px 18px" }}>
                 <SectionHeader title="Industry Context" sub={`${profile.industry_label} — ${profile.industry_risk} risk sector`} />
-                <p style={{ fontSize: 12, color: "#64748b", lineHeight: 1.7, margin: 0 }}>
+                <p style={{ fontSize: 12, color: "#78716c", lineHeight: 1.7, margin: 0 }}>
                   The sector modifier ({profile.industry_risk === "Low" ? "positive" : profile.industry_risk === "Very High" ? "strong negative" : "neutral to negative"}) reflects UK insolvency statistics for the {profile.industry_label} industry.
                   {" "}This is a systemic factor that applies regardless of individual company performance.
                   {profile.industry_risk !== "Low" && " Operating in a higher-risk sector means trade creditors should apply shorter payment terms and lower credit limits relative to the company's score alone."}
@@ -884,13 +884,13 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                     <div style={{ fontSize: 11, fontWeight: 700, color: "#a5b4fc", marginBottom: 4 }}>
                       Potential score improvement: +{sortedActions.reduce((s, a) => s + a.potential_gain, 0)} points
                     </div>
-                    <div style={{ fontSize: 11, color: "#2563eb" }}>Actions ranked by impact. Expand each for step-by-step guidance.</div>
+                    <div style={{ fontSize: 11, color: "#1c1917" }}>Actions ranked by impact. Expand each for step-by-step guidance.</div>
                   </div>
 
                   {sortedActions.map((a, i) => <ActionCard key={a.id} action={a} rank={i + 1} />)}
 
                   <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: "14px 16px", marginTop: 4 }}>
-                    <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 8 }}>WHAT CANNOT BE IMPROVED QUICKLY</div>
+                    <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", marginBottom: 8 }}>WHAT CANNOT BE IMPROVED QUICKLY</div>
                     <div style={{ fontSize: 11, color: "#475569", lineHeight: 1.7 }}>
                       Company age (contributing up to 25 points) can only be improved over time — 2.5 points per year of trading. Industry risk is a systemic factor tied to SIC codes and does not reflect individual company performance.
                     </div>
@@ -919,7 +919,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                 {(profile.data_sources_used ?? ["Companies House"]).map((src) => (
                   <div key={src} style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 8, padding: "10px 14px", display: "flex", alignItems: "center", gap: 10 }}>
                     <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e", flexShrink: 0 }} />
-                    <span style={{ fontSize: 12, fontWeight: 600, color: "#f1f5f9" }}>{src}</span>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: "#e7e5e4" }}>{src}</span>
                     <span style={{ fontSize: 10, color: "#22c55e", marginLeft: "auto" }}>✓ Queried</span>
                   </div>
                 ))}
@@ -928,7 +928,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
               {/* FCA enrichment */}
               {enrichment && !!((enrichment.fca as Record<string, unknown>)?.checked) && (
                 <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: "14px 16px" }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 10 }}>FCA FINANCIAL SERVICES REGISTER</div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", marginBottom: 10 }}>FCA FINANCIAL SERVICES REGISTER</div>
                   {(() => {
                     const fca = enrichment.fca as Record<string, unknown>;
                     if (fca.unverifiable) {
@@ -937,7 +937,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                           <span style={{ background: "rgba(245,158,11,0.10)", border: "1px solid rgba(245,158,11,0.25)", color: "#fcd34d", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 4, display: "inline-block", width: "fit-content" }}>UNVERIFIED</span>
                           <div style={{ fontSize: 11, color: "#475569", lineHeight: 1.5 }}>
                             FCA status could not be checked — API credentials not configured.
-                            Register at <span style={{ color: "#2563eb" }}>register.fca.org.uk/developer</span> and set <code style={{ color: "#a5b4fc", fontSize: 10 }}>FCA_API_EMAIL</code> + <code style={{ color: "#a5b4fc", fontSize: 10 }}>FCA_API_KEY</code> in your backend environment.
+                            Register at <span style={{ color: "#1c1917" }}>register.fca.org.uk/developer</span> and set <code style={{ color: "#a5b4fc", fontSize: 10 }}>FCA_API_EMAIL</code> + <code style={{ color: "#a5b4fc", fontSize: 10 }}>FCA_API_KEY</code> in your backend environment.
                           </div>
                         </div>
                       );
@@ -947,7 +947,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                             <span style={{ background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.3)", color: "#86efac", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 4 }}>FCA AUTHORISED</span>
-                            {!!(fca.status) && <span style={{ fontSize: 11, color: "#94a3b8" }}>{String(fca.status)}</span>}
+                            {!!(fca.status) && <span style={{ fontSize: 11, color: "#a8a29e" }}>{String(fca.status)}</span>}
                           </div>
                           {!!(fca.firm_reference_number) && (
                             <div style={{ fontSize: 11, color: "#475569" }}>FRN: {String(fca.firm_reference_number)}</div>
@@ -957,7 +957,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                     }
                     return (
                       <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                        <span style={{ background: "rgba(100,116,139,0.10)", border: "1px solid #1e293b", color: "#64748b", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 4, display: "inline-block", width: "fit-content" }}>NOT FOUND</span>
+                        <span style={{ background: "rgba(100,116,139,0.10)", border: "1px solid #1e293b", color: "#78716c", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 4, display: "inline-block", width: "fit-content" }}>NOT FOUND</span>
                         <div style={{ fontSize: 11, color: "#475569" }}>No matching firm found on the FCA Financial Services Register via name/CH number search.</div>
                       </div>
                     );
@@ -968,7 +968,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
               {/* PSC enrichment */}
               {enrichment && enrichment.psc != null && (
                 <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: "14px 16px" }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 10 }}>PSC OWNERSHIP REGISTER</div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", marginBottom: 10 }}>PSC OWNERSHIP REGISTER</div>
                   {(() => {
                     const psc = enrichment.psc as Record<string, unknown>;
                     const names = (psc.psc_names as string[] | undefined) ?? [];
@@ -976,8 +976,8 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                     const concentration = String(psc.concentration_risk);
                     return (
                       <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                        <div style={{ fontSize: 11, color: "#94a3b8" }}>
-                          <strong style={{ color: "#f1f5f9" }}>{pscCount}</strong> active PSC{pscCount !== 1 ? "s" : ""} registered
+                        <div style={{ fontSize: 11, color: "#a8a29e" }}>
+                          <strong style={{ color: "#e7e5e4" }}>{pscCount}</strong> active PSC{pscCount !== 1 ? "s" : ""} registered
                           {" · "}Concentration: <strong style={{ color: concentration === "Low" ? "#22c55e" : concentration === "High" ? "#ef4444" : "#f59e0b" }}>{concentration}</strong>
                         </div>
                         {psc.has_offshore_psc === true && <div style={{ fontSize: 10, color: "#fca5a5", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 4, padding: "3px 8px" }}>⚠ Offshore PSC detected</div>}
@@ -996,16 +996,16 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
               {/* Postcode enrichment */}
               {enrichment && !!((enrichment.postcode as Record<string, unknown>)?.checked) && !!((enrichment.postcode as Record<string, unknown>).region) && (
                 <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: "14px 16px" }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 10 }}>GEOGRAPHIC ANALYSIS (POSTCODES.IO)</div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", marginBottom: 10 }}>GEOGRAPHIC ANALYSIS (POSTCODES.IO)</div>
                   {(() => {
                     const pc = enrichment.postcode as Record<string, unknown>;
                     const imdDecile = pc.imd_decile != null ? Number(pc.imd_decile) : null;
                     const deprivLabel = pc.deprivation_label != null ? String(pc.deprivation_label) : null;
                     return (
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                        <div><div style={{ fontSize: 9, color: "#475569", marginBottom: 2 }}>REGION</div><div style={{ fontSize: 12, fontWeight: 600, color: "#f1f5f9" }}>{String(pc.region) || "—"}</div></div>
-                        <div><div style={{ fontSize: 9, color: "#475569", marginBottom: 2 }}>COUNTRY</div><div style={{ fontSize: 12, fontWeight: 600, color: "#f1f5f9" }}>{String(pc.country) || "—"}</div></div>
-                        {imdDecile != null && <div><div style={{ fontSize: 9, color: "#475569", marginBottom: 2 }}>IMD DECILE</div><div style={{ fontSize: 12, fontWeight: 600, color: "#f1f5f9" }}>{imdDecile}/10</div></div>}
+                        <div><div style={{ fontSize: 9, color: "#475569", marginBottom: 2 }}>REGION</div><div style={{ fontSize: 12, fontWeight: 600, color: "#e7e5e4" }}>{String(pc.region) || "—"}</div></div>
+                        <div><div style={{ fontSize: 9, color: "#475569", marginBottom: 2 }}>COUNTRY</div><div style={{ fontSize: 12, fontWeight: 600, color: "#e7e5e4" }}>{String(pc.country) || "—"}</div></div>
+                        {imdDecile != null && <div><div style={{ fontSize: 9, color: "#475569", marginBottom: 2 }}>IMD DECILE</div><div style={{ fontSize: 12, fontWeight: 600, color: "#e7e5e4" }}>{imdDecile}/10</div></div>}
                         {deprivLabel && <div><div style={{ fontSize: 9, color: "#475569", marginBottom: 2 }}>DEPRIVATION</div><div style={{ fontSize: 12, fontWeight: 600, color: deprivLabel === "Low" ? "#22c55e" : deprivLabel === "Moderate" ? "#f59e0b" : "#ef4444" }}>{deprivLabel}</div></div>}
                       </div>
                     );
@@ -1016,14 +1016,14 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
               {/* Director network */}
               {enrichment && !!((enrichment.opencorp as Record<string, unknown>)?.checked) && (
                 <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: "14px 16px" }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 10 }}>DIRECTOR NETWORK (OPENCORPORATES)</div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", marginBottom: 10 }}>DIRECTOR NETWORK (OPENCORPORATES)</div>
                   {(() => {
                     const oc = enrichment.opencorp as Record<string, unknown>;
                     const flags = (oc.adverse_flags as Array<Record<string, string>> | undefined) ?? [];
                     const checked = Number(oc.directors_checked) || 0;
                     return (
                       <div>
-                        <div style={{ fontSize: 11, color: "#94a3b8", marginBottom: 8 }}>
+                        <div style={{ fontSize: 11, color: "#a8a29e", marginBottom: 8 }}>
                           {checked} director{checked !== 1 ? "s" : ""} checked ·{" "}
                           {flags.length === 0 ? <span style={{ color: "#22c55e" }}>No adverse associations found</span> : <span style={{ color: "#ef4444" }}>{flags.length} adverse flag{flags.length !== 1 ? "s" : ""}</span>}
                         </div>
@@ -1041,7 +1041,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
               {/* VAT */}
               {enrichment && !!((enrichment.vat as Record<string, unknown>)?.vat_number_provided) && (
                 <div style={{ background: "#0a0f1e", border: "1px solid #1e293b", borderRadius: 10, padding: "14px 16px" }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 10 }}>HMRC VAT REGISTER</div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", marginBottom: 10 }}>HMRC VAT REGISTER</div>
                   {(() => {
                     const vat = enrichment.vat as Record<string, unknown>;
                     const bizName = vat.business_name != null ? String(vat.business_name) : null;
@@ -1049,7 +1049,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                     return !!(vat.is_registered) ? (
                       <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                         <span style={{ background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.3)", color: "#86efac", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 4, display: "inline-block", width: "fit-content" }}>VAT REGISTERED</span>
-                        {bizName && <div style={{ fontSize: 11, color: "#94a3b8" }}>{bizName}</div>}
+                        {bizName && <div style={{ fontSize: 11, color: "#a8a29e" }}>{bizName}</div>}
                         {addr && <div style={{ fontSize: 10, color: "#475569" }}>{addr}</div>}
                       </div>
                     ) : (
@@ -1074,12 +1074,12 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
 
         {/* ── Footer ── */}
         <div style={{ borderTop: "1px solid #1e293b", padding: "12px 24px", flexShrink: 0, background: "#0a0f1e", display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ fontSize: 10, color: "#334155", flex: 1 }}>
+          <span style={{ fontSize: 10, color: "#44403c", flex: 1 }}>
             Triage Finance Open-Source Credit Engine · Powered by Companies House public data · Not a regulated credit reference report
           </span>
           <button
             onClick={onClose}
-            style={{ background: "#1e293b", border: "1px solid #334155", color: "#94a3b8", cursor: "pointer", borderRadius: 7, padding: "7px 16px", fontSize: 12, fontWeight: 600 }}
+            style={{ background: "#1e293b", border: "1px solid #44403c", color: "#a8a29e", cursor: "pointer", borderRadius: 7, padding: "7px 16px", fontSize: 12, fontWeight: 600 }}
           >
             Close
           </button>

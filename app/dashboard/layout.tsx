@@ -75,7 +75,7 @@ function DealMenu({ deal, onClose, onRename, anchorRect }: MenuProps) {
         left,
         width: menuWidth,
         background: "#fff",
-        border: "1px solid #e2e8f0",
+        border: "1px solid #d6d3d1",
         borderRadius: 10,
         boxShadow: "0 8px 30px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08)",
         zIndex: 2000,
@@ -84,12 +84,12 @@ function DealMenu({ deal, onClose, onRename, anchorRect }: MenuProps) {
       }}
     >
       {/* Deal name header */}
-      <div style={{ padding: "8px 10px 7px", borderBottom: "1px solid #f1f5f9", marginBottom: 2 }}>
-        <p style={{ fontSize: 11, fontWeight: 700, color: "#334155", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+      <div style={{ padding: "8px 10px 7px", borderBottom: "1px solid #e7e5e4", marginBottom: 2 }}>
+        <p style={{ fontSize: 11, fontWeight: 700, color: "#44403c", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
           {deal.name}
         </p>
         {deal.askingPrice > 0 && (
-          <p style={{ fontSize: 10, color: "#94a3b8", margin: "1px 0 0" }}>
+          <p style={{ fontSize: 10, color: "#a8a29e", margin: "1px 0 0" }}>
             £{deal.askingPrice >= 1_000_000 ? (deal.askingPrice / 1_000_000).toFixed(1) + "m" : Math.round(deal.askingPrice / 1_000) + "k"} asking
           </p>
         )}
@@ -112,19 +112,19 @@ function DealMenu({ deal, onClose, onRename, anchorRect }: MenuProps) {
             cursor: item.disabled ? "not-allowed" : "pointer",
             fontSize: 12.5,
             fontWeight: 500,
-            color: item.disabled ? "#cbd5e1" : item.danger ? "#dc2626" : "#334155",
+            color: item.disabled ? "#d6d3d1" : item.danger ? "#dc2626" : "#44403c",
             textAlign: "left",
             transition: "background 0.1s",
           }}
           onMouseEnter={e => {
-            if (!item.disabled) (e.currentTarget as HTMLElement).style.background = item.danger ? "#fef2f2" : "#f8fafc";
+            if (!item.disabled) (e.currentTarget as HTMLElement).style.background = item.danger ? "#fef2f2" : "#faf9f7";
           }}
           onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
         >
           <span style={{ fontSize: 13, width: 18, textAlign: "center", flexShrink: 0 }}>{item.icon}</span>
           {item.label}
           {item.label === "Delete Deal" && !canDelete && (
-            <span style={{ fontSize: 9, color: "#94a3b8", marginLeft: "auto" }}>last deal</span>
+            <span style={{ fontSize: 9, color: "#a8a29e", marginLeft: "auto" }}>last deal</span>
           )}
         </button>
       ))}
@@ -181,8 +181,8 @@ function DealItem({ deal, isActive, onCloseSidebar }: { deal: StoredDeal; isActi
           padding: "8px 8px 8px 10px",
           borderRadius: 8,
           cursor: "pointer",
-          background: isActive && pathname === "/dashboard/triage" ? "#eff6ff" : hovered ? "#f8fafc" : "transparent",
-          borderLeft: isActive && pathname === "/dashboard/triage" ? "2px solid #2563eb" : "2px solid transparent",
+          background: isActive && pathname === "/dashboard/triage" ? "#e7e5e4" : hovered ? "#faf9f7" : "transparent",
+          borderLeft: isActive && pathname === "/dashboard/triage" ? "2px solid #1c1917" : "2px solid transparent",
           transition: "background 0.1s",
           userSelect: "none",
           position: "relative",
@@ -200,25 +200,25 @@ function DealItem({ deal, isActive, onCloseSidebar }: { deal: StoredDeal; isActi
                 onKeyDown={e => { if (e.key === "Enter") commit(); if (e.key === "Escape") { setEditing(false); setDraft(deal.name); } }}
                 onClick={e => e.stopPropagation()}
                 style={{
-                  fontSize: 12, fontWeight: 600, color: "#0f172a",
-                  background: "#fff", border: "1px solid #2563eb",
+                  fontSize: 12, fontWeight: 600, color: "#1c1917",
+                  background: "#fff", border: "1px solid #1c1917",
                   borderRadius: 4, padding: "1px 6px", width: "100%", outline: "none", fontFamily: "inherit",
                 }}
               />
             ) : (
-              <p style={{ fontSize: 12, fontWeight: 600, color: isActive && pathname === "/dashboard/triage" ? "#3730a3" : "#334155", margin: "0 0 2px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              <p style={{ fontSize: 12, fontWeight: 600, color: isActive && pathname === "/dashboard/triage" ? "#3730a3" : "#44403c", margin: "0 0 2px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                 {deal.name}
               </p>
             )}
             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
               {deal.askingPrice > 0 && (
-                <span style={{ fontSize: 10, color: "#94a3b8" }}>
+                <span style={{ fontSize: 10, color: "#a8a29e" }}>
                   £{deal.askingPrice >= 1_000_000 ? (deal.askingPrice / 1_000_000).toFixed(1) + "m" : Math.round(deal.askingPrice / 1_000) + "k"}
                 </span>
               )}
               {deal.askingPrice > 0 && deal.netProfit > 0 && (
                 <>
-                  <span style={{ fontSize: 9, color: "#cbd5e1" }}>·</span>
+                  <span style={{ fontSize: 9, color: "#d6d3d1" }}>·</span>
                   <span style={{ fontSize: 10, fontWeight: 700, color: dot.color }}>{dscr > 0 ? `${dscr.toFixed(2)}×` : "—"}</span>
                 </>
               )}
@@ -229,15 +229,15 @@ function DealItem({ deal, isActive, onCloseSidebar }: { deal: StoredDeal; isActi
           <button
             onClick={openMenu}
             style={{
-              width: 32, height: 32, borderRadius: 6, border: "1px solid #e2e8f0",
-              background: menuOpen ? "#f1f5f9" : "transparent",
+              width: 32, height: 32, borderRadius: 6, border: "1px solid #d6d3d1",
+              background: menuOpen ? "#e7e5e4" : "transparent",
               cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-              flexShrink: 0, fontSize: 14, color: "#64748b", lineHeight: 1,
+              flexShrink: 0, fontSize: 14, color: "#78716c", lineHeight: 1,
               opacity: hovered || menuOpen ? 1 : 0,
               transition: "opacity 0.1s, background 0.1s",
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#bfdbfe"; (e.currentTarget as HTMLElement).style.color = "#2563eb"; (e.currentTarget as HTMLElement).style.opacity = "1"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; (e.currentTarget as HTMLElement).style.color = "#64748b"; }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#d6d3d1"; (e.currentTarget as HTMLElement).style.color = "#1c1917"; (e.currentTarget as HTMLElement).style.opacity = "1"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#d6d3d1"; (e.currentTarget as HTMLElement).style.color = "#78716c"; }}
             onTouchStart={e => { e.currentTarget.style.opacity = "1"; }}
             title="Deal options"
             aria-label="Deal options"
@@ -262,9 +262,9 @@ function DealItem({ deal, isActive, onCloseSidebar }: { deal: StoredDeal; isActi
 /* ─── User / account panel ───────────────────────────────────────────────── */
 
 const TIER_META: Record<Tier, { label: string; color: string; bg: string }> = {
-  explorer:      { label: "Explorer",       color: "#64748b", bg: "#f1f5f9" },
-  searcher:      { label: "Active Searcher", color: "#2563eb", bg: "#eff6ff" },
-  broker:        { label: "Deal Broker",     color: "#1e3a8a", bg: "#eff6ff" },
+  explorer:      { label: "Explorer",       color: "#78716c", bg: "#e7e5e4" },
+  searcher:      { label: "Active Searcher", color: "#1c1917", bg: "#e7e5e4" },
+  broker:        { label: "Deal Broker",     color: "#292524", bg: "#e7e5e4" },
   institutional: { label: "Institutional",   color: "#0891b2", bg: "#ecfeff" },
 };
 
@@ -282,28 +282,28 @@ function UserAccountPanel() {
     : userEmail.slice(0, 2).toUpperCase();
 
   return (
-    <div style={{ borderTop: "1px solid #e2e8f0", padding: "12px 10px 14px" }}>
+    <div style={{ borderTop: "1px solid #d6d3d1", padding: "12px 10px 14px" }}>
       {!isLoggedIn ? (
         /* ── Guest: sign-in nudge ── */
         <div>
-          <p style={{ fontSize: 11, fontWeight: 600, color: "#94a3b8", margin: "0 0 8px 2px", lineHeight: 1.5 }}>
+          <p style={{ fontSize: 11, fontWeight: 600, color: "#a8a29e", margin: "0 0 8px 2px", lineHeight: 1.5 }}>
             Sign in to save your deals
           </p>
           <div style={{ display: "flex", gap: 6 }}>
             <button
               onClick={() => router.push("/login")}
-              style={{ flex: 1, fontSize: 11, fontWeight: 700, padding: "7px 0", borderRadius: 7, border: "1px solid #e2e8f0", background: "#fff", color: "#334155", cursor: "pointer" }}>
+              style={{ flex: 1, fontSize: 11, fontWeight: 700, padding: "7px 0", borderRadius: 7, border: "1px solid #d6d3d1", background: "#fff", color: "#44403c", cursor: "pointer" }}>
               Sign in
             </button>
             <button
               onClick={() => router.push("/signup")}
-              style={{ flex: 1, fontSize: 11, fontWeight: 700, padding: "7px 0", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff", cursor: "pointer" }}>
+              style={{ flex: 1, fontSize: 11, fontWeight: 700, padding: "7px 0", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff", cursor: "pointer" }}>
               Sign up free
             </button>
           </div>
           <button
             onClick={() => openUpgradeModal()}
-            style={{ marginTop: 6, width: "100%", fontSize: 11, fontWeight: 600, padding: "7px 0", borderRadius: 7, border: "1px solid #bfdbfe", background: "#eff6ff", color: "#2563eb", cursor: "pointer" }}>
+            style={{ marginTop: 6, width: "100%", fontSize: 11, fontWeight: 600, padding: "7px 0", borderRadius: 7, border: "1px solid #d6d3d1", background: "#e7e5e4", color: "#1c1917", cursor: "pointer" }}>
             View plans ↗
           </button>
         </div>
@@ -315,17 +315,17 @@ function UserAccountPanel() {
               // eslint-disable-next-line @next/next/no-img-element
               <img src={session.user.image} alt="" style={{ width: 30, height: 30, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
             ) : (
-              <div style={{ width: 30, height: 30, borderRadius: "50%", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
+              <div style={{ width: 30, height: 30, borderRadius: "50%", background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
                 {initials}
               </div>
             )}
             <div style={{ flex: 1, minWidth: 0 }}>
-              <p style={{ fontSize: 12, fontWeight: 700, color: "#0f172a", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{userName || userEmail}</p>
-              <p style={{ fontSize: 10, color: "#94a3b8", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{userEmail}</p>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "#1c1917", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{userName || userEmail}</p>
+              <p style={{ fontSize: 10, color: "#a8a29e", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{userEmail}</p>
             </div>
             <button
               onClick={() => router.push("/dashboard/account")}
-              style={{ fontSize: 14, color: "#2563eb", background: "none", border: "none", cursor: "pointer", padding: "8px", borderRadius: 8, fontWeight: 600, minWidth: 36, minHeight: 36, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1 }}
+              style={{ fontSize: 14, color: "#1c1917", background: "none", border: "none", cursor: "pointer", padding: "8px", borderRadius: 8, fontWeight: 600, minWidth: 36, minHeight: 36, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1 }}
               title="Account settings"
               aria-label="Account settings">
               ⚙
@@ -336,7 +336,7 @@ function UserAccountPanel() {
             {!isPremium && (
               <button
                 onClick={() => openUpgradeModal()}
-                style={{ fontSize: 10, fontWeight: 700, color: "#2563eb", background: "none", border: "none", cursor: "pointer", padding: "4px 8px", textDecoration: "underline", minHeight: 32 }}>
+                style={{ fontSize: 10, fontWeight: 700, color: "#1c1917", background: "none", border: "none", cursor: "pointer", padding: "4px 8px", textDecoration: "underline", minHeight: 32 }}>
                 Upgrade ↗
               </button>
             )}
@@ -374,7 +374,7 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
 
   return (
     <header style={{
-      height: 52, background: "#fff", borderBottom: "1px solid #e2e8f0",
+      height: 52, background: "#fff", borderBottom: "1px solid #d6d3d1",
       display: "flex", alignItems: "center",
       padding: "0 12px", gap: 10, flexShrink: 0,
     }}>
@@ -385,7 +385,7 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
         aria-label="Open menu"
         style={{
           width: 36, height: 36, borderRadius: 8,
-          border: "1px solid #e2e8f0", background: "transparent",
+          border: "1px solid #d6d3d1", background: "transparent",
           cursor: "pointer", display: "flex", flexDirection: "column",
           gap: 4, alignItems: "center", justifyContent: "center", flexShrink: 0,
         }}
@@ -398,24 +398,24 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
       {/* Logo — mobile only center */}
       <div className="nav-mobile-btn" style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 7, textDecoration: "none", pointerEvents: "auto" }}>
-          <div style={{ width: 24, height: 24, borderRadius: 6, background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <div style={{ width: 24, height: 24, borderRadius: 6, background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             <BarChart3 size={12} color="#fff" />
           </div>
-          <span style={{ fontWeight: 700, fontSize: 13, color: "#0f172a", letterSpacing: "-0.02em" }}>Triage Finance</span>
+          <span style={{ fontWeight: 700, fontSize: 13, color: "#1c1917", letterSpacing: "-0.02em" }}>Triage Finance</span>
         </Link>
       </div>
 
       {/* Page title — desktop only */}
       <div className="nav-desktop-links" style={{ flex: 1 }}>
-        <p style={{ fontSize: 14, fontWeight: 700, color: "#0f172a", margin: 0 }}>{pageTitle}</p>
+        <p style={{ fontSize: 14, fontWeight: 700, color: "#1c1917", margin: 0 }}>{pageTitle}</p>
       </div>
 
       {/* Right side — desktop: BETA + back to site */}
       <div className="nav-desktop-links" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <span style={{ fontSize: 10, fontWeight: 700, color: "#2563eb", background: "#eff6ff", border: "1px solid #bfdbfe", borderRadius: 9999, padding: "2px 8px", letterSpacing: "0.07em" }}>
+        <span style={{ fontSize: 10, fontWeight: 700, color: "#1c1917", background: "#e7e5e4", border: "1px solid #d6d3d1", borderRadius: 9999, padding: "2px 8px", letterSpacing: "0.07em" }}>
           BETA
         </span>
-        <Link href="/" style={{ fontSize: 12, fontWeight: 600, color: "#64748b", textDecoration: "none", padding: "5px 10px", borderRadius: 7, border: "1px solid #e2e8f0", whiteSpace: "nowrap", transition: "background 0.1s" }}>
+        <Link href="/" style={{ fontSize: 12, fontWeight: 600, color: "#78716c", textDecoration: "none", padding: "5px 10px", borderRadius: 7, border: "1px solid #d6d3d1", whiteSpace: "nowrap", transition: "background 0.1s" }}>
           ← Site
         </Link>
       </div>
@@ -426,9 +426,9 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
         className="nav-mobile-btn"
         aria-label="Homepage"
         style={{
-          width: 32, height: 32, borderRadius: 8, border: "1px solid #e2e8f0",
+          width: 32, height: 32, borderRadius: 8, border: "1px solid #d6d3d1",
           background: "transparent", display: "flex", alignItems: "center", justifyContent: "center",
-          flexShrink: 0, color: "#64748b", textDecoration: "none",
+          flexShrink: 0, color: "#78716c", textDecoration: "none",
         }}
       >
         <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -442,13 +442,13 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
           <button
             onClick={() => router.push("/dashboard/account")}
             aria-label="Account"
-            style={{ width: 32, height: 32, borderRadius: "50%", border: "2px solid #e2e8f0", background: "transparent", padding: 0, cursor: "pointer", overflow: "hidden", flexShrink: 0 }}
+            style={{ width: 32, height: 32, borderRadius: "50%", border: "2px solid #d6d3d1", background: "transparent", padding: 0, cursor: "pointer", overflow: "hidden", flexShrink: 0 }}
           >
             {session.user?.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={session.user.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             ) : (
-              <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, color: "#fff" }}>
+              <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, color: "#fff" }}>
                 {initials}
               </div>
             )}
@@ -456,7 +456,7 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
         ) : (
           <button
             onClick={() => router.push("/login")}
-            style={{ fontSize: 11, fontWeight: 700, padding: "6px 12px", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff", cursor: "pointer" }}>
+            style={{ fontSize: 11, fontWeight: 700, padding: "6px 12px", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff", cursor: "pointer" }}>
             Sign in
           </button>
         )}
@@ -507,7 +507,7 @@ function FoundingMemberBanner() {
   return (
     <div style={{
       display: "flex", alignItems: "center", justifyContent: "space-between",
-      background: "linear-gradient(90deg,#1e3a8a,#2563eb)",
+      background: "linear-gradient(90deg,#292524,#1c1917)",
       padding: "8px 16px", flexShrink: 0, flexWrap: "wrap", gap: 8,
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -519,7 +519,7 @@ function FoundingMemberBanner() {
       <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
         <button
           onClick={() => openUpgradeModal()}
-          style={{ fontSize: 11, fontWeight: 700, padding: "5px 13px", borderRadius: 6, border: "none", background: "#fff", color: "#2563eb", cursor: "pointer", whiteSpace: "nowrap" }}>
+          style={{ fontSize: 11, fontWeight: 700, padding: "5px 13px", borderRadius: 6, border: "none", background: "#fff", color: "#1c1917", cursor: "pointer", whiteSpace: "nowrap" }}>
           Claim offer →
         </button>
         <button onClick={dismiss} aria-label="Dismiss" style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: 16, lineHeight: 1, padding: "8px", minWidth: 36, minHeight: 36, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -549,7 +549,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
   }, [createDeal, router]);
 
   return (
-    <div style={{ display: "flex", height: "100dvh", overflow: "hidden", background: "#f8fafc" }}>
+    <div style={{ display: "flex", height: "100dvh", overflow: "hidden", background: "#faf9f7" }}>
 
       {/* Overlay for mobile */}
       {sidebarOpen && (
@@ -559,12 +559,12 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
       {/* Sidebar */}
       <aside className={`dashboard-sidebar${sidebarOpen ? " open" : ""}`}>
         {/* Logo */}
-        <div style={{ padding: "18px 16px 14px", borderBottom: "1px solid #e2e8f0" }}>
+        <div style={{ padding: "18px 16px 14px", borderBottom: "1px solid #d6d3d1" }}>
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
-            <div style={{ width: 28, height: 28, borderRadius: 7, background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ width: 28, height: 28, borderRadius: 7, background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <BarChart3 size={14} color="#fff" />
             </div>
-            <span style={{ fontWeight: 700, fontSize: 14, color: "#0f172a", letterSpacing: "-0.02em" }}>Triage Finance</span>
+            <span style={{ fontWeight: 700, fontSize: 14, color: "#1c1917", letterSpacing: "-0.02em" }}>Triage Finance</span>
           </Link>
         </div>
 
@@ -578,12 +578,12 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
               display: "flex", alignItems: "center", gap: 7,
               padding: "7px 10px", marginBottom: 8, borderRadius: 8,
               textDecoration: "none", fontSize: 12, fontWeight: 700,
-              color: pathname === "/dashboard" ? "#3730a3" : "#334155",
-              background: pathname === "/dashboard" ? "#eff6ff" : "transparent",
-              borderLeft: pathname === "/dashboard" ? "2px solid #2563eb" : "2px solid transparent",
+              color: pathname === "/dashboard" ? "#3730a3" : "#44403c",
+              background: pathname === "/dashboard" ? "#e7e5e4" : "transparent",
+              borderLeft: pathname === "/dashboard" ? "2px solid #1c1917" : "2px solid transparent",
               transition: "background 0.1s",
             }}
-            onMouseEnter={e => { if (pathname !== "/dashboard") (e.currentTarget as HTMLElement).style.background = "#f8fafc"; }}
+            onMouseEnter={e => { if (pathname !== "/dashboard") (e.currentTarget as HTMLElement).style.background = "#faf9f7"; }}
             onMouseLeave={e => { if (pathname !== "/dashboard") (e.currentTarget as HTMLElement).style.background = "transparent"; }}
           >
             <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -593,10 +593,10 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
           </Link>
 
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "4px 8px", marginBottom: 6 }}>
-            <p style={{ fontSize: 10, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>
+            <p style={{ fontSize: 10, fontWeight: 700, color: "#a8a29e", textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>
               Deals
             </p>
-            <span style={{ fontSize: 10, color: "#64748b", background: "#f1f5f9", border: "1px solid #e2e8f0", borderRadius: 9999, padding: "1px 7px", fontWeight: 700 }}>
+            <span style={{ fontSize: 10, color: "#78716c", background: "#e7e5e4", border: "1px solid #d6d3d1", borderRadius: 9999, padding: "1px 7px", fontWeight: 700 }}>
               {deals.length}
             </span>
           </div>
@@ -609,18 +609,18 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
         </nav>
 
         {/* New analysis CTA */}
-        <div style={{ padding: "12px 10px", borderTop: "1px solid #e2e8f0" }}>
+        <div style={{ padding: "12px 10px", borderTop: "1px solid #d6d3d1" }}>
           <button
             onClick={handleNewDeal}
             style={{
               width: "100%", padding: "9px 14px", borderRadius: 9,
-              border: "1.5px dashed #bfdbfe", background: "transparent",
-              color: "#2563eb", fontSize: 12, fontWeight: 700, cursor: "pointer",
+              border: "1.5px dashed #d6d3d1", background: "transparent",
+              color: "#1c1917", fontSize: 12, fontWeight: 700, cursor: "pointer",
               display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
               transition: "background 0.12s, border-color 0.12s",
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#eff6ff"; (e.currentTarget as HTMLElement).style.borderColor = "#2563eb"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.borderColor = "#bfdbfe"; }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#e7e5e4"; (e.currentTarget as HTMLElement).style.borderColor = "#1c1917"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.borderColor = "#d6d3d1"; }}
           >
             <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />

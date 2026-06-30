@@ -29,7 +29,7 @@ const SECTORS: Sector[] = [
     note: "of SDE",
     drivers: ["Recurring patient base", "NHS contract revenue", "CQC registration moat"],
     risks: ["Regulatory risk", "Key-person dependency", "Recruitment pressure"],
-    color: "#2563eb",
+    color: "#1c1917",
   },
   {
     id: "engineering",
@@ -51,7 +51,7 @@ const SECTORS: Sector[] = [
     note: "of SDE (SME SaaS)",
     drivers: ["Recurring subscription revenue", "High gross margins", "Scalable delivery"],
     risks: ["Churn rate", "Technical debt", "Market saturation"],
-    color: "#1e3a8a",
+    color: "#292524",
   },
   {
     id: "logistics",
@@ -117,7 +117,7 @@ function SectorCard({
   return (
     <div
       style={{
-        background: highlight ? `linear-gradient(135deg, #0f172a 0%, ${sector.color}18 100%)` : "#0f172a",
+        background: highlight ? `linear-gradient(135deg, #1c1917 0%, ${sector.color}18 100%)` : "#1c1917",
         border: `1px solid ${highlight ? sector.color + "60" : "#1e293b"}`,
         borderRadius: 12,
         padding: "20px 22px",
@@ -138,7 +138,7 @@ function SectorCard({
       <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 14 }}>
         <span style={{ fontSize: 26, lineHeight: 1, flexShrink: 0 }}>{sector.emoji}</span>
         <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: 700, fontSize: 14, color: "#f1f5f9", marginBottom: 2 }}>
+          <div style={{ fontWeight: 700, fontSize: 14, color: "#e7e5e4", marginBottom: 2 }}>
             {sector.name}
           </div>
           <div style={{ fontSize: 11, color: "#475569" }}>{sector.note}</div>
@@ -166,7 +166,7 @@ function SectorCard({
           <span style={{ fontSize: 10, fontWeight: 700, color: sector.color, letterSpacing: "0.07em", flexShrink: 0 }}>
             <GlossaryTerm term="EV">EV</GlossaryTerm> RANGE
           </span>
-          <span style={{ fontSize: 16, fontWeight: 800, color: "#f1f5f9", fontVariantNumeric: "tabular-nums" }}>
+          <span style={{ fontSize: 16, fontWeight: 800, color: "#e7e5e4", fontVariantNumeric: "tabular-nums" }}>
             {fmtGbp(evLow)} – {fmtGbp(evHigh)}
           </span>
         </div>
@@ -184,7 +184,7 @@ function SectorCard({
             borderRadius: 9999,
           }} />
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 4, fontSize: 9, color: "#334155" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 4, fontSize: 9, color: "#44403c" }}>
           <span>1×</span><span>2×</span><span>3×</span><span>4×</span><span>5×</span><span>6×</span>
         </div>
       </div>
@@ -194,7 +194,7 @@ function SectorCard({
         <div>
           <div style={{ fontSize: 9, fontWeight: 700, color: "#22c55e", letterSpacing: "0.09em", marginBottom: 6 }}>VALUE DRIVERS</div>
           {sector.drivers.map(d => (
-            <div key={d} style={{ display: "flex", gap: 5, fontSize: 11, color: "#94a3b8", marginBottom: 3, lineHeight: 1.4 }}>
+            <div key={d} style={{ display: "flex", gap: 5, fontSize: 11, color: "#a8a29e", marginBottom: 3, lineHeight: 1.4 }}>
               <span style={{ color: "#22c55e", flexShrink: 0, marginTop: 1 }}>▸</span>{d}
             </div>
           ))}
@@ -202,7 +202,7 @@ function SectorCard({
         <div>
           <div style={{ fontSize: 9, fontWeight: 700, color: "#f87171", letterSpacing: "0.09em", marginBottom: 6 }}>RISK FACTORS</div>
           {sector.risks.map(r => (
-            <div key={r} style={{ display: "flex", gap: 5, fontSize: 11, color: "#94a3b8", marginBottom: 3, lineHeight: 1.4 }}>
+            <div key={r} style={{ display: "flex", gap: 5, fontSize: 11, color: "#a8a29e", marginBottom: 3, lineHeight: 1.4 }}>
               <span style={{ color: "#f87171", flexShrink: 0, marginTop: 1 }}>▸</span>{r}
             </div>
           ))}
@@ -256,7 +256,7 @@ function SdeSlider({ value, onChange }: { value: number; onChange: (v: number) =
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
-        <span style={{ fontSize: 13, fontWeight: 600, color: "#94a3b8" }}>Annual <GlossaryTerm term="SDE">SDE</GlossaryTerm> / Owner Earnings</span>
+        <span style={{ fontSize: 13, fontWeight: 600, color: "#a8a29e" }}>Annual <GlossaryTerm term="SDE">SDE</GlossaryTerm> / Owner Earnings</span>
         <span style={{
           fontSize: 22,
           fontWeight: 800,
@@ -270,7 +270,7 @@ function SdeSlider({ value, onChange }: { value: number; onChange: (v: number) =
       <div style={{ position: "relative", height: 28, display: "flex", alignItems: "center" }}>
         <div style={{
           position: "absolute", left: 0, right: 0, height: 8, borderRadius: 9999,
-          background: `linear-gradient(90deg, #2563eb ${pct}%, #1e293b ${pct}%)`,
+          background: `linear-gradient(90deg, #1c1917 ${pct}%, #1e293b ${pct}%)`,
           pointerEvents: "none",
         }} />
         <input
@@ -284,7 +284,7 @@ function SdeSlider({ value, onChange }: { value: number; onChange: (v: number) =
           style={{ position: "relative", zIndex: 1, background: "transparent", width: "100%" }}
         />
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "#334155", marginTop: 4 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "#44403c", marginTop: 4 }}>
         <span>£50k</span><span>£250k</span><span>£500k</span><span>£750k</span><span>£1m</span>
       </div>
     </div>
@@ -309,16 +309,16 @@ function SearchBar({ value, onChange }: { value: string; onChange: (v: string) =
         placeholder="Filter sectors…"
         style={{
           width: "100%",
-          background: "#0f172a",
+          background: "#1c1917",
           border: "1px solid #1e293b",
           borderRadius: 9,
           padding: "11px 14px 11px 38px",
           fontSize: 13,
-          color: "#f1f5f9",
+          color: "#e7e5e4",
           outline: "none",
           boxSizing: "border-box",
         }}
-        onFocus={e => (e.currentTarget.style.borderColor = "#2563eb")}
+        onFocus={e => (e.currentTarget.style.borderColor = "#1c1917")}
         onBlur={e => (e.currentTarget.style.borderColor = "#1e293b")}
       />
     </div>
@@ -354,14 +354,14 @@ function SummaryTable({ sectors, sde }: { sectors: Sector[]; sde: number }) {
           {sectors.map((s, i) => (
             <tr
               key={s.id}
-              style={{ borderBottom: "1px solid #0f172a", background: i % 2 === 0 ? "#0a0f1e" : "transparent" }}
+              style={{ borderBottom: "1px solid #1c1917", background: i % 2 === 0 ? "#0a0f1e" : "transparent" }}
               onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = `${s.color}10`)}
               onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = i % 2 === 0 ? "#0a0f1e" : "transparent")}
             >
               <td style={{ padding: "11px 14px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
                   <span style={{ fontSize: 16 }}>{s.emoji}</span>
-                  <span style={{ fontWeight: 600, color: "#e2e8f0" }}>{s.name}</span>
+                  <span style={{ fontWeight: 600, color: "#d6d3d1" }}>{s.name}</span>
                 </div>
               </td>
               <td style={{ padding: "11px 14px" }}>
@@ -371,10 +371,10 @@ function SummaryTable({ sectors, sde }: { sectors: Sector[]; sde: number }) {
               </td>
               {sde > 0 && (
                 <>
-                  <td style={{ padding: "11px 14px", fontVariantNumeric: "tabular-nums", color: "#94a3b8" }}>
+                  <td style={{ padding: "11px 14px", fontVariantNumeric: "tabular-nums", color: "#a8a29e" }}>
                     {fmtGbp(sde * s.minMultiple)}
                   </td>
-                  <td style={{ padding: "11px 14px", fontVariantNumeric: "tabular-nums", color: "#f1f5f9", fontWeight: 600 }}>
+                  <td style={{ padding: "11px 14px", fontVariantNumeric: "tabular-nums", color: "#e7e5e4", fontWeight: 600 }}>
                     {fmtGbp(sde * s.maxMultiple)}
                   </td>
                 </>
@@ -415,7 +415,7 @@ export default function GuidePage() {
   const sliderActive = sde > 0;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#050a14", color: "#f1f5f9" }}>
+    <div style={{ minHeight: "100vh", background: "#050a14", color: "#e7e5e4" }}>
       <SiteNav />
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "100px 32px 80px" }}>
@@ -424,10 +424,10 @@ export default function GuidePage() {
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.25)", borderRadius: 20, padding: "4px 12px", fontSize: 11, fontWeight: 700, color: "#a5b4fc", letterSpacing: "0.07em", marginBottom: 16 }}>
             UK M&A BENCHMARK DATA
           </div>
-          <h1 style={{ fontSize: 36, fontWeight: 900, color: "#f8fafc", margin: "0 0 14px", letterSpacing: "-0.03em", lineHeight: 1.15 }}>
+          <h1 style={{ fontSize: 36, fontWeight: 900, color: "#faf9f7", margin: "0 0 14px", letterSpacing: "-0.03em", lineHeight: 1.15 }}>
             Industry Valuation Guide
           </h1>
-          <p style={{ fontSize: 15, color: "#64748b", lineHeight: 1.7, margin: 0 }}>
+          <p style={{ fontSize: 15, color: "#78716c", lineHeight: 1.7, margin: 0 }}>
             Benchmark <GlossaryTerm term="SDE">SDE</GlossaryTerm> multiples for UK SME acquisitions, based on broker consensus ranges, BVR, IBBA and Daltons published data (2022–2025). Drag the slider to calculate <GlossaryTerm term="EV">enterprise value</GlossaryTerm> ranges across all sectors in real time.
           </p>
         </div>
@@ -452,7 +452,7 @@ export default function GuidePage() {
           </div>
           <SdeSlider value={sde || SDE_MIN} onChange={setSde} />
           {!sliderActive && (
-            <p style={{ fontSize: 12, color: "#334155", margin: "12px 0 0" }}>
+            <p style={{ fontSize: 12, color: "#44403c", margin: "12px 0 0" }}>
               Move the slider to see enterprise value ranges populate across all sectors simultaneously.
             </p>
           )}
@@ -476,7 +476,7 @@ export default function GuidePage() {
                   fontSize: 12,
                   fontWeight: 600,
                   background: view === v ? "#1e293b" : "transparent",
-                  color: view === v ? "#f1f5f9" : "#475569",
+                  color: view === v ? "#e7e5e4" : "#475569",
                   transition: "all 0.15s",
                   textTransform: "capitalize",
                 }}
@@ -485,7 +485,7 @@ export default function GuidePage() {
               </button>
             ))}
           </div>
-          <span style={{ fontSize: 12, color: "#334155" }}>
+          <span style={{ fontSize: 12, color: "#44403c" }}>
             {filtered.length} sector{filtered.length !== 1 ? "s" : ""}
           </span>
         </div>
@@ -501,7 +501,7 @@ export default function GuidePage() {
               <SectorCard key={s.id} sector={s} sde={sliderActive ? sde : 0} highlight={sliderActive} />
             ))}
             {filtered.length === 0 && (
-              <div style={{ gridColumn: "1/-1", textAlign: "center", padding: "60px 0", color: "#334155" }}>
+              <div style={{ gridColumn: "1/-1", textAlign: "center", padding: "60px 0", color: "#44403c" }}>
                 No sectors match "{query}"
               </div>
             )}
@@ -520,12 +520,12 @@ export default function GuidePage() {
           border: "1px solid #1e293b",
           borderRadius: 12,
         }}>
-          <div style={{ fontSize: 10, fontWeight: 700, color: "#334155", letterSpacing: "0.1em", marginBottom: 12 }}>
+          <div style={{ fontSize: 10, fontWeight: 700, color: "#44403c", letterSpacing: "0.1em", marginBottom: 12 }}>
             METHODOLOGY & DISCLAIMER
           </div>
           <p style={{ fontSize: 12, color: "#475569", lineHeight: 1.7, margin: 0 }}>
             Multiples represent the mid-market consensus range for profitable UK SMEs (SDE £100k – £2m) transacted via business brokers and corporate finance advisers (2022–2025). Sources include BVR Market Pulse, IBBA Market Pulse, Daltons Business, and Plimsoll published benchmarks. Healthcare/Dental premiums reflect NHS income multiples. Professional Services multiples are expressed as a factor of annual recurring fees rather than SDE. SaaS figures apply to SME MRR-based businesses, not VC-backed growth companies. Enterprise Value = Asking Price (debt-free, cash-free basis). All figures are indicative benchmarks only and do not constitute financial advice.{" "}
-            <Link href="/dashboard/triage" style={{ color: "#2563eb", textDecoration: "none" }}>
+            <Link href="/dashboard/triage" style={{ color: "#1c1917", textDecoration: "none" }}>
               Use the Triage Workspace
             </Link>{" "}
             for a personalised deal analysis.

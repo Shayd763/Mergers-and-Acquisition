@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useState } from "react";
 import { useSubscription, type Tier } from "@/app/components/SubscriptionContext";
 import { useSession } from "next-auth/react";
@@ -20,7 +20,7 @@ const TIER_DEFS: {
     name: "Explorer",
     price: "Free",
     priceNote: "forever",
-    color: "#64748b",
+    color: "#78716c",
     icon: <Star size={15} />,
     features: [
       "Dynamic deal structuring with live sliders",
@@ -35,7 +35,7 @@ const TIER_DEFS: {
     name: "Active Searcher",
     price: "£49",
     priceNote: "/month",
-    color: "#2563eb",
+    color: "#1c1917",
     icon: <Zap size={15} />,
     features: [
       "Unlimited deal workspaces",
@@ -53,7 +53,7 @@ const TIER_DEFS: {
     name: "Deal Broker",
     price: "£149",
     priceNote: "/month",
-    color: "#1e3a8a",
+    color: "#292524",
     icon: <Building2 size={15} />,
     features: [
       "Everything in Active Searcher",
@@ -90,7 +90,7 @@ function PlanCard({ td, isCurrent, onSelect, loading }: {
 }) {
   return (
     <div style={{
-      border: isCurrent ? `2px solid ${td.color}` : "1.5px solid #e2e8f0",
+      border: isCurrent ? `2px solid ${td.color}` : "1.5px solid #d6d3d1",
       borderRadius: 14,
       padding: "20px",
       background: isCurrent ? `${td.color}07` : "#fff",
@@ -128,9 +128,9 @@ function PlanCard({ td, isCurrent, onSelect, loading }: {
           {td.icon}
         </div>
         <div>
-          <p style={{ fontSize: 14, fontWeight: 800, color: "#0f172a", margin: 0 }}>{td.name}</p>
-          <p style={{ fontSize: 13, color: "#64748b", margin: 0 }}>
-            <span style={{ fontWeight: 700, fontSize: 18, color: "#0f172a" }}>{td.price}</span>
+          <p style={{ fontSize: 14, fontWeight: 800, color: "#1c1917", margin: 0 }}>{td.name}</p>
+          <p style={{ fontSize: 13, color: "#78716c", margin: 0 }}>
+            <span style={{ fontWeight: 700, fontSize: 18, color: "#1c1917" }}>{td.price}</span>
             {" "}{td.priceNote}
           </p>
         </div>
@@ -141,7 +141,7 @@ function PlanCard({ td, isCurrent, onSelect, loading }: {
         {td.features.map((f, i) => (
           <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
             <CheckCircle size={13} style={{ color: td.color, flexShrink: 0, marginTop: 2 }} />
-            <span style={{ fontSize: 12.5, color: "#334155", lineHeight: 1.4 }}>{f}</span>
+            <span style={{ fontSize: 12.5, color: "#44403c", lineHeight: 1.4 }}>{f}</span>
           </div>
         ))}
       </div>
@@ -285,7 +285,7 @@ export default function AccountPage() {
             // eslint-disable-next-line @next/next/no-img-element
             <img src={session.user.image} alt="" style={{ width: 52, height: 52, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
           ) : (
-            <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
+            <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
               {initials}
             </div>
           )}
@@ -331,7 +331,7 @@ export default function AccountPage() {
             <button
               onClick={handleBillingPortal}
               disabled={portalLoading}
-              style={{ fontSize: 12, color: "#2563eb", fontWeight: 600, border: "1px solid #bfdbfe", borderRadius: 7, padding: "6px 12px", background: "#eff6ff", whiteSpace: "nowrap", cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}>
+              style={{ fontSize: 12, color: "#1c1917", fontWeight: 600, border: "1px solid #d6d3d1", borderRadius: 7, padding: "6px 12px", background: "#e7e5e4", whiteSpace: "nowrap", cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}>
               {portalLoading ? "Opening…" : <><ExternalLink size={11} /> Manage billing</>}
             </button>
           )}
@@ -349,7 +349,7 @@ export default function AccountPage() {
           ))}
         </div>
 
-        <p style={{ fontSize: 11, color: "#94a3b8", margin: "16px 0 0", textAlign: "center" }}>
+        <p style={{ fontSize: 11, color: "#a8a29e", margin: "16px 0 0", textAlign: "center" }}>
           Cancel anytime · No lock-in · Billed monthly · Prices in GBP
         </p>
       </div>
@@ -382,7 +382,7 @@ export default function AccountPage() {
           </div>
         ) : (
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <Lock size={16} style={{ color: "#94a3b8" }} />
+            <Lock size={16} style={{ color: "#a8a29e" }} />
             <p style={{ fontSize: 13, color: "var(--muted)", margin: 0 }}>
               No active subscription.{" "}
               <button

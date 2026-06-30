@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -38,7 +38,7 @@ function CapitalPlayground({ defaultPrice, avgMultiple, avgNetProfit, avgAddBack
   const fmt = (n: number) => `£${n >= 1000000 ? (n / 1000000).toFixed(2) + "m" : (n / 1000).toFixed(0) + "k"}`;
 
   return (
-    <div style={{ background: "#0f172a", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, overflow: "hidden" }}>
+    <div style={{ background: "#1c1917", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, overflow: "hidden" }}>
       <div style={{ padding: "12px 20px", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", gap: 6 }}>
         {["#ef4444","#f59e0b","#22c55e"].map(c => <div key={c} style={{ width: 10, height: 10, borderRadius: "50%", background: c, opacity: 0.7 }} />)}
         <span style={{ fontSize: 11, color: "#475569", fontWeight: 500, marginLeft: 6 }}>Capital Structure Modeller</span>
@@ -46,7 +46,7 @@ function CapitalPlayground({ defaultPrice, avgMultiple, avgNetProfit, avgAddBack
       <div style={{ padding: "24px 24px 20px" }}>
         {/* Stack bar */}
         <div style={{ height: 10, borderRadius: 9999, overflow: "hidden", display: "flex", background: "#1e293b", marginBottom: 24, border: "1px solid rgba(255,255,255,0.06)" }}>
-          <div style={{ width: `${equity}%`, background: "linear-gradient(90deg,#1e3a8a,#2563eb)", transition: "width 0.15s" }} />
+          <div style={{ width: `${equity}%`, background: "linear-gradient(90deg,#292524,#1c1917)", transition: "width 0.15s" }} />
           <div style={{ width: `${vendor}%`, background: "linear-gradient(90deg,#a855f7,#c084fc)", transition: "width 0.15s" }} />
           <div style={{ width: `${bank}%`, background: "linear-gradient(90deg,#f59e0b,#fbbf24)", transition: "width 0.15s" }} />
         </div>
@@ -109,7 +109,7 @@ function CapitalPlayground({ defaultPrice, avgMultiple, avgNetProfit, avgAddBack
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
             style={{
               width: "100%", padding: "11px 0", borderRadius: 10, border: "none", cursor: "pointer",
-              background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff",
+              background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff",
               fontSize: 13, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
             }}
           >
@@ -151,7 +151,7 @@ export default function BuyPageClient({
         boxShadow: "0 0 0 1px rgba(99,102,241,0.12)",
       }}>
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 7, textDecoration: "none" }}>
-          <div style={{ width: 22, height: 22, borderRadius: 6, background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ width: 22, height: 22, borderRadius: 6, background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <BarChart3 size={12} color="#fff" />
           </div>
           <span style={{ fontSize: 13, fontWeight: 700, color: "#f4f4f5" }}>Triage Finance</span>
@@ -203,7 +203,7 @@ export default function BuyPageClient({
               style={{ background: "rgba(18,18,22,0.85)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "28px 28px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
                 <TrendingUp size={16} color="#818cf8" />
-                <span style={{ fontSize: 12, fontWeight: 700, color: "#2563eb", letterSpacing: "0.09em", textTransform: "uppercase" }}>UK M&A Market Conditions · {cd.displayName}</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#1c1917", letterSpacing: "0.09em", textTransform: "uppercase" }}>UK M&A Market Conditions · {cd.displayName}</span>
               </div>
               <p style={{ fontSize: 14, color: "#a1a1aa", lineHeight: 1.8, margin: "0 0 20px" }}>{sd.marketSummary}</p>
               <p style={{ fontSize: 13, color: "#71717a", lineHeight: 1.7, margin: 0 }}>{cd.marketNote}</p>
@@ -242,7 +242,7 @@ export default function BuyPageClient({
             {/* Market benchmarks */}
             <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
               style={{ background: "rgba(18,18,22,0.85)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "28px" }}>
-              <p style={{ fontSize: 12, fontWeight: 700, color: "#2563eb", letterSpacing: "0.09em", textTransform: "uppercase", marginBottom: 20 }}>Market Benchmarks · {cd.displayName} {sd.displayName}</p>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "#1c1917", letterSpacing: "0.09em", textTransform: "uppercase", marginBottom: 20 }}>Market Benchmarks · {cd.displayName} {sd.displayName}</p>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
                 {[
                   { label: "Avg Asking Price", val: `£${(adjustedPrice / 1000).toFixed(0)}k`, sub: `${cd.premiumPct >= 0 ? "+" : ""}${(cd.premiumPct * 100).toFixed(0)}% vs national avg` },
@@ -266,7 +266,7 @@ export default function BuyPageClient({
               style={{ background: "rgba(18,18,22,0.85)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "28px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
                 <Building2 size={15} color="#818cf8" />
-                <p style={{ fontSize: 12, fontWeight: 700, color: "#2563eb", letterSpacing: "0.09em", textTransform: "uppercase", margin: 0 }}>Active Businesses · Companies House · {cd.displayName}</p>
+                <p style={{ fontSize: 12, fontWeight: 700, color: "#1c1917", letterSpacing: "0.09em", textTransform: "uppercase", margin: 0 }}>Active Businesses · Companies House · {cd.displayName}</p>
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 {companies.map(c => (

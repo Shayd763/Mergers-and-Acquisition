@@ -115,7 +115,7 @@ function JsonBlock({ obj }: { obj: unknown }) {
     .replace(/:\s*("([^"]*)")/g, ': <span style="color:#6ee7b7">$1</span>')
     .replace(/:\s*(-?\d+\.?\d*)/g, ': <span style="color:#f9a8d4">$1</span>')
     .replace(/:\s*(true|false)/g, ': <span style="color:#fbbf24">$1</span>')
-    .replace(/:\s*(null)/g, ': <span style="color:#94a3b8">$1</span>');
+    .replace(/:\s*(null)/g, ': <span style="color:#a8a29e">$1</span>');
 
   return (
     <pre
@@ -124,7 +124,7 @@ function JsonBlock({ obj }: { obj: unknown }) {
         fontSize: 11.5,
         lineHeight: 1.65,
         margin: 0,
-        color: "#e2e8f0",
+        color: "#d6d3d1",
         overflowX: "auto",
       }}
       dangerouslySetInnerHTML={{ __html: html }}
@@ -738,7 +738,7 @@ export function CreditMemoDrawer({
 
         {/* ── Drawer header ── */}
         <div style={{
-          background: "#0f172a",
+          background: "#1c1917",
           padding: "18px 22px 14px",
           flexShrink: 0,
           borderBottom: "1px solid rgba(255,255,255,0.08)",
@@ -746,12 +746,12 @@ export function CreditMemoDrawer({
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
-                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#2563eb" }} />
-                <span style={{ fontSize: 11, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 600 }}>
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#1c1917" }} />
+                <span style={{ fontSize: 11, color: "#78716c", textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 600 }}>
                   DealTriage · Stage 3 Unlock
                 </span>
               </div>
-              <h2 style={{ fontSize: 17, fontWeight: 800, color: "#f1f5f9", margin: 0, letterSpacing: "-0.02em" }}>
+              <h2 style={{ fontSize: 17, fontWeight: 800, color: "#e7e5e4", margin: 0, letterSpacing: "-0.02em" }}>
                 Credit Memo &amp; Lender Portal
               </h2>
               {registryData?.company_name && (
@@ -759,7 +759,7 @@ export function CreditMemoDrawer({
                   {registryData.company_name}
                 </p>
               )}
-              <p style={{ fontSize: 12, color: "#64748b", margin: "4px 0 0" }}>
+              <p style={{ fontSize: 12, color: "#78716c", margin: "4px 0 0" }}>
                 Deal ID: <span style={{ color: "#a5b4fc", fontFamily: "monospace", fontSize: 11 }}>{dealId}</span>
               </p>
             </div>
@@ -768,7 +768,7 @@ export function CreditMemoDrawer({
               style={{
                 background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
                 borderRadius: 7, padding: "6px 10px", cursor: "pointer",
-                color: "#94a3b8", fontSize: 16, lineHeight: 1,
+                color: "#a8a29e", fontSize: 16, lineHeight: 1,
               }}>
               ✕
             </button>
@@ -786,8 +786,8 @@ export function CreditMemoDrawer({
                 style={{
                   fontSize: 12, fontWeight: 600, padding: "7px 16px",
                   borderRadius: 7, border: "none", cursor: "pointer",
-                  background: tab === t ? "#2563eb" : "rgba(255,255,255,0.06)",
-                  color: tab === t ? "#fff" : "#94a3b8",
+                  background: tab === t ? "#1c1917" : "rgba(255,255,255,0.06)",
+                  color: tab === t ? "#fff" : "#a8a29e",
                   transition: "all 0.15s",
                   display: "flex", alignItems: "center", gap: 5,
                 }}>
@@ -798,7 +798,7 @@ export function CreditMemoDrawer({
         </div>
 
         {/* ── Scrollable body ── */}
-        <div style={{ flex: 1, overflowY: "auto", background: "#f8fafc" }}>
+        <div style={{ flex: 1, overflowY: "auto", background: "#faf9f7" }}>
 
           {/* ════ TAB: CREDIT MEMO ════ */}
           {tab === "memo" && (
@@ -806,18 +806,18 @@ export function CreditMemoDrawer({
 
               {/* Download button */}
               <div style={{
-                background: "#0f172a", borderRadius: 12, padding: "20px 22px",
+                background: "#1c1917", borderRadius: 12, padding: "20px 22px",
                 display: "flex", justifyContent: "space-between", alignItems: "center",
               }}>
                 <div>
-                  <p style={{ fontSize: 14, fontWeight: 700, color: "#f1f5f9", margin: "0 0 4px" }}>Deal Credit Memo</p>
-                  <p style={{ fontSize: 12, color: "#64748b", margin: 0 }}>4-page institutional PDF · Credit intelligence included</p>
+                  <p style={{ fontSize: 14, fontWeight: 700, color: "#e7e5e4", margin: "0 0 4px" }}>Deal Credit Memo</p>
+                  <p style={{ fontSize: 12, color: "#78716c", margin: 0 }}>4-page institutional PDF · Credit intelligence included</p>
                 </div>
                 <button
                   onClick={handleDownloadPDF}
                   disabled={pdfGenerating}
                   style={{
-                    background: pdfGenerating ? "#334155" : "#2563eb",
+                    background: pdfGenerating ? "#44403c" : "#1c1917",
                     color: "#fff", border: "none", borderRadius: 8,
                     padding: "10px 18px", fontSize: 13, fontWeight: 700,
                     cursor: pdfGenerating ? "not-allowed" : "pointer",
@@ -866,11 +866,11 @@ export function CreditMemoDrawer({
                 <div key={pg} className="card" style={{ padding: "16px 18px" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
                     <span style={{
-                      fontSize: 10, fontWeight: 700, background: "#eff6ff", color: "#2563eb",
-                      border: "1px solid #bfdbfe", borderRadius: 5, padding: "2px 8px",
+                      fontSize: 10, fontWeight: 700, background: "#e7e5e4", color: "#1c1917",
+                      border: "1px solid #d6d3d1", borderRadius: 5, padding: "2px 8px",
                       textTransform: "uppercase", letterSpacing: "0.06em",
                     }}>{pg}</span>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: "#0f172a" }}>{title}</span>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: "#1c1917" }}>{title}</span>
                   </div>
                   <ul style={{ margin: 0, padding: "0 0 0 16px" }}>
                     {items.map((item, i) => (
@@ -884,11 +884,11 @@ export function CreditMemoDrawer({
               <div className="card" style={{ padding: "16px 18px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
                   <span style={{
-                    fontSize: 10, fontWeight: 700, background: "#eff6ff", color: "#2563eb",
-                    border: "1px solid #bfdbfe", borderRadius: 5, padding: "2px 8px",
+                    fontSize: 10, fontWeight: 700, background: "#e7e5e4", color: "#1c1917",
+                    border: "1px solid #d6d3d1", borderRadius: 5, padding: "2px 8px",
                     textTransform: "uppercase", letterSpacing: "0.06em",
                   }}>Page 4</span>
-                  <span style={{ fontSize: 13, fontWeight: 700, color: "#0f172a" }}>Credit Intelligence Report</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "#1c1917" }}>Credit Intelligence Report</span>
                 </div>
                 <ul style={{ margin: 0, padding: "0 0 0 16px" }}>
                   {[
@@ -905,7 +905,7 @@ export function CreditMemoDrawer({
 
               {/* Registry verification card */}
               {registryData && (
-                <div className="card" style={{ padding: "16px 18px", background: "#0f172a" }}>
+                <div className="card" style={{ padding: "16px 18px", background: "#1c1917" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
                     <span style={{ fontSize: 10, fontWeight: 700, color: "#475569", letterSpacing: "0.1em" }}>
                       COMPANIES HOUSE REGISTRY VERIFICATION
@@ -913,7 +913,7 @@ export function CreditMemoDrawer({
                     <span style={{
                       marginLeft: "auto", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 4,
                       background: registryData.reconciliation_score === "CLEAN" ? "#14532d" : registryData.reconciliation_score === "REVIEW" ? "#1e3a5f" : "#7f1d1d",
-                      color: registryData.reconciliation_score === "CLEAN" ? "#86efac" : registryData.reconciliation_score === "REVIEW" ? "#93c5fd" : "#fca5a5",
+                      color: registryData.reconciliation_score === "CLEAN" ? "#86efac" : registryData.reconciliation_score === "REVIEW" ? "#a8a29e" : "#fca5a5",
                     }}>
                       {registryData.reconciliation_score}
                     </span>
@@ -929,7 +929,7 @@ export function CreditMemoDrawer({
                     ].map(([l, v]) => (
                       <div key={l}>
                         <div style={{ fontSize: 9, color: "#475569", fontWeight: 700, letterSpacing: "0.08em", marginBottom: 2 }}>{l}</div>
-                        <div style={{ fontSize: 12, fontWeight: 700, color: "#f1f5f9" }}>{v}</div>
+                        <div style={{ fontSize: 12, fontWeight: 700, color: "#e7e5e4" }}>{v}</div>
                       </div>
                     ))}
                   </div>
@@ -942,10 +942,10 @@ export function CreditMemoDrawer({
                           borderLeft: `2px solid ${f.status === "AMBER" || f.status === "RED" ? "#d97706" : "#3b82f6"}`,
                           borderRadius: "0 5px 5px 0",
                         }}>
-                          <span style={{ fontSize: 10, fontWeight: 700, color: f.status === "AMBER" || f.status === "RED" ? "#fbbf24" : "#93c5fd", flexShrink: 0 }}>
+                          <span style={{ fontSize: 10, fontWeight: 700, color: f.status === "AMBER" || f.status === "RED" ? "#fbbf24" : "#a8a29e", flexShrink: 0 }}>
                             {f.status}
                           </span>
-                          <span style={{ fontSize: 11, color: "#94a3b8", lineHeight: 1.4 }}>{f.title}</span>
+                          <span style={{ fontSize: 11, color: "#a8a29e", lineHeight: 1.4 }}>{f.title}</span>
                         </div>
                       ))}
                     </div>
@@ -953,7 +953,7 @@ export function CreditMemoDrawer({
                 </div>
               )}
 
-              <p style={{ fontSize: 11, color: "#94a3b8", textAlign: "center", margin: 0 }}>
+              <p style={{ fontSize: 11, color: "#a8a29e", textAlign: "center", margin: 0 }}>
                 For indicative purposes only · Not financial advice · DealTriage UK
               </p>
             </div>
@@ -967,14 +967,14 @@ export function CreditMemoDrawer({
               {/* JSON payload */}
               <div style={{ borderRadius: 10, overflow: "hidden", border: "1px solid #1e293b" }}>
                 <div style={{
-                  background: "#0f172a", padding: "10px 16px",
+                  background: "#1c1917", padding: "10px 16px",
                   display: "flex", justifyContent: "space-between", alignItems: "center",
                   borderBottom: "1px solid rgba(255,255,255,0.06)",
                 }}>
-                  <span style={{ fontSize: 11, color: "#64748b", fontFamily: "monospace" }}>
+                  <span style={{ fontSize: 11, color: "#78716c", fontFamily: "monospace" }}>
                     POST /api/v1/submit-deal-package
                   </span>
-                  <span style={{ fontSize: 10, color: "#2563eb", fontWeight: 600, background: "#1e1b4b", padding: "2px 8px", borderRadius: 4 }}>
+                  <span style={{ fontSize: 10, color: "#1c1917", fontWeight: 600, background: "#1e1b4b", padding: "2px 8px", borderRadius: 4 }}>
                     LIVE PAYLOAD
                   </span>
                 </div>
@@ -985,7 +985,7 @@ export function CreditMemoDrawer({
 
               {/* Lender toggles */}
               <div className="card" style={{ padding: "18px 20px" }}>
-                <h3 style={{ fontSize: 13, fontWeight: 700, color: "#0f172a", margin: "0 0 14px" }}>
+                <h3 style={{ fontSize: 13, fontWeight: 700, color: "#1c1917", margin: "0 0 14px" }}>
                   Lender Integration Toggles
                 </h3>
                 {(["oaknorth", "sfc", "funding"] as const).map((key) => {
@@ -1004,18 +1004,18 @@ export function CreditMemoDrawer({
                     }}>
                       <div>
                         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                          <span style={{ fontSize: 13, fontWeight: 600, color: "#0f172a" }}>{name}</span>
-                          <span style={{ fontSize: 10, color: on ? "#059669" : "#94a3b8", background: on ? "#d1fae5" : "#f1f5f9", border: `1px solid ${on ? "#a7f3d0" : "#e2e8f0"}`, borderRadius: 4, padding: "1px 7px", fontWeight: 600 }}>
+                          <span style={{ fontSize: 13, fontWeight: 600, color: "#1c1917" }}>{name}</span>
+                          <span style={{ fontSize: 10, color: on ? "#059669" : "#a8a29e", background: on ? "#d1fae5" : "#e7e5e4", border: `1px solid ${on ? "#a7f3d0" : "#d6d3d1"}`, borderRadius: 4, padding: "1px 7px", fontWeight: 600 }}>
                             {on ? badge : "Disabled"}
                           </span>
                         </div>
-                        <p style={{ fontSize: 11, color: "#64748b", margin: "2px 0 0" }}>{desc}</p>
+                        <p style={{ fontSize: 11, color: "#78716c", margin: "2px 0 0" }}>{desc}</p>
                       </div>
                       <button
                         onClick={() => setLenders(l => ({ ...l, [key]: !l[key] }))}
                         style={{
                           width: 44, height: 24, borderRadius: 12,
-                          background: on ? "#2563eb" : "#e2e8f0",
+                          background: on ? "#1c1917" : "#d6d3d1",
                           border: "none", cursor: "pointer",
                           position: "relative", transition: "background 0.2s", flexShrink: 0,
                         }}
@@ -1038,16 +1038,16 @@ export function CreditMemoDrawer({
               {/* Submit button */}
               <div className="card" style={{ padding: "18px 20px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                  <h3 style={{ fontSize: 13, fontWeight: 700, color: "#0f172a", margin: 0 }}>Submit to Active Lenders</h3>
-                  <span style={{ fontSize: 11, color: "#64748b" }}>
+                  <h3 style={{ fontSize: 13, fontWeight: 700, color: "#1c1917", margin: 0 }}>Submit to Active Lenders</h3>
+                  <span style={{ fontSize: 11, color: "#78716c" }}>
                     {Object.values(lenders).filter(Boolean).length} lender{Object.values(lenders).filter(Boolean).length !== 1 ? "s" : ""} selected
                   </span>
                 </div>
 
                 {submitStep >= 0 ? (
                   <div style={{
-                    background: submitStep === SUBMIT_STEPS.length - 1 ? "#d1fae5" : "#f8fafc",
-                    border: `1px solid ${submitStep === SUBMIT_STEPS.length - 1 ? "#a7f3d0" : "#e2e8f0"}`,
+                    background: submitStep === SUBMIT_STEPS.length - 1 ? "#d1fae5" : "#faf9f7",
+                    border: `1px solid ${submitStep === SUBMIT_STEPS.length - 1 ? "#a7f3d0" : "#d6d3d1"}`,
                     borderRadius: 8, padding: "12px 16px",
                     display: "flex", alignItems: "center", gap: 12,
                   }}>
@@ -1067,20 +1067,20 @@ export function CreditMemoDrawer({
                   <button
                     onClick={handleSubmit}
                     style={{
-                      width: "100%", background: "#2563eb", color: "#fff",
+                      width: "100%", background: "#1c1917", color: "#fff",
                       border: "none", borderRadius: 8, padding: "12px 16px",
                       fontSize: 14, fontWeight: 700, cursor: "pointer",
                       display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                      boxShadow: "0 4px 14px rgba(37,99,235,0.3)",
+                      boxShadow: "0 4px 14px rgba(28,25,23,0.3)",
                       transition: "box-shadow 0.2s",
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 6px 20px rgba(37,99,235,0.45)")}
-                    onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 4px 14px rgba(37,99,235,0.3)")}>
+                    onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 6px 20px rgba(28,25,23,0.45)")}
+                    onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 4px 14px rgba(28,25,23,0.3)")}>
                     🚀 Submit to Lenders
                   </button>
                 )}
 
-                <p style={{ fontSize: 11, color: "#94a3b8", margin: "10px 0 0", textAlign: "center" }}>
+                <p style={{ fontSize: 11, color: "#a8a29e", margin: "10px 0 0", textAlign: "center" }}>
                   Simulated routing only · No real submission is made · DealTriage demo
                 </p>
               </div>

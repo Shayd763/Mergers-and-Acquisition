@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { BarChart3 } from "lucide-react";
@@ -19,11 +19,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8fafc", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px" }}>
+    <div style={{ minHeight: "100vh", background: "#faf9f7", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px" }}>
 
       {/* Logo */}
       <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", marginBottom: 32 }}>
-        <div style={{ width: 36, height: 36, borderRadius: 9, background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ width: 36, height: 36, borderRadius: 9, background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <BarChart3 size={18} color="#fff" />
         </div>
         <span style={{ fontWeight: 700, fontSize: 18, color: "var(--text)", letterSpacing: "-0.02em" }}>Triage Finance</span>
@@ -68,7 +68,7 @@ export default function LoginPage() {
         </p>
       </div>
 
-      <p style={{ fontSize: 12, color: "#94a3b8", marginTop: 24, textAlign: "center", maxWidth: 320 }}>
+      <p style={{ fontSize: 12, color: "#a8a29e", marginTop: 24, textAlign: "center", maxWidth: 320 }}>
         By signing in you agree to our{" "}
         <Link href="/terms" style={{ color: "var(--muted)", textDecoration: "underline" }}>Terms of Service</Link> and{" "}
         <Link href="/privacy" style={{ color: "var(--muted)", textDecoration: "underline" }}>Privacy Policy</Link>.

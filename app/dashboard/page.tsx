@@ -12,9 +12,9 @@ const ALL_STATUSES: DealStatus[] = ["Pursuing", "Saved", "In Review", "Analysed"
 
 const STATUS_STYLE: Record<DealStatus, { bg: string; color: string; border: string }> = {
   Pursuing:    { bg: "#ecfdf5", color: "#059669", border: "#a7f3d0" },
-  Saved:       { bg: "#eff6ff", color: "#1e3a8a", border: "#bfdbfe" },
-  "In Review": { bg: "#eff6ff", color: "#3b82f6", border: "#bfdbfe" },
-  Analysed:    { bg: "#f8fafc", color: "#64748b", border: "#e2e8f0" },
+  Saved:       { bg: "#e7e5e4", color: "#292524", border: "#d6d3d1" },
+  "In Review": { bg: "#e7e5e4", color: "#3b82f6", border: "#d6d3d1" },
+  Analysed:    { bg: "#faf9f7", color: "#78716c", border: "#d6d3d1" },
   Rejected:    { bg: "#fef2f2", color: "#ef4444", border: "#fecaca" },
   Demo:        { bg: "#fffbeb", color: "#d97706", border: "#fde68a" },
 };
@@ -98,7 +98,7 @@ function StatusCell({ status, onChange }: { status: DealStatus; onChange: (s: De
       {open && (
         <div style={{
           position: "absolute", top: "calc(100% + 3px)", left: 0, zIndex: 200,
-          background: "#fff", border: "1px solid #e2e8f0", borderRadius: 8,
+          background: "#fff", border: "1px solid #d6d3d1", borderRadius: 8,
           boxShadow: "0 6px 20px rgba(0,0,0,0.1)", minWidth: 128, overflow: "hidden",
         }}>
           {ALL_STATUSES.map(st => {
@@ -106,11 +106,11 @@ function StatusCell({ status, onChange }: { status: DealStatus; onChange: (s: De
             return (
               <button key={st} onClick={() => { onChange(st); setOpen(false); }} style={{
                 display: "flex", alignItems: "center", gap: 7, width: "100%",
-                padding: "7px 11px", background: st === status ? "#f8fafc" : "#fff",
+                padding: "7px 11px", background: st === status ? "#faf9f7" : "#fff",
                 border: "none", cursor: "pointer", fontSize: 11, fontWeight: st === status ? 700 : 500,
                 color: ss.color, textAlign: "left",
               }}
-                onMouseEnter={e => { if (st !== status) (e.currentTarget as HTMLElement).style.background = "#f8fafc"; }}
+                onMouseEnter={e => { if (st !== status) (e.currentTarget as HTMLElement).style.background = "#faf9f7"; }}
                 onMouseLeave={e => { if (st !== status) (e.currentTarget as HTMLElement).style.background = "#fff"; }}
               >
                 <span style={{ width: 7, height: 7, borderRadius: "50%", background: ss.color, flexShrink: 0 }} />
@@ -146,9 +146,9 @@ function RowMenu({ onDelete, onNotes, onOpen, onShare }: { onDelete: () => void;
         onMouseLeave={() => setHovered(false)}
         style={{
           width: 28, height: 28, borderRadius: 7,
-          border: `1px solid ${open || hovered ? "#bfdbfe" : "transparent"}`,
-          background: open ? "#eff6ff" : hovered ? "#f0f7ff" : "transparent",
-          cursor: "pointer", color: open || hovered ? "#2563eb" : "#94a3b8",
+          border: `1px solid ${open || hovered ? "#d6d3d1" : "transparent"}`,
+          background: open ? "#e7e5e4" : hovered ? "#f0f7ff" : "transparent",
+          cursor: "pointer", color: open || hovered ? "#1c1917" : "#a8a29e",
           display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: 16, lineHeight: 1, transition: "all 0.12s",
           letterSpacing: "0.05em",
@@ -160,7 +160,7 @@ function RowMenu({ onDelete, onNotes, onOpen, onShare }: { onDelete: () => void;
       {open && (
         <div style={{
           position: "absolute", top: "calc(100% + 4px)", right: 0, zIndex: 200,
-          background: "#fff", border: "1px solid #e2e8f0", borderRadius: 10,
+          background: "#fff", border: "1px solid #d6d3d1", borderRadius: 10,
           boxShadow: "0 8px 24px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06)",
           minWidth: 160, overflow: "hidden", padding: "4px",
         }}>
@@ -180,7 +180,7 @@ function RowMenu({ onDelete, onNotes, onOpen, onShare }: { onDelete: () => void;
               display: "flex", alignItems: "center", gap: 8, width: "100%",
               padding: "7px 10px", background: "transparent", border: "none",
               borderRadius: 7, cursor: "pointer", fontSize: 12, fontWeight: 500,
-              color: (item as { danger?: boolean }).danger ? "#ef4444" : "#334155",
+              color: (item as { danger?: boolean }).danger ? "#ef4444" : "#44403c",
               textAlign: "left", transition: "background 0.1s",
             }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = (item as { danger?: boolean }).danger ? "#fef2f2" : "#f0f7ff"; }}
@@ -240,14 +240,14 @@ function ColHeader({
             background: filterValue ? "var(--accent)" : "none", border: filterValue ? "none" : "1px solid #d1d5db",
             borderRadius: 3, cursor: "pointer", padding: 0, flexShrink: 0,
           }}>
-            <svg width="8" height="8" viewBox="0 0 10 10" fill={filterValue ? "#fff" : "#94a3b8"}>
+            <svg width="8" height="8" viewBox="0 0 10 10" fill={filterValue ? "#fff" : "#a8a29e"}>
               <path d="M1 2h8L6 5.5V9L4 8V5.5L1 2z" />
             </svg>
           </button>
           {filterOpen && (
             <div style={{
               position: "absolute", top: "calc(100% + 4px)", left: 0, zIndex: 300,
-              background: "#fff", border: "1px solid #e2e8f0", borderRadius: 8,
+              background: "#fff", border: "1px solid #d6d3d1", borderRadius: 8,
               boxShadow: "0 6px 20px rgba(0,0,0,0.1)", minWidth: 130, overflow: "hidden",
             }}>
               {["All", ...filterOptions].map(opt => (
@@ -256,10 +256,10 @@ function ColHeader({
                   padding: "7px 11px", background: (filterValue === opt || (opt === "All" && !filterValue)) ? "#f0f4ff" : "#fff",
                   border: "none", cursor: "pointer", fontSize: 11,
                   fontWeight: (filterValue === opt || (opt === "All" && !filterValue)) ? 700 : 400,
-                  color: (filterValue === opt || (opt === "All" && !filterValue)) ? "var(--accent)" : "#334155",
+                  color: (filterValue === opt || (opt === "All" && !filterValue)) ? "var(--accent)" : "#44403c",
                   textAlign: "left",
                 }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#f8fafc"; }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#faf9f7"; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = (filterValue === opt || (opt === "All" && !filterValue)) ? "#f0f4ff" : "#fff"; }}
                 >
                   {opt}
@@ -349,12 +349,12 @@ export default function DashboardPage() {
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "60vh", gap: 16, padding: "40px 24px", textAlign: "center" }}>
         <div style={{ fontSize: 48 }}>📋</div>
         <h2 style={{ fontSize: 20, fontWeight: 700, color: "#1e293b", margin: 0 }}>No deals yet</h2>
-        <p style={{ fontSize: 14, color: "#64748b", margin: 0, maxWidth: 340 }}>
+        <p style={{ fontSize: 14, color: "#78716c", margin: 0, maxWidth: 340 }}>
           Run your first deal analysis to start building your acquisition pipeline.
         </p>
         <Link href="/dashboard/triage" style={{
           textDecoration: "none", padding: "10px 20px",
-          background: "#2563eb", color: "#fff", borderRadius: 8, fontSize: 13, fontWeight: 700,
+          background: "#1c1917", color: "#fff", borderRadius: 8, fontSize: 13, fontWeight: 700,
         }}>+ Analyse a deal</Link>
       </div>
     );
@@ -390,16 +390,16 @@ export default function DashboardPage() {
         return (
           <div style={{
             display: "flex", alignItems: "center", gap: 12, justifyContent: "space-between",
-            background: "linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%)",
+            background: "linear-gradient(135deg,#1c1917 0%,#1e1b4b 100%)",
             borderRadius: 10, padding: "14px 18px", marginBottom: 16, flexWrap: "wrap",
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <span style={{ fontSize: 22 }}>🏦</span>
               <div>
-                <p style={{ fontSize: 13, fontWeight: 700, color: "#f1f5f9", margin: "0 0 2px" }}>
+                <p style={{ fontSize: 13, fontWeight: 700, color: "#e7e5e4", margin: "0 0 2px" }}>
                   {bankableReal.length} deal{bankableReal.length > 1 ? "s" : ""} ready for lender submission
                 </p>
-                <p style={{ fontSize: 11, color: "#94a3b8", margin: 0 }}>
+                <p style={{ fontSize: 11, color: "#a8a29e", margin: 0 }}>
                   Get matched with OakNorth, ThinCats &amp; other SME acquisition lenders — no cost to you
                 </p>
               </div>
@@ -408,9 +408,9 @@ export default function DashboardPage() {
               onClick={() => { setActiveDealId(bankableReal[0].id); router.push("/dashboard/triage"); }}
               style={{
                 flexShrink: 0, fontSize: 12, fontWeight: 700, padding: "9px 16px", borderRadius: 8,
-                background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff",
+                background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff",
                 border: "none", cursor: "pointer",
-                boxShadow: "0 4px 12px rgba(37,99,235,0.40)",
+                boxShadow: "0 4px 12px rgba(28,25,23,0.40)",
               }}>
               Submit to lenders →
             </button>
@@ -529,7 +529,7 @@ export default function DashboardPage() {
               return (
                 <tr key={deal.id}
                   style={{ borderBottom: i < rows.length - 1 ? "1px solid var(--border-light)" : "none", transition: "background 0.1s" }}
-                  onMouseEnter={e => (e.currentTarget.style.background = "#f8fafc")}
+                  onMouseEnter={e => (e.currentTarget.style.background = "#faf9f7")}
                   onMouseLeave={e => (e.currentTarget.style.background = "")}
                 >
                   {/* Business */}
@@ -539,7 +539,7 @@ export default function DashboardPage() {
                         <span style={{ fontSize: 8, fontWeight: 700, color: "#d97706", background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 3, padding: "1px 4px", flexShrink: 0 }}>DEMO</span>
                       )}
                       <span style={{ fontSize: 12, fontWeight: 600, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={deal.name}>{deal.name}</span>
-                      {deal.notes && <span title={deal.notes} style={{ fontSize: 10, color: "#94a3b8", cursor: "default" }}>📝</span>}
+                      {deal.notes && <span title={deal.notes} style={{ fontSize: 10, color: "#a8a29e", cursor: "default" }}>📝</span>}
                     </div>
                   </td>
                   {/* Location */}
@@ -583,7 +583,7 @@ export default function DashboardPage() {
                   </td>
                   {/* Date */}
                   <td className="dash-col-hide" style={{ padding: "10px 10px" }}>
-                    <span style={{ fontSize: 11, color: "#94a3b8", whiteSpace: "nowrap" }}>{date ? fmtDate(date) : "—"}</span>
+                    <span style={{ fontSize: 11, color: "#a8a29e", whiteSpace: "nowrap" }}>{date ? fmtDate(date) : "—"}</span>
                   </td>
                   {/* Actions */}
                   <td style={{ padding: "6px 8px", textAlign: "center" }}>
@@ -607,7 +607,7 @@ export default function DashboardPage() {
       {toast && (
         <div style={{
           position: "fixed", bottom: 28, left: "50%", transform: "translateX(-50%)",
-          background: "#0f172a", color: "#f1f5f9",
+          background: "#1c1917", color: "#e7e5e4",
           borderRadius: 9999, padding: "10px 22px",
           fontSize: 13, fontWeight: 600, zIndex: 9999,
           boxShadow: "0 8px 24px rgba(0,0,0,0.20)",

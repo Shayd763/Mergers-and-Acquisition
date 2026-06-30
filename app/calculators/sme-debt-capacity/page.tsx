@@ -16,12 +16,12 @@ const JSON_LD = {
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
 };
 
-function Num({ label, val, color = "#0f172a", sub, bg = "#f8fafc", border = "#e2e8f0" }: { label: string; val: string; color?: string; sub?: string; bg?: string; border?: string }) {
+function Num({ label, val, color = "#1c1917", sub, bg = "#faf9f7", border = "#d6d3d1" }: { label: string; val: string; color?: string; sub?: string; bg?: string; border?: string }) {
   return (
     <div style={{ padding: "18px 16px", borderRadius: 12, background: bg, border: `1px solid ${border}`, textAlign: "center" }}>
-      <p style={{ fontSize: 10, color: "#64748b", margin: "0 0 6px", textTransform: "uppercase", letterSpacing: "0.09em", fontWeight: 600 }}>{label}</p>
+      <p style={{ fontSize: 10, color: "#78716c", margin: "0 0 6px", textTransform: "uppercase", letterSpacing: "0.09em", fontWeight: 600 }}>{label}</p>
       <p style={{ fontSize: 22, fontWeight: 800, color, margin: "0 0 3px", letterSpacing: "-0.03em" }}>{val}</p>
-      {sub && <p style={{ fontSize: 10, color: "#94a3b8", margin: 0 }}>{sub}</p>}
+      {sub && <p style={{ fontSize: 10, color: "#a8a29e", margin: 0 }}>{sub}</p>}
     </div>
   );
 }
@@ -49,30 +49,30 @@ export default function SMEDebtCapacityPage() {
   const totalRepaid = maxAnnualService * termYearsVal;
   const totalInterest = totalRepaid - maxLoan;
 
-  const inputStyle: React.CSSProperties = { width: "100%", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 10, padding: "11px 14px", fontSize: 14, color: "#0f172a", outline: "none", fontFamily: "inherit" };
+  const inputStyle: React.CSSProperties = { width: "100%", background: "#faf9f7", border: "1px solid #d6d3d1", borderRadius: 10, padding: "11px 14px", fontSize: 14, color: "#1c1917", outline: "none", fontFamily: "inherit" };
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }} />
-      <div style={{ background: "#f8fafc", minHeight: "100vh", color: "#0f172a", fontFamily: "'Inter','Segoe UI',system-ui,sans-serif" }}>
-        <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", backgroundImage: "linear-gradient(rgba(148,163,184,0.12) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,0.12) 1px,transparent 1px)", backgroundSize: "64px 64px", maskImage: "radial-gradient(ellipse 70% 50% at 50% 0%,transparent 20%,#f8fafc 80%)", WebkitMaskImage: "radial-gradient(ellipse 70% 50% at 50% 0%,transparent 20%,#f8fafc 80%)" }} />
+      <div style={{ background: "#faf9f7", minHeight: "100vh", color: "#1c1917", fontFamily: "'Inter','Segoe UI',system-ui,sans-serif" }}>
+        <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", backgroundImage: "linear-gradient(rgba(148,163,184,0.12) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,0.12) 1px,transparent 1px)", backgroundSize: "64px 64px", maskImage: "radial-gradient(ellipse 70% 50% at 50% 0%,transparent 20%,#faf9f7 80%)", WebkitMaskImage: "radial-gradient(ellipse 70% 50% at 50% 0%,transparent 20%,#faf9f7 80%)" }} />
         <SiteNav />
 
         <div style={{ maxWidth: 860, margin: "0 auto", padding: "80px 24px 80px", position: "relative", zIndex: 1 }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: EXPO }}>
-            <p style={{ fontSize: 11, fontWeight: 700, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 14 }}>Free Calculator · UK SME M&A</p>
-            <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, letterSpacing: "-0.04em", margin: "0 0 16px", color: "#0f172a" }}>
+            <p style={{ fontSize: 11, fontWeight: 700, color: "#1c1917", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 14 }}>Free Calculator · UK SME M&A</p>
+            <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, letterSpacing: "-0.04em", margin: "0 0 16px", color: "#1c1917" }}>
               UK SME Debt Capacity Calculator
             </h1>
-            <p style={{ fontSize: 15, color: "#64748b", maxWidth: 580, lineHeight: 1.75, marginBottom: 24 }}>
+            <p style={{ fontSize: 15, color: "#78716c", maxWidth: 580, lineHeight: 1.75, marginBottom: 24 }}>
               Find the maximum acquisition loan a UK business can support at a given SDE, target DSCR, and bank lending rate. Used by ETA buyers to reverse-engineer deal structures from a given income statement.
             </p>
           </motion.div>
 
           <div className="grid-2col" style={{ gap: 20, alignItems: "start" }}>
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.55, ease: EXPO }}
-              style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "28px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
-              <p style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 24 }}>Inputs</p>
+              style={{ background: "#fff", border: "1px solid #d6d3d1", borderRadius: 16, padding: "28px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "#78716c", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 24 }}>Inputs</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
                 {[
                   { label: "Annual SDE / EBITDA", val: sde, set: setSde, step: 5000, pound: true },
@@ -81,9 +81,9 @@ export default function SMEDebtCapacityPage() {
                   { label: "Loan Term (years)", val: termYears, set: setTermYears, step: 1, min: 1, max: 25, pound: false },
                 ].map(f => (
                   <div key={f.label}>
-                    <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 6 }}>{f.label}</label>
+                    <label style={{ fontSize: 13, fontWeight: 600, color: "#44403c", display: "block", marginBottom: 6 }}>{f.label}</label>
                     <div style={{ position: "relative" }}>
-                      {f.pound && <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", fontSize: 14, fontWeight: 600 }}>£</span>}
+                      {f.pound && <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#a8a29e", fontSize: 14, fontWeight: 600 }}>£</span>}
                       <input type="number" value={f.val} step={f.step} min={f.min ?? 0} max={f.max ?? 10000000}
                         onChange={e => f.set(e.target.value)}
                         style={{ ...inputStyle, paddingLeft: f.pound ? 28 : 14 }} />
@@ -95,41 +95,41 @@ export default function SMEDebtCapacityPage() {
 
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18, duration: 0.55, ease: EXPO }}
               style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              <div style={{ background: "linear-gradient(135deg,#eff6ff,#eff6ff)", border: "1px solid #bfdbfe", borderRadius: 16, padding: "28px", textAlign: "center" }}>
-                <p style={{ fontSize: 11, fontWeight: 700, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Maximum Supportable Loan</p>
-                <p style={{ fontSize: 52, fontWeight: 800, letterSpacing: "-0.05em", color: "#0f172a", margin: "0 0 4px", lineHeight: 1 }}>
+              <div style={{ background: "linear-gradient(135deg,#e7e5e4,#e7e5e4)", border: "1px solid #d6d3d1", borderRadius: 16, padding: "28px", textAlign: "center" }}>
+                <p style={{ fontSize: 11, fontWeight: 700, color: "#1c1917", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Maximum Supportable Loan</p>
+                <p style={{ fontSize: 52, fontWeight: 800, letterSpacing: "-0.05em", color: "#1c1917", margin: "0 0 4px", lineHeight: 1 }}>
                   £{maxLoan >= 1000000 ? (maxLoan / 1000000).toFixed(2) + "m" : Math.round(maxLoan / 1000) + "k"}
                 </p>
-                <p style={{ fontSize: 13, color: "#64748b", margin: 0 }}>At DSCR {minDscr}× · {apr}% APR · {termYears}yr term</p>
+                <p style={{ fontSize: 13, color: "#78716c", margin: 0 }}>At DSCR {minDscr}× · {apr}% APR · {termYears}yr term</p>
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                <Num label="Max Annual Service"  val={`£${Math.round(maxAnnualService).toLocaleString()}`} color="#2563eb" bg="#eff6ff" border="#bfdbfe" />
-                <Num label="Monthly Payment"     val={`£${Math.round(monthlyPayment).toLocaleString()}`}   color="#1e3a8a" bg="#eff6ff" border="#bfdbfe" />
-                <Num label="Total Repaid"        val={`£${Math.round(totalRepaid).toLocaleString()}`}      color="#334155" />
+                <Num label="Max Annual Service"  val={`£${Math.round(maxAnnualService).toLocaleString()}`} color="#1c1917" bg="#e7e5e4" border="#d6d3d1" />
+                <Num label="Monthly Payment"     val={`£${Math.round(monthlyPayment).toLocaleString()}`}   color="#292524" bg="#e7e5e4" border="#d6d3d1" />
+                <Num label="Total Repaid"        val={`£${Math.round(totalRepaid).toLocaleString()}`}      color="#44403c" />
                 <Num label="Total Interest"      val={`£${Math.round(totalInterest).toLocaleString()}`}    color="#dc2626" bg="#fef2f2" border="#fecaca" />
               </div>
 
-              <div style={{ padding: "14px 16px", borderRadius: 12, background: "#eff6ff", border: "1px solid #bfdbfe" }}>
-                <p style={{ fontSize: 12, color: "#1d4ed8", margin: 0, lineHeight: 1.65 }}>
+              <div style={{ padding: "14px 16px", borderRadius: 12, background: "#e7e5e4", border: "1px solid #d6d3d1" }}>
+                <p style={{ fontSize: 12, color: "#0c0a09", margin: 0, lineHeight: 1.65 }}>
                   <strong>How to use:</strong> If the seller is asking more than £{Math.round(maxLoan / 1000)}k, you need additional vendor finance or buyer equity to bridge the gap while staying above your DSCR floor.
                 </p>
               </div>
 
               <Link href="/dashboard/triage" style={{ textDecoration: "none" }}>
                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-                  style={{ width: "100%", padding: "13px", borderRadius: 12, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#2563eb,#1e3a8a)", color: "#fff", fontSize: 14, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                  style={{ width: "100%", padding: "13px", borderRadius: 12, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#1c1917,#292524)", color: "#fff", fontSize: 14, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
                   Model a full deal <ArrowRight size={15} />
                 </motion.button>
               </Link>
             </motion.div>
           </div>
 
-          <div style={{ marginTop: 40, borderTop: "1px solid #e2e8f0", paddingTop: 28 }}>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 14 }}>Related Calculators</p>
+          <div style={{ marginTop: 40, borderTop: "1px solid #d6d3d1", paddingTop: 28 }}>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "#78716c", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 14 }}>Related Calculators</p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               {["/calculators/dscr-calculator", "/calculators/sde-to-ebitda", "/calculators/stamp-duty", "/calculators/compound-interest-calculator"].map(h => (
-                <Link key={h} href={h} style={{ padding: "8px 16px", borderRadius: 9999, background: "#fff", border: "1px solid #e2e8f0", color: "#475569", fontSize: 13, textDecoration: "none" }}>
+                <Link key={h} href={h} style={{ padding: "8px 16px", borderRadius: 9999, background: "#fff", border: "1px solid #d6d3d1", color: "#475569", fontSize: 13, textDecoration: "none" }}>
                   {h.split("/").pop()!.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase())}
                 </Link>
               ))}

@@ -125,7 +125,7 @@ export function NavigationTransition() {
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <div style={{
               width: 9, height: 9, borderRadius: "50%",
-              background: "linear-gradient(135deg,#2563eb,#8b5cf6)",
+              background: "linear-gradient(135deg,#1c1917,#8b5cf6)",
               boxShadow: "0 0 18px rgba(99,102,241,0.75)",
             }} />
             <span style={{
@@ -141,7 +141,7 @@ export function NavigationTransition() {
             </span>
             <div style={{
               width: 9, height: 9, borderRadius: "50%",
-              background: "linear-gradient(135deg,#8b5cf6,#2563eb)",
+              background: "linear-gradient(135deg,#8b5cf6,#1c1917)",
               boxShadow: "0 0 18px rgba(139,92,246,0.75)",
             }} />
           </div>
@@ -229,7 +229,7 @@ export function NavigationTransition() {
         <div style={{
           height: "100%",
           width: `${progress}%`,
-          background: "linear-gradient(90deg,#2563eb 0%,#a78bfa 55%,#818cf8 100%)",
+          background: "linear-gradient(90deg,#1c1917 0%,#a78bfa 55%,#818cf8 100%)",
           boxShadow: "0 0 8px rgba(99,102,241,0.8)",
           transition: progress === 100 ? "width 0.2s ease-out" : "width 0.1s linear",
         }} />

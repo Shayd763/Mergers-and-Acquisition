@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React from "react";
 import { Lock } from "lucide-react";
 import { useSubscription, type Tier } from "./SubscriptionContext";
@@ -19,9 +19,9 @@ const TIER_LABELS: Record<Tier, string> = {
 };
 
 const TIER_COLORS: Record<Tier, string> = {
-  explorer: "#64748b",
-  searcher: "#2563eb",
-  broker: "#1e3a8a",
+  explorer: "#78716c",
+  searcher: "#1c1917",
+  broker: "#292524",
   institutional: "#0891b2",
 };
 

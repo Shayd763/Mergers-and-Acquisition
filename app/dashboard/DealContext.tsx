@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
 import { useSession } from "next-auth/react";
@@ -62,7 +62,7 @@ export function simpleDscr(deal: StoredDeal): number {
 
 export function dscrDot(deal: StoredDeal): { color: string; glow: string } {
   if (deal.askingPrice === 0 && deal.netProfit === 0)
-    return { color: "#94a3b8", glow: "#94a3b820" };
+    return { color: "#a8a29e", glow: "#a8a29e20" };
   const d = simpleDscr(deal);
   if (d >= 1.25) return { color: "#22c55e", glow: "#22c55e25" };
   if (d >= 1.0)  return { color: "#f59e0b", glow: "#f59e0b25" };

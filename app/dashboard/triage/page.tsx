@@ -94,23 +94,23 @@ const fmtPct = (n: number | null | undefined): string => {
 
 function buildScript(d: ExtractedDeal): TerminalLine[] {
   return [
-    { tag: "SCANNING",   text: "Reading listing structure…",                                                   color: "#94a3b8" },
+    { tag: "SCANNING",   text: "Reading listing structure…",                                                   color: "#a8a29e" },
     { tag: "ANALYSING",  text: "Extracting core financials…",                                                  color: "#a5b4fc" },
-    { tag: "EXTRACTED",  text: `Turnover: ${fmt(d.turnover)}  |  Net Profit: ${fmt(d.net_profit)}`,           color: "#bfdbfe" },
-    { tag: "PARSING",    text: "Normalising owner adjustments & lease data…",                                  color: "#94a3b8" },
+    { tag: "EXTRACTED",  text: `Turnover: ${fmt(d.turnover)}  |  Net Profit: ${fmt(d.net_profit)}`,           color: "#d6d3d1" },
+    { tag: "PARSING",    text: "Normalising owner adjustments & lease data…",                                  color: "#a8a29e" },
     { tag: "CALCUL.",    text: "Projecting 5-yr SDE amortisation models…",                                     color: "#a5b4fc" },
-    { tag: "VERIFIED",   text: `Normalized Adj: ${fmt(d.add_backs)}  |  Confidence: ${d.raw_confidence.toUpperCase()}`, color: "#bfdbfe" },
+    { tag: "VERIFIED",   text: `Normalized Adj: ${fmt(d.add_backs)}  |  Confidence: ${d.raw_confidence.toUpperCase()}`, color: "#d6d3d1" },
     { tag: "SUCCESS",    text: "Triage workspace populated.",                                                  color: "#34d399" },
   ];
 }
 
 function buildFileScript(filename: string): TerminalLine[] {
   return [
-    { tag: "READING",    text: `Parsing uploaded document: ${filename}`,      color: "#94a3b8" },
+    { tag: "READING",    text: `Parsing uploaded document: ${filename}`,      color: "#a8a29e" },
     { tag: "IDENTIFYING",text: "Scanning financial tables and key metrics…",   color: "#a5b4fc" },
-    { tag: "EXTRACTING", text: "Processing income statements…",                color: "#94a3b8" },
+    { tag: "EXTRACTING", text: "Processing income statements…",                color: "#a8a29e" },
     { tag: "NORMALISING",text: "Calibrating owner adjustment figures…",        color: "#a5b4fc" },
-    { tag: "EXTRACTED",  text: "Successfully pulled financial historicals.",   color: "#bfdbfe" },
+    { tag: "EXTRACTED",  text: "Successfully pulled financial historicals.",   color: "#d6d3d1" },
     { tag: "SUCCESS",    text: "Triage workspace populated from document.",    color: "#34d399" },
   ];
 }
@@ -163,7 +163,7 @@ function EditableTitle({ value, onChange }: { value: string; onChange: (v: strin
       {!editing && (
         <h1
           onClick={startEditing}
-          style={{ fontSize: 20, fontWeight: 800, color: "#0f172a", margin: 0, letterSpacing: "-0.02em", cursor: "pointer" }}
+          style={{ fontSize: 20, fontWeight: 800, color: "#1c1917", margin: 0, letterSpacing: "-0.02em", cursor: "pointer" }}
           title="Tap to rename"
         >
           {value}
@@ -181,8 +181,8 @@ function EditableTitle({ value, onChange }: { value: string; onChange: (v: strin
         }}
         style={{
           display: editing ? "block" : "none",
-          fontSize: 20, fontWeight: 800, color: "#0f172a",
-          background: "#f1f5f9", border: "1.5px solid #2563eb",
+          fontSize: 20, fontWeight: 800, color: "#1c1917",
+          background: "#e7e5e4", border: "1.5px solid #1c1917",
           borderRadius: 6, padding: "4px 10px", outline: "none",
           fontFamily: "inherit", letterSpacing: "-0.02em",
           width: "100%", maxWidth: 420, minWidth: 160,
@@ -192,7 +192,7 @@ function EditableTitle({ value, onChange }: { value: string; onChange: (v: strin
       {!editing && (
         <button
           onClick={startEditing}
-          style={{ background: "none", border: "none", cursor: "pointer", padding: 4, color: "#94a3b8", display: "flex", alignItems: "center", flexShrink: 0 }}
+          style={{ background: "none", border: "none", cursor: "pointer", padding: 4, color: "#a8a29e", display: "flex", alignItems: "center", flexShrink: 0 }}
           title="Rename deal"
         >
           <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -233,7 +233,7 @@ function Terminal({ lines, active }: { lines: TerminalLine[]; active: boolean })
             <span style={{ color: "#6c7086", minWidth: 90, flexShrink: 0 }}>
               {["[READING]", "[IDENTIFYING]", "[EXTRACTING]", "[NORMALISING]", "[EXTRACTED]", "[SUCCESS]"][lines.length] ?? ""}
             </span>
-            <span style={{ color: "#94a3b8" }} className="cursor-blink" />
+            <span style={{ color: "#a8a29e" }} className="cursor-blink" />
           </div>
         )}
       </div>
@@ -611,7 +611,7 @@ function SectorBenchmarksCard({
   const priceDeltaSign = priceDelta !== null ? (priceDelta > 0 ? "+" : "") : "";
 
   return (
-    <div className="card" style={{ padding: 20, marginBottom: 16, borderLeft: "3px solid #2563eb" }}>
+    <div className="card" style={{ padding: 20, marginBottom: 16, borderLeft: "3px solid #1c1917" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 }}>
         <div>
           <h2 style={{ fontSize: 14, fontWeight: 700, color: "var(--text)", margin: "0 0 2px" }}>
@@ -622,7 +622,7 @@ function SectorBenchmarksCard({
           </p>
         </div>
         {lastAccountsDate && (
-          <span style={{ fontSize: 10, fontWeight: 600, color: "#64748b", background: "#f1f5f9", border: "1px solid #e2e8f0", borderRadius: 5, padding: "3px 8px", whiteSpace: "nowrap" }}>
+          <span style={{ fontSize: 10, fontWeight: 600, color: "#78716c", background: "#e7e5e4", border: "1px solid #d6d3d1", borderRadius: 5, padding: "3px 8px", whiteSpace: "nowrap" }}>
             Accounts to {new Date(lastAccountsDate).toLocaleDateString("en-GB", { month: "short", year: "numeric" })}
           </span>
         )}
@@ -632,8 +632,8 @@ function SectorBenchmarksCard({
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 14 }}>
         {/* EV multiple */}
         <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 12px" }}>
-          <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", letterSpacing: "0.09em", marginBottom: 5 }}>EV / SDE MULTIPLE</div>
-          <div style={{ fontSize: 16, fontWeight: 800, color: "#2563eb" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, color: "#78716c", letterSpacing: "0.09em", marginBottom: 5 }}>EV / SDE MULTIPLE</div>
+          <div style={{ fontSize: 16, fontWeight: 800, color: "#1c1917" }}>
             {val.adjusted_multiple_low.toFixed(1)}×–{val.adjusted_multiple_high.toFixed(1)}×
           </div>
           <div style={{ fontSize: 10, color: "var(--muted)", marginTop: 2 }}>
@@ -643,7 +643,7 @@ function SectorBenchmarksCard({
 
         {/* Net margin */}
         <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 12px" }}>
-          <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", letterSpacing: "0.09em", marginBottom: 5 }}>TYPICAL NET MARGIN</div>
+          <div style={{ fontSize: 9, fontWeight: 700, color: "#78716c", letterSpacing: "0.09em", marginBottom: 5 }}>TYPICAL NET MARGIN</div>
           <div style={{ fontSize: 16, fontWeight: 800, color: "#0891b2" }}>
             {(val.sector_net_margin_low ?? 6).toFixed(0)}%–{(val.sector_net_margin_high ?? 15).toFixed(0)}%
           </div>
@@ -654,7 +654,7 @@ function SectorBenchmarksCard({
 
         {/* Implied asking price */}
         <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 12px" }}>
-          <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", letterSpacing: "0.09em", marginBottom: 5 }}>IMPLIED ASKING PRICE</div>
+          <div style={{ fontSize: 9, fontWeight: 700, color: "#78716c", letterSpacing: "0.09em", marginBottom: 5 }}>IMPLIED ASKING PRICE</div>
           {impliedMid ? (
             <>
               <div style={{ fontSize: 16, fontWeight: 800, color: "#059669" }}>
@@ -666,7 +666,7 @@ function SectorBenchmarksCard({
             </>
           ) : (
             <>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "#94a3b8" }}>Enter profit to calculate</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#a8a29e" }}>Enter profit to calculate</div>
               <div style={{ fontSize: 10, color: "var(--muted)", marginTop: 2 }}>
                 SDE × {val.adjusted_multiple_low.toFixed(1)}×–{val.adjusted_multiple_high.toFixed(1)}×
               </div>
@@ -696,13 +696,13 @@ function SectorBenchmarksCard({
 
       {/* Benchmark explanation row */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <p style={{ fontSize: 10, color: "#94a3b8", margin: 0, lineHeight: 1.5 }}>
+        <p style={{ fontSize: 10, color: "#a8a29e", margin: 0, lineHeight: 1.5 }}>
           Multiples are credit-score adjusted from base sector range ({val.base_multiple_low.toFixed(1)}×–{val.base_multiple_high.toFixed(1)}×).
           Net margins from UK SME benchmarks (BDO/ICAEW).
         </p>
         <button
           onClick={onViewCreditLimit}
-          style={{ fontSize: 10, fontWeight: 600, color: "#2563eb", background: "none", border: "none", cursor: "pointer", padding: 0, whiteSpace: "nowrap", textDecoration: "underline" }}
+          style={{ fontSize: 10, fontWeight: 600, color: "#1c1917", background: "none", border: "none", cursor: "pointer", padding: 0, whiteSpace: "nowrap", textDecoration: "underline" }}
         >
           View credit limit calc →
         </button>
@@ -749,7 +749,7 @@ function EstimatedValuationCard({
     askingVsAvg < 0.85  ? { label: "Below Market",  color: "#059669", bg: "#ecfdf5", border: "#a7f3d0" } :
     askingVsAvg < 1.10  ? { label: "Fair Value",    color: "#d97706", bg: "#fffbeb", border: "#fde68a" } :
     askingVsAvg < 1.30  ? { label: "Above Market",  color: "#dc2626", bg: "#fef2f2", border: "#fecaca" } :
-                          { label: "Overpriced",    color: "#1e3a8a", bg: "#eff6ff", border: "#bfdbfe" };
+                          { label: "Overpriced",    color: "#292524", bg: "#e7e5e4", border: "#d6d3d1" };
 
   // Bar scale: max of highVal across sources for relative width
   const maxVal = Math.max(...rows.map(r => r.highVal), askingPrice || 0);
@@ -786,32 +786,32 @@ function EstimatedValuationCard({
 
       {/* Market consensus banner */}
       <div style={{
-        background: "linear-gradient(135deg, #eff6ff 0%, #eff6ff 100%)",
-        border: "1px solid #bfdbfe", borderRadius: 10, padding: "14px 18px",
+        background: "linear-gradient(135deg, #e7e5e4 0%, #e7e5e4 100%)",
+        border: "1px solid #d6d3d1", borderRadius: 10, padding: "14px 18px",
         display: "flex", justifyContent: "space-between", alignItems: "center",
         marginBottom: 18, flexWrap: "wrap", gap: 12,
       }}>
         <div>
-          <p style={{ fontSize: 10, fontWeight: 700, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 4px" }}>
+          <p style={{ fontSize: 10, fontWeight: 700, color: "#1c1917", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 4px" }}>
             Market Consensus Estimate
           </p>
           <p style={{ fontSize: 22, fontWeight: 800, color: "#1e1b4b", margin: 0, letterSpacing: "-0.03em" }}>
             {fmtV(avgLow)} – {fmtV(avgHigh)}
           </p>
-          <p style={{ fontSize: 12, color: "#2563eb", margin: "2px 0 0" }}>
+          <p style={{ fontSize: 12, color: "#1c1917", margin: "2px 0 0" }}>
             Mid-point: <strong>{fmtV(avgMid)}</strong> · avg {avgMultiple}× SDE
           </p>
         </div>
         {askingPrice > 0 && (
           <div style={{ textAlign: "right" }}>
-            <p style={{ fontSize: 10, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 4px" }}>
+            <p style={{ fontSize: 10, fontWeight: 700, color: "#a8a29e", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 4px" }}>
               Asking Price
             </p>
-            <p style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: 0, letterSpacing: "-0.02em" }}>
+            <p style={{ fontSize: 18, fontWeight: 800, color: "#1c1917", margin: 0, letterSpacing: "-0.02em" }}>
               {fmtV(askingPrice)}
             </p>
             {askingVsAvg !== null && (
-              <p style={{ fontSize: 11, color: priceVerdict?.color ?? "#64748b", margin: "2px 0 0" }}>
+              <p style={{ fontSize: 11, color: priceVerdict?.color ?? "#78716c", margin: "2px 0 0" }}>
                 {(askingVsAvg * 100).toFixed(0)}% of mid-point
               </p>
             )}
@@ -827,7 +827,7 @@ function EstimatedValuationCard({
               <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
                 <span style={{
                   fontSize: 9, fontWeight: 800, letterSpacing: "0.08em",
-                  color: "#2563eb", background: "#eff6ff", border: "1px solid #bfdbfe",
+                  color: "#1c1917", background: "#e7e5e4", border: "1px solid #d6d3d1",
                   borderRadius: 4, padding: "1px 5px",
                 }}>
                   {r.abbrev}
@@ -837,25 +837,25 @@ function EstimatedValuationCard({
                 </span>
               </div>
               <span style={{ fontSize: 12, fontWeight: 700, color: "var(--text)", fontVariantNumeric: "tabular-nums" }}>
-                {r.band.low}–{r.band.high}× · <span style={{ color: "#2563eb" }}>{fmtV(r.midVal)}</span>
+                {r.band.low}–{r.band.high}× · <span style={{ color: "#1c1917" }}>{fmtV(r.midVal)}</span>
               </span>
             </div>
             {/* Range bar */}
-            <div style={{ position: "relative", height: 6, background: "#f1f5f9", borderRadius: 9999, overflow: "hidden" }}>
+            <div style={{ position: "relative", height: 6, background: "#e7e5e4", borderRadius: 9999, overflow: "hidden" }}>
               {/* Low-to-high band */}
               <div style={{
                 position: "absolute",
                 left: bar(r.lowVal),
                 width: `${Math.max(4, Math.round(((r.highVal - r.lowVal) / maxVal) * 100))}%`,
                 top: 0, bottom: 0,
-                background: "#bfdbfe", borderRadius: 9999,
+                background: "#d6d3d1", borderRadius: 9999,
               }} />
               {/* Mid dot */}
               <div style={{
                 position: "absolute",
                 left: `calc(${bar(r.midVal)} - 3px)`,
                 top: 0, bottom: 0, width: 6,
-                background: "#2563eb", borderRadius: 9999,
+                background: "#1c1917", borderRadius: 9999,
               }} />
               {/* Asking price marker */}
               {askingPrice > 0 && (
@@ -874,8 +874,8 @@ function EstimatedValuationCard({
       {/* Legend */}
       <div style={{ display: "flex", gap: 14, marginTop: 14, flexWrap: "wrap" }}>
         {[
-          { color: "#bfdbfe", label: "Valuation range" },
-          { color: "#2563eb", label: "Mid estimate" },
+          { color: "#d6d3d1", label: "Valuation range" },
+          { color: "#1c1917", label: "Mid estimate" },
           ...(askingPrice > 0 ? [{ color: "#f59e0b", label: "Asking price" }] : []),
         ].map(({ color, label }) => (
           <div key={label} style={{ display: "flex", alignItems: "center", gap: 5 }}>
@@ -885,7 +885,7 @@ function EstimatedValuationCard({
         ))}
       </div>
 
-      <p style={{ fontSize: 10, color: "#cbd5e1", margin: "12px 0 0", lineHeight: 1.6 }}>
+      <p style={{ fontSize: 10, color: "#d6d3d1", margin: "12px 0 0", lineHeight: 1.6 }}>
         Multiples based on BVR/BIZCOMPS, IBBA Market Pulse, Plimsoll Analytics and Daltons Business UK data.
         Indicative only — actual value depends on growth trajectory, customer concentration, lease terms and buyer profile.
       </p>
@@ -926,7 +926,7 @@ function DealViabilityCard({
           {Array.from({ length: 10 }, (_, i) => (
             <div key={i} style={{
               flex: 1, height: 6, borderRadius: 3,
-              background: i < bars ? v.color : "#e2e8f0",
+              background: i < bars ? v.color : "#d6d3d1",
               transition: "background 0.3s",
             }} />
           ))}
@@ -943,7 +943,7 @@ function DealViabilityCard({
           ["Levered FCF", fmt(fcf) + "/yr"],
         ].map(([l, val]) => (
           <div key={l}>
-            <p style={{ fontSize: 9, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 2px" }}>{l}</p>
+            <p style={{ fontSize: 9, fontWeight: 700, color: "#a8a29e", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 2px" }}>{l}</p>
             <p style={{ fontSize: 15, fontWeight: 800, color: v.color, margin: 0, fontVariantNumeric: "tabular-nums" }}>{val}</p>
           </div>
         ))}
@@ -965,7 +965,7 @@ function DealViabilityCard({
           <button
             onClick={onOpenFunnel}
             style={{
-              width: "100%", background: "#0f172a", color: "#fff",
+              width: "100%", background: "#1c1917", color: "#fff",
               border: "none", borderRadius: 9, padding: "12px 0",
               fontSize: 14, fontWeight: 700, cursor: "pointer",
               display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
@@ -973,13 +973,13 @@ function DealViabilityCard({
               transition: "box-shadow 0.2s, background 0.15s",
             }}
             onMouseEnter={e => (e.currentTarget.style.background = "#1e293b")}
-            onMouseLeave={e => (e.currentTarget.style.background = "#0f172a")}>
+            onMouseLeave={e => (e.currentTarget.style.background = "#1c1917")}>
             🏦 Submit to Approved Lenders
             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </button>
-          <p style={{ fontSize: 10, color: "#94a3b8", textAlign: "center", margin: "8px 0 0", lineHeight: 1.5 }}>
+          <p style={{ fontSize: 10, color: "#a8a29e", textAlign: "center", margin: "8px 0 0", lineHeight: 1.5 }}>
             Triage Finance receives a referral commission from lenders on successful origination · No cost to you
           </p>
         </div>
@@ -1016,9 +1016,9 @@ function DropZone({ onFile, disabled }: { onFile: (f: File) => void; disabled: b
         onDrop={e => { e.preventDefault(); setDragging(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }}
         onClick={() => !disabled && inputRef.current?.click()}
         style={{
-          border: `2px dashed ${dragging ? "#2563eb" : error ? "#dc2626" : "#cbd5e1"}`,
+          border: `2px dashed ${dragging ? "#1c1917" : error ? "#dc2626" : "#d6d3d1"}`,
           borderRadius: 12, padding: "36px 24px",
-          background: dragging ? "#eff6ff" : "#fafafa",
+          background: dragging ? "#e7e5e4" : "#fafafa",
           textAlign: "center", cursor: disabled ? "not-allowed" : "pointer",
           transition: "border-color 0.15s, background 0.15s",
           opacity: disabled ? 0.5 : 1,
@@ -1026,15 +1026,15 @@ function DropZone({ onFile, disabled }: { onFile: (f: File) => void; disabled: b
         <div style={{ fontSize: 32, marginBottom: 10 }}>
           {dragging ? "📂" : "📄"}
         </div>
-        <p style={{ fontSize: 14, fontWeight: 600, color: dragging ? "#2563eb" : "#334155", margin: "0 0 6px" }}>
+        <p style={{ fontSize: 14, fontWeight: 600, color: dragging ? "#1c1917" : "#44403c", margin: "0 0 6px" }}>
           {dragging ? "Release to upload" : "Drop your IM here"}
         </p>
-        <p style={{ fontSize: 12, color: "#94a3b8", margin: "0 0 14px" }}>
+        <p style={{ fontSize: 12, color: "#a8a29e", margin: "0 0 14px" }}>
           PDF, Word (.docx), or PowerPoint (.pptx) · Max 30 MB
         </p>
         <span style={{
           display: "inline-flex", alignItems: "center", gap: 6,
-          background: "#fff", border: "1px solid #e2e8f0",
+          background: "#fff", border: "1px solid #d6d3d1",
           borderRadius: 7, padding: "7px 16px",
           fontSize: 13, fontWeight: 600, color: "#475569",
           boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
@@ -1215,7 +1215,7 @@ export default function TriagePage() {
     setShowTerm(true); setTermLines([]); setTermActive(true);
 
     const earlyLines: TerminalLine[] = [
-      { tag: "SCANNING",  text: "Reading listing structure…",  color: "#94a3b8" },
+      { tag: "SCANNING",  text: "Reading listing structure…",  color: "#a8a29e" },
       { tag: "ANALYSING", text: "Extracting core financials…", color: "#a5b4fc" },
     ];
     let shown = 0;
@@ -1503,10 +1503,10 @@ export default function TriagePage() {
         width: 28, height: 28, borderRadius: "50%", flexShrink: 0,
         display: "flex", alignItems: "center", justifyContent: "center",
         fontSize: 11, fontWeight: 800,
-        background: done ? "#059669" : active ? "#2563eb" : reached ? "#e0e7ff" : "#f1f5f9",
-        color: done ? "#fff" : active ? "#fff" : reached ? "#2563eb" : "#cbd5e1",
+        background: done ? "#059669" : active ? "#1c1917" : reached ? "#e0e7ff" : "#e7e5e4",
+        color: done ? "#fff" : active ? "#fff" : reached ? "#1c1917" : "#d6d3d1",
         transition: "all 0.25s",
-        boxShadow: active ? "0 0 0 4px rgba(37,99,235,0.15)" : "none",
+        boxShadow: active ? "0 0 0 4px rgba(28,25,23,0.15)" : "none",
       }}>
         {done ? (
           <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1516,7 +1516,7 @@ export default function TriagePage() {
       </div>
       <span className="step-label" style={{
         fontSize: 12, fontWeight: active ? 700 : 500,
-        color: done ? "#059669" : active ? "#2563eb" : reached ? "#475569" : "#cbd5e1",
+        color: done ? "#059669" : active ? "#1c1917" : reached ? "#475569" : "#d6d3d1",
         whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
         transition: "color 0.25s",
       }}>
@@ -1528,7 +1528,7 @@ export default function TriagePage() {
   /* ── Shared step header ── */
   const StepHeader = ({ n, label, sub }: { n: number; label: string; sub: string }) => (
     <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20, paddingBottom: 16, borderBottom: "1px solid var(--border)" }}>
-      <div style={{ width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 800, color: "#fff", flexShrink: 0, boxShadow: "0 4px 12px rgba(37,99,235,0.3)" }}>{n}</div>
+      <div style={{ width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 800, color: "#fff", flexShrink: 0, boxShadow: "0 4px 12px rgba(28,25,23,0.3)" }}>{n}</div>
       <div>
         <h2 style={{ fontSize: 17, fontWeight: 800, color: "var(--text)", margin: 0, letterSpacing: "-0.02em" }}>{label}</h2>
         <p style={{ fontSize: 12, color: "var(--muted)", margin: 0 }}>{sub}</p>
@@ -1547,7 +1547,7 @@ export default function TriagePage() {
         {prevStep && (
           <button
             onClick={() => goToStep(prevStep)}
-            style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "#64748b", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 9, padding: "9px 16px", cursor: "pointer", fontWeight: 600 }}>
+            style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "#78716c", background: "#faf9f7", border: "1px solid #d6d3d1", borderRadius: 9, padding: "9px 16px", cursor: "pointer", fontWeight: 600 }}>
             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M11 17l-5-5m0 0l5-5m-5 5h12" /></svg>
             {prevLabel ?? "Back"}
           </button>
@@ -1561,11 +1561,11 @@ export default function TriagePage() {
             style={{
               display: "flex", alignItems: "center", gap: 8,
               fontSize: 14, fontWeight: 700,
-              background: nextDisabled ? "#e2e8f0" : "linear-gradient(135deg,#1e3a8a,#2563eb)",
-              color: nextDisabled ? "#94a3b8" : "#fff",
+              background: nextDisabled ? "#d6d3d1" : "linear-gradient(135deg,#292524,#1c1917)",
+              color: nextDisabled ? "#a8a29e" : "#fff",
               border: "none", borderRadius: 10, padding: "11px 22px",
               cursor: nextDisabled ? "not-allowed" : "pointer",
-              boxShadow: nextDisabled ? "none" : "0 4px 14px rgba(37,99,235,0.3)",
+              boxShadow: nextDisabled ? "none" : "0 4px 14px rgba(28,25,23,0.3)",
               transition: "all 0.2s",
             }}>
             {nextLabel ?? "Continue"}
@@ -1594,27 +1594,27 @@ export default function TriagePage() {
         <div style={{
           display: "flex", alignItems: "center", gap: 14, justifyContent: "space-between",
           background: "linear-gradient(135deg,#f0f4ff,#faf5ff)",
-          border: "1px solid #bfdbfe", borderRadius: 12, padding: "12px 18px",
+          border: "1px solid #d6d3d1", borderRadius: 12, padding: "12px 18px",
           marginBottom: 18, flexWrap: "wrap",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <svg width="15" height="15" fill="none" stroke="#fff" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg>
             </div>
             <div>
               <p style={{ fontSize: 13, fontWeight: 700, color: "#1e1b4b", margin: "0 0 1px" }}>
                 Your deal analysis isn&apos;t saved yet
               </p>
-              <p style={{ fontSize: 11, color: "#2563eb", margin: 0 }}>
+              <p style={{ fontSize: 11, color: "#1c1917", margin: 0 }}>
                 Create a free account to save unlimited deal audits and revisit them anytime.
               </p>
             </div>
           </div>
           <div style={{ display: "flex", gap: 8 }}>
-            <a href="/login" style={{ fontSize: 12, fontWeight: 600, padding: "7px 14px", borderRadius: 7, border: "1px solid #bfdbfe", background: "#fff", color: "#2563eb", textDecoration: "none" }}>
+            <a href="/login" style={{ fontSize: 12, fontWeight: 600, padding: "7px 14px", borderRadius: 7, border: "1px solid #d6d3d1", background: "#fff", color: "#1c1917", textDecoration: "none" }}>
               Sign in
             </a>
-            <a href="/signup" style={{ fontSize: 12, fontWeight: 700, padding: "7px 14px", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff", textDecoration: "none" }}>
+            <a href="/signup" style={{ fontSize: 12, fontWeight: 700, padding: "7px 14px", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff", textDecoration: "none" }}>
               Create free account →
             </a>
           </div>
@@ -1644,13 +1644,13 @@ export default function TriagePage() {
                 display: "flex", alignItems: "center", gap: 5,
                 padding: "5px 11px", borderRadius: 7, cursor: "pointer",
                 fontSize: 12, fontWeight: 600,
-                border: activeDeal?.status === "Saved" ? "1.5px solid #bfdbfe" : "1.5px solid #e2e8f0",
-                background: activeDeal?.status === "Saved" ? "#eff6ff" : "#fff",
-                color: activeDeal?.status === "Saved" ? "#1e3a8a" : "#94a3b8",
+                border: activeDeal?.status === "Saved" ? "1.5px solid #d6d3d1" : "1.5px solid #d6d3d1",
+                background: activeDeal?.status === "Saved" ? "#e7e5e4" : "#fff",
+                color: activeDeal?.status === "Saved" ? "#292524" : "#a8a29e",
                 transition: "all 0.15s",
               }}
             >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill={activeDeal?.status === "Saved" ? "#1e3a8a" : "none"} stroke={activeDeal?.status === "Saved" ? "#1e3a8a" : "#94a3b8"} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill={activeDeal?.status === "Saved" ? "#292524" : "none"} stroke={activeDeal?.status === "Saved" ? "#292524" : "#a8a29e"} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
               </svg>
               {activeDeal?.status === "Saved" ? "Saved" : "Save for later"}
@@ -1665,28 +1665,28 @@ export default function TriagePage() {
       {/* ── Step progress bar ── */}
       <div className="step-bar" style={{
         display: "flex", alignItems: "center",
-        background: "#fff", border: "1px solid #e2e8f0",
+        background: "#fff", border: "1px solid #d6d3d1",
         borderRadius: 14, padding: "12px 20px",
         marginBottom: 28, boxShadow: "0 1px 6px rgba(0,0,0,0.06)",
         gap: 4,
       }}>
         <StepPill n={1} label="Verify Company"   done={step1Done}  active={currentStep === 1} reached={step1Reached} />
-        <div className="step-connector" style={{ height: 2, flex: "0 0 32px", background: step1Done ? "#a7f3d0" : "#e2e8f0", borderRadius: 9999 }} />
+        <div className="step-connector" style={{ height: 2, flex: "0 0 32px", background: step1Done ? "#a7f3d0" : "#d6d3d1", borderRadius: 9999 }} />
         <StepPill n={2} label="Enter Financials" done={step2Done}  active={currentStep === 2} reached={step2Reached} />
-        <div className="step-connector" style={{ height: 2, flex: "0 0 32px", background: step2Done ? "#a7f3d0" : "#e2e8f0", borderRadius: 9999 }} />
+        <div className="step-connector" style={{ height: 2, flex: "0 0 32px", background: step2Done ? "#a7f3d0" : "#d6d3d1", borderRadius: 9999 }} />
         <StepPill n={3} label="Deal Analysis"    done={step3Done}  active={currentStep === 3} reached={step3Reached} />
-        <div className="step-connector" style={{ height: 2, flex: "0 0 32px", background: step3Done ? "#a7f3d0" : "#e2e8f0", borderRadius: 9999 }} />
+        <div className="step-connector" style={{ height: 2, flex: "0 0 32px", background: step3Done ? "#a7f3d0" : "#d6d3d1", borderRadius: 9999 }} />
         <StepPill n={4} label="Submit & Export"  done={false}      active={currentStep === 4} reached={step4Reached} />
       </div>
 
       {/* ── Social proof ── */}
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 22, justifyContent: "center" }}>
         <div style={{ display: "flex", gap: -3 }}>
-          {["#1e3a8a","#2563eb","#06b6d4","#059669","#d97706"].map((c, i) => (
-            <div key={i} style={{ width: 20, height: 20, borderRadius: "50%", background: c, border: "2px solid #f8fafc", marginLeft: i > 0 ? -6 : 0, flexShrink: 0 }} />
+          {["#292524","#1c1917","#06b6d4","#059669","#d97706"].map((c, i) => (
+            <div key={i} style={{ width: 20, height: 20, borderRadius: "50%", background: c, border: "2px solid #faf9f7", marginLeft: i > 0 ? -6 : 0, flexShrink: 0 }} />
           ))}
         </div>
-        <span style={{ fontSize: 12, color: "#64748b" }}>
+        <span style={{ fontSize: 12, color: "#78716c" }}>
           Analyse any UK business listing in under 60 seconds
         </span>
       </div>
@@ -1702,7 +1702,7 @@ export default function TriagePage() {
             {/* ── Left: Company Search ── */}
             <div className="card" style={{ padding: 22 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16, paddingBottom: 14, borderBottom: "1px solid var(--border)" }}>
-                <div style={{ width: 30, height: 30, borderRadius: "50%", background: step1Done ? "#059669" : "#2563eb", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
+                <div style={{ width: 30, height: 30, borderRadius: "50%", background: step1Done ? "#059669" : "#1c1917", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
                   {step1Done ? <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg> : "1"}
                 </div>
                 <div>
@@ -1729,7 +1729,7 @@ export default function TriagePage() {
               )}
 
               {!step1Done && (
-                <p style={{ fontSize: 11, color: "#94a3b8", margin: "12px 0 0", lineHeight: 1.6 }}>
+                <p style={{ fontSize: 11, color: "#a8a29e", margin: "12px 0 0", lineHeight: 1.6 }}>
                   Optional but recommended — verifies directors, charges, and company age before you model the deal.
                 </p>
               )}
@@ -1738,7 +1738,7 @@ export default function TriagePage() {
             {/* ── Right: Financial Data ── */}
             <div className="card" style={{ padding: 22 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16, paddingBottom: 14, borderBottom: "1px solid var(--border)" }}>
-                <div style={{ width: 30, height: 30, borderRadius: "50%", background: step2Done ? "#059669" : "#2563eb", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
+                <div style={{ width: 30, height: 30, borderRadius: "50%", background: step2Done ? "#059669" : "#1c1917", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
                   {step2Done ? <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg> : "2"}
                 </div>
                 <div>
@@ -1754,7 +1754,7 @@ export default function TriagePage() {
               </div>
 
               {/* Mode tabs */}
-              <div style={{ display: "flex", gap: 2, background: "#f1f5f9", borderRadius: 9, padding: 3, marginBottom: 14 }}>
+              <div style={{ display: "flex", gap: 2, background: "#e7e5e4", borderRadius: 9, padding: 3, marginBottom: 14 }}>
                 {(["paste", "upload", "manual"] as const).map(mode => (
                   <button key={mode}
                     onClick={() => {
@@ -1765,12 +1765,12 @@ export default function TriagePage() {
                       flex: 1, fontSize: 11, fontWeight: 600, padding: "6px 8px", borderRadius: 7,
                       border: "none", cursor: "pointer",
                       background: inputMode === mode ? "#fff" : "transparent",
-                      color: inputMode === mode ? "#0f172a" : "#64748b",
+                      color: inputMode === mode ? "#1c1917" : "#78716c",
                       boxShadow: inputMode === mode ? "0 1px 3px rgba(0,0,0,0.10)" : "none",
                       transition: "all 0.15s", display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
                     }}>
                     {mode === "paste" ? "✏ Paste Text"
-                     : mode === "upload" ? (<>📄 Upload IM{!isPremium && <Lock size={9} style={{ color: "#94a3b8" }} />}</>)
+                     : mode === "upload" ? (<>📄 Upload IM{!isPremium && <Lock size={9} style={{ color: "#a8a29e" }} />}</>)
                      : "✎ Manual"}
                   </button>
                 ))}
@@ -1956,7 +1956,7 @@ export default function TriagePage() {
               <KSlider label={<GlossaryTerm term="BankDebt">Bank / Commercial Debt</GlossaryTerm>}  value={bankPct}   onChange={setBank}   color="#f59e0b" />
             </div>
             <div style={{ marginTop: 28 }}>
-              <div style={{ height: 14, borderRadius: 9999, overflow: "hidden", background: "#e2e8f0", display: "flex", border: "1px solid #e2e8f0" }}>
+              <div style={{ height: 14, borderRadius: 9999, overflow: "hidden", background: "#d6d3d1", display: "flex", border: "1px solid #d6d3d1" }}>
                 <div style={{ width: `${equityPct}%`, background: "#3b82f6", transition: "width 0.2s", position: "relative" }}>
                   {equityPct >= 10 && <span style={{ position: "absolute", right: 6, top: "50%", transform: "translateY(-50%)", fontSize: 9, fontWeight: 800, color: "#fff" }}>{equityPct}%</span>}
                 </div>
@@ -1989,22 +1989,22 @@ export default function TriagePage() {
               <div className="card" style={{ padding: 20 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
                   <h3 style={{ fontSize: 13, fontWeight: 700, color: "var(--text)", margin: 0 }}>Advanced Debt Engineering</h3>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "#2563eb", background: "#eff6ff", padding: "3px 10px", borderRadius: 20 }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "#1c1917", background: "#e7e5e4", padding: "3px 10px", borderRadius: 20 }}>
                     Effective APR: {(BOE_BASE_RATE + boeSpread).toFixed(2)}%
                   </span>
                 </div>
-                <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "10px 14px", marginBottom: 14 }}>
+                <div style={{ background: "#faf9f7", border: "1px solid #d6d3d1", borderRadius: 8, padding: "10px 14px", marginBottom: 14 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <span style={{ fontSize: 12, color: "var(--muted)", fontWeight: 600 }}>BoE Base Rate</span>
                     <span style={{ fontSize: 13, fontWeight: 800, color: "var(--text)" }}>{BOE_BASE_RATE.toFixed(2)}%</span>
                   </div>
-                  <p style={{ fontSize: 10, color: "#94a3b8", margin: "3px 0 0" }}>Bank of England rate as of June 2026 · updates manually</p>
+                  <p style={{ fontSize: 10, color: "#a8a29e", margin: "3px 0 0" }}>Bank of England rate as of June 2026 · updates manually</p>
                 </div>
                 <div className="triage-metrics-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                   <div>
                     <label style={{ fontSize: 11, fontWeight: 600, color: "var(--muted)", display: "block", marginBottom: 5 }}>Lender Spread (% above BoE)</label>
                     <input type="number" min={1} max={20} step={0.25} value={boeSpread} onChange={e => setBoeSpread(Number(e.target.value))} className="input" style={{ fontSize: 13 }} />
-                    <p style={{ fontSize: 10, color: "#94a3b8", margin: "4px 0 0" }}>BoE {BOE_BASE_RATE}% + {boeSpread}% = {(BOE_BASE_RATE + boeSpread).toFixed(2)}% APR</p>
+                    <p style={{ fontSize: 10, color: "#a8a29e", margin: "4px 0 0" }}>BoE {BOE_BASE_RATE}% + {boeSpread}% = {(BOE_BASE_RATE + boeSpread).toFixed(2)}% APR</p>
                   </div>
                   <div>
                     <label style={{ fontSize: 11, fontWeight: 600, color: "var(--muted)", display: "block", marginBottom: 5 }}>Loan Term (years)</label>
@@ -2069,8 +2069,8 @@ export default function TriagePage() {
 
           {/* ── Forensic audit (premium) ── */}
           {reconciling && (
-            <div style={{ marginBottom: 16, padding: "20px 24px", background: "#0f172a", borderRadius: 12, border: "1px solid #1e293b", color: "#475569", fontSize: 13, display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ width: 14, height: 14, border: "2px solid #334155", borderTopColor: "#2563eb", borderRadius: "50%", display: "inline-block", animation: "spin 0.8s linear infinite" }} />
+            <div style={{ marginBottom: 16, padding: "20px 24px", background: "#1c1917", borderRadius: 12, border: "1px solid #1e293b", color: "#475569", fontSize: 13, display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ width: 14, height: 14, border: "2px solid #44403c", borderTopColor: "#1c1917", borderRadius: "50%", display: "inline-block", animation: "spin 0.8s linear infinite" }} />
               Running forensic reconciliation…
             </div>
           )}
@@ -2153,15 +2153,15 @@ export default function TriagePage() {
 
             {/* Credit memo */}
             <div style={{
-              background: creditMemoUnlocked ? "linear-gradient(135deg, #eff6ff 0%, #eff6ff 100%)" : "#f8fafc",
-              border: `1px solid ${creditMemoUnlocked ? "#bfdbfe" : "#e2e8f0"}`,
+              background: creditMemoUnlocked ? "linear-gradient(135deg, #e7e5e4 0%, #e7e5e4 100%)" : "#faf9f7",
+              border: `1px solid ${creditMemoUnlocked ? "#d6d3d1" : "#d6d3d1"}`,
               borderRadius: 14, padding: "24px", transition: "all 0.3s",
             }}>
-              <div style={{ width: 40, height: 40, borderRadius: 10, background: creditMemoUnlocked ? "#2563eb" : "#e2e8f0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, marginBottom: 14 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 10, background: creditMemoUnlocked ? "#1c1917" : "#d6d3d1", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, marginBottom: 14 }}>
                 {creditMemoUnlocked ? "📋" : "🔒"}
               </div>
-              <h3 style={{ fontSize: 15, fontWeight: 800, color: creditMemoUnlocked ? "#1e1b4b" : "#94a3b8", margin: "0 0 6px" }}>Credit Memo PDF</h3>
-              <p style={{ fontSize: 13, color: creditMemoUnlocked ? "#2563eb" : "#94a3b8", margin: "0 0 18px", lineHeight: 1.55 }}>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: creditMemoUnlocked ? "#1e1b4b" : "#a8a29e", margin: "0 0 6px" }}>Credit Memo PDF</h3>
+              <p style={{ fontSize: 13, color: creditMemoUnlocked ? "#1c1917" : "#a8a29e", margin: "0 0 18px", lineHeight: 1.55 }}>
                 {creditMemoUnlocked
                   ? "Generate a 3-page institutional Credit Memo ready to share with lenders."
                   : "Unlocks when DSCR ≥ 1.25× and Levered FCF > 0."}
@@ -2176,11 +2176,11 @@ export default function TriagePage() {
                 }}
                 style={{
                   width: "100%", padding: "12px 0",
-                  background: creditMemoUnlocked ? "#2563eb" : "#e2e8f0",
-                  color: creditMemoUnlocked ? "#fff" : "#94a3b8",
+                  background: creditMemoUnlocked ? "#1c1917" : "#d6d3d1",
+                  color: creditMemoUnlocked ? "#fff" : "#a8a29e",
                   border: "none", borderRadius: 9, fontSize: 13, fontWeight: 700,
                   cursor: creditMemoUnlocked ? "pointer" : "not-allowed",
-                  boxShadow: creditMemoUnlocked ? "0 4px 14px rgba(37,99,235,0.28)" : "none",
+                  boxShadow: creditMemoUnlocked ? "0 4px 14px rgba(28,25,23,0.28)" : "none",
                   display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
                 }}>
                 {creditMemoUnlocked ? (

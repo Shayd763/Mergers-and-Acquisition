@@ -6,9 +6,9 @@ import { useSubscription, type Tier } from "./SubscriptionContext";
 const OWNER_EMAIL = "shailendavdra@gmail.com";
 
 const TIERS: { id: Tier; label: string; color: string }[] = [
-  { id: "explorer",      label: "Explorer",      color: "#64748b" },
-  { id: "searcher",      label: "Searcher",      color: "#2563eb" },
-  { id: "broker",        label: "Broker",        color: "#1e3a8a" },
+  { id: "explorer",      label: "Explorer",      color: "#78716c" },
+  { id: "searcher",      label: "Searcher",      color: "#1c1917" },
+  { id: "broker",        label: "Broker",        color: "#292524" },
   { id: "institutional", label: "Institutional", color: "#0891b2" },
 ];
 
@@ -24,7 +24,7 @@ export function DevTierSwitcher() {
       bottom: 16,
       right: 16,
       zIndex: 9999,
-      background: "#0f172a",
+      background: "#1c1917",
       borderRadius: 12,
       padding: "8px 10px",
       display: "flex",
@@ -33,7 +33,7 @@ export function DevTierSwitcher() {
       boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
       fontFamily: "monospace",
     }}>
-      <span style={{ fontSize: 10, color: "#64748b", fontWeight: 700, letterSpacing: "0.06em", marginRight: 2 }}>DEV</span>
+      <span style={{ fontSize: 10, color: "#78716c", fontWeight: 700, letterSpacing: "0.06em", marginRight: 2 }}>DEV</span>
       {TIERS.map(t => (
         <button
           key={t.id}
@@ -46,7 +46,7 @@ export function DevTierSwitcher() {
             border: "none",
             cursor: "pointer",
             background: tier === t.id ? t.color : "#1e293b",
-            color: tier === t.id ? "#fff" : "#94a3b8",
+            color: tier === t.id ? "#fff" : "#a8a29e",
             transition: "all 0.15s",
           }}
         >

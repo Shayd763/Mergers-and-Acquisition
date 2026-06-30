@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useEffect, useRef, useState } from "react";
 import { Lock, Zap, Star, Building2, X, CheckCircle, RefreshCw, ArrowRight, ArrowLeft } from "lucide-react";
 import { useSubscription, type Tier } from "./SubscriptionContext";
@@ -29,7 +29,7 @@ const TIERS: TierDef[] = [
     period: "forever",
     desc: "Structure deals and run credit checks for free.",
     icon: <Star size={16} />,
-    accentColor: "#64748b",
+    accentColor: "#78716c",
     cta: "Start Free",
     free: true,
     features: [
@@ -46,7 +46,7 @@ const TIERS: TierDef[] = [
     period: "/mo",
     desc: "AI parsing, unlimited workspaces, full enrichment.",
     icon: <Zap size={16} />,
-    accentColor: "#2563eb",
+    accentColor: "#1c1917",
     highlight: true,
     badge: "Most Popular",
     cta: "Upgrade — £49/mo",
@@ -279,7 +279,7 @@ function TierCard({ tier: td, current, onUpgrade, onContact, onFree }: {
       {td.badge && (
         <div style={{
           position: "absolute", top: -10, left: "50%", transform: "translateX(-50%)",
-          background: "linear-gradient(135deg,#1e3a8a,#2563eb)",
+          background: "linear-gradient(135deg,#292524,#1c1917)",
           color: "#fff", fontSize: 9, fontWeight: 800, letterSpacing: "0.1em",
           padding: "3px 10px", borderRadius: 9999, whiteSpace: "nowrap",
         }}>
@@ -338,7 +338,7 @@ function TierCard({ tier: td, current, onUpgrade, onContact, onFree }: {
           background: isCurrent
             ? "transparent"
             : td.highlight
-            ? "linear-gradient(135deg,#1e3a8a,#2563eb)"
+            ? "linear-gradient(135deg,#292524,#1c1917)"
             : td.contact
             ? "linear-gradient(135deg,#0891b2,#06b6d4)"
             : `${td.accentColor}33`,

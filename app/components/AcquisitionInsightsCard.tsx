@@ -147,19 +147,19 @@ function CompareRow({ label, imVal, chVal, crVal, conflict }: {
     <div style={{
       display: "grid", gridTemplateColumns: "1.2fr 1fr 1fr 1fr",
       gap: 6, padding: "8px 0",
-      borderBottom: "1px solid #f1f5f9",
+      borderBottom: "1px solid #e7e5e4",
       alignItems: "center",
     }}>
-      <span style={{ fontSize: 11, color: "#94a3b8", fontWeight: 600 }}>{label}</span>
-      <span style={{ fontSize: 11.5, color: "#0f172a", fontWeight: 600, textAlign: "center" }}>{imVal}</span>
+      <span style={{ fontSize: 11, color: "#a8a29e", fontWeight: 600 }}>{label}</span>
+      <span style={{ fontSize: 11.5, color: "#1c1917", fontWeight: 600, textAlign: "center" }}>{imVal}</span>
       <span style={{
         fontSize: 11.5, fontWeight: 600, textAlign: "center",
-        color: conflict ? "#dc2626" : "#0f172a",
+        color: conflict ? "#dc2626" : "#1c1917",
       }}>
         {chVal}
         {conflict && <span style={{ marginLeft: 4, fontSize: 10 }}>⚠</span>}
       </span>
-      <span style={{ fontSize: 11.5, color: "#2563eb", fontWeight: 600, textAlign: "center" }}>
+      <span style={{ fontSize: 11.5, color: "#1c1917", fontWeight: 600, textAlign: "center" }}>
         {crVal ?? "—"}
       </span>
     </div>
@@ -475,13 +475,13 @@ export function AcquisitionInsightsCard({
   return (
     <div style={{
       background: "#fff",
-      border: "1px solid #e2e8f0",
+      border: "1px solid #d6d3d1",
       borderRadius: 12,
       overflow: "hidden",
     }}>
       {/* Header */}
       <div style={{
-        background: "#0f172a",
+        background: "#1c1917",
         padding: "14px 20px",
         display: "flex",
         alignItems: "center",
@@ -491,7 +491,7 @@ export function AcquisitionInsightsCard({
           <div style={{ fontSize: 10, fontWeight: 700, color: "#475569", letterSpacing: "0.1em", marginBottom: 2 }}>
             ACQUISITION INTELLIGENCE · REGISTRY VS IM ANALYSIS
           </div>
-          <div style={{ fontSize: 14, fontWeight: 700, color: "#f1f5f9" }}>
+          <div style={{ fontSize: 14, fontWeight: 700, color: "#e7e5e4" }}>
             {companyDetails.company_name}
           </div>
         </div>
@@ -518,16 +518,16 @@ export function AcquisitionInsightsCard({
           <div style={{
             display: "grid", gridTemplateColumns: "1.2fr 1fr 1fr 1fr",
             gap: 6, marginBottom: 10, paddingBottom: 8,
-            borderBottom: "2px solid #f1f5f9", minWidth: 320,
+            borderBottom: "2px solid #e7e5e4", minWidth: 320,
           }}>
-            <span style={{ fontSize: 10, fontWeight: 700, color: "#94a3b8", letterSpacing: "0.09em" }}>METRIC</span>
-            <span style={{ fontSize: 10, fontWeight: 700, color: "#2563eb", letterSpacing: "0.09em", textAlign: "center" }}>
+            <span style={{ fontSize: 10, fontWeight: 700, color: "#a8a29e", letterSpacing: "0.09em" }}>METRIC</span>
+            <span style={{ fontSize: 10, fontWeight: 700, color: "#1c1917", letterSpacing: "0.09em", textAlign: "center" }}>
               <GlossaryTerm term="IM">IM</GlossaryTerm> / LISTING
             </span>
             <span style={{ fontSize: 10, fontWeight: 700, color: "#0891b2", letterSpacing: "0.09em", textAlign: "center" }}>
               <GlossaryTerm term="CompaniesHouse">COMPANIES HOUSE</GlossaryTerm>
             </span>
-            <span style={{ fontSize: 10, fontWeight: 700, color: "#2563eb", letterSpacing: "0.09em", textAlign: "center",
+            <span style={{ fontSize: 10, fontWeight: 700, color: "#1c1917", letterSpacing: "0.09em", textAlign: "center",
               opacity: creditProfile ? 1 : 0.35 }}>
               CREDIT REPORT
             </span>
@@ -592,15 +592,15 @@ export function AcquisitionInsightsCard({
 
         {/* ── Multiple methodology note ── */}
         <div style={{
-          background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8,
-          padding: "10px 14px", fontSize: 11, color: "#64748b", lineHeight: 1.6,
+          background: "#faf9f7", border: "1px solid #d6d3d1", borderRadius: 8,
+          padding: "10px 14px", fontSize: 11, color: "#78716c", lineHeight: 1.6,
         }}>
-          <span style={{ fontWeight: 700, color: "#334155" }}>Multiple Methodology: </span>
+          <span style={{ fontWeight: 700, color: "#44403c" }}>Multiple Methodology: </span>
           <strong>IM/Listing</strong> = entry multiple paid at asking price.&nbsp;
           <strong>Companies House</strong> = broker market benchmark range for this sector (SME open-market pricing).&nbsp;
           <strong>Credit Report</strong> = credit-adjusted EV/SDE range using UK M&A transaction data (Experian/BDO) with company-specific risk adjustments.
           {val && (
-            <span style={{ marginLeft: 4, color: "#2563eb", fontWeight: 600 }}>
+            <span style={{ marginLeft: 4, color: "#1c1917", fontWeight: 600 }}>
               Net credit adjustment: {val.total_adjustment_pct >= 0 ? "+" : ""}{val.total_adjustment_pct.toFixed(1)}%.
             </span>
           )}
@@ -608,7 +608,7 @@ export function AcquisitionInsightsCard({
 
         {/* ── Acquisition signals ── */}
         <div>
-          <div style={{ fontSize: 10, fontWeight: 700, color: "#64748b", letterSpacing: "0.09em", marginBottom: 10 }}>
+          <div style={{ fontSize: 10, fontWeight: 700, color: "#78716c", letterSpacing: "0.09em", marginBottom: 10 }}>
             ACQUISITION SIGNALS ({signals.length})
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>

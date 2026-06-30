@@ -175,8 +175,8 @@ function MiniArc({ score, color }: { score: number; color: "green" | "amber" | "
 export function CreditProfileBadge({ profile, loading, onViewReport }: Props) {
   if (loading) {
     return (
-      <div style={{ background: "#0f172a", border: "1px solid #1e293b", borderRadius: 10, padding: "14px 18px", display: "flex", alignItems: "center", gap: 10, color: "#475569", fontSize: 13 }}>
-        <span style={{ width: 12, height: 12, border: "2px solid #334155", borderTopColor: "#2563eb", borderRadius: "50%", display: "inline-block", animation: "spin 0.8s linear infinite" }} />
+      <div style={{ background: "#1c1917", border: "1px solid #1e293b", borderRadius: 10, padding: "14px 18px", display: "flex", alignItems: "center", gap: 10, color: "#475569", fontSize: 13 }}>
+        <span style={{ width: 12, height: 12, border: "2px solid #44403c", borderTopColor: "#1c1917", borderRadius: "50%", display: "inline-block", animation: "spin 0.8s linear infinite" }} />
         Computing credit profile…
       </div>
     );
@@ -185,19 +185,19 @@ export function CreditProfileBadge({ profile, loading, onViewReport }: Props) {
   if (!profile) return null;
 
   const p = PALETTE[profile.risk_color];
-  const opinionColor = OPINION_COLOR[profile.credit_opinion] ?? "#94a3b8";
+  const opinionColor = OPINION_COLOR[profile.credit_opinion] ?? "#a8a29e";
 
   return (
-    <div style={{ background: "#0f172a", border: "1px solid #1e293b", borderRadius: 10, overflow: "hidden" }}>
+    <div style={{ background: "#1c1917", border: "1px solid #1e293b", borderRadius: 10, overflow: "hidden" }}>
       {/* Header strip */}
       <div style={{ background: "#0a0f1e", borderBottom: "1px solid #1e293b", padding: "8px 14px", display: "flex", alignItems: "center", gap: 8 }}>
-        <span style={{ fontSize: 9, fontWeight: 700, color: "#334155", letterSpacing: "0.12em", flex: 1 }}>CREDIT PROFILE · COMPANIES HOUSE DATA</span>
+        <span style={{ fontSize: 9, fontWeight: 700, color: "#44403c", letterSpacing: "0.12em", flex: 1 }}>CREDIT PROFILE · COMPANIES HOUSE DATA</span>
         {profile.data_sources_used && profile.data_sources_used.length > 0 && (
-          <span style={{ fontSize: 9, fontWeight: 700, color: "#2563eb", background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: 4, padding: "1px 6px", letterSpacing: "0.06em" }}>
+          <span style={{ fontSize: 9, fontWeight: 700, color: "#1c1917", background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: 4, padding: "1px 6px", letterSpacing: "0.06em" }}>
             {profile.data_sources_used.length} sources
           </span>
         )}
-        <span style={{ fontSize: 9, fontWeight: 700, color: "#334155", letterSpacing: "0.08em" }}>OPEN-SOURCE ENGINE</span>
+        <span style={{ fontSize: 9, fontWeight: 700, color: "#44403c", letterSpacing: "0.08em" }}>OPEN-SOURCE ENGINE</span>
       </div>
 
       {/* Score + headline metrics */}
@@ -218,17 +218,17 @@ export function CreditProfileBadge({ profile, loading, onViewReport }: Props) {
           {/* 3-up headline figures */}
           <div className="triage-override-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
             <div>
-              <div style={{ fontSize: 9, fontWeight: 700, color: "#334155", letterSpacing: "0.09em", marginBottom: 2 }}>CREDIT LIMIT</div>
-              <div style={{ fontSize: 13, fontWeight: 800, color: "#f1f5f9", fontVariantNumeric: "tabular-nums" }}>{fmtGbp(profile.credit_limit_gbp)}</div>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "#44403c", letterSpacing: "0.09em", marginBottom: 2 }}>CREDIT LIMIT</div>
+              <div style={{ fontSize: 13, fontWeight: 800, color: "#e7e5e4", fontVariantNumeric: "tabular-nums" }}>{fmtGbp(profile.credit_limit_gbp)}</div>
               <div style={{ fontSize: 9, color: "#475569" }}>up to {fmtGbp(profile.max_credit_gbp)}</div>
             </div>
             <div>
-              <div style={{ fontSize: 9, fontWeight: 700, color: "#334155", letterSpacing: "0.09em", marginBottom: 2 }}>PAYMENT TERMS</div>
-              <div style={{ fontSize: 13, fontWeight: 800, color: "#f1f5f9" }}>Net {profile.recommended_payment_days}d</div>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "#44403c", letterSpacing: "0.09em", marginBottom: 2 }}>PAYMENT TERMS</div>
+              <div style={{ fontSize: 13, fontWeight: 800, color: "#e7e5e4" }}>Net {profile.recommended_payment_days}d</div>
               <div style={{ fontSize: 9, color: "#475569" }}>{profile.payment_behaviour}</div>
             </div>
             <div>
-              <div style={{ fontSize: 9, fontWeight: 700, color: "#334155", letterSpacing: "0.09em", marginBottom: 2 }}>OPINION</div>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "#44403c", letterSpacing: "0.09em", marginBottom: 2 }}>OPINION</div>
               <div style={{ fontSize: 13, fontWeight: 800, color: opinionColor }}>{profile.credit_opinion}</div>
               <div style={{ fontSize: 9, color: "#475569" }}>Top {100 - profile.score_percentile}%</div>
             </div>
