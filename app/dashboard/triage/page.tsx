@@ -145,6 +145,7 @@ function EditableTitle({ value, onChange }: { value: string; onChange: (v: strin
   // so iOS treats it as within the user gesture and opens the keyboard.
   const startEditing = () => {
     committedRef.current = false;
+    setDraft(value);
     setEditing(true);
     // input is always in DOM (visibility toggled), so focus() works immediately
     requestAnimationFrame(() => { inputRef.current?.focus(); inputRef.current?.select(); });
@@ -1103,7 +1104,7 @@ function addressToCity(details: CompanyDetails): string {
 }
 
 export default function TriagePage() {
-  const { activeDeal, activeDealId, updateDeal, hydrated } = useDealStore();
+  const { activeDeal, activeDealId, updateDeal, createDeal, hydrated } = useDealStore();
   const { isPremium, openUpgradeModal, pdfExportCount, incrementPdfExport } = useSubscription();
   const { status: authStatus } = useSession();
   const isGuest = authStatus !== "authenticated";
@@ -1626,7 +1627,14 @@ export default function TriagePage() {
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <EditableTitle
             value={activeDeal?.name ?? "New Deal Analysis"}
-            onChange={name => updateDeal(activeDealId, { name })}
+            onChange={name => {
+              if (activeDealId) {
+                updateDeal(activeDealId, { name });
+              } else {
+                const newId = createDeal();
+                updateDeal(newId, { name });
+              }
+            }}
           />
           {activeDealId && (
             <button
