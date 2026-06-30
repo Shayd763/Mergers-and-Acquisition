@@ -10,6 +10,23 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "name and email are required" }, { status: 400 });
     }
 
+    if (typeof name !== "string" || name.length > 200) {
+      return NextResponse.json({ error: "name must be under 200 characters" }, { status: 400 });
+    }
+    if (typeof email !== "string" || email.length > 320) {
+      return NextResponse.json({ error: "invalid email" }, { status: 400 });
+    }
+
+    const numericFields = { turnover, netProfit, addBacks, askingPrice, sde, dscr };
+    for (const [field, val] of Object.entries(numericFields)) {
+      if (val !== undefined && val !== null) {
+        const n = Number(val);
+        if (!isFinite(n) || n < 0 || n > 1_000_000_000) {
+          return NextResponse.json({ error: `${field} out of range` }, { status: 400 });
+        }
+      }
+    }
+
     await pool.query(
       `INSERT INTO sell_leads (name, email, sector, turnover, net_profit, add_backs, asking_price, sde, dscr, dscr_grade, created_at)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW())

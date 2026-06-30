@@ -70,8 +70,8 @@ export default function LoginPage() {
 
       <p style={{ fontSize: 12, color: "#94a3b8", marginTop: 24, textAlign: "center", maxWidth: 320 }}>
         By signing in you agree to our{" "}
-        <a href="#" style={{ color: "var(--muted)", textDecoration: "underline" }}>Terms of Service</a> and{" "}
-        <a href="#" style={{ color: "var(--muted)", textDecoration: "underline" }}>Privacy Policy</a>.
+        <Link href="/terms" style={{ color: "var(--muted)", textDecoration: "underline" }}>Terms of Service</Link> and{" "}
+        <Link href="/privacy" style={{ color: "var(--muted)", textDecoration: "underline" }}>Privacy Policy</Link>.
       </p>
     </div>
   );

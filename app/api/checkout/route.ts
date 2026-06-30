@@ -39,16 +39,20 @@ export async function POST(req: NextRequest) {
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? req.headers.get("origin") ?? "http://localhost:3000";
 
-  const checkoutSession = await stripe.checkout.sessions.create({
-    customer: customerId,
-    mode: "subscription",
-    line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${appUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${appUrl}/dashboard`,
-    metadata: { email, tier },
-    subscription_data: { metadata: { email, tier } },
-    allow_promotion_codes: true,
-  });
-
-  return NextResponse.json({ url: checkoutSession.url });
+  try {
+    const checkoutSession = await stripe.checkout.sessions.create({
+      customer: customerId,
+      mode: "subscription",
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: `${appUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${appUrl}/dashboard`,
+      metadata: { email, tier },
+      subscription_data: { metadata: { email, tier } },
+      allow_promotion_codes: true,
+    });
+    return NextResponse.json({ url: checkoutSession.url });
+  } catch (err) {
+    console.error("Stripe checkout error:", err);
+    return NextResponse.json({ error: "Failed to create checkout session" }, { status: 500 });
+  }
 }

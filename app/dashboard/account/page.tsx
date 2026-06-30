@@ -193,6 +193,7 @@ export default function AccountPage() {
   const [portalLoading, setPortalLoading] = useState(false);
   const [profileSaving, setProfileSaving] = useState(false);
   const [profileSaved, setProfileSaved] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const userEmail = session?.user?.email ?? "";
   const [firstName, setFirstName] = useState("");
@@ -398,8 +399,26 @@ export default function AccountPage() {
       <div className="card" style={{ padding: 24, border: "1px solid #fee2e2" }}>
         <h2 style={{ fontSize: 14, fontWeight: 700, color: "#dc2626", margin: "0 0 12px" }}>Danger zone</h2>
         <p style={{ fontSize: 13, color: "var(--muted)", margin: "0 0 14px" }}>Permanently delete your account and all saved deals. This cannot be undone.</p>
-        <button style={{ fontSize: 12, fontWeight: 700, padding: "8px 16px", background: "none", border: "1px solid #fca5a5", borderRadius: 7, color: "#dc2626", cursor: "pointer" }}>
-          Delete account
+        <button
+          disabled={deleteLoading}
+          onClick={async () => {
+            if (!window.confirm("Are you sure? This will permanently delete your account and all saved deals. This cannot be undone.")) return;
+            setDeleteLoading(true);
+            try {
+              const res = await fetch("/api/account", { method: "DELETE" });
+              if (res.ok) {
+                window.location.href = "/?deleted=1";
+              } else {
+                alert("Failed to delete account. Please contact support at hello@triagefinance.co.uk");
+                setDeleteLoading(false);
+              }
+            } catch {
+              alert("Failed to delete account. Please contact support at hello@triagefinance.co.uk");
+              setDeleteLoading(false);
+            }
+          }}
+          style={{ fontSize: 12, fontWeight: 700, padding: "8px 16px", background: "none", border: "1px solid #fca5a5", borderRadius: 7, color: "#dc2626", cursor: deleteLoading ? "wait" : "pointer", opacity: deleteLoading ? 0.6 : 1 }}>
+          {deleteLoading ? "Deleting…" : "Delete account"}
         </button>
       </div>
     </div>

@@ -78,54 +78,6 @@ function SignupForm() {
           </button>
         </div>
 
-        {/* Divider */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
-          <hr className="divider" style={{ flex: 1 }} />
-          <span style={{ fontSize: 12, color: "#94a3b8", whiteSpace: "nowrap" }}>or register with email</span>
-          <hr className="divider" style={{ flex: 1 }} />
-        </div>
-
-        {/* Form */}
-        <form style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-            <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-soft)" }}>First name</span>
-              <input type="text" placeholder="James" className="input" />
-            </label>
-            <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-soft)" }}>Last name</span>
-              <input type="text" placeholder="Smith" className="input" />
-            </label>
-          </div>
-
-          <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-soft)" }}>Work email</span>
-            <input type="email" placeholder="james@searchfund.co.uk" className="input" />
-          </label>
-
-          <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-soft)" }}>Password</span>
-            <input type="password" placeholder="8+ characters" className="input" />
-          </label>
-
-          <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-soft)" }}>Your role</span>
-            <select className="input" style={{ cursor: "pointer" }}>
-              <option value="">Select your role…</option>
-              <option>ETA Buyer / Searcher</option>
-              <option>Search Fund Principal</option>
-              <option>Corporate Finance Advisor</option>
-              <option>Business Broker</option>
-              <option>Private Equity</option>
-              <option>Other</option>
-            </select>
-          </label>
-
-          <Link href="/dashboard" className="btn-primary" style={{ width: "100%", justifyContent: "center", padding: "11px 16px", fontSize: 14, marginTop: 4 }}>
-            Create free account →
-          </Link>
-        </form>
-
         <p style={{ textAlign: "center", fontSize: 13, color: "var(--muted)", marginTop: 24 }}>
           Already have an account?{" "}
           <Link href="/login" style={{ color: "var(--accent)", fontWeight: 600, textDecoration: "none" }}>Sign in</Link>
