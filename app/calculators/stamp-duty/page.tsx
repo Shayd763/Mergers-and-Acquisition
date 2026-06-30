@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -18,14 +18,17 @@ const JSON_LD = {
 
 function calcSDLT(price: number, isResidential: boolean): number {
   if (!isResidential) {
+    // Non-residential SDLT rates (unchanged 2025)
     if (price <= 150000) return 0;
     if (price <= 250000) return (price - 150000) * 0.02;
     return (250000 - 150000) * 0.02 + (price - 250000) * 0.05;
   } else {
-    if (price <= 250000) return 0;
-    if (price <= 925000) return (price - 250000) * 0.05;
-    if (price <= 1500000) return (925000 - 250000) * 0.05 + (price - 925000) * 0.10;
-    return (925000 - 250000) * 0.05 + (1500000 - 925000) * 0.10 + (price - 1500000) * 0.12;
+    // Residential SDLT rates from April 2025 (nil-rate band reverted to £125k)
+    if (price <= 125000) return 0;
+    if (price <= 250000) return (price - 125000) * 0.02;
+    if (price <= 925000) return (250000 - 125000) * 0.02 + (price - 250000) * 0.05;
+    if (price <= 1500000) return (250000 - 125000) * 0.02 + (925000 - 250000) * 0.05 + (price - 925000) * 0.10;
+    return (250000 - 125000) * 0.02 + (925000 - 250000) * 0.05 + (1500000 - 925000) * 0.10 + (price - 1500000) * 0.12;
   }
 }
 
@@ -59,7 +62,7 @@ export default function StampDutyPage() {
 
         <div style={{ maxWidth: 900, margin: "0 auto", padding: "80px 24px 80px", position: "relative", zIndex: 1 }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: EXPO }}>
-            <p style={{ fontSize: 11, fontWeight: 700, color: "#4f46e5", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 14 }}>Free Calculator · 2024 UK Tax Rates</p>
+            <p style={{ fontSize: 11, fontWeight: 700, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 14 }}>Free Calculator · 2025 UK Tax Rates</p>
             <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, letterSpacing: "-0.04em", margin: "0 0 16px", color: "#0f172a" }}>
               UK Stamp Duty Business Acquisition Calculator
             </h1>
@@ -79,7 +82,7 @@ export default function StampDutyPage() {
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                   {(["assets", "shares"] as const).map(t => (
                     <button key={t} onClick={() => setDealType(t)}
-                      style={{ padding: "10px 14px", borderRadius: 10, border: `1px solid ${dealType === t ? "#c7d2fe" : "#e2e8f0"}`, background: dealType === t ? "#eef2ff" : "#f8fafc", color: dealType === t ? "#4f46e5" : "#64748b", fontSize: 13, fontWeight: 600, cursor: "pointer", textTransform: "capitalize" }}>
+                      style={{ padding: "10px 14px", borderRadius: 10, border: `1px solid ${dealType === t ? "#bfdbfe" : "#e2e8f0"}`, background: dealType === t ? "#eff6ff" : "#f8fafc", color: dealType === t ? "#2563eb" : "#64748b", fontSize: 13, fontWeight: 600, cursor: "pointer", textTransform: "capitalize" }}>
                       {t === "assets" ? "Asset Purchase" : "Share Purchase"}
                     </button>
                   ))}
@@ -101,7 +104,7 @@ export default function StampDutyPage() {
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
                       <label style={{ fontSize: 13, fontWeight: 600, color: "#334155" }}>Includes Property / Lease</label>
                       <button onClick={() => setIncludesProperty(!includesProperty)}
-                        style={{ width: 40, height: 22, borderRadius: 11, border: "none", background: includesProperty ? "#4f46e5" : "#e2e8f0", cursor: "pointer", position: "relative", transition: "background 0.15s" }}>
+                        style={{ width: 40, height: 22, borderRadius: 11, border: "none", background: includesProperty ? "#2563eb" : "#e2e8f0", cursor: "pointer", position: "relative", transition: "background 0.15s" }}>
                         <span style={{ position: "absolute", top: 2, left: includesProperty ? 20 : 2, width: 18, height: 18, borderRadius: "50%", background: "#fff", transition: "left 0.15s", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
                       </button>
                     </div>
@@ -114,7 +117,7 @@ export default function StampDutyPage() {
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                           {(["commercial", "residential"] as const).map(t => (
                             <button key={t} onClick={() => setIsResidential(t === "residential")}
-                              style={{ padding: "8px 10px", borderRadius: 8, border: `1px solid ${(!isResidential && t === "commercial") || (isResidential && t === "residential") ? "#c7d2fe" : "#e2e8f0"}`, background: (!isResidential && t === "commercial") || (isResidential && t === "residential") ? "#eef2ff" : "#f8fafc", color: (!isResidential && t === "commercial") || (isResidential && t === "residential") ? "#4f46e5" : "#64748b", fontSize: 12, fontWeight: 600, cursor: "pointer", textTransform: "capitalize" }}>
+                              style={{ padding: "8px 10px", borderRadius: 8, border: `1px solid ${(!isResidential && t === "commercial") || (isResidential && t === "residential") ? "#bfdbfe" : "#e2e8f0"}`, background: (!isResidential && t === "commercial") || (isResidential && t === "residential") ? "#eff6ff" : "#f8fafc", color: (!isResidential && t === "commercial") || (isResidential && t === "residential") ? "#2563eb" : "#64748b", fontSize: 12, fontWeight: 600, cursor: "pointer", textTransform: "capitalize" }}>
                               {t}
                             </button>
                           ))}
@@ -138,8 +141,8 @@ export default function StampDutyPage() {
             {/* Results */}
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18, duration: 0.55, ease: EXPO }}
               style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              <div style={{ background: "linear-gradient(135deg,#eef2ff,#f5f3ff)", border: "1px solid #c7d2fe", borderRadius: 16, padding: "28px", textAlign: "center" }}>
-                <p style={{ fontSize: 11, fontWeight: 700, color: "#4f46e5", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Total Tax Liability</p>
+              <div style={{ background: "linear-gradient(135deg,#eff6ff,#eff6ff)", border: "1px solid #bfdbfe", borderRadius: 16, padding: "28px", textAlign: "center" }}>
+                <p style={{ fontSize: 11, fontWeight: 700, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Total Tax Liability</p>
                 <p style={{ fontSize: 52, fontWeight: 800, letterSpacing: "-0.05em", color: "#0f172a", margin: "0 0 4px", lineHeight: 1 }}>
                   £{totalDuty.toLocaleString()}
                 </p>
@@ -153,7 +156,7 @@ export default function StampDutyPage() {
                   ...(dealType === "shares" ? [{ label: "SDRT (0.5% on shares)", val: `£${sharesDuty.toLocaleString()}`, color: "#d97706" }] : []),
                   ...(dealType === "assets" && includesProperty ? [{ label: `SDLT (${isResidential ? "residential" : "commercial"} property)`, val: `£${propertyDuty.toLocaleString()}`, color: "#d97706" }] : []),
                   { label: "Goodwill / IP", val: "£0 (exempt)", color: "#059669" },
-                  { label: "Total Tax Due", val: `£${totalDuty.toLocaleString()}`, color: "#4f46e5", bold: true },
+                  { label: "Total Tax Due", val: `£${totalDuty.toLocaleString()}`, color: "#2563eb", bold: true },
                   { label: "All-in Acquisition Cost", val: `£${totalCost.toLocaleString()}`, color: "#0f172a", bold: true },
                 ].map(r => (
                   <div key={r.label} style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px solid #f1f5f9" }}>
@@ -172,7 +175,7 @@ export default function StampDutyPage() {
 
               <Link href="/dashboard/triage" style={{ textDecoration: "none" }}>
                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-                  style={{ width: "100%", padding: "13px", borderRadius: 12, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", fontSize: 14, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                  style={{ width: "100%", padding: "13px", borderRadius: 12, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#2563eb,#1e3a8a)", color: "#fff", fontSize: 14, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
                   Run full deal triage <ArrowRight size={15} />
                 </motion.button>
               </Link>

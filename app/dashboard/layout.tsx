@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
@@ -181,8 +181,8 @@ function DealItem({ deal, isActive, onCloseSidebar }: { deal: StoredDeal; isActi
           padding: "8px 8px 8px 10px",
           borderRadius: 8,
           cursor: "pointer",
-          background: isActive && pathname === "/dashboard/triage" ? "#eef2ff" : hovered ? "#f8fafc" : "transparent",
-          borderLeft: isActive && pathname === "/dashboard/triage" ? "2px solid #4f46e5" : "2px solid transparent",
+          background: isActive && pathname === "/dashboard/triage" ? "#eff6ff" : hovered ? "#f8fafc" : "transparent",
+          borderLeft: isActive && pathname === "/dashboard/triage" ? "2px solid #2563eb" : "2px solid transparent",
           transition: "background 0.1s",
           userSelect: "none",
           position: "relative",
@@ -201,7 +201,7 @@ function DealItem({ deal, isActive, onCloseSidebar }: { deal: StoredDeal; isActi
                 onClick={e => e.stopPropagation()}
                 style={{
                   fontSize: 12, fontWeight: 600, color: "#0f172a",
-                  background: "#fff", border: "1px solid #4f46e5",
+                  background: "#fff", border: "1px solid #2563eb",
                   borderRadius: 4, padding: "1px 6px", width: "100%", outline: "none", fontFamily: "inherit",
                 }}
               />
@@ -236,7 +236,7 @@ function DealItem({ deal, isActive, onCloseSidebar }: { deal: StoredDeal; isActi
               opacity: hovered || menuOpen ? 1 : 0,
               transition: "opacity 0.1s, background 0.1s",
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#c7d2fe"; (e.currentTarget as HTMLElement).style.color = "#4f46e5"; (e.currentTarget as HTMLElement).style.opacity = "1"; }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#bfdbfe"; (e.currentTarget as HTMLElement).style.color = "#2563eb"; (e.currentTarget as HTMLElement).style.opacity = "1"; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; (e.currentTarget as HTMLElement).style.color = "#64748b"; }}
             onTouchStart={e => { e.currentTarget.style.opacity = "1"; }}
             title="Deal options"
@@ -263,8 +263,8 @@ function DealItem({ deal, isActive, onCloseSidebar }: { deal: StoredDeal; isActi
 
 const TIER_META: Record<Tier, { label: string; color: string; bg: string }> = {
   explorer:      { label: "Explorer",       color: "#64748b", bg: "#f1f5f9" },
-  searcher:      { label: "Active Searcher", color: "#4f46e5", bg: "#eef2ff" },
-  broker:        { label: "Deal Broker",     color: "#7c3aed", bg: "#f5f3ff" },
+  searcher:      { label: "Active Searcher", color: "#2563eb", bg: "#eff6ff" },
+  broker:        { label: "Deal Broker",     color: "#1e3a8a", bg: "#eff6ff" },
   institutional: { label: "Institutional",   color: "#0891b2", bg: "#ecfeff" },
 };
 
@@ -297,13 +297,13 @@ function UserAccountPanel() {
             </button>
             <button
               onClick={() => router.push("/signup")}
-              style={{ flex: 1, fontSize: 11, fontWeight: 700, padding: "7px 0", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", cursor: "pointer" }}>
+              style={{ flex: 1, fontSize: 11, fontWeight: 700, padding: "7px 0", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff", cursor: "pointer" }}>
               Sign up free
             </button>
           </div>
           <button
             onClick={() => openUpgradeModal()}
-            style={{ marginTop: 6, width: "100%", fontSize: 11, fontWeight: 600, padding: "7px 0", borderRadius: 7, border: "1px solid #c7d2fe", background: "#eef2ff", color: "#4f46e5", cursor: "pointer" }}>
+            style={{ marginTop: 6, width: "100%", fontSize: 11, fontWeight: 600, padding: "7px 0", borderRadius: 7, border: "1px solid #bfdbfe", background: "#eff6ff", color: "#2563eb", cursor: "pointer" }}>
             View plans ↗
           </button>
         </div>
@@ -315,7 +315,7 @@ function UserAccountPanel() {
               // eslint-disable-next-line @next/next/no-img-element
               <img src={session.user.image} alt="" style={{ width: 30, height: 30, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
             ) : (
-              <div style={{ width: 30, height: 30, borderRadius: "50%", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
+              <div style={{ width: 30, height: 30, borderRadius: "50%", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
                 {initials}
               </div>
             )}
@@ -325,7 +325,7 @@ function UserAccountPanel() {
             </div>
             <button
               onClick={() => router.push("/dashboard/account")}
-              style={{ fontSize: 10, color: "#6366f1", background: "none", border: "none", cursor: "pointer", padding: "3px 6px", borderRadius: 5, fontWeight: 600 }}
+              style={{ fontSize: 10, color: "#2563eb", background: "none", border: "none", cursor: "pointer", padding: "3px 6px", borderRadius: 5, fontWeight: 600 }}
               title="Account settings">
               ⚙
             </button>
@@ -335,7 +335,7 @@ function UserAccountPanel() {
             {!isPremium && (
               <button
                 onClick={() => openUpgradeModal()}
-                style={{ fontSize: 10, fontWeight: 700, color: "#4f46e5", background: "none", border: "none", cursor: "pointer", padding: 0, textDecoration: "underline" }}>
+                style={{ fontSize: 10, fontWeight: 700, color: "#2563eb", background: "none", border: "none", cursor: "pointer", padding: 0, textDecoration: "underline" }}>
                 Upgrade ↗
               </button>
             )}
@@ -397,7 +397,7 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
       {/* Logo — mobile only center */}
       <div className="nav-mobile-btn" style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 7, textDecoration: "none", pointerEvents: "auto" }}>
-          <div style={{ width: 24, height: 24, borderRadius: 6, background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <div style={{ width: 24, height: 24, borderRadius: 6, background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             <BarChart3 size={12} color="#fff" />
           </div>
           <span style={{ fontWeight: 700, fontSize: 13, color: "#0f172a", letterSpacing: "-0.02em" }}>Triage Finance</span>
@@ -411,7 +411,7 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
 
       {/* Right side — desktop: BETA + back to site */}
       <div className="nav-desktop-links" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <span style={{ fontSize: 10, fontWeight: 700, color: "#4f46e5", background: "#eef2ff", border: "1px solid #c7d2fe", borderRadius: 9999, padding: "2px 8px", letterSpacing: "0.07em" }}>
+        <span style={{ fontSize: 10, fontWeight: 700, color: "#2563eb", background: "#eff6ff", border: "1px solid #bfdbfe", borderRadius: 9999, padding: "2px 8px", letterSpacing: "0.07em" }}>
           BETA
         </span>
         <Link href="/" style={{ fontSize: 12, fontWeight: 600, color: "#64748b", textDecoration: "none", padding: "5px 10px", borderRadius: 7, border: "1px solid #e2e8f0", whiteSpace: "nowrap", transition: "background 0.1s" }}>
@@ -447,7 +447,7 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
               // eslint-disable-next-line @next/next/no-img-element
               <img src={session.user.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             ) : (
-              <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, color: "#fff" }}>
+              <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, color: "#fff" }}>
                 {initials}
               </div>
             )}
@@ -455,7 +455,7 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
         ) : (
           <button
             onClick={() => router.push("/login")}
-            style={{ fontSize: 11, fontWeight: 700, padding: "6px 12px", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", cursor: "pointer" }}>
+            style={{ fontSize: 11, fontWeight: 700, padding: "6px 12px", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff", cursor: "pointer" }}>
             Sign in
           </button>
         )}
@@ -506,7 +506,7 @@ function FoundingMemberBanner() {
   return (
     <div style={{
       display: "flex", alignItems: "center", justifyContent: "space-between",
-      background: "linear-gradient(90deg,#4f46e5,#7c3aed)",
+      background: "linear-gradient(90deg,#1e3a8a,#2563eb)",
       padding: "8px 16px", flexShrink: 0, flexWrap: "wrap", gap: 8,
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -518,7 +518,7 @@ function FoundingMemberBanner() {
       <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
         <button
           onClick={() => openUpgradeModal()}
-          style={{ fontSize: 11, fontWeight: 700, padding: "5px 13px", borderRadius: 6, border: "none", background: "#fff", color: "#4f46e5", cursor: "pointer", whiteSpace: "nowrap" }}>
+          style={{ fontSize: 11, fontWeight: 700, padding: "5px 13px", borderRadius: 6, border: "none", background: "#fff", color: "#2563eb", cursor: "pointer", whiteSpace: "nowrap" }}>
           Claim offer →
         </button>
         <button onClick={dismiss} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: 16, lineHeight: 1, padding: "2px 4px" }}>
@@ -560,7 +560,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
         {/* Logo */}
         <div style={{ padding: "18px 16px 14px", borderBottom: "1px solid #e2e8f0" }}>
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
-            <div style={{ width: 28, height: 28, borderRadius: 7, background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ width: 28, height: 28, borderRadius: 7, background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <BarChart3 size={14} color="#fff" />
             </div>
             <span style={{ fontWeight: 700, fontSize: 14, color: "#0f172a", letterSpacing: "-0.02em" }}>Triage Finance</span>
@@ -578,8 +578,8 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
               padding: "7px 10px", marginBottom: 8, borderRadius: 8,
               textDecoration: "none", fontSize: 12, fontWeight: 700,
               color: pathname === "/dashboard" ? "#3730a3" : "#334155",
-              background: pathname === "/dashboard" ? "#eef2ff" : "transparent",
-              borderLeft: pathname === "/dashboard" ? "2px solid #4f46e5" : "2px solid transparent",
+              background: pathname === "/dashboard" ? "#eff6ff" : "transparent",
+              borderLeft: pathname === "/dashboard" ? "2px solid #2563eb" : "2px solid transparent",
               transition: "background 0.1s",
             }}
             onMouseEnter={e => { if (pathname !== "/dashboard") (e.currentTarget as HTMLElement).style.background = "#f8fafc"; }}
@@ -613,13 +613,13 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
             onClick={handleNewDeal}
             style={{
               width: "100%", padding: "9px 14px", borderRadius: 9,
-              border: "1.5px dashed #c7d2fe", background: "transparent",
-              color: "#4f46e5", fontSize: 12, fontWeight: 700, cursor: "pointer",
+              border: "1.5px dashed #bfdbfe", background: "transparent",
+              color: "#2563eb", fontSize: 12, fontWeight: 700, cursor: "pointer",
               display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
               transition: "background 0.12s, border-color 0.12s",
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#eef2ff"; (e.currentTarget as HTMLElement).style.borderColor = "#6366f1"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.borderColor = "#c7d2fe"; }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#eff6ff"; (e.currentTarget as HTMLElement).style.borderColor = "#2563eb"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.borderColor = "#bfdbfe"; }}
           >
             <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />

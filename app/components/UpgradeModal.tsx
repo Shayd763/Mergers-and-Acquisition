@@ -46,7 +46,7 @@ const TIERS: TierDef[] = [
     period: "/mo",
     desc: "AI parsing, unlimited workspaces, full enrichment.",
     icon: <Zap size={16} />,
-    accentColor: "#6366f1",
+    accentColor: "#2563eb",
     highlight: true,
     badge: "Most Popular",
     cta: "Upgrade — £49/mo",
@@ -279,7 +279,7 @@ function TierCard({ tier: td, current, onUpgrade, onContact, onFree }: {
       {td.badge && (
         <div style={{
           position: "absolute", top: -10, left: "50%", transform: "translateX(-50%)",
-          background: "linear-gradient(135deg,#6366f1,#a855f7)",
+          background: "linear-gradient(135deg,#1e3a8a,#2563eb)",
           color: "#fff", fontSize: 9, fontWeight: 800, letterSpacing: "0.1em",
           padding: "3px 10px", borderRadius: 9999, whiteSpace: "nowrap",
         }}>
@@ -338,7 +338,7 @@ function TierCard({ tier: td, current, onUpgrade, onContact, onFree }: {
           background: isCurrent
             ? "transparent"
             : td.highlight
-            ? "linear-gradient(135deg,#6366f1,#a855f7)"
+            ? "linear-gradient(135deg,#1e3a8a,#2563eb)"
             : td.contact
             ? "linear-gradient(135deg,#0891b2,#06b6d4)"
             : `${td.accentColor}33`,

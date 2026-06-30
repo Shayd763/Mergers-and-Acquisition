@@ -19,7 +19,7 @@ export default function CheckoutSuccessPage() {
       padding: "24px", fontFamily: "'Inter','Segoe UI',system-ui,sans-serif",
     }}>
       <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", marginBottom: 40 }}>
-        <div style={{ width: 36, height: 36, borderRadius: 9, background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ width: 36, height: 36, borderRadius: 9, background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <BarChart3 size={18} color="#fff" />
         </div>
         <span style={{ fontWeight: 700, fontSize: 18, color: "#0f172a", letterSpacing: "-0.02em" }}>Triage Finance</span>
@@ -50,7 +50,7 @@ export default function CheckoutSuccessPage() {
           <Link href="/dashboard" style={{ textDecoration: "none" }}>
             <button style={{
               width: "100%", padding: "13px", borderRadius: 12, border: "none",
-              cursor: "pointer", background: "linear-gradient(135deg,#4f46e5,#7c3aed)",
+              cursor: "pointer", background: "linear-gradient(135deg,#1e3a8a,#2563eb)",
               color: "#fff", fontSize: 14, fontWeight: 700,
             }}>
               Go to Dashboard →

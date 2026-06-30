@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -75,7 +75,7 @@ export default function DSCRCalculatorPage() {
 
         <div style={{ maxWidth: 860, margin: "0 auto", padding: "80px 24px 80px", position: "relative", zIndex: 1 }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: EXPO }}>
-            <p style={{ fontSize: 11, fontWeight: 700, color: "#4f46e5", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 14 }}>Free Calculator · No account required</p>
+            <p style={{ fontSize: 11, fontWeight: 700, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 14 }}>Free Calculator · No account required</p>
             <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, letterSpacing: "-0.04em", margin: "0 0 16px", color: "#0f172a" }}>
               SME DSCR Calculator
             </h1>
@@ -122,7 +122,7 @@ export default function DSCRCalculatorPage() {
                   { label: `Corp. Tax (${corpTaxVal}%)`, val: `−£${Math.round(taxCharge).toLocaleString()}`, color: "#dc2626" },
                   { label: "Net Cash Available", val: `£${Math.round(netCashAfterTax).toLocaleString()}`, color: "#059669" },
                   { label: "Annual Debt Service", val: `£${annualDebtVal.toLocaleString()}`, color: "#d97706" },
-                  { label: "DSCR (pre-tax)", val: `${dscrRaw.toFixed(2)}×`, color: "#4f46e5" },
+                  { label: "DSCR (pre-tax)", val: `${dscrRaw.toFixed(2)}×`, color: "#2563eb" },
                   { label: "DSCR (post-tax)", val: `${dscr > 50 ? "∞" : dscr.toFixed(2)}×`, color: band.color, bold: true },
                 ].map(r => (
                   <div key={r.label} style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px solid #f1f5f9" }}>
@@ -132,16 +132,16 @@ export default function DSCRCalculatorPage() {
                 ))}
               </div>
 
-              <div style={{ padding: "14px 16px", borderRadius: 12, background: "#eef2ff", border: "1px solid #c7d2fe", display: "flex", gap: 10 }}>
-                <Info size={13} color="#4f46e5" style={{ flexShrink: 0, marginTop: 2 }} />
-                <p style={{ fontSize: 12, color: "#4f46e5", margin: 0, lineHeight: 1.65 }}>
+              <div style={{ padding: "14px 16px", borderRadius: 12, background: "#eff6ff", border: "1px solid #bfdbfe", display: "flex", gap: 10 }}>
+                <Info size={13} color="#2563eb" style={{ flexShrink: 0, marginTop: 2 }} />
+                <p style={{ fontSize: 12, color: "#2563eb", margin: 0, lineHeight: 1.65 }}>
                   UK commercial lenders (OakNorth, ThinCats, HSBC) require a minimum 1.25× DSCR. Conservative lenders prefer 1.35×+.
                 </p>
               </div>
 
               <Link href="/dashboard/triage" style={{ textDecoration: "none" }}>
                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-                  style={{ width: "100%", padding: "13px", borderRadius: 12, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", fontSize: 14, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                  style={{ width: "100%", padding: "13px", borderRadius: 12, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#2563eb,#1e3a8a)", color: "#fff", fontSize: 14, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
                   Run full deal triage <ArrowRight size={15} />
                 </motion.button>
               </Link>

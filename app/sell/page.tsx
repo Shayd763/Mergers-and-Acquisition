@@ -37,6 +37,8 @@ export default function SellPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const turnoverVal    = Number(turnover)    || 0;
   const netProfitVal   = Number(netProfit)   || 0;
@@ -48,7 +50,9 @@ export default function SellPage() {
   const multiple = askingPriceVal > 0 && sde > 0 ? askingPriceVal / sde : 0;
   const totalCost = askingPriceVal * 1.05;
   const bankLoan = totalCost * 0.55;
-  const annualDebt = bankLoan * (0.12 / (1 - Math.pow(1.06, -5)));
+  const mr = 0.12 / 12;
+  const nm = 5 * 12;
+  const annualDebt = bankLoan * (mr * Math.pow(1 + mr, nm)) / (Math.pow(1 + mr, nm) - 1) * 12;
   const dscr = annualDebt > 0 ? sde / annualDebt : 99;
   const bscore = bankabilityScore(dscr);
   const sectorMultiple = SECTOR_MULTIPLES[sector] ?? 3.2;
@@ -143,8 +147,8 @@ export default function SellPage() {
                   {/* Quick preview */}
                   <div style={{ marginTop: 28, padding: "18px 20px", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 14, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
                     {[
-                      { label: "SDE", val: `£${((netProfitVal + addBacksVal) / 1000).toFixed(0)}k`, color: "#4f46e5" },
-                      { label: "Implied Multiple", val: sde > 0 ? `${multiple.toFixed(1)}×` : "—", color: "#7c3aed" },
+                      { label: "SDE", val: `£${((netProfitVal + addBacksVal) / 1000).toFixed(0)}k`, color: "#2563eb" },
+                      { label: "Implied Multiple", val: sde > 0 ? `${multiple.toFixed(1)}×` : "—", color: "#1e3a8a" },
                       { label: "Sector Avg Multiple", val: `${sectorMultiple}×`, color: "#059669" },
                     ].map(m => (
                       <div key={m.label} style={{ textAlign: "center" }}>
@@ -181,7 +185,7 @@ export default function SellPage() {
                       {[
                         { label: "Turnover", val: `£${(turnoverVal / 1000).toFixed(0)}k` },
                         { label: "Net Profit", val: `£${(netProfitVal / 1000).toFixed(0)}k`, color: "#059669" },
-                        { label: "SDE", val: `£${(sde / 1000).toFixed(0)}k`, color: "#4f46e5" },
+                        { label: "SDE", val: `£${(sde / 1000).toFixed(0)}k`, color: "#2563eb" },
                         { label: "Asking Price", val: `£${(askingPriceVal / 1000).toFixed(0)}k` },
                         { label: "Your Multiple", val: `${multiple.toFixed(1)}×`, color: multiple <= sectorMultiple ? "#059669" : "#d97706" },
                         { label: "Sector Benchmark", val: `${sectorMultiple}×`, color: "#64748b" },
@@ -197,16 +201,16 @@ export default function SellPage() {
                   {/* Debt stress card */}
                   <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 20, padding: "28px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 18 }}>
-                      <Shield size={15} color="#4f46e5" />
-                      <p style={{ fontSize: 12, fontWeight: 700, color: "#4f46e5", letterSpacing: "0.09em", textTransform: "uppercase", margin: 0 }}>Buyer Debt Stress Test</p>
+                      <Shield size={15} color="#2563eb" />
+                      <p style={{ fontSize: 12, fontWeight: 700, color: "#2563eb", letterSpacing: "0.09em", textTransform: "uppercase", margin: 0 }}>Buyer Debt Stress Test</p>
                     </div>
                     <p style={{ fontSize: 13, color: "#64748b", marginBottom: 18, lineHeight: 1.65 }}>
                       Assuming a buyer structures: <strong>55% bank debt</strong> at 12% APR over 5 years, <strong>20% vendor finance</strong>, and <strong>25% equity</strong>:
                     </p>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 16 }}>
                       {[
-                        { label: "Bank Loan Required", val: `£${Math.round(bankLoan / 1000)}k`, color: "#4f46e5" },
-                        { label: "Annual Debt Service", val: `£${Math.round(annualDebt / 1000)}k`, color: "#7c3aed" },
+                        { label: "Bank Loan Required", val: `£${Math.round(bankLoan / 1000)}k`, color: "#2563eb" },
+                        { label: "Annual Debt Service", val: `£${Math.round(annualDebt / 1000)}k`, color: "#1e3a8a" },
                         { label: "Buyer's SDE", val: `£${Math.round(sde / 1000)}k`, color: "#059669" },
                         { label: "DSCR", val: `${dscr > 50 ? "∞" : dscr.toFixed(2)}×`, color: dscr >= 1.25 ? "#059669" : "#dc2626" },
                       ].map(m => (
@@ -283,11 +287,31 @@ export default function SellPage() {
                   <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                     <input type="text" placeholder="Your name" value={name} onChange={e => setName(e.target.value)} style={inputStyle} />
                     <input type="email" placeholder="Business email" value={email} onChange={e => setEmail(e.target.value)} style={inputStyle} />
-                    <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }} disabled={!name || !email}
-                      onClick={() => setSubmitted(true)}
+                    <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }} disabled={!name || !email || submitting}
+                      onClick={async () => {
+                        setSubmitError("");
+                        setSubmitting(true);
+                        try {
+                          await fetch("/api/sell-lead", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                              name, email, sector, turnover: turnoverVal, netProfit: netProfitVal,
+                              addBacks: addBacksVal, askingPrice: askingPriceVal,
+                              sde, dscr: Number(dscr.toFixed(2)), dscrGrade: bscore.grade,
+                            }),
+                          });
+                          setSubmitted(true);
+                        } catch {
+                          setSubmitError("Something went wrong — please try again.");
+                        } finally {
+                          setSubmitting(false);
+                        }
+                      }}
                       style={{ padding: "12px", borderRadius: 10, border: "none", cursor: name && email ? "pointer" : "not-allowed", background: name && email ? "linear-gradient(135deg,#059669,#10b981)" : "#e2e8f0", color: name && email ? "#fff" : "#94a3b8", fontSize: 14, fontWeight: 700 }}>
-                      Send Me the Report
+                      {submitting ? "Sending…" : "Send Me the Report"}
                     </motion.button>
+                    {submitError && <p style={{ fontSize: 12, color: "#dc2626", margin: 0 }}>{submitError}</p>}
                   </div>
                   <p style={{ fontSize: 10, color: "#cbd5e1", marginTop: 10, lineHeight: 1.6 }}>By submitting, you opt into Triage Finance's pre-vetted buyer network. Unsubscribe at any time.</p>
                 </motion.div>
@@ -308,8 +332,8 @@ export default function SellPage() {
         {/* Footer */}
         <div style={{ marginTop: 64, borderTop: "1px solid #e2e8f0", paddingTop: 32, textAlign: "center" }}>
           <p style={{ fontSize: 12, color: "#94a3b8" }}>
-            Valuations are indicative only. Based on 2024 UK SME M&A benchmarks.{" "}
-            <Link href="/" style={{ color: "#4f46e5", textDecoration: "none" }}>← Back to Triage Finance</Link>
+            Valuations are indicative only. Based on 2025 UK SME M&A benchmarks. Not financial advice.{" "}
+            <Link href="/" style={{ color: "#2563eb", textDecoration: "none" }}>← Back to Triage Finance</Link>
           </p>
         </div>
       </div>

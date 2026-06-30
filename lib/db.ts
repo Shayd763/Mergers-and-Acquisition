@@ -27,6 +27,20 @@ async function ensureTable() {
       updated_at BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM NOW()),
       PRIMARY KEY (id, user_email)
     );
+    CREATE TABLE IF NOT EXISTS sell_leads (
+      email        TEXT PRIMARY KEY,
+      name         TEXT NOT NULL,
+      sector       TEXT,
+      turnover     NUMERIC,
+      net_profit   NUMERIC,
+      add_backs    NUMERIC,
+      asking_price NUMERIC,
+      sde          NUMERIC,
+      dscr         NUMERIC,
+      dscr_grade   TEXT,
+      created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at   TIMESTAMPTZ
+    );
   `);
   tableReady = true;
 }

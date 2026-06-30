@@ -6,10 +6,7 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 
 export default function LoginPage() {
-  const [loading, setLoading] = useState<"google" | "linkedin" | "credentials" | null>(null);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState<"google" | "linkedin" | null>(null);
 
   const handleGoogle = async () => {
     setLoading("google");
@@ -21,30 +18,12 @@ export default function LoginPage() {
     await signIn("linkedin", { callbackUrl: "/dashboard" });
   };
 
-  const handleCredentials = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setLoading("credentials");
-    const result = await signIn("credentials", {
-      username,
-      password,
-      callbackUrl: "/dashboard",
-      redirect: false,
-    });
-    if (result?.error) {
-      setError("Invalid username or password.");
-      setLoading(null);
-    } else if (result?.url) {
-      window.location.href = result.url;
-    }
-  };
-
   return (
     <div style={{ minHeight: "100vh", background: "#f8fafc", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px" }}>
 
       {/* Logo */}
       <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", marginBottom: 32 }}>
-        <div style={{ width: 36, height: 36, borderRadius: 9, background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ width: 36, height: 36, borderRadius: 9, background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <BarChart3 size={18} color="#fff" />
         </div>
         <span style={{ fontWeight: 700, fontSize: 18, color: "var(--text)", letterSpacing: "-0.02em" }}>Triage Finance</span>
@@ -81,52 +60,7 @@ export default function LoginPage() {
           </button>
         </div>
 
-        {/* Divider */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
-          <hr className="divider" style={{ flex: 1 }} />
-          <span style={{ fontSize: 12, color: "#94a3b8", whiteSpace: "nowrap" }}>or sign in with username</span>
-          <hr className="divider" style={{ flex: 1 }} />
-        </div>
-
-        {/* Credentials form */}
-        <form onSubmit={handleCredentials} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-soft)" }}>Username</span>
-            <input
-              type="text"
-              placeholder="username"
-              className="input"
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-              required
-            />
-          </label>
-
-          <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-soft)" }}>Password</span>
-            <input
-              type="password"
-              placeholder="••••••••"
-              className="input"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-            />
-          </label>
-
-          {error && (
-            <p style={{ fontSize: 13, color: "#dc2626", margin: 0 }}>{error}</p>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading !== null}
-            className="btn-primary"
-            style={{ width: "100%", justifyContent: "center", padding: "11px 16px", fontSize: 14, marginTop: 4, opacity: loading === "credentials" ? 0.7 : 1 }}
-          >
-            {loading === "credentials" ? "Signing in…" : "Sign in"}
-          </button>
-        </form>
+        {/* Admin access is via a separate internal route — not public */}
 
         <p style={{ textAlign: "center", fontSize: 13, color: "var(--muted)", marginTop: 24 }}>
           Don&apos;t have an account?{" "}

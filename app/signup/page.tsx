@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
@@ -31,16 +31,16 @@ function SignupForm() {
 
       {/* Logo */}
       <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", marginBottom: 32 }}>
-        <div style={{ width: 36, height: 36, borderRadius: 9, background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 17 }}>T</div>
+        <div style={{ width: 36, height: 36, borderRadius: 9, background: "linear-gradient(135deg,#2563eb,#1e3a8a)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 17 }}>T</div>
         <span style={{ fontWeight: 700, fontSize: 18, color: "var(--text)", letterSpacing: "-0.02em" }}>Triage Finance</span>
       </Link>
 
       {/* Card */}
       <div className="card" style={{ width: "100%", maxWidth: 440, padding: 32 }}>
         {plan ? (
-          <div style={{ marginBottom: 6, padding: "8px 14px", borderRadius: 10, background: "#f0f4ff", border: "1px solid #c7d2fe", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <span style={{ fontSize: 13, color: "#4f46e5", fontWeight: 600 }}>Plan: {plan.name}</span>
-            <span style={{ fontSize: 13, color: "#4f46e5", fontWeight: 800 }}>{plan.price}</span>
+          <div style={{ marginBottom: 6, padding: "8px 14px", borderRadius: 10, background: "#f0f4ff", border: "1px solid #bfdbfe", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 13, color: "#2563eb", fontWeight: 600 }}>Plan: {plan.name}</span>
+            <span style={{ fontSize: 13, color: "#2563eb", fontWeight: 800 }}>{plan.price}</span>
           </div>
         ) : (
           <div style={{ marginBottom: 6 }}>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -12,7 +12,7 @@ const ALL_STATUSES: DealStatus[] = ["Pursuing", "Saved", "In Review", "Analysed"
 
 const STATUS_STYLE: Record<DealStatus, { bg: string; color: string; border: string }> = {
   Pursuing:    { bg: "#ecfdf5", color: "#059669", border: "#a7f3d0" },
-  Saved:       { bg: "#f5f3ff", color: "#7c3aed", border: "#ddd6fe" },
+  Saved:       { bg: "#eff6ff", color: "#1e3a8a", border: "#bfdbfe" },
   "In Review": { bg: "#eff6ff", color: "#3b82f6", border: "#bfdbfe" },
   Analysed:    { bg: "#f8fafc", color: "#64748b", border: "#e2e8f0" },
   Rejected:    { bg: "#fef2f2", color: "#ef4444", border: "#fecaca" },
@@ -146,9 +146,9 @@ function RowMenu({ onDelete, onNotes, onOpen, onShare }: { onDelete: () => void;
         onMouseLeave={() => setHovered(false)}
         style={{
           width: 28, height: 28, borderRadius: 7,
-          border: `1px solid ${open || hovered ? "#c7d2fe" : "transparent"}`,
-          background: open ? "#eef2ff" : hovered ? "#f5f3ff" : "transparent",
-          cursor: "pointer", color: open || hovered ? "#4f46e5" : "#94a3b8",
+          border: `1px solid ${open || hovered ? "#bfdbfe" : "transparent"}`,
+          background: open ? "#eff6ff" : hovered ? "#f0f7ff" : "transparent",
+          cursor: "pointer", color: open || hovered ? "#2563eb" : "#94a3b8",
           display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: 16, lineHeight: 1, transition: "all 0.12s",
           letterSpacing: "0.05em",
@@ -183,7 +183,7 @@ function RowMenu({ onDelete, onNotes, onOpen, onShare }: { onDelete: () => void;
               color: (item as { danger?: boolean }).danger ? "#ef4444" : "#334155",
               textAlign: "left", transition: "background 0.1s",
             }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = (item as { danger?: boolean }).danger ? "#fef2f2" : "#f5f3ff"; }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = (item as { danger?: boolean }).danger ? "#fef2f2" : "#f0f7ff"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
             >
               <span style={{ fontSize: 13, width: 16, textAlign: "center", flexShrink: 0 }}>{item.icon}</span>
@@ -354,7 +354,7 @@ export default function DashboardPage() {
         </p>
         <Link href="/dashboard/triage" style={{
           textDecoration: "none", padding: "10px 20px",
-          background: "#6366f1", color: "#fff", borderRadius: 8, fontSize: 13, fontWeight: 700,
+          background: "#2563eb", color: "#fff", borderRadius: 8, fontSize: 13, fontWeight: 700,
         }}>+ Analyse a deal</Link>
       </div>
     );
@@ -408,9 +408,9 @@ export default function DashboardPage() {
               onClick={() => { setActiveDealId(bankableReal[0].id); router.push("/dashboard/triage"); }}
               style={{
                 flexShrink: 0, fontSize: 12, fontWeight: 700, padding: "9px 16px", borderRadius: 8,
-                background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff",
+                background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff",
                 border: "none", cursor: "pointer",
-                boxShadow: "0 4px 12px rgba(79,70,229,0.40)",
+                boxShadow: "0 4px 12px rgba(37,99,235,0.40)",
               }}>
               Submit to lenders →
             </button>

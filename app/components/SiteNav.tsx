@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -21,16 +21,24 @@ const CALC_LINKS = [
 function CalcDropdown() {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{ position: "relative" }} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
-      <motion.span
+    <div
+      style={{ position: "relative" }}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <motion.button
         whileHover={{ scale: 1.04 }}
-        style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "6px 13px", borderRadius: 9999, fontSize: 13, color: open ? "#0f172a" : "#64748b", fontWeight: 500, cursor: "pointer" }}
+        onClick={() => setOpen(o => !o)}
+        onKeyDown={e => { if (e.key === "Escape") setOpen(false); }}
+        aria-haspopup="true"
+        aria-expanded={open}
+        style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "6px 13px", borderRadius: 9999, fontSize: 13, color: open ? "#0f172a" : "#64748b", fontWeight: 500, cursor: "pointer", background: "none", border: "none" }}
       >
         Calculators
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform 0.18s" }}>
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true" style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform 0.18s" }}>
           <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-      </motion.span>
+      </motion.button>
       <AnimatePresence>
         {open && (
           <motion.div
@@ -57,6 +65,9 @@ export function SiteNav() {
 
   return (
     <>
+      {/* Skip to main content — keyboard accessibility */}
+      <a href="#main-content" className="skip-link">Skip to main content</a>
+
       {/* Floating pill nav */}
       <div style={{ position: "fixed", top: 16, left: 0, right: 0, zIndex: 100, display: "flex", justifyContent: "center", padding: "0 12px", pointerEvents: "none", overflow: "hidden" }}>
         <motion.nav
@@ -65,7 +76,7 @@ export function SiteNav() {
         >
           {/* Logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, padding: "4px 10px 4px 4px", textDecoration: "none", flexShrink: 0 }}>
-            <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", flexShrink: 0 }}>
+            <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", flexShrink: 0 }}>
               <BarChart3 size={13} color="#fff" />
             </div>
             <span style={{ fontSize: 14, fontWeight: 700, color: "#0f172a", letterSpacing: "-0.02em", whiteSpace: "nowrap" }}>Triage Finance</span>
@@ -97,7 +108,7 @@ export function SiteNav() {
           <div className="nav-desktop-links" style={{ marginLeft: 4 }}>
             <Link href="/dashboard" style={{ textDecoration: "none" }}>
               <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-                style={{ padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", fontSize: 13, fontWeight: 700, whiteSpace: "nowrap" }}>
+                style={{ padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff", fontSize: 13, fontWeight: 700, whiteSpace: "nowrap" }}>
                 Dashboard
               </motion.button>
             </Link>
@@ -107,7 +118,10 @@ export function SiteNav() {
           <button
             className="nav-mobile-btn"
             onClick={() => setMobileNavOpen(o => !o)}
-            style={{ marginLeft: 6, width: 36, height: 36, borderRadius: 10, border: "1px solid #e2e8f0", background: mobileNavOpen ? "#0f172a" : "#f8fafc", cursor: "pointer", display: "flex", flexDirection: "column", gap: 4, alignItems: "center", justifyContent: "center", transition: "background 0.2s", flexShrink: 0 }}
+            aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileNavOpen}
+            aria-controls="mobile-nav"
+            style={{ marginLeft: 6, width: 44, height: 44, borderRadius: 10, border: "1px solid #e2e8f0", background: mobileNavOpen ? "#0f172a" : "#f8fafc", cursor: "pointer", display: "flex", flexDirection: "column", gap: 4, alignItems: "center", justifyContent: "center", transition: "background 0.2s", flexShrink: 0 }}
           >
             <span style={{ width: 14, height: 1.5, background: mobileNavOpen ? "#fff" : "#334155", borderRadius: 1, transform: mobileNavOpen ? "rotate(45deg) translate(4px, 4px)" : "none", transition: "transform 0.22s, background 0.2s" }} />
             <span style={{ width: 14, height: 1.5, background: mobileNavOpen ? "#fff" : "#334155", borderRadius: 1, opacity: mobileNavOpen ? 0 : 1, transition: "opacity 0.18s, background 0.2s" }} />
@@ -120,10 +134,13 @@ export function SiteNav() {
       <AnimatePresence>
         {mobileNavOpen && (
           <motion.div
+            id="mobile-nav"
+            role="dialog"
+            aria-label="Navigation menu"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.28, ease: EXPO }}
             style={{ position: "fixed", inset: 0, zIndex: 98, background: "#07070f", display: "flex", flexDirection: "column", padding: "100px 32px 48px", overflowY: "auto" }}
           >
-            <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", width: 500, height: 300, borderRadius: "50%", background: "radial-gradient(ellipse, rgba(79,70,229,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", width: 500, height: 300, borderRadius: "50%", background: "radial-gradient(ellipse, rgba(37,99,235,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
 
             <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", marginBottom: 18 }}>Platform</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 2, marginBottom: 40 }}>
@@ -167,7 +184,7 @@ export function SiteNav() {
 
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.4, ease: EXPO }} style={{ marginTop: "auto" }}>
               <Link href="/dashboard" onClick={() => setMobileNavOpen(false)} style={{ textDecoration: "none", display: "block" }}>
-                <div style={{ background: "linear-gradient(135deg,#4f46e5,#7c3aed)", borderRadius: 16, padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 0 40px rgba(79,70,229,0.3)" }}>
+                <div style={{ background: "linear-gradient(135deg,#1e3a8a,#2563eb)", borderRadius: 16, padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 0 40px rgba(37,99,235,0.3)" }}>
                   <div>
                     <p style={{ fontSize: 16, fontWeight: 700, color: "#fff", margin: "0 0 3px" }}>Start for free</p>
                     <p style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", margin: 0 }}>Triage your first deal in 60 seconds</p>

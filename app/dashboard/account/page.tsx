@@ -35,7 +35,7 @@ const TIER_DEFS: {
     name: "Active Searcher",
     price: "£49",
     priceNote: "/month",
-    color: "#4f46e5",
+    color: "#2563eb",
     icon: <Zap size={15} />,
     features: [
       "Unlimited deal workspaces",
@@ -53,7 +53,7 @@ const TIER_DEFS: {
     name: "Deal Broker",
     price: "£149",
     priceNote: "/month",
-    color: "#7c3aed",
+    color: "#1e3a8a",
     icon: <Building2 size={15} />,
     features: [
       "Everything in Active Searcher",
@@ -191,14 +191,40 @@ export default function AccountPage() {
   const { data: session } = useSession();
   const [loadingTier, setLoadingTier] = useState<Tier | null>(null);
   const [portalLoading, setPortalLoading] = useState(false);
+  const [profileSaving, setProfileSaving] = useState(false);
+  const [profileSaved, setProfileSaved] = useState(false);
+
+  const userEmail = session?.user?.email ?? "";
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  React.useEffect(() => {
+    const name = session?.user?.name ?? "";
+    setFirstName(name.split(" ")[0] ?? "");
+    setLastName(name.split(" ").slice(1).join(" ") ?? "");
+  }, [session?.user?.name]);
 
   const userName = session?.user?.name ?? "";
-  const userEmail = session?.user?.email ?? "";
-  const firstName = userName.split(" ")[0] ?? "";
-  const lastName = userName.split(" ").slice(1).join(" ") ?? "";
   const initials = userName
     ? userName.split(" ").map((w: string) => w[0]).join("").toUpperCase().slice(0, 2)
     : userEmail.slice(0, 2).toUpperCase();
+
+  const handleSaveProfile = async () => {
+    setProfileSaving(true);
+    setProfileSaved(false);
+    try {
+      const name = [firstName.trim(), lastName.trim()].filter(Boolean).join(" ");
+      await fetch("/api/profile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name }),
+      });
+      setProfileSaved(true);
+      setTimeout(() => setProfileSaved(false), 3000);
+    } finally {
+      setProfileSaving(false);
+    }
+  };
 
   const handleBillingPortal = async () => {
     setPortalLoading(true);
@@ -258,7 +284,7 @@ export default function AccountPage() {
             // eslint-disable-next-line @next/next/no-img-element
             <img src={session.user.image} alt="" style={{ width: 52, height: 52, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
           ) : (
-            <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
+            <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
               {initials}
             </div>
           )}
@@ -268,19 +294,29 @@ export default function AccountPage() {
           </div>
         </div>
         <div className="triage-metrics-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-          {([
-            ["First name", firstName],
-            ["Last name", lastName],
-            ["Email", userEmail],
-            ["Role", "ETA Buyer / Searcher"],
-          ] as [string, string][]).map(([label, value]) => (
-            <label key={label} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <span style={{ fontSize: 11, fontWeight: 600, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{label}</span>
-              <input defaultValue={value} className="input" style={{ fontSize: 13 }} />
-            </label>
-          ))}
+          <label style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <span style={{ fontSize: 11, fontWeight: 600, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em" }}>First name</span>
+            <input value={firstName} onChange={e => setFirstName(e.target.value)} className="input" style={{ fontSize: 13 }} />
+          </label>
+          <label style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <span style={{ fontSize: 11, fontWeight: 600, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Last name</span>
+            <input value={lastName} onChange={e => setLastName(e.target.value)} className="input" style={{ fontSize: 13 }} />
+          </label>
+          <label style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <span style={{ fontSize: 11, fontWeight: 600, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Email</span>
+            <input value={userEmail} readOnly className="input" style={{ fontSize: 13, opacity: 0.6, cursor: "not-allowed" }} />
+          </label>
+          <label style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <span style={{ fontSize: 11, fontWeight: 600, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Role</span>
+            <input defaultValue="ETA Buyer / Searcher" readOnly className="input" style={{ fontSize: 13, opacity: 0.6, cursor: "not-allowed" }} />
+          </label>
         </div>
-        <button className="btn-primary" style={{ marginTop: 16, padding: "9px 20px", fontSize: 13 }}>Save changes</button>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 16 }}>
+          <button onClick={handleSaveProfile} disabled={profileSaving} className="btn-primary" style={{ padding: "9px 20px", fontSize: 13 }}>
+            {profileSaving ? "Saving…" : "Save changes"}
+          </button>
+          {profileSaved && <span style={{ fontSize: 13, color: "#059669", fontWeight: 600 }}>✓ Saved</span>}
+        </div>
       </div>
 
       {/* Plan management */}
@@ -294,7 +330,7 @@ export default function AccountPage() {
             <button
               onClick={handleBillingPortal}
               disabled={portalLoading}
-              style={{ fontSize: 12, color: "#4f46e5", fontWeight: 600, border: "1px solid #c7d2fe", borderRadius: 7, padding: "6px 12px", background: "#eef2ff", whiteSpace: "nowrap", cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}>
+              style={{ fontSize: 12, color: "#2563eb", fontWeight: 600, border: "1px solid #bfdbfe", borderRadius: 7, padding: "6px 12px", background: "#eff6ff", whiteSpace: "nowrap", cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}>
               {portalLoading ? "Opening…" : <><ExternalLink size={11} /> Manage billing</>}
             </button>
           )}

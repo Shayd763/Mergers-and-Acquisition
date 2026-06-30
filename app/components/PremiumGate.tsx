@@ -20,8 +20,8 @@ const TIER_LABELS: Record<Tier, string> = {
 
 const TIER_COLORS: Record<Tier, string> = {
   explorer: "#64748b",
-  searcher: "#6366f1",
-  broker: "#a855f7",
+  searcher: "#2563eb",
+  broker: "#1e3a8a",
   institutional: "#0891b2",
 };
 

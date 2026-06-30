@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -59,7 +59,7 @@ export default function CompoundInterestPage() {
 
         <div style={{ maxWidth: 960, margin: "0 auto", padding: "80px 24px 80px", position: "relative", zIndex: 1 }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: EXPO }}>
-            <p style={{ fontSize: 11, fontWeight: 700, color: "#4f46e5", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 14 }}>Free Calculator · Acquisition ROI Modelling</p>
+            <p style={{ fontSize: 11, fontWeight: 700, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 14 }}>Free Calculator · Acquisition ROI Modelling</p>
             <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, letterSpacing: "-0.04em", margin: "0 0 16px", color: "#0f172a" }}>
               Compound Interest Return Calculator
             </h1>
@@ -94,8 +94,8 @@ export default function CompoundInterestPage() {
               {/* Summary metrics */}
               <div style={{ borderTop: "1px solid #f1f5f9", paddingTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
                 {[
-                  { label: "Total Distributions", val: `£${totalDist.toLocaleString()}`,                           color: "#7c3aed" },
-                  { label: "Final Equity Value",  val: `£${Math.round(finalRow?.value ?? 0).toLocaleString()}`,    color: "#4f46e5" },
+                  { label: "Total Distributions", val: `£${totalDist.toLocaleString()}`,                           color: "#1e3a8a" },
+                  { label: "Final Equity Value",  val: `£${Math.round(finalRow?.value ?? 0).toLocaleString()}`,    color: "#2563eb" },
                   { label: "Total Value",         val: `£${Math.round(finalRow?.total ?? 0).toLocaleString()}`,    color: "#059669" },
                   { label: "MOIC",                val: `${moic.toFixed(2)}×`,                                      color: "#d97706" },
                   { label: "Net Gain",            val: `£${Math.round(totalReturn).toLocaleString()}`,             color: "#059669" },
@@ -122,7 +122,7 @@ export default function CompoundInterestPage() {
                     return (
                       <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
                         <span style={{ fontSize: 10, color: "#64748b" }}>£{r.total >= 1000000 ? (r.total / 1000000).toFixed(1) + "m" : Math.round(r.total / 1000) + "k"}</span>
-                        <div style={{ width: "100%", height: `${heightPct}%`, background: i === 0 ? "#e2e8f0" : `linear-gradient(180deg, #4f46e5, #7c3aed)`, borderRadius: "4px 4px 0 0", minHeight: 4, transition: "height 0.3s" }} />
+                        <div style={{ width: "100%", height: `${heightPct}%`, background: i === 0 ? "#e2e8f0" : `linear-gradient(180deg, #2563eb, #1e3a8a)`, borderRadius: "4px 4px 0 0", minHeight: 4, transition: "height 0.3s" }} />
                         <span style={{ fontSize: 10, color: "#94a3b8" }}>Y{r.year}</span>
                       </div>
                     );
@@ -144,9 +144,9 @@ export default function CompoundInterestPage() {
                     borderBottom: i < schedule.length - 1 ? "1px solid #f1f5f9" : "none",
                     background: i % 2 === 0 ? "transparent" : "#fafafa",
                   }}>
-                    <span style={{ fontSize: 13, color: "#4f46e5", fontWeight: 700 }}>Y{r.year}</span>
+                    <span style={{ fontSize: 13, color: "#2563eb", fontWeight: 700 }}>Y{r.year}</span>
                     <span style={{ fontSize: 13, color: "#059669" }}>+£{Math.round(r.growth).toLocaleString()}</span>
-                    <span style={{ fontSize: 13, color: "#7c3aed" }}>£{r.distribution.toLocaleString()}</span>
+                    <span style={{ fontSize: 13, color: "#1e3a8a" }}>£{r.distribution.toLocaleString()}</span>
                     <span style={{ fontSize: 13, color: "#64748b" }}>£{Math.round(r.value).toLocaleString()}</span>
                     <span style={{ fontSize: 13, color: "#0f172a", fontWeight: 600 }}>£{Math.round(r.total).toLocaleString()}</span>
                   </div>
@@ -155,7 +155,7 @@ export default function CompoundInterestPage() {
 
               <Link href="/dashboard/triage" style={{ textDecoration: "none" }}>
                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-                  style={{ width: "100%", padding: "13px", borderRadius: 12, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", fontSize: 14, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                  style={{ width: "100%", padding: "13px", borderRadius: 12, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#2563eb,#1e3a8a)", color: "#fff", fontSize: 14, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
                   Model an acquisition <ArrowRight size={15} />
                 </motion.button>
               </Link>

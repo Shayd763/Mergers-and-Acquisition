@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useSession } from "next-auth/react";
 import { useSubscription, type Tier } from "./SubscriptionContext";
@@ -7,8 +7,8 @@ const OWNER_EMAIL = "shailendavdra@gmail.com";
 
 const TIERS: { id: Tier; label: string; color: string }[] = [
   { id: "explorer",      label: "Explorer",      color: "#64748b" },
-  { id: "searcher",      label: "Searcher",      color: "#4f46e5" },
-  { id: "broker",        label: "Broker",        color: "#7c3aed" },
+  { id: "searcher",      label: "Searcher",      color: "#2563eb" },
+  { id: "broker",        label: "Broker",        color: "#1e3a8a" },
   { id: "institutional", label: "Institutional", color: "#0891b2" },
 ];
 

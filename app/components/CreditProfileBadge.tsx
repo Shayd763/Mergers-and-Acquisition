@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useEffect, useRef, useState } from "react";
 
 // ─── Types ────────────────────────────────────────────────────────────────── //
@@ -176,7 +176,7 @@ export function CreditProfileBadge({ profile, loading, onViewReport }: Props) {
   if (loading) {
     return (
       <div style={{ background: "#0f172a", border: "1px solid #1e293b", borderRadius: 10, padding: "14px 18px", display: "flex", alignItems: "center", gap: 10, color: "#475569", fontSize: 13 }}>
-        <span style={{ width: 12, height: 12, border: "2px solid #334155", borderTopColor: "#6366f1", borderRadius: "50%", display: "inline-block", animation: "spin 0.8s linear infinite" }} />
+        <span style={{ width: 12, height: 12, border: "2px solid #334155", borderTopColor: "#2563eb", borderRadius: "50%", display: "inline-block", animation: "spin 0.8s linear infinite" }} />
         Computing credit profile…
       </div>
     );
@@ -193,7 +193,7 @@ export function CreditProfileBadge({ profile, loading, onViewReport }: Props) {
       <div style={{ background: "#0a0f1e", borderBottom: "1px solid #1e293b", padding: "8px 14px", display: "flex", alignItems: "center", gap: 8 }}>
         <span style={{ fontSize: 9, fontWeight: 700, color: "#334155", letterSpacing: "0.12em", flex: 1 }}>CREDIT PROFILE · COMPANIES HOUSE DATA</span>
         {profile.data_sources_used && profile.data_sources_used.length > 0 && (
-          <span style={{ fontSize: 9, fontWeight: 700, color: "#6366f1", background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: 4, padding: "1px 6px", letterSpacing: "0.06em" }}>
+          <span style={{ fontSize: 9, fontWeight: 700, color: "#2563eb", background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: 4, padding: "1px 6px", letterSpacing: "0.06em" }}>
             {profile.data_sources_used.length} sources
           </span>
         )}

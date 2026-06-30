@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useEffect, useRef, useState } from "react";
 import type { CreditProfile, DetailedFactor, ImprovementAction, ValuationEstimate, ValuationAdjustment, CreditLimitBreakdown } from "./CreditProfileBadge";
 
@@ -368,7 +368,7 @@ function ValuationTab({ val, creditBand, p }: { val: ValuationEstimate | null; c
       {!hasEV && (
         <div style={{ background: "rgba(99,102,241,0.06)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: 8, padding: "12px 16px" }}>
           <div style={{ fontSize: 11, fontWeight: 700, color: "#a5b4fc", marginBottom: 4 }}>Enterprise value not calculated</div>
-          <div style={{ fontSize: 11, color: "#6366f1" }}>
+          <div style={{ fontSize: 11, color: "#2563eb" }}>
             Paste an Information Memorandum with net profit or SDE figures to unlock the full EV estimate range.
           </div>
         </div>
@@ -437,7 +437,7 @@ function StepRow({ step, label, value, formula, highlight }: { step: number; lab
       border: `1px solid ${highlight ? "rgba(99,102,241,0.25)" : "#1e293b"}`,
       borderRadius: 8, marginBottom: 6,
     }}>
-      <div style={{ width: 24, height: 24, borderRadius: "50%", background: highlight ? "#4f46e5" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, color: highlight ? "#fff" : "#475569", flexShrink: 0 }}>
+      <div style={{ width: 24, height: 24, borderRadius: "50%", background: highlight ? "#2563eb" : "#1e293b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, color: highlight ? "#fff" : "#475569", flexShrink: 0 }}>
         {step}
       </div>
       <div>
@@ -884,7 +884,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                     <div style={{ fontSize: 11, fontWeight: 700, color: "#a5b4fc", marginBottom: 4 }}>
                       Potential score improvement: +{sortedActions.reduce((s, a) => s + a.potential_gain, 0)} points
                     </div>
-                    <div style={{ fontSize: 11, color: "#6366f1" }}>Actions ranked by impact. Expand each for step-by-step guidance.</div>
+                    <div style={{ fontSize: 11, color: "#2563eb" }}>Actions ranked by impact. Expand each for step-by-step guidance.</div>
                   </div>
 
                   {sortedActions.map((a, i) => <ActionCard key={a.id} action={a} rank={i + 1} />)}
@@ -937,7 +937,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
                           <span style={{ background: "rgba(245,158,11,0.10)", border: "1px solid rgba(245,158,11,0.25)", color: "#fcd34d", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 4, display: "inline-block", width: "fit-content" }}>UNVERIFIED</span>
                           <div style={{ fontSize: 11, color: "#475569", lineHeight: 1.5 }}>
                             FCA status could not be checked — API credentials not configured.
-                            Register at <span style={{ color: "#6366f1" }}>register.fca.org.uk/developer</span> and set <code style={{ color: "#a5b4fc", fontSize: 10 }}>FCA_API_EMAIL</code> + <code style={{ color: "#a5b4fc", fontSize: 10 }}>FCA_API_KEY</code> in your backend environment.
+                            Register at <span style={{ color: "#2563eb" }}>register.fca.org.uk/developer</span> and set <code style={{ color: "#a5b4fc", fontSize: 10 }}>FCA_API_EMAIL</code> + <code style={{ color: "#a5b4fc", fontSize: 10 }}>FCA_API_KEY</code> in your backend environment.
                           </div>
                         </div>
                       );

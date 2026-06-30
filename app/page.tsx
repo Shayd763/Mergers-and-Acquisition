@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useEffect, useRef, useState, useCallback, useSyncExternalStore } from "react";
@@ -52,7 +52,7 @@ function SpotlightCard({ children, style = {} }: { children: React.ReactNode; st
       whileHover={isTouch ? undefined : { scale: 1.015 }}
       transition={{ type: "spring", stiffness: 300, damping: 28 }}
       style={{ position: "relative", overflow: "hidden", borderRadius: 24, border: "1px solid #e2e8f0", background: "#ffffff", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", ...style }}>
-      {inside && !isTouch && <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(260px circle at ${pos.x}px ${pos.y}px, rgba(79,70,229,0.05), transparent 70%)`, zIndex: 0 }} />}
+      {inside && !isTouch && <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(260px circle at ${pos.x}px ${pos.y}px, rgba(37,99,235,0.05), transparent 70%)`, zIndex: 0 }} />}
       <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
     </motion.div>
   );
@@ -78,22 +78,22 @@ function DealSlider() {
     <div style={{ padding: "20px 24px" }}>
       <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", color: "#94a3b8", textTransform: "uppercase", marginBottom: 14 }}>Live Preview — Manchester Consultancy · £450k</p>
       <div style={{ height: 7, borderRadius: 9999, overflow: "hidden", display: "flex", background: "#f1f5f9", marginBottom: 18, border: "1px solid #e2e8f0" }}>
-        <div style={{ width: `${equity}%`, background: "linear-gradient(90deg,#4f46e5,#6366f1)", transition: "width 0.2s" }} />
-        <div style={{ width: `${vendor}%`, background: "linear-gradient(90deg,#7c3aed,#a855f7)", transition: "width 0.2s" }} />
+        <div style={{ width: `${equity}%`, background: "linear-gradient(90deg,#1e3a8a,#2563eb)", transition: "width 0.2s" }} />
+        <div style={{ width: `${vendor}%`, background: "linear-gradient(90deg,#1e3a8a,#a855f7)", transition: "width 0.2s" }} />
         <div style={{ width: `${bank}%`, background: "linear-gradient(90deg,#d97706,#f59e0b)", transition: "width 0.2s" }} />
       </div>
       <div style={{ marginBottom: 16 }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
           <span style={{ fontSize: 12, color: "#64748b" }}>Buyer Equity</span>
-          <span style={{ fontSize: 12, fontWeight: 700, color: "#4f46e5" }}>{equity}% · £{equityAmt.toLocaleString()}</span>
+          <span style={{ fontSize: 12, fontWeight: 700, color: "#2563eb" }}>{equity}% · £{equityAmt.toLocaleString()}</span>
         </div>
         <div style={{ position: "relative", height: 5 }}>
-          <div style={{ position: "absolute", inset: 0, borderRadius: 9999, background: `linear-gradient(90deg, #4f46e5 ${pct}%, #e2e8f0 ${pct}%)` }} />
+          <div style={{ position: "absolute", inset: 0, borderRadius: 9999, background: `linear-gradient(90deg, #2563eb ${pct}%, #e2e8f0 ${pct}%)` }} />
           <input type="range" min={10} max={70} value={equity} onChange={e => setEquity(Number(e.target.value))} style={{ position: "absolute", inset: 0, width: "100%", opacity: 0, cursor: "pointer", height: "100%" }} />
         </div>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
-        {[{ label: "Bank Loan", val: `£${(bankAmt/1000).toFixed(0)}k`, color: "#d97706" }, { label: "Vendor Finance", val: `£${(vendorAmt/1000).toFixed(0)}k`, color: "#7c3aed" }, { label: "DSCR", val: dscr > 50 ? "∞" : `${dscr.toFixed(2)}×`, color: dscrOk ? "#059669" : "#dc2626" }].map(s => (
+        {[{ label: "Bank Loan", val: `£${(bankAmt/1000).toFixed(0)}k`, color: "#d97706" }, { label: "Vendor Finance", val: `£${(vendorAmt/1000).toFixed(0)}k`, color: "#1e3a8a" }, { label: "DSCR", val: dscr > 50 ? "∞" : `${dscr.toFixed(2)}×`, color: dscrOk ? "#059669" : "#dc2626" }].map(s => (
           <div key={s.label} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 10, padding: "9px 10px", textAlign: "center" }}>
             <p style={{ fontSize: 9, color: "#94a3b8", marginBottom: 3, textTransform: "uppercase", letterSpacing: "0.08em" }}>{s.label}</p>
             <p style={{ fontSize: 14, fontWeight: 700, color: s.color, margin: 0 }}>{s.val}</p>
@@ -173,7 +173,7 @@ function FAQ({ q, a }: { q: string; a: string }) {
 /* ─── Pricing card ───────────────────────────────────────────────────────── */
 function PricingCard({ name, price, desc, features, cta, highlight = false, href, isCurrent = false }: { name: string; price: string; desc: string; features: string[]; cta: string; highlight?: boolean; href: string; isCurrent?: boolean }) {
   return (
-    <SpotlightCard style={{ position: "relative", padding: "32px 28px", display: "flex", flexDirection: "column", height: "100%", background: highlight ? "#4f46e5" : "#ffffff", border: isCurrent ? "2px solid #059669" : highlight ? "1px solid #4338ca" : "1px solid #e2e8f0", boxShadow: isCurrent ? "0 0 0 4px rgba(5,150,105,0.1), 0 4px 16px rgba(0,0,0,0.08)" : highlight ? "0 20px 60px rgba(79,70,229,0.25)" : "0 1px 3px rgba(0,0,0,0.06)" }}>
+    <SpotlightCard style={{ position: "relative", padding: "32px 28px", display: "flex", flexDirection: "column", height: "100%", background: highlight ? "#2563eb" : "#ffffff", border: isCurrent ? "2px solid #059669" : highlight ? "1px solid #1d4ed8" : "1px solid #e2e8f0", boxShadow: isCurrent ? "0 0 0 4px rgba(5,150,105,0.1), 0 4px 16px rgba(0,0,0,0.08)" : highlight ? "0 20px 60px rgba(37,99,235,0.25)" : "0 1px 3px rgba(0,0,0,0.06)" }}>
       {/* Current plan badge */}
       {isCurrent && (
         <div style={{ position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)", background: "#059669", color: "#fff", fontSize: 10, fontWeight: 800, letterSpacing: "0.1em", padding: "4px 12px", borderRadius: 9999, textTransform: "uppercase", whiteSpace: "nowrap", boxShadow: "0 2px 8px rgba(5,150,105,0.35)" }}>
@@ -181,7 +181,7 @@ function PricingCard({ name, price, desc, features, cta, highlight = false, href
         </div>
       )}
       {highlight && !isCurrent && <div style={{ alignSelf: "flex-start", marginBottom: 16, background: "rgba(255,255,255,0.2)", color: "#fff", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", padding: "4px 10px", borderRadius: 9999, textTransform: "uppercase" }}>Most Popular</div>}
-      <p style={{ fontSize: 12, fontWeight: 600, color: highlight ? "rgba(255,255,255,0.7)" : "#4f46e5", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>{name}</p>
+      <p style={{ fontSize: 12, fontWeight: 600, color: highlight ? "rgba(255,255,255,0.7)" : "#2563eb", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>{name}</p>
       <p style={{ fontSize: 36, fontWeight: 800, color: highlight ? "#fff" : "#0f172a", margin: "0 0 4px", letterSpacing: "-0.03em" }}>{price}</p>
       <p style={{ fontSize: 13, color: highlight ? "rgba(255,255,255,0.6)" : "#64748b", marginBottom: 28 }}>{desc}</p>
       <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
@@ -193,7 +193,7 @@ function PricingCard({ name, price, desc, features, cta, highlight = false, href
         ))}
       </div>
       <Link href={isCurrent ? "/dashboard/account" : href} style={{ textDecoration: "none" }}>
-        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} style={{ width: "100%", padding: "12px 0", borderRadius: 10, border: isCurrent ? "none" : highlight ? "none" : "1px solid #e2e8f0", cursor: "pointer", fontWeight: 700, fontSize: 14, background: isCurrent ? "#059669" : highlight ? "#ffffff" : "#f8fafc", color: isCurrent ? "#fff" : highlight ? "#4f46e5" : "#334155" }}>
+        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} style={{ width: "100%", padding: "12px 0", borderRadius: 10, border: isCurrent ? "none" : highlight ? "none" : "1px solid #e2e8f0", cursor: "pointer", fontWeight: 700, fontSize: 14, background: isCurrent ? "#059669" : highlight ? "#ffffff" : "#f8fafc", color: isCurrent ? "#fff" : highlight ? "#2563eb" : "#334155" }}>
           {isCurrent ? "Manage Plan →" : cta}
         </motion.button>
       </Link>
@@ -256,8 +256,8 @@ const HERO_CONTENT = {
     sub: "Analyse and audit any target for validity and assurance — from Companies House registry checks and credit scoring to deal structuring and direct financing with our lender partners. One platform, every step.",
     cta1: { label: "Audit a Deal — Free", href: "/dashboard/triage" },
     cta2: { label: "Read the Deal Sourcing Guide", href: "/deal-sourcing-guide" },
-    accent: "#4f46e5",
-    accentEnd: "#7c3aed",
+    accent: "#1e3a8a",
+    accentEnd: "#2563eb",
     phrases: BUYER_PHRASES,
   },
   seller: {
@@ -357,7 +357,7 @@ function Ticker() {
         {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
           <span key={i} style={{
             fontSize: 11.5, fontWeight: 600,
-            color: i % 4 === 0 ? "#4f46e5" : i % 4 === 1 ? "#0891b2" : i % 4 === 2 ? "#059669" : "#64748b",
+            color: i % 4 === 0 ? "#2563eb" : i % 4 === 1 ? "#0891b2" : i % 4 === 2 ? "#059669" : "#64748b",
             whiteSpace: "nowrap",
             padding: "0 28px",
             display: "flex", alignItems: "center", gap: 8,
@@ -414,7 +414,7 @@ function PortalLoginButton() {
             animate={{ opacity: 1, scale: 1 }}
             style={{ display: "flex", alignItems: "center", gap: 7, padding: "4px 10px 4px 4px", borderRadius: 9999, background: "#f0fdf4", border: "1px solid #bbf7d0", cursor: "default" }}
           >
-            <div style={{ width: 22, height: 22, borderRadius: "50%", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 700, color: "#fff", flexShrink: 0 }}>
+            <div style={{ width: 22, height: 22, borderRadius: "50%", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 700, color: "#fff", flexShrink: 0 }}>
               {initials || "U"}
             </div>
             <span style={{ fontSize: 11, fontWeight: 600, color: "#15803d", whiteSpace: "nowrap" }}>Signed in</span>
@@ -425,7 +425,7 @@ function PortalLoginButton() {
           onClick={handleClick}
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
-          style={{ padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", fontSize: 13, fontWeight: 700, boxShadow: "0 0 16px rgba(79,70,229,0.3)", whiteSpace: "nowrap" }}
+          style={{ padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff", fontSize: 13, fontWeight: 700, boxShadow: "0 0 16px rgba(37,99,235,0.3)", whiteSpace: "nowrap" }}
         >
           {isSignedIn ? "Portal →" : "Portal Login →"}
         </motion.button>
@@ -457,7 +457,7 @@ function PortalLoginButton() {
             </div>
             <div style={{ display: "flex", gap: 8 }}>
               <Link href="/signup" style={{ flex: 1, textDecoration: "none" }}>
-                <button style={{ width: "100%", padding: "8px 0", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
+                <button style={{ width: "100%", padding: "8px 0", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
                   Create free account →
                 </button>
               </Link>
@@ -588,7 +588,7 @@ export default function HomePage() {
           style={{ display: "flex", alignItems: "center", gap: 2, background: "rgba(255,255,255,0.92)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", border: "1px solid #e2e8f0", borderRadius: 9999, padding: "8px 12px", boxShadow: "0 4px 24px rgba(0,0,0,0.08)", maxWidth: "calc(100vw - 24px)", pointerEvents: "all" }}>
           {/* Logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, padding: "4px 10px 4px 4px", textDecoration: "none", flexShrink: 0 }}>
-            <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", flexShrink: 0 }}><BarChart3 size={13} color="#fff" /></div>
+            <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", flexShrink: 0 }}><BarChart3 size={13} color="#fff" /></div>
             <span style={{ fontSize: 14, fontWeight: 700, color: "#0f172a", letterSpacing: "-0.02em", whiteSpace: "nowrap" }}>Triage Finance</span>
           </Link>
           {/* Desktop links */}
@@ -629,7 +629,7 @@ export default function HomePage() {
         {mobileNavOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.28, ease: EXPO }}
             style={{ position: "fixed", inset: 0, zIndex: 98, background: "#07070f", display: "flex", flexDirection: "column", padding: "100px 32px 48px", overflowY: "auto" }}>
-            <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", width: 500, height: 300, borderRadius: "50%", background: "radial-gradient(ellipse, rgba(79,70,229,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", width: 500, height: 300, borderRadius: "50%", background: "radial-gradient(ellipse, rgba(37,99,235,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
             <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", marginBottom: 18 }}>Platform</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 2, marginBottom: 40 }}>
               {[
@@ -670,7 +670,7 @@ export default function HomePage() {
             </div>
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.4, ease: EXPO }} style={{ marginTop: "auto" }}>
               <Link href="/dashboard" onClick={() => setMobileNavOpen(false)} style={{ textDecoration: "none", display: "block" }}>
-                <div style={{ background: "linear-gradient(135deg,#4f46e5,#7c3aed)", borderRadius: 16, padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 0 40px rgba(79,70,229,0.3)" }}>
+                <div style={{ background: "linear-gradient(135deg,#1e3a8a,#2563eb)", borderRadius: 16, padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 0 40px rgba(37,99,235,0.3)" }}>
                   <div>
                     <p style={{ fontSize: 16, fontWeight: 700, color: "#fff", margin: "0 0 3px" }}>Start for free</p>
                     <p style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", margin: 0 }}>Triage your first deal in 60 seconds</p>
@@ -686,7 +686,7 @@ export default function HomePage() {
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section style={{ minHeight: "100svh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "100px 20px 60px", position: "relative", zIndex: 1, textAlign: "center" }}>
         {/* Breathing ambient glow behind the headline */}
-        <div className="hero-glow" style={{ position: "absolute", top: "35%", left: "50%", transform: "translate(-50%,-50%)", width: 700, height: 420, borderRadius: "50%", background: `radial-gradient(ellipse, ${track === "buyer" ? "rgba(79,70,229,0.13)" : "rgba(5,150,105,0.10)"} 0%, transparent 70%)`, pointerEvents: "none", transition: "background 0.6s", animation: "hero-glow-breathe 5s ease-in-out infinite" }} />
+        <div className="hero-glow" style={{ position: "absolute", top: "35%", left: "50%", transform: "translate(-50%,-50%)", width: 700, height: 420, borderRadius: "50%", background: `radial-gradient(ellipse, ${track === "buyer" ? "rgba(37,99,235,0.13)" : "rgba(5,150,105,0.10)"} 0%, transparent 70%)`, pointerEvents: "none", transition: "background 0.6s", animation: "hero-glow-breathe 5s ease-in-out infinite" }} />
         <style>{`
           @keyframes hero-glow-breathe {
             0%, 100% { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
@@ -704,7 +704,7 @@ export default function HomePage() {
             {(["buyer", "seller"] as const).map(t => (
               <button key={t} onClick={() => setTrack(t)} style={{
                 padding: "9px 22px", borderRadius: 9999, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600, transition: "all 0.2s",
-                background: track === t ? (t === "buyer" ? "linear-gradient(135deg,#4f46e5,#7c3aed)" : "linear-gradient(135deg,#059669,#10b981)") : "transparent",
+                background: track === t ? (t === "buyer" ? "linear-gradient(135deg,#1e3a8a,#2563eb)" : "linear-gradient(135deg,#059669,#10b981)") : "transparent",
                 color: track === t ? "#fff" : "#64748b",
                 boxShadow: track === t ? "0 2px 10px rgba(0,0,0,0.15)" : "none",
               }}>
@@ -716,9 +716,9 @@ export default function HomePage() {
           {/* Badge */}
           <AnimatePresence mode="popLayout">
             <motion.div key={track + "-badge"} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}
-              style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 28, background: track === "buyer" ? "#eef2ff" : "#ecfdf5", border: `1px solid ${track === "buyer" ? "#c7d2fe" : "#a7f3d0"}`, borderRadius: 9999, padding: "6px 14px" }}>
-              <Activity size={12} color={track === "buyer" ? "#4f46e5" : "#059669"} />
-              <span style={{ fontSize: 12, color: track === "buyer" ? "#4f46e5" : "#059669", fontWeight: 600, letterSpacing: "0.04em" }}>{hero.badge}</span>
+              style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 28, background: track === "buyer" ? "#eff6ff" : "#ecfdf5", border: `1px solid ${track === "buyer" ? "#bfdbfe" : "#a7f3d0"}`, borderRadius: 9999, padding: "6px 14px" }}>
+              <Activity size={12} color={track === "buyer" ? "#2563eb" : "#059669"} />
+              <span style={{ fontSize: 12, color: track === "buyer" ? "#2563eb" : "#059669", fontWeight: 600, letterSpacing: "0.04em" }}>{hero.badge}</span>
             </motion.div>
           </AnimatePresence>
 
@@ -775,8 +775,8 @@ export default function HomePage() {
             <motion.div key={track + "-ctas"} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25, delay: 0.08 }}
               style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
               <Link href={hero.cta1.href} style={{ textDecoration: "none" }}>
-                <motion.button whileHover={{ scale: 1.04, boxShadow: `0 8px 30px ${track === "buyer" ? "rgba(79,70,229,0.35)" : "rgba(5,150,105,0.3)"}` }} whileTap={{ scale: 0.97 }}
-                  style={{ padding: "14px 28px", borderRadius: 12, border: "none", cursor: "pointer", background: `linear-gradient(135deg,${hero.accent},${track === "buyer" ? "#7c3aed" : "#10b981"})`, color: "#fff", fontSize: 15, fontWeight: 700, boxShadow: `0 4px 20px ${track === "buyer" ? "rgba(79,70,229,0.25)" : "rgba(5,150,105,0.2)"}`, display: "flex", alignItems: "center", gap: 8 }}>
+                <motion.button whileHover={{ scale: 1.04, boxShadow: `0 8px 30px ${track === "buyer" ? "rgba(37,99,235,0.35)" : "rgba(5,150,105,0.3)"}` }} whileTap={{ scale: 0.97 }}
+                  style={{ padding: "14px 28px", borderRadius: 12, border: "none", cursor: "pointer", background: `linear-gradient(135deg,${hero.accent},${track === "buyer" ? "#2563eb" : "#10b981"})`, color: "#fff", fontSize: 15, fontWeight: 700, boxShadow: `0 4px 20px ${track === "buyer" ? "rgba(37,99,235,0.25)" : "rgba(5,150,105,0.2)"}`, display: "flex", alignItems: "center", gap: 8 }}>
                   {hero.cta1.label} <ArrowRight size={16} />
                 </motion.button>
               </Link>
@@ -800,7 +800,7 @@ export default function HomePage() {
         {/* Hero card */}
         <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55, duration: 0.8, ease: EXPO }}
           style={{ width: "100%", maxWidth: 440, marginTop: 56, position: "relative", zIndex: 2 }}>
-          <div style={{ position: "absolute", inset: -24, borderRadius: 48, background: "radial-gradient(ellipse at center, rgba(79,70,229,0.12) 0%, transparent 70%)", filter: "blur(20px)", pointerEvents: "none" }} />
+          <div style={{ position: "absolute", inset: -24, borderRadius: 48, background: "radial-gradient(ellipse at center, rgba(37,99,235,0.12) 0%, transparent 70%)", filter: "blur(20px)", pointerEvents: "none" }} />
           <SpotlightCard style={{ overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.1)" }}>
             <div style={{ padding: "11px 16px", borderBottom: "1px solid #f1f5f9", display: "flex", alignItems: "center", gap: 8 }}>
               <div style={{ display: "flex", gap: 6 }}>{["#ef4444","#f59e0b","#22c55e"].map(c => <div key={c} style={{ width: 10, height: 10, borderRadius: "50%", background: c, opacity: 0.8 }} />)}</div>
@@ -849,8 +849,8 @@ export default function HomePage() {
           <motion.div variants={fadeUp}>
             <div style={{ display: "inline-flex", flexWrap: "wrap", gap: 20, justifyContent: "center", background: "#fff", border: "1px solid #e2e8f0", borderRadius: 20, padding: "24px 36px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", marginBottom: 48 }}>
               {[
-                { label: "Bank Debt", pct: "60%", amt: "£360k", color: "#4f46e5" },
-                { label: "Vendor Finance", pct: "20%", amt: "£120k", color: "#7c3aed" },
+                { label: "Bank Debt", pct: "60%", amt: "£360k", color: "#2563eb" },
+                { label: "Vendor Finance", pct: "20%", amt: "£120k", color: "#1e3a8a" },
                 { label: "Investor Equity", pct: "20%", amt: "£120k", color: "#059669" },
               ].map(s => (
                 <div key={s.label} style={{ textAlign: "center", minWidth: 120 }}>
@@ -875,8 +875,8 @@ export default function HomePage() {
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }}
           style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14 }}>
           {[
-            { n: 1, icon: <Target size={16} />, title: "Source the Target", body: "Find a UK retirement-sale business with stable SDE (e.g., engineering firm at £200k SDE, asking £600k from a retiring founder).", accent: "#4f46e5" },
-            { n: 2, icon: <BarChart3 size={16} />, title: "Audit the Deal", body: "Drop the numbers into Triage Finance. Structure 60% bank / 20% vendor / 20% investor equity. Verify DSCR ≥ 1.35× and IRR ≥ 30%.", accent: "#7c3aed" },
+            { n: 1, icon: <Target size={16} />, title: "Source the Target", body: "Find a UK retirement-sale business with stable SDE (e.g., engineering firm at £200k SDE, asking £600k from a retiring founder).", accent: "#2563eb" },
+            { n: 2, icon: <BarChart3 size={16} />, title: "Audit the Deal", body: "Drop the numbers into Triage Finance. Structure 60% bank / 20% vendor / 20% investor equity. Verify DSCR ≥ 1.35× and IRR ≥ 30%.", accent: "#1e3a8a" },
             { n: 3, icon: <FileText size={16} />, title: "Export Credit Memo", body: "Download the 3-page institutional-grade Deal Credit Memo PDF. This is your proof of concept — lender and investor ready on Day 1.", accent: "#059669" },
             { n: 4, icon: <Users size={16} />, title: "Pitch Passive Investors", body: "Approach HNWs: 'I have a pre-underwritten UK deal with an institutional credit memo. I need £120k equity — the business pays it off.' Close in days.", accent: "#d97706" },
             { n: 5, icon: <Wallet size={16} />, title: "Pocket the Arbitrage", body: "Take a 2–4% deal sourcing fee (£12k–£24k cash on Day 1). Retain 15–30% sweat equity as deal architect. Zero personal capital deployed.", accent: "#dc2626" },
@@ -921,7 +921,7 @@ export default function HomePage() {
       {/* ── Features bento ───────────────────────────────────────────────── */}
       <section id="features" style={{ padding: "80px 24px 120px", maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} style={{ textAlign: "center", marginBottom: 64 }}>
-          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#4f46e5", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>Platform Features</motion.p>
+          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>Platform Features</motion.p>
           <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#0f172a", margin: "0 0 16px", lineHeight: 1.1 }}>Everything a serious buyer needs.</motion.h2>
           <motion.p variants={fadeUp} style={{ fontSize: 16, color: "#64748b", maxWidth: 520, margin: "0 auto" }}>From raw listing text to a credit memo ready for your lender — in under a minute.</motion.p>
         </motion.div>
@@ -929,13 +929,13 @@ export default function HomePage() {
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }}
           className="bento-12">
           {[
-            { col: "1 / 8", icon: <Zap size={20} color="#4f46e5" />, iconBg: "#eef2ff", title: "AI-Powered Extraction", desc: "Paste any broker listing and our AI strips out the numbers instantly — asking price, SDE, turnover, add-backs, and lease data — with zero manual entry.", badge: "< 1 second" },
-            { col: "8 / 13", icon: <TrendingUp size={20} color="#7c3aed" />, iconBg: "#f5f3ff", title: "19 IB-Grade Metrics", desc: "DSCR, 5-year Equity IRR, Levered FCF, CoC ROI, DSCR bands, total acquisition cost — the full suite institutional buyers expect.", badge: "Goldman-standard" },
+            { col: "1 / 8", icon: <Zap size={20} color="#2563eb" />, iconBg: "#eff6ff", title: "AI-Powered Extraction", desc: "Paste any broker listing and our AI strips out the numbers instantly — asking price, SDE, turnover, add-backs, and lease data — with zero manual entry.", badge: "< 1 second" },
+            { col: "8 / 13", icon: <TrendingUp size={20} color="#1e3a8a" />, iconBg: "#eff6ff", title: "19 IB-Grade Metrics", desc: "DSCR, 5-year Equity IRR, Levered FCF, CoC ROI, DSCR bands, total acquisition cost — the full suite institutional buyers expect.", badge: "Goldman-standard" },
           ].map(c => (
             <motion.div key={c.title} variants={fadeUp} style={{ gridColumn: c.col }}>
               <SpotlightCard style={{ padding: "36px 32px", height: "100%" }}>
                 <div style={{ width: 44, height: 44, borderRadius: 12, background: c.iconBg, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24 }}>{c.icon}</div>
-                <div style={{ display: "inline-block", marginBottom: 16, background: "#eef2ff", border: "1px solid #c7d2fe", borderRadius: 9999, padding: "3px 10px", fontSize: 10, fontWeight: 700, color: "#4f46e5", letterSpacing: "0.06em", textTransform: "uppercase" }}>{c.badge}</div>
+                <div style={{ display: "inline-block", marginBottom: 16, background: "#eff6ff", border: "1px solid #bfdbfe", borderRadius: 9999, padding: "3px 10px", fontSize: 10, fontWeight: 700, color: "#2563eb", letterSpacing: "0.06em", textTransform: "uppercase" }}>{c.badge}</div>
                 <h3 style={{ fontSize: 20, fontWeight: 700, color: "#0f172a", margin: "0 0 12px", letterSpacing: "-0.02em" }}>{c.title}</h3>
                 <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.7, margin: 0 }}>{c.desc}</p>
               </SpotlightCard>
@@ -944,7 +944,7 @@ export default function HomePage() {
           {[
             { col: "1 / 5", icon: <FileText size={18} color="#059669" />, iconBg: "#ecfdf5", label: "3-Page Credit Memo", val: "PDF", sub: "Institutional lender-ready output" },
             { col: "5 / 9", icon: <Shield size={18} color="#d97706" />, iconBg: "#fffbeb", label: "Deal Viability Score", val: "STRONG", sub: "Real-time DSCR threshold rating" },
-            { col: "9 / 13", icon: <Users size={18} color="#7c3aed" />, iconBg: "#f5f3ff", label: "Lender Network", val: "4", sub: "Pre-approved UK commercial lenders" },
+            { col: "9 / 13", icon: <Users size={18} color="#2563eb" />, iconBg: "#eff6ff", label: "Lender Network", val: "4", sub: "Pre-approved UK commercial lenders" },
           ].map(c => (
             <motion.div key={c.label} variants={fadeUp} style={{ gridColumn: c.col }}>
               <BentoCell icon={c.icon} label={c.label} value={c.val} sub={c.sub} iconBg={c.iconBg} />
@@ -955,8 +955,8 @@ export default function HomePage() {
               <div className="grid-2col" style={{ gap: 48, alignItems: "center" }}>
                 <div>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-                    <Layers size={18} color="#4f46e5" />
-                    <span style={{ fontSize: 12, fontWeight: 700, color: "#4f46e5", letterSpacing: "0.1em", textTransform: "uppercase" }}>Document Upload</span>
+                    <Layers size={18} color="#2563eb" />
+                    <span style={{ fontSize: 12, fontWeight: 700, color: "#2563eb", letterSpacing: "0.1em", textTransform: "uppercase" }}>Document Upload</span>
                   </div>
                   <h3 style={{ fontSize: 22, fontWeight: 700, color: "#0f172a", margin: "0 0 12px" }}>PDF & CIM parsing built in.</h3>
                   <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.75, margin: "0 0 24px" }}>Upload PDFs, DOCX, or PPTX files directly. The platform populates your triage workspace from raw CIM documents automatically.</p>
@@ -967,9 +967,9 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div style={{ background: "#f8fafc", borderRadius: 14, padding: "20px 24px", border: "1px solid #e2e8f0", display: "flex", flexDirection: "column", gap: 10 }}>
-                  {[{ tag: "SCANNING", text: "Reading document structure…", color: "#94a3b8" }, { tag: "EXTRACTED", text: "Turnover: £820,000  |  Net Profit: £120,000", color: "#4f46e5" }, { tag: "VERIFIED", text: "DSCR: 2.90×  ✓  Passes 1.25× threshold", color: "#059669" }, { tag: "SUCCESS", text: "Triage workspace populated in 0.4s.", color: "#059669" }].map((l, i) => (
+                  {[{ tag: "SCANNING", text: "Reading document structure…", color: "#94a3b8" }, { tag: "EXTRACTED", text: "Turnover: £820,000  |  Net Profit: £120,000", color: "#2563eb" }, { tag: "VERIFIED", text: "DSCR: 2.90×  ✓  Passes 1.25× threshold", color: "#059669" }, { tag: "SUCCESS", text: "Triage workspace populated in 0.4s.", color: "#059669" }].map((l, i) => (
                     <motion.div key={l.tag} initial={{ opacity: 0, x: -8 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.12 }} viewport={{ once: true }} style={{ display: "flex", gap: 10 }}>
-                      <span style={{ fontSize: 10, color: "#4f46e5", fontWeight: 700, fontFamily: "monospace", minWidth: 72 }}>{l.tag}</span>
+                      <span style={{ fontSize: 10, color: "#2563eb", fontWeight: 700, fontFamily: "monospace", minWidth: 72 }}>{l.tag}</span>
                       <span style={{ fontSize: 12, color: l.color, fontFamily: "monospace" }}>{l.text}</span>
                     </motion.div>
                   ))}
@@ -982,10 +982,10 @@ export default function HomePage() {
         {/* Calculator links */}
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ marginTop: 24 }}>
           <motion.div variants={fadeUp} style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 20, padding: "28px 32px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "#4f46e5", letterSpacing: "0.09em", textTransform: "uppercase", marginBottom: 16 }}>Free M&A Calculators</p>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "#2563eb", letterSpacing: "0.09em", textTransform: "uppercase", marginBottom: 16 }}>Free M&A Calculators</p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               {CALC_LINKS.map(l => (
-                <Link key={l.href} href={l.href} style={{ padding: "9px 18px", borderRadius: 9999, background: "#f8fafc", border: "1px solid #e2e8f0", color: "#4f46e5", fontSize: 13, textDecoration: "none", fontWeight: 600 }}>{l.label}</Link>
+                <Link key={l.href} href={l.href} style={{ padding: "9px 18px", borderRadius: 9999, background: "#f8fafc", border: "1px solid #e2e8f0", color: "#2563eb", fontSize: 13, textDecoration: "none", fontWeight: 600 }}>{l.label}</Link>
               ))}
             </div>
           </motion.div>
@@ -1005,7 +1005,7 @@ export default function HomePage() {
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }}
           style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 16 }}>
           {[
-            { icon: <Briefcase size={20} color="#4f46e5" />, iconBg: "#eef2ff", title: "Lender Referral Commission", body: "When a buyer's deal closes with one of our lending partners, we receive a 1% referral fee on the originated loan. A typical UK acquisition loan of £200k–£500k generates £2,000–£5,000 per transaction from a user who used our free tool for 15 minutes.", tag: "1% per loan originated" },
+            { icon: <Briefcase size={20} color="#2563eb" />, iconBg: "#eff6ff", title: "Lender Referral Commission", body: "When a buyer's deal closes with one of our lending partners, we receive a 1% referral fee on the originated loan. A typical UK acquisition loan of £200k–£500k generates £2,000–£5,000 per transaction from a user who used our free tool for 15 minutes.", tag: "1% per loan originated" },
             { icon: <Users size={20} color="#059669" />, iconBg: "#ecfdf5", title: "Buy-Side Buyer Database", body: "Every business seller who uses our tool opts into our proprietary buyer network — a live database of active UK searchers and ETA buyers. Brokers and M&A advisors pay a premium subscription to access this curated deal-flow pipeline.", tag: "Proprietary data asset" },
             { icon: <Activity size={20} color="#d97706" />, iconBg: "#fffbeb", title: "The Transaction Data Moat", body: "Every free triage logs target sectors, price ranges, and financial margins. We are building the largest proprietary database of active UK micro-cap M&A activity — a data asset with significant independent value.", tag: "Largest UK micro-cap dataset" },
           ].map(m => (
@@ -1024,7 +1024,7 @@ export default function HomePage() {
       {/* ── Testimonials ──────────────────────────────────────────────────── */}
       <section style={{ padding: "0 24px 120px", maxWidth: 1100, margin: "0 auto" }}>
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} style={{ textAlign: "center", marginBottom: 56 }}>
-          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#4f46e5", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>Testimonials</motion.p>
+          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>Testimonials</motion.p>
           <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#0f172a", margin: 0 }}>Trusted by acquisition professionals.</motion.h2>
         </motion.div>
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
@@ -1049,13 +1049,13 @@ export default function HomePage() {
           className="grid-2col" style={{ gap: 16 }}>
           {/* Buyer CTA */}
           <motion.div variants={fadeUp}>
-            <div style={{ background: "linear-gradient(135deg,#4f46e5,#7c3aed)", borderRadius: 24, padding: "52px 40px", position: "relative", overflow: "hidden", height: "100%", display: "flex", flexDirection: "column" }}>
+            <div style={{ background: "linear-gradient(135deg,#1e3a8a,#2563eb)", borderRadius: 24, padding: "52px 40px", position: "relative", overflow: "hidden", height: "100%", display: "flex", flexDirection: "column" }}>
               <div style={{ position: "absolute", top: -60, right: -60, width: 200, height: 200, borderRadius: "50%", background: "rgba(255,255,255,0.07)", pointerEvents: "none" }} />
               <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.6)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>For Buyers</p>
               <h3 style={{ fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "#fff", margin: "0 0 14px", letterSpacing: "-0.03em", lineHeight: 1.15 }}>Audit a deal in under 30 seconds.</h3>
               <p style={{ fontSize: 14, color: "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: "0 0 32px", flex: 1 }}>No spreadsheets. No manual modelling. Paste a listing, adjust sliders, get bank-grade metrics and a credit memo instantly.</p>
               <Link href="/dashboard/triage" style={{ textDecoration: "none" }}>
-                <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} style={{ padding: "13px 24px", borderRadius: 12, border: "none", cursor: "pointer", background: "#fff", color: "#4f46e5", fontSize: 14, fontWeight: 800, display: "inline-flex", alignItems: "center", gap: 8 }}>
+                <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} style={{ padding: "13px 24px", borderRadius: 12, border: "none", cursor: "pointer", background: "#fff", color: "#2563eb", fontSize: 14, fontWeight: 800, display: "inline-flex", alignItems: "center", gap: 8 }}>
                   Audit a Deal — Free <ArrowRight size={15} />
                 </motion.button>
               </Link>
@@ -1081,7 +1081,7 @@ export default function HomePage() {
       {/* ── Pricing ──────────────────────────────────────────────────────── */}
       <section id="pricing" style={{ padding: "0 24px 120px", maxWidth: 1200, margin: "0 auto" }}>
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} style={{ textAlign: "center", marginBottom: 56 }}>
-          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#4f46e5", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>Pricing</motion.p>
+          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>Pricing</motion.p>
           <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#0f172a", margin: "0 0 12px" }}>Aligned with every stage of the deal journey.</motion.h2>
           <motion.p variants={fadeUp} style={{ fontSize: 15, color: "#64748b", maxWidth: 540, margin: "0 auto" }}>Start free. Upgrade when you need more firepower — and get every subscription fee back when you close.</motion.p>
         </motion.div>
@@ -1093,7 +1093,7 @@ export default function HomePage() {
           display: "flex", alignItems: "center", gap: 18,
           marginBottom: 28, flexWrap: "wrap",
         }}>
-          <div style={{ width: 40, height: 40, borderRadius: 10, flexShrink: 0, background: "linear-gradient(135deg,#6366f1,#a855f7)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>🔄</div>
+          <div style={{ width: 40, height: 40, borderRadius: 10, flexShrink: 0, background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>🔄</div>
           <div style={{ flex: 1, minWidth: 240 }}>
             <p style={{ fontSize: 13, fontWeight: 800, color: "#c4b5fd", margin: "0 0 3px", letterSpacing: "0.04em" }}>THE DEBT OFFSET GUARANTEE — UP TO £588 CASHBACK</p>
             <p style={{ fontSize: 12.5, color: "rgba(255,255,255,0.6)", margin: 0, lineHeight: 1.6 }}>
@@ -1101,7 +1101,7 @@ export default function HomePage() {
             </p>
           </div>
           <Link href="/dashboard/triage" style={{ textDecoration: "none", flexShrink: 0 }}>
-            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} style={{ padding: "9px 18px", borderRadius: 9, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#6366f1,#a855f7)", color: "#fff", fontSize: 13, fontWeight: 700, whiteSpace: "nowrap" }}>
+            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} style={{ padding: "9px 18px", borderRadius: 9, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff", fontSize: 13, fontWeight: 700, whiteSpace: "nowrap" }}>
               Start Free →
             </motion.button>
           </Link>
@@ -1132,7 +1132,7 @@ export default function HomePage() {
       {/* ── FAQ ───────────────────────────────────────────────────────────── */}
       <section id="faq" style={{ padding: "80px 24px 120px", maxWidth: 720, margin: "0 auto" }}>
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} style={{ textAlign: "center", marginBottom: 56 }}>
-          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#4f46e5", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>FAQ</motion.p>
+          <motion.p variants={fadeUp} style={{ fontSize: 12, fontWeight: 600, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>FAQ</motion.p>
           <motion.h2 variants={fadeUp} style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#0f172a", margin: 0 }}>Common questions.</motion.h2>
         </motion.div>
         <div style={{ border: "1px solid #e2e8f0", borderRadius: 20, padding: "0 28px", background: "#ffffff", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
@@ -1143,7 +1143,7 @@ export default function HomePage() {
       {/* ── Footer ───────────────────────────────────────────────────────── */}
       <footer style={{ borderTop: "1px solid #e2e8f0", padding: "48px 24px", display: "flex", flexDirection: "column", alignItems: "center", gap: 20, background: "#fff" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#4f46e5,#7c3aed)" }}><BarChart3 size={13} color="#fff" /></div>
+          <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#1e3a8a,#2563eb)" }}><BarChart3 size={13} color="#fff" /></div>
           <span style={{ fontSize: 14, fontWeight: 700, color: "#0f172a" }}>Triage Finance</span>
         </div>
         <div style={{ display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center" }}>

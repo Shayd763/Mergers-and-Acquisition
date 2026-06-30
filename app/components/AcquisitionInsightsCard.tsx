@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React from "react";
 import { GlossaryTerm } from "@/app/components/GlossaryTerm";
 import type { CreditProfile } from "@/app/components/CreditProfileBadge";
@@ -159,7 +159,7 @@ function CompareRow({ label, imVal, chVal, crVal, conflict }: {
         {chVal}
         {conflict && <span style={{ marginLeft: 4, fontSize: 10 }}>⚠</span>}
       </span>
-      <span style={{ fontSize: 11.5, color: "#6366f1", fontWeight: 600, textAlign: "center" }}>
+      <span style={{ fontSize: 11.5, color: "#2563eb", fontWeight: 600, textAlign: "center" }}>
         {crVal ?? "—"}
       </span>
     </div>
@@ -521,13 +521,13 @@ export function AcquisitionInsightsCard({
             borderBottom: "2px solid #f1f5f9", minWidth: 320,
           }}>
             <span style={{ fontSize: 10, fontWeight: 700, color: "#94a3b8", letterSpacing: "0.09em" }}>METRIC</span>
-            <span style={{ fontSize: 10, fontWeight: 700, color: "#6366f1", letterSpacing: "0.09em", textAlign: "center" }}>
+            <span style={{ fontSize: 10, fontWeight: 700, color: "#2563eb", letterSpacing: "0.09em", textAlign: "center" }}>
               <GlossaryTerm term="IM">IM</GlossaryTerm> / LISTING
             </span>
             <span style={{ fontSize: 10, fontWeight: 700, color: "#0891b2", letterSpacing: "0.09em", textAlign: "center" }}>
               <GlossaryTerm term="CompaniesHouse">COMPANIES HOUSE</GlossaryTerm>
             </span>
-            <span style={{ fontSize: 10, fontWeight: 700, color: "#6366f1", letterSpacing: "0.09em", textAlign: "center",
+            <span style={{ fontSize: 10, fontWeight: 700, color: "#2563eb", letterSpacing: "0.09em", textAlign: "center",
               opacity: creditProfile ? 1 : 0.35 }}>
               CREDIT REPORT
             </span>
@@ -600,7 +600,7 @@ export function AcquisitionInsightsCard({
           <strong>Companies House</strong> = broker market benchmark range for this sector (SME open-market pricing).&nbsp;
           <strong>Credit Report</strong> = credit-adjusted EV/SDE range using UK M&A transaction data (Experian/BDO) with company-specific risk adjustments.
           {val && (
-            <span style={{ marginLeft: 4, color: "#6366f1", fontWeight: 600 }}>
+            <span style={{ marginLeft: 4, color: "#2563eb", fontWeight: 600 }}>
               Net credit adjustment: {val.total_adjustment_pct >= 0 ? "+" : ""}{val.total_adjustment_pct.toFixed(1)}%.
             </span>
           )}

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useEffect } from "react";
 
 interface Props {
@@ -60,7 +60,7 @@ export function EmailCaptureModal({ isOpen, onCaptured, onClose, headline, subli
       }}>
         {/* Header */}
         <div style={{
-          background: "linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)",
+          background: "linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%)",
           padding: "28px 28px 22px",
         }}>
           <div style={{ fontSize: 28, marginBottom: 10 }}>🔒</div>
@@ -73,13 +73,13 @@ export function EmailCaptureModal({ isOpen, onCaptured, onClose, headline, subli
         </div>
 
         {/* Social proof bar */}
-        <div style={{ background: "#f0f4ff", borderBottom: "1px solid #c7d2fe", padding: "8px 28px", display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ background: "#f0f4ff", borderBottom: "1px solid #bfdbfe", padding: "8px 28px", display: "flex", alignItems: "center", gap: 8 }}>
           <div style={{ display: "flex", gap: -4 }}>
-            {["#4f46e5","#7c3aed","#06b6d4","#059669","#d97706"].map((c, i) => (
+            {["#2563eb","#1e3a8a","#06b6d4","#059669","#d97706"].map((c, i) => (
               <div key={i} style={{ width: 18, height: 18, borderRadius: "50%", background: c, border: "2px solid #f0f4ff", marginLeft: i > 0 ? -5 : 0, flexShrink: 0 }} />
             ))}
           </div>
-          <span style={{ fontSize: 11, color: "#4f46e5", fontWeight: 600 }}>
+          <span style={{ fontSize: 11, color: "#2563eb", fontWeight: 600 }}>
             3,241+ deal analysts already on Triage Finance
           </span>
         </div>
@@ -106,7 +106,7 @@ export function EmailCaptureModal({ isOpen, onCaptured, onClose, headline, subli
                       padding: "10px 14px", borderRadius: 9, border: "1.5px solid #e2e8f0",
                       fontSize: 14, outline: "none", fontFamily: "inherit",
                     }}
-                    onFocus={e => { e.currentTarget.style.borderColor = "#6366f1"; }}
+                    onFocus={e => { e.currentTarget.style.borderColor = "#2563eb"; }}
                     onBlur={e => { e.currentTarget.style.borderColor = "#e2e8f0"; }}
                   />
                 </label>
@@ -120,7 +120,7 @@ export function EmailCaptureModal({ isOpen, onCaptured, onClose, headline, subli
                       padding: "10px 14px", borderRadius: 9, border: "1.5px solid #e2e8f0",
                       fontSize: 14, outline: "none", fontFamily: "inherit",
                     }}
-                    onFocus={e => { e.currentTarget.style.borderColor = "#6366f1"; }}
+                    onFocus={e => { e.currentTarget.style.borderColor = "#2563eb"; }}
                     onBlur={e => { e.currentTarget.style.borderColor = "#e2e8f0"; }}
                   />
                 </label>
@@ -131,11 +131,11 @@ export function EmailCaptureModal({ isOpen, onCaptured, onClose, headline, subli
                 disabled={!ready}
                 style={{
                   marginTop: 16, width: "100%", padding: "13px 0",
-                  background: ready ? "linear-gradient(135deg,#4f46e5,#7c3aed)" : "#e2e8f0",
+                  background: ready ? "linear-gradient(135deg,#2563eb,#1e3a8a)" : "#e2e8f0",
                   color: ready ? "#fff" : "#94a3b8",
                   border: "none", borderRadius: 10, fontSize: 14, fontWeight: 700,
                   cursor: ready ? "pointer" : "not-allowed",
-                  boxShadow: ready ? "0 4px 14px rgba(79,70,229,0.30)" : "none",
+                  boxShadow: ready ? "0 4px 14px rgba(37,99,235,0.30)" : "none",
                   transition: "all 0.2s",
                 }}>
                 Unlock for free →

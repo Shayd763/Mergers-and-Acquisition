@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useCallback, useRef, useEffect } from "react";
 import type { CreditProfile } from "./CreditProfileBadge";
 import { useSubscription } from "./SubscriptionContext";
@@ -20,7 +20,7 @@ export interface DealMetricsForMemo {
   corp_tax_charge: number;
   levered_fcf: number;
   dscr: number;
-  dscr_band: "strong" | "tight" | "unbankable";
+  dscr_band: "strong" | "acceptable" | "marginal" | "unbankable";
   equity_irr: number;
   coc_roi: number;
   capital_stack_valid: boolean;
@@ -746,7 +746,7 @@ export function CreditMemoDrawer({
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
-                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4f46e5" }} />
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#2563eb" }} />
                 <span style={{ fontSize: 11, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 600 }}>
                   DealTriage · Stage 3 Unlock
                 </span>
@@ -786,7 +786,7 @@ export function CreditMemoDrawer({
                 style={{
                   fontSize: 12, fontWeight: 600, padding: "7px 16px",
                   borderRadius: 7, border: "none", cursor: "pointer",
-                  background: tab === t ? "#4f46e5" : "rgba(255,255,255,0.06)",
+                  background: tab === t ? "#2563eb" : "rgba(255,255,255,0.06)",
                   color: tab === t ? "#fff" : "#94a3b8",
                   transition: "all 0.15s",
                   display: "flex", alignItems: "center", gap: 5,
@@ -817,7 +817,7 @@ export function CreditMemoDrawer({
                   onClick={handleDownloadPDF}
                   disabled={pdfGenerating}
                   style={{
-                    background: pdfGenerating ? "#334155" : "#4f46e5",
+                    background: pdfGenerating ? "#334155" : "#2563eb",
                     color: "#fff", border: "none", borderRadius: 8,
                     padding: "10px 18px", fontSize: 13, fontWeight: 700,
                     cursor: pdfGenerating ? "not-allowed" : "pointer",
@@ -866,8 +866,8 @@ export function CreditMemoDrawer({
                 <div key={pg} className="card" style={{ padding: "16px 18px" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
                     <span style={{
-                      fontSize: 10, fontWeight: 700, background: "#eef2ff", color: "#4f46e5",
-                      border: "1px solid #c7d2fe", borderRadius: 5, padding: "2px 8px",
+                      fontSize: 10, fontWeight: 700, background: "#eff6ff", color: "#2563eb",
+                      border: "1px solid #bfdbfe", borderRadius: 5, padding: "2px 8px",
                       textTransform: "uppercase", letterSpacing: "0.06em",
                     }}>{pg}</span>
                     <span style={{ fontSize: 13, fontWeight: 700, color: "#0f172a" }}>{title}</span>
@@ -884,8 +884,8 @@ export function CreditMemoDrawer({
               <div className="card" style={{ padding: "16px 18px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
                   <span style={{
-                    fontSize: 10, fontWeight: 700, background: "#eef2ff", color: "#4f46e5",
-                    border: "1px solid #c7d2fe", borderRadius: 5, padding: "2px 8px",
+                    fontSize: 10, fontWeight: 700, background: "#eff6ff", color: "#2563eb",
+                    border: "1px solid #bfdbfe", borderRadius: 5, padding: "2px 8px",
                     textTransform: "uppercase", letterSpacing: "0.06em",
                   }}>Page 4</span>
                   <span style={{ fontSize: 13, fontWeight: 700, color: "#0f172a" }}>Credit Intelligence Report</span>
@@ -974,7 +974,7 @@ export function CreditMemoDrawer({
                   <span style={{ fontSize: 11, color: "#64748b", fontFamily: "monospace" }}>
                     POST /api/v1/submit-deal-package
                   </span>
-                  <span style={{ fontSize: 10, color: "#4f46e5", fontWeight: 600, background: "#1e1b4b", padding: "2px 8px", borderRadius: 4 }}>
+                  <span style={{ fontSize: 10, color: "#2563eb", fontWeight: 600, background: "#1e1b4b", padding: "2px 8px", borderRadius: 4 }}>
                     LIVE PAYLOAD
                   </span>
                 </div>
@@ -1015,7 +1015,7 @@ export function CreditMemoDrawer({
                         onClick={() => setLenders(l => ({ ...l, [key]: !l[key] }))}
                         style={{
                           width: 44, height: 24, borderRadius: 12,
-                          background: on ? "#4f46e5" : "#e2e8f0",
+                          background: on ? "#2563eb" : "#e2e8f0",
                           border: "none", cursor: "pointer",
                           position: "relative", transition: "background 0.2s", flexShrink: 0,
                         }}
@@ -1067,15 +1067,15 @@ export function CreditMemoDrawer({
                   <button
                     onClick={handleSubmit}
                     style={{
-                      width: "100%", background: "#4f46e5", color: "#fff",
+                      width: "100%", background: "#2563eb", color: "#fff",
                       border: "none", borderRadius: 8, padding: "12px 16px",
                       fontSize: 14, fontWeight: 700, cursor: "pointer",
                       display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                      boxShadow: "0 4px 14px rgba(79,70,229,0.3)",
+                      boxShadow: "0 4px 14px rgba(37,99,235,0.3)",
                       transition: "box-shadow 0.2s",
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 6px 20px rgba(79,70,229,0.45)")}
-                    onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 4px 14px rgba(79,70,229,0.3)")}>
+                    onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 6px 20px rgba(37,99,235,0.45)")}
+                    onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 4px 14px rgba(37,99,235,0.3)")}>
                     🚀 Submit to Lenders
                   </button>
                 )}

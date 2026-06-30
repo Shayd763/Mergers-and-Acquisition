@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useState } from "react";
 import { GlossaryTerm } from "@/app/components/GlossaryTerm";
 
@@ -307,7 +307,7 @@ export function ForensicAuditPanel({ result, extracted }: Props) {
               padding: "10px 12px",
             }}
           >
-            <div style={{ fontSize: 10, color: "#6366f1", fontWeight: 700, letterSpacing: "0.08em", marginBottom: 8 }}>
+            <div style={{ fontSize: 10, color: "#2563eb", fontWeight: 700, letterSpacing: "0.08em", marginBottom: 8 }}>
               <GlossaryTerm term="ValuationMultiple">MULTIPLE ADJUSTMENT</GlossaryTerm>
             </div>
             <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>

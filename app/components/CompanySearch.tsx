@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef, useEffect, useCallback, useSyncExternalStore } from "react";
 
@@ -123,7 +123,7 @@ function ResultRow({ r, onSelect, compact }: { r: CompanySearchResult; onSelect:
         </p>
       </div>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4, flexShrink: 0 }}>
-        <span style={{ fontSize: 10, fontWeight: 700, color: "#4f46e5", background: "#eef2ff", border: "1px solid #c7d2fe", borderRadius: 6, padding: "2px 7px", fontFamily: "monospace" }}>
+        <span style={{ fontSize: 10, fontWeight: 700, color: "#2563eb", background: "#eff6ff", border: "1px solid #bfdbfe", borderRadius: 6, padding: "2px 7px", fontFamily: "monospace" }}>
           #{r.company_number}
         </span>
         <span style={{ fontSize: 9, fontWeight: 700, color: isActive ? "#059669" : "#94a3b8", background: isActive ? "#ecfdf5" : "#f8fafc", border: `1px solid ${isActive ? "#a7f3d0" : "#e2e8f0"}`, borderRadius: 4, padding: "1px 5px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
@@ -247,7 +247,7 @@ interface SearchInputProps {
 function SearchInput({ inputRef, value, searching, autoFocus, onChange, onFocused, onClear }: SearchInputProps) {
   return (
     <div style={{ position: "relative" }}>
-      <div style={{ position: "absolute", left: 13, top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: searching ? "#4f46e5" : "#94a3b8", transition: "color 0.15s" }}>
+      <div style={{ position: "absolute", left: 13, top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: searching ? "#2563eb" : "#94a3b8", transition: "color 0.15s" }}>
         {searching ? (
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} style={{ animation: "spin 0.7s linear infinite" }}>
             <path strokeLinecap="round" d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
@@ -281,8 +281,8 @@ function SearchInput({ inputRef, value, searching, autoFocus, onChange, onFocuse
           transition: "border-color 0.15s, box-shadow 0.15s",
         }}
         onFocus={e => {
-          e.currentTarget.style.borderColor = "#4f46e5";
-          e.currentTarget.style.boxShadow = "0 0 0 3px rgba(79,70,229,0.12)";
+          e.currentTarget.style.borderColor = "#2563eb";
+          e.currentTarget.style.boxShadow = "0 0 0 3px rgba(37,99,235,0.12)";
           onFocused();
         }}
         onBlur={e => {
@@ -487,7 +487,7 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
             {/* Cancel */}
             <button
               onPointerDown={() => setOpen(false)}
-              style={{ background: "none", border: "none", cursor: "pointer", color: "#4f46e5", fontSize: 14, fontWeight: 600, padding: "4px 0", whiteSpace: "nowrap", flexShrink: 0 }}
+              style={{ background: "none", border: "none", cursor: "pointer", color: "#2563eb", fontSize: 14, fontWeight: 600, padding: "4px 0", whiteSpace: "nowrap", flexShrink: 0 }}
             >
               Cancel
             </button>
@@ -510,7 +510,7 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
           <div style={{ padding: "8px 16px", background: "#f8fafc", borderBottom: "1px solid #f1f5f9", flexShrink: 0, minHeight: 34, display: "flex", alignItems: "center", gap: 8 }}>
             {searching ? (
               <>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" strokeWidth={2.5} style={{ animation: "spin 0.7s linear infinite", flexShrink: 0 }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth={2.5} style={{ animation: "spin 0.7s linear infinite", flexShrink: 0 }}>
                   <path strokeLinecap="round" d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
                 </svg>
                 <span style={{ fontSize: 11, color: "#64748b" }}>Searching Companies House…</span>
@@ -558,7 +558,7 @@ export function CompanySearch({ onCompanySelect, initialDetails }: Props) {
       {/* Loading details */}
       {loadingDetails && (
         <div style={{ marginTop: 10, padding: "12px 16px", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 10, display: "flex", alignItems: "center", gap: 10 }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" strokeWidth={2.5} style={{ animation: "spin 0.7s linear infinite", flexShrink: 0 }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth={2.5} style={{ animation: "spin 0.7s linear infinite", flexShrink: 0 }}>
             <path strokeLinecap="round" d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
           </svg>
           <span style={{ fontSize: 12, color: "#64748b" }}>Fetching official company record, directors & charges…</span>

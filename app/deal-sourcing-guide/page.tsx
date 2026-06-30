@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -26,8 +26,9 @@ function ArbitrageCalc() {
   const bankLoan = Math.round(totalCost * 0.60);
   const vendorFinance = Math.round(totalCost * 0.20);
   const investorEquity = totalCost - bankLoan - vendorFinance;
-  const annualDebt = bankLoan * (0.12 / (1 - Math.pow(1.06, -5)));
-  const vendorAnnual = vendorFinance * (0.06 / (1 - Math.pow(1 + 0.06, -3)));
+  const mr = 0.12 / 12; const nm = 60;
+  const annualDebt = bankLoan * (mr * Math.pow(1 + mr, nm)) / (Math.pow(1 + mr, nm) - 1) * 12;
+  const vendorAnnual = vendorFinance / 3;
   const totalDebt = annualDebt + vendorAnnual;
   const dscr = totalDebt > 0 ? sde / totalDebt : 99;
   const dscrOk = dscr >= 1.25;
@@ -81,8 +82,8 @@ function ArbitrageCalc() {
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {[
               { label: "Asking Price", val: `£${(askingPrice / 1000).toFixed(0)}k`, color: "#0f172a" },
-              { label: "Bank Debt (60%)", val: `£${(bankLoan / 1000).toFixed(0)}k`, color: "#4f46e5" },
-              { label: "Vendor Finance (20%)", val: `£${(vendorFinance / 1000).toFixed(0)}k`, color: "#7c3aed" },
+              { label: "Bank Debt (60%)", val: `£${(bankLoan / 1000).toFixed(0)}k`, color: "#2563eb" },
+              { label: "Vendor Finance (20%)", val: `£${(vendorFinance / 1000).toFixed(0)}k`, color: "#1e3a8a" },
               { label: "Investor Equity (20%)", val: `£${(investorEquity / 1000).toFixed(0)}k`, color: "#059669" },
               { label: "DSCR", val: `${dscr > 50 ? "∞" : dscr.toFixed(2)}×`, color: dscrOk ? "#059669" : "#dc2626" },
             ].map(r => (
@@ -98,9 +99,9 @@ function ArbitrageCalc() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
               {[
                 { label: "Day 1 Fee", val: `£${sourcingFee.toLocaleString()}`, color: "#d97706" },
-                { label: "Your Equity Stake", val: `£${(equityValue / 1000).toFixed(0)}k`, color: "#7c3aed" },
+                { label: "Your Equity Stake", val: `£${(equityValue / 1000).toFixed(0)}k`, color: "#1e3a8a" },
                 { label: "Your Capital In", val: "£0", color: "#059669" },
-                { label: "Est. 5yr IRR", val: irr > 0 ? `${(irr * 100).toFixed(0)}%` : "—", color: "#4f46e5" },
+                { label: "Est. 5yr IRR", val: irr > 0 ? `${(irr * 100).toFixed(0)}%` : "—", color: "#2563eb" },
               ].map(m => (
                 <div key={m.label} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 10, padding: "10px 12px", textAlign: "center" }}>
                   <p style={{ fontSize: 9, color: "#94a3b8", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "0.09em" }}>{m.label}</p>
@@ -112,7 +113,7 @@ function ArbitrageCalc() {
 
           <Link href="/dashboard/triage" style={{ textDecoration: "none", display: "block", marginTop: 16 }}>
             <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-              style={{ width: "100%", padding: "11px", borderRadius: 10, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", fontSize: 13, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
+              style={{ width: "100%", padding: "11px", borderRadius: 10, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#2563eb,#1e3a8a)", color: "#fff", fontSize: 13, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
               Audit a real deal with this structure <ArrowRight size={13} />
             </motion.button>
           </Link>
@@ -143,7 +144,7 @@ function Callout({ icon, title, body, color, bg, border }: {
 function SectionHead({ step, title, sub }: { step: string; title: string; sub: string }) {
   return (
     <div style={{ marginBottom: 32 }}>
-      <span style={{ fontSize: 11, fontWeight: 800, color: "#4f46e5", letterSpacing: "0.12em", textTransform: "uppercase" }}>{step}</span>
+      <span style={{ fontSize: 11, fontWeight: 800, color: "#2563eb", letterSpacing: "0.12em", textTransform: "uppercase" }}>{step}</span>
       <h2 style={{ fontSize: "clamp(24px, 3.5vw, 38px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#0f172a", margin: "8px 0 12px", lineHeight: 1.15 }}>{title}</h2>
       <p style={{ fontSize: 15, color: "#64748b", lineHeight: 1.7, margin: 0, maxWidth: 600 }}>{sub}</p>
     </div>
@@ -177,7 +178,7 @@ export default function DealSourcingGuidePage() {
 
   const STEPS = [
     {
-      n: "01", icon: <Target size={22} />, accent: "#4f46e5",
+      n: "01", icon: <Target size={22} />, accent: "#2563eb",
       title: "Source: Find the Right Retirement Sale",
       sub: "The best deals are boring, profitable, and owner-dependent. You're looking for a retiring founder who has built a stable cash machine — not a growth story.",
       content: (
@@ -194,7 +195,7 @@ export default function DealSourcingGuidePage() {
               { title: "Green flag signals", items: ["Recurring B2B client base", "Owner wants full exit (not partial)", "10+ year trading history", "Business runs without the owner daily", "Lease secured (5+ years remaining)", "Accounts show consistent SDE growth"] },
             ].map(c => (
               <div key={c.title} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 12, padding: "16px 18px" }}>
-                <p style={{ fontSize: 11, fontWeight: 700, color: "#4f46e5", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 12px" }}>{c.title}</p>
+                <p style={{ fontSize: 11, fontWeight: 700, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 12px" }}>{c.title}</p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   {c.items.map(i => (
                     <div key={i} style={{ display: "flex", gap: 8, alignItems: "center" }}>
@@ -210,7 +211,7 @@ export default function DealSourcingGuidePage() {
       ),
     },
     {
-      n: "02", icon: <BarChart3 size={22} />, accent: "#7c3aed",
+      n: "02", icon: <BarChart3 size={22} />, accent: "#1e3a8a",
       title: "Structure: Map the Capital Stack",
       sub: "The deal structure is the core of the arbitrage. You're building a debt-heavy, low-equity acquisition that the business's own cash flow repays — with your capital in at zero.",
       content: (
@@ -241,7 +242,7 @@ export default function DealSourcingGuidePage() {
             </div>
             <div style={{ marginTop: 20, padding: "14px 16px", borderRadius: 10, background: "rgba(74,222,128,0.1)", border: "1px solid rgba(74,222,128,0.25)" }}>
               <p style={{ fontSize: 12, color: "#4ade80", margin: 0, fontWeight: 600 }}>
-                ✓  At £200k SDE: Annual bank debt service ≈ £99k + vendor ≈ £44k = £143k total. DSCR = 200k ÷ 143k = <strong>1.40×</strong> — comfortably above the 1.25× lender minimum.
+                ✓  At £200k SDE: Annual bank debt service ≈ £99k (12% APR, 5yr) + vendor ≈ £40k (3yr linear) = £139k total. DSCR = 200k ÷ 139k = <strong>1.44×</strong> — comfortably above the 1.25× lender minimum.
               </p>
             </div>
           </div>
@@ -277,7 +278,7 @@ export default function DealSourcingGuidePage() {
               </div>
             ))}
           </div>
-          <Callout icon={<Zap size={15} />} title="Why the Credit Memo is your unfair advantage" color="#4f46e5" bg="#eef2ff" border="#c7d2fe"
+          <Callout icon={<Zap size={15} />} title="Why the Credit Memo is your unfair advantage" color="#2563eb" bg="#eff6ff" border="#bfdbfe"
             body="Most first-time UK buyers approach lenders with a spreadsheet and a hope. You'll arrive with a professionally structured 3-page document that mirrors the format lenders see from PE firms. This alone positions you as a serious buyer and accelerates the approval process by weeks." />
           <div style={{ textAlign: "center" }}>
             <Link href="/dashboard/triage" style={{ textDecoration: "none" }}>
@@ -360,13 +361,13 @@ export default function DealSourcingGuidePage() {
               </div>
             </div>
             <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 14, padding: "22px" }}>
-              <p style={{ fontSize: 11, fontWeight: 700, color: "#4f46e5", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 16px" }}>5-Year Hold — Ongoing</p>
+              <p style={{ fontSize: 11, fontWeight: 700, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 16px" }}>5-Year Hold — Ongoing</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 {[
                   { label: "Annual salary (as MD / operator)", val: "£60–80k", note: "Market rate management salary from business P&L" },
                   { label: "Annual levered FCF dividend", val: "Variable", note: "Residual cash after debt service — paid to you + investors" },
                   { label: "Exit: business sale at Year 5", val: "20% of exit", note: "Your equity stake at year-5 sale multiplied by exit value" },
-                  { label: "Target 5yr equity IRR", val: "35–45%", color: "#4f46e5", note: "On investors' capital (they brought the risk, not you)" },
+                  { label: "Target 5yr equity IRR", val: "35–45%", color: "#2563eb", note: "On investors' capital (they brought the risk, not you)" },
                 ].map(r => (
                   <div key={r.label} style={{ padding: "11px 14px", background: "#f8fafc", borderRadius: 10, border: "1px solid #e2e8f0" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
@@ -402,7 +403,7 @@ export default function DealSourcingGuidePage() {
           </motion.div>
           <motion.h1 variants={fadeUp} style={{ fontSize: "clamp(32px,5vw,60px)", fontWeight: 800, letterSpacing: "-0.04em", margin: "0 0 18px", lineHeight: 1.1 }}>
             How to Acquire a UK Business<br />
-            <span style={{ background: "linear-gradient(135deg,#4f46e5,#7c3aed)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>With Zero Personal Capital.</span>
+            <span style={{ background: "linear-gradient(135deg,#2563eb,#1e3a8a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>With Zero Personal Capital.</span>
           </motion.h1>
           <motion.p variants={fadeUp} style={{ fontSize: 17, color: "#64748b", maxWidth: 640, lineHeight: 1.75, marginBottom: 32 }}>
             The Deal Arbitrage framework is a 5-step system for sourcing, structuring, and completing UK SME acquisitions using bank debt, vendor finance, and raised equity — with your own cash input at precisely zero. This is not theory. This is the mechanics behind every ETA deal that closes without a personal cheque.
@@ -412,7 +413,7 @@ export default function DealSourcingGuidePage() {
               <div key={s} style={{ background: "#0f172a", color: "#f4f4f5", padding: "10px 20px", borderRadius: 9999, fontSize: 13, fontWeight: 700, letterSpacing: "0.02em", fontFamily: "monospace" }}>{s}</div>
             ))}
             <Link href="/dashboard/triage" style={{ textDecoration: "none" }}>
-              <motion.button whileHover={{ scale: 1.03 }} style={{ padding: "10px 20px", borderRadius: 9999, border: "1px solid #e2e8f0", background: "#fff", color: "#4f46e5", fontSize: 13, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 7 }}>
+              <motion.button whileHover={{ scale: 1.03 }} style={{ padding: "10px 20px", borderRadius: 9999, border: "1px solid #e2e8f0", background: "#fff", color: "#2563eb", fontSize: 13, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 7 }}>
                 Try the platform <ArrowRight size={13} />
               </motion.button>
             </Link>
@@ -422,7 +423,7 @@ export default function DealSourcingGuidePage() {
         {/* Live calculator */}
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EXPO }} style={{ marginBottom: 80 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-            <div style={{ width: 2, height: 20, background: "linear-gradient(180deg,#4f46e5,#7c3aed)", borderRadius: 2 }} />
+            <div style={{ width: 2, height: 20, background: "linear-gradient(180deg,#2563eb,#1e3a8a)", borderRadius: 2 }} />
             <p style={{ fontSize: 13, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em", margin: 0 }}>Live Arbitrage Calculator — Adjust the inputs to model your deal</p>
           </div>
           <ArbitrageCalc />
@@ -480,7 +481,7 @@ export default function DealSourcingGuidePage() {
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", position: "relative" }}>
               <Link href="/dashboard/triage" style={{ textDecoration: "none" }}>
                 <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
-                  style={{ padding: "14px 28px", borderRadius: 12, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#6366f1,#a855f7)", color: "#fff", fontSize: 15, fontWeight: 700, display: "flex", alignItems: "center", gap: 8, boxShadow: "0 0 40px rgba(99,102,241,0.4)" }}>
+                  style={{ padding: "14px 28px", borderRadius: 12, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#2563eb,#a855f7)", color: "#fff", fontSize: 15, fontWeight: 700, display: "flex", alignItems: "center", gap: 8, boxShadow: "0 0 40px rgba(99,102,241,0.4)" }}>
                   Audit a Deal — Free <ArrowRight size={16} />
                 </motion.button>
               </Link>

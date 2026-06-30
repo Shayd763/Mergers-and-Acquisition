@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useEffect } from "react";
 
 /* ─── Types ──────────────────────────────────────────────────────────────── */
@@ -154,7 +154,7 @@ export function LenderFunnelModal({
             {[1, 2, 3].map(s => (
               <div key={s} style={{
                 height: 4, flex: 1, borderRadius: 9999,
-                background: s <= step ? "#4f46e5" : "#1e293b",
+                background: s <= step ? "#2563eb" : "#1e293b",
                 transition: "background 0.3s",
               }} />
             ))}
@@ -203,8 +203,8 @@ export function LenderFunnelModal({
                     style={{
                       display: "flex", alignItems: "center", gap: 14,
                       padding: "14px 16px", borderRadius: 12, border: "none", cursor: "pointer",
-                      background: on ? "#f5f3ff" : "#f8fafc",
-                      outline: on ? "2px solid #4f46e5" : "2px solid transparent",
+                      background: on ? "#eff6ff" : "#f8fafc",
+                      outline: on ? "2px solid #2563eb" : "2px solid transparent",
                       transition: "all 0.15s", textAlign: "left", width: "100%",
                     }}>
                     <div style={{
@@ -222,16 +222,16 @@ export function LenderFunnelModal({
                         <span style={{
                           fontSize: 10, fontWeight: 600, padding: "1px 7px", borderRadius: 9999,
                           background: on ? "#ede9fe" : "#f1f5f9",
-                          color: on ? "#7c3aed" : "#94a3b8",
-                          border: `1px solid ${on ? "#ddd6fe" : "#e2e8f0"}`,
+                          color: on ? "#1e3a8a" : "#94a3b8",
+                          border: `1px solid ${on ? "#bfdbfe" : "#e2e8f0"}`,
                         }}>{badge}</span>
                       </div>
                       <p style={{ fontSize: 12, color: "#64748b", margin: 0, lineHeight: 1.4 }}>{desc}</p>
                     </div>
                     <div style={{
                       width: 22, height: 22, borderRadius: "50%", flexShrink: 0,
-                      border: `2px solid ${on ? "#4f46e5" : "#cbd5e1"}`,
-                      background: on ? "#4f46e5" : "transparent",
+                      border: `2px solid ${on ? "#2563eb" : "#cbd5e1"}`,
+                      background: on ? "#2563eb" : "transparent",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       color: "#fff", fontSize: 12, fontWeight: 700,
                       transition: "all 0.15s",
@@ -298,14 +298,14 @@ export function LenderFunnelModal({
               </label>
 
               {/* Deal summary chip */}
-              <div style={{ background: "#eef2ff", border: "1px solid #c7d2fe", borderRadius: 10, padding: "12px 14px", display: "flex", gap: 16 }}>
+              <div style={{ background: "#eff6ff", border: "1px solid #bfdbfe", borderRadius: 10, padding: "12px 14px", display: "flex", gap: 16 }}>
                 {[
                   ["Total Deal Size", `£${(totalCost / 1000).toFixed(0)}k`],
                   ["DSCR", `${dscr.toFixed(2)}×`],
                   ["Sector", sector ?? "SME"],
                 ].map(([l, v]) => (
                   <div key={l}>
-                    <p style={{ fontSize: 10, color: "#6366f1", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>{l}</p>
+                    <p style={{ fontSize: 10, color: "#2563eb", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>{l}</p>
                     <p style={{ fontSize: 14, fontWeight: 700, color: "#1e1b4b", margin: 0 }}>{v}</p>
                   </div>
                 ))}
@@ -366,10 +366,10 @@ export function LenderFunnelModal({
             <button
               onClick={() => setStep(2)}
               style={{
-                width: "100%", background: "#4f46e5", color: "#fff",
+                width: "100%", background: "#2563eb", color: "#fff",
                 border: "none", borderRadius: 9, padding: "13px 0",
                 fontSize: 14, fontWeight: 700, cursor: "pointer",
-                boxShadow: "0 4px 14px rgba(79,70,229,0.30)",
+                boxShadow: "0 4px 14px rgba(37,99,235,0.30)",
               }}>
               Continue with {nSelected} partner{nSelected !== 1 ? "s" : ""} →
             </button>
@@ -390,11 +390,11 @@ export function LenderFunnelModal({
                 onClick={runTransmit}
                 disabled={!name.trim() || !email.includes("@") || !timeline}
                 style={{
-                  flex: 1, background: "#4f46e5", color: "#fff",
+                  flex: 1, background: "#2563eb", color: "#fff",
                   border: "none", borderRadius: 9, padding: "12px 0",
                   fontSize: 14, fontWeight: 700, cursor: (!name.trim() || !email.includes("@") || !timeline) ? "not-allowed" : "pointer",
                   opacity: (!name.trim() || !email.includes("@") || !timeline) ? 0.5 : 1,
-                  boxShadow: "0 4px 14px rgba(79,70,229,0.28)",
+                  boxShadow: "0 4px 14px rgba(37,99,235,0.28)",
                 }}>
                 Submit to Lenders 🚀
               </button>

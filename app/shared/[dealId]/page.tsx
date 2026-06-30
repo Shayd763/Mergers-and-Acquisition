@@ -24,9 +24,10 @@ function seedDeal(id: string) {
   const vendorPct = 20;
   const bankPct = 55;
   const bankLoan = Math.round(totalCost * bankPct / 100);
-  const annualDebt = bankLoan * (0.12 / (1 - Math.pow(1.06, -5)));
+  const mr = 0.12 / 12; const nm = 60;
+  const annualDebt = bankLoan * (mr * Math.pow(1 + mr, nm)) / (Math.pow(1 + mr, nm) - 1) * 12;
   const dscr = annualDebt > 0 ? sde / annualDebt : 99;
-  const irr = 0.22 + (hash % 15) / 100;
+  const irr: number | null = null; // IRR not available on shared views — full analysis requires sign-in
   const sectors = ["Engineering Consultancy", "Accounting Practice", "Day Nursery", "Manufacturing", "Logistics"];
   const cities = ["Manchester", "Birmingham", "Leeds", "Bristol", "Glasgow"];
   return {
@@ -82,7 +83,7 @@ export default function SharedDealPage({ params }: { params: Promise<{ dealId: s
       {/* Nav */}
       <nav style={{ position: "fixed", top: 16, left: "50%", transform: "translateX(-50%)", zIndex: 100, display: "flex", alignItems: "center", gap: 8, padding: "7px 14px", background: "rgba(18,18,22,0.8)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: 9999, boxShadow: "0 0 0 1px rgba(99,102,241,0.12)" }}>
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 7, textDecoration: "none" }}>
-          <div style={{ width: 22, height: 22, borderRadius: 6, background: "linear-gradient(135deg,#6366f1,#a855f7)", display: "flex", alignItems: "center", justifyContent: "center" }}><BarChart3 size={12} color="#fff" /></div>
+          <div style={{ width: 22, height: 22, borderRadius: 6, background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center" }}><BarChart3 size={12} color="#fff" /></div>
           <span style={{ fontSize: 13, fontWeight: 700, color: "#f4f4f5" }}>Triage Finance</span>
         </Link>
         <span style={{ color: "#27272a" }}>·</span>
@@ -113,7 +114,7 @@ export default function SharedDealPage({ params }: { params: Promise<{ dealId: s
             { label: "SDE", val: fmt(d.sde), sub: `Net profit + add-backs`, color: "#818cf8" },
             { label: "Valuation Multiple", val: `${d.multiple.toFixed(1)}×`, sub: "SDE multiple", color: "#c084fc" },
             { label: "DSCR", val: `${d.dscr.toFixed(2)}×`, sub: d.dscrOk ? "✓ Bankable" : "✗ Below 1.25×", color: dscrColor },
-            { label: "Equity IRR (5yr)", val: `${(d.irr * 100).toFixed(1)}%`, sub: "Target hold return", color: "#fbbf24" },
+            { label: "Equity IRR (5yr)", val: d.irr !== null ? `${(d.irr * 100).toFixed(1)}%` : "Sign in to view", sub: "Requires full triage", color: "#fbbf24" },
           ].map(m => (
             <motion.div key={m.label} variants={fadeUp}><Metric {...m} /></motion.div>
           ))}
@@ -127,7 +128,7 @@ export default function SharedDealPage({ params }: { params: Promise<{ dealId: s
               style={{ background: "rgba(18,18,22,0.85)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "26px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
                 <TrendingUp size={15} color="#818cf8" />
-                <p style={{ fontSize: 12, fontWeight: 700, color: "#6366f1", letterSpacing: "0.09em", textTransform: "uppercase", margin: 0 }}>Financial Summary</p>
+                <p style={{ fontSize: 12, fontWeight: 700, color: "#2563eb", letterSpacing: "0.09em", textTransform: "uppercase", margin: 0 }}>Financial Summary</p>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
                 {[
@@ -151,10 +152,10 @@ export default function SharedDealPage({ params }: { params: Promise<{ dealId: s
               style={{ background: "rgba(18,18,22,0.85)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "26px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
                 <Shield size={15} color="#818cf8" />
-                <p style={{ fontSize: 12, fontWeight: 700, color: "#6366f1", letterSpacing: "0.09em", textTransform: "uppercase", margin: 0 }}>Capital Structure</p>
+                <p style={{ fontSize: 12, fontWeight: 700, color: "#2563eb", letterSpacing: "0.09em", textTransform: "uppercase", margin: 0 }}>Capital Structure</p>
               </div>
               <div style={{ height: 12, borderRadius: 9999, overflow: "hidden", display: "flex", background: "#1e293b", marginBottom: 20, border: "1px solid rgba(255,255,255,0.06)" }}>
-                <div style={{ width: `${d.equityPct}%`, background: "linear-gradient(90deg,#6366f1,#818cf8)" }} />
+                <div style={{ width: `${d.equityPct}%`, background: "linear-gradient(90deg,#1e3a8a,#2563eb)" }} />
                 <div style={{ width: `${d.vendorPct}%`, background: "linear-gradient(90deg,#a855f7,#c084fc)" }} />
                 <div style={{ width: `${d.bankPct}%`, background: "linear-gradient(90deg,#f59e0b,#fbbf24)" }} />
               </div>
@@ -181,13 +182,13 @@ export default function SharedDealPage({ params }: { params: Promise<{ dealId: s
             {/* Credit memo preview */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               style={{ background: "rgba(18,18,22,0.85)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "26px" }}>
-              <p style={{ fontSize: 12, fontWeight: 700, color: "#6366f1", letterSpacing: "0.09em", textTransform: "uppercase", margin: "0 0 16px" }}>Deal Credit Memo — Summary</p>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "#2563eb", letterSpacing: "0.09em", textTransform: "uppercase", margin: "0 0 16px" }}>Deal Credit Memo — Summary</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {[
                   { icon: <CheckCircle size={13} />, color: "#4ade80", text: `SDE of ${fmt(d.sde)} verified against normalised add-backs of ${fmt(d.addBacks)}` },
                   { icon: <CheckCircle size={13} />, color: "#4ade80", text: `Capital structure: ${d.equityPct}% equity / ${d.vendorPct}% vendor / ${d.bankPct}% bank debt` },
                   { icon: d.dscrOk ? <CheckCircle size={13} /> : <AlertTriangle size={13} />, color: d.dscrOk ? "#4ade80" : "#fbbf24", text: `DSCR ${d.dscr.toFixed(2)}× — ${d.dscrOk ? "passes" : "below"} 1.25× standard lender threshold` },
-                  { icon: <CheckCircle size={13} />, color: "#4ade80", text: `5-year equity IRR projected at ${(d.irr * 100).toFixed(1)}% based on base-case SDE growth` },
+                  { icon: <Lock size={13} />, color: "#52525b", text: "5-year equity IRR available in full triage workspace — sign in to view" },
                 ].map((r, i) => (
                   <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", padding: "10px 12px", borderRadius: 10, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
                     <span style={{ color: r.color, flexShrink: 0, marginTop: 1 }}>{r.icon}</span>
@@ -207,7 +208,7 @@ export default function SharedDealPage({ params }: { params: Promise<{ dealId: s
             {/* Main CTA */}
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6, ease: EXPO }}
               style={{ background: "linear-gradient(135deg,rgba(99,102,241,0.18),rgba(168,85,247,0.12))", border: "1px solid rgba(99,102,241,0.3)", borderRadius: 20, padding: "28px 24px", textAlign: "center" }}>
-              <div style={{ width: 44, height: 44, borderRadius: 12, background: "linear-gradient(135deg,#6366f1,#a855f7)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
                 <BarChart3 size={20} color="#fff" />
               </div>
               <p style={{ fontSize: 16, fontWeight: 800, color: "#f4f4f5", letterSpacing: "-0.03em", margin: "0 0 10px", lineHeight: 1.2 }}>
@@ -218,7 +219,7 @@ export default function SharedDealPage({ params }: { params: Promise<{ dealId: s
               </p>
               <Link href="/" style={{ textDecoration: "none" }}>
                 <motion.button whileHover={{ scale: 1.03, boxShadow: "0 0 40px rgba(99,102,241,0.4)" }} whileTap={{ scale: 0.97 }}
-                  style={{ width: "100%", padding: "13px 20px", borderRadius: 12, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#6366f1,#a855f7)", color: "#fff", fontSize: 14, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, boxShadow: "0 0 30px rgba(99,102,241,0.35)" }}>
+                  style={{ width: "100%", padding: "13px 20px", borderRadius: 12, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff", fontSize: 14, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, boxShadow: "0 0 30px rgba(37,99,235,0.35)" }}>
                   Start for free <ArrowRight size={15} />
                 </motion.button>
               </Link>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
@@ -29,7 +29,7 @@ const SECTORS: Sector[] = [
     note: "of SDE",
     drivers: ["Recurring patient base", "NHS contract revenue", "CQC registration moat"],
     risks: ["Regulatory risk", "Key-person dependency", "Recruitment pressure"],
-    color: "#6366f1",
+    color: "#2563eb",
   },
   {
     id: "engineering",
@@ -51,7 +51,7 @@ const SECTORS: Sector[] = [
     note: "of SDE (SME SaaS)",
     drivers: ["Recurring subscription revenue", "High gross margins", "Scalable delivery"],
     risks: ["Churn rate", "Technical debt", "Market saturation"],
-    color: "#7c3aed",
+    color: "#1e3a8a",
   },
   {
     id: "logistics",
@@ -270,7 +270,7 @@ function SdeSlider({ value, onChange }: { value: number; onChange: (v: number) =
       <div style={{ position: "relative", height: 28, display: "flex", alignItems: "center" }}>
         <div style={{
           position: "absolute", left: 0, right: 0, height: 8, borderRadius: 9999,
-          background: `linear-gradient(90deg, #6366f1 ${pct}%, #1e293b ${pct}%)`,
+          background: `linear-gradient(90deg, #2563eb ${pct}%, #1e293b ${pct}%)`,
           pointerEvents: "none",
         }} />
         <input
@@ -318,7 +318,7 @@ function SearchBar({ value, onChange }: { value: string; onChange: (v: string) =
           outline: "none",
           boxSizing: "border-box",
         }}
-        onFocus={e => (e.currentTarget.style.borderColor = "#6366f1")}
+        onFocus={e => (e.currentTarget.style.borderColor = "#2563eb")}
         onBlur={e => (e.currentTarget.style.borderColor = "#1e293b")}
       />
     </div>
@@ -428,7 +428,7 @@ export default function GuidePage() {
             Industry Valuation Guide
           </h1>
           <p style={{ fontSize: 15, color: "#64748b", lineHeight: 1.7, margin: 0 }}>
-            Benchmark <GlossaryTerm term="SDE">SDE</GlossaryTerm> multiples for UK SME acquisitions, sourced from live deal data and broker consensus ranges. Drag the slider to calculate <GlossaryTerm term="EV">enterprise value</GlossaryTerm> ranges across all sectors in real time.
+            Benchmark <GlossaryTerm term="SDE">SDE</GlossaryTerm> multiples for UK SME acquisitions, based on broker consensus ranges, BVR, IBBA and Daltons published data (2022–2025). Drag the slider to calculate <GlossaryTerm term="EV">enterprise value</GlossaryTerm> ranges across all sectors in real time.
           </p>
         </div>
 
@@ -524,8 +524,8 @@ export default function GuidePage() {
             METHODOLOGY & DISCLAIMER
           </div>
           <p style={{ fontSize: 12, color: "#475569", lineHeight: 1.7, margin: 0 }}>
-            Multiples represent the mid-market consensus range for profitable UK SMEs (SDE £100k – £2m) transacted via business brokers and corporate finance advisers (2022–2024). Healthcare/Dental premiums reflect NHS income multiples. Professional Services multiples are expressed as a factor of annual recurring fees rather than SDE. SaaS figures apply to SME MRR-based businesses, not VC-backed growth companies. Enterprise Value = Asking Price (debt-free, cash-free basis). All figures are indicative benchmarks only and do not constitute financial advice.{" "}
-            <Link href="/dashboard/triage" style={{ color: "#6366f1", textDecoration: "none" }}>
+            Multiples represent the mid-market consensus range for profitable UK SMEs (SDE £100k – £2m) transacted via business brokers and corporate finance advisers (2022–2025). Sources include BVR Market Pulse, IBBA Market Pulse, Daltons Business, and Plimsoll published benchmarks. Healthcare/Dental premiums reflect NHS income multiples. Professional Services multiples are expressed as a factor of annual recurring fees rather than SDE. SaaS figures apply to SME MRR-based businesses, not VC-backed growth companies. Enterprise Value = Asking Price (debt-free, cash-free basis). All figures are indicative benchmarks only and do not constitute financial advice.{" "}
+            <Link href="/dashboard/triage" style={{ color: "#2563eb", textDecoration: "none" }}>
               Use the Triage Workspace
             </Link>{" "}
             for a personalised deal analysis.

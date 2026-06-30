@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { GlossaryTerm } from "@/app/components/GlossaryTerm";
@@ -46,7 +46,7 @@ interface DealMetrics {
   corp_tax_charge: number;
   levered_fcf: number;
   dscr: number;
-  dscr_band: "strong" | "tight" | "unbankable";
+  dscr_band: "strong" | "acceptable" | "marginal" | "unbankable";
   dscr_warning: boolean;
   equity_irr: number;
   coc_roi: number;
@@ -96,10 +96,10 @@ function buildScript(d: ExtractedDeal): TerminalLine[] {
   return [
     { tag: "SCANNING",   text: "Reading listing structure…",                                                   color: "#94a3b8" },
     { tag: "ANALYSING",  text: "Extracting core financials…",                                                  color: "#a5b4fc" },
-    { tag: "EXTRACTED",  text: `Turnover: ${fmt(d.turnover)}  |  Net Profit: ${fmt(d.net_profit)}`,           color: "#c7d2fe" },
+    { tag: "EXTRACTED",  text: `Turnover: ${fmt(d.turnover)}  |  Net Profit: ${fmt(d.net_profit)}`,           color: "#bfdbfe" },
     { tag: "PARSING",    text: "Normalising owner adjustments & lease data…",                                  color: "#94a3b8" },
     { tag: "CALCUL.",    text: "Projecting 5-yr SDE amortisation models…",                                     color: "#a5b4fc" },
-    { tag: "VERIFIED",   text: `Normalized Adj: ${fmt(d.add_backs)}  |  Confidence: ${d.raw_confidence.toUpperCase()}`, color: "#c7d2fe" },
+    { tag: "VERIFIED",   text: `Normalized Adj: ${fmt(d.add_backs)}  |  Confidence: ${d.raw_confidence.toUpperCase()}`, color: "#bfdbfe" },
     { tag: "SUCCESS",    text: "Triage workspace populated.",                                                  color: "#34d399" },
   ];
 }
@@ -110,23 +110,25 @@ function buildFileScript(filename: string): TerminalLine[] {
     { tag: "IDENTIFYING",text: "Scanning financial tables and key metrics…",   color: "#a5b4fc" },
     { tag: "EXTRACTING", text: "Processing income statements…",                color: "#94a3b8" },
     { tag: "NORMALISING",text: "Calibrating owner adjustment figures…",        color: "#a5b4fc" },
-    { tag: "EXTRACTED",  text: "Successfully pulled financial historicals.",   color: "#c7d2fe" },
+    { tag: "EXTRACTED",  text: "Successfully pulled financial historicals.",   color: "#bfdbfe" },
     { tag: "SUCCESS",    text: "Triage workspace populated from document.",    color: "#34d399" },
   ];
 }
 
 /* ─── Deal viability score ───────────────────────────────────────────────── */
 
-function viabilityScore(dscr: number, fcf: number): "strong" | "marginal" | "unbankable" {
-  if (dscr > 1.50 && fcf > 0) return "strong";
-  if (dscr >= 1.25)            return "marginal";
+function viabilityScore(dscr: number): "strong" | "acceptable" | "marginal" | "unbankable" {
+  if (dscr >= 1.50) return "strong";
+  if (dscr >= 1.25) return "acceptable";
+  if (dscr >= 1.10) return "marginal";
   return "unbankable";
 }
 
 const VIABILITY = {
-  strong:     { label: "STRONG",     color: "#059669", bg: "#ecfdf5", border: "#a7f3d0", dot: "#22c55e", text: "Highly attractive to commercial lenders." },
-  marginal:   { label: "MARGINAL",   color: "#d97706", bg: "#fffbeb", border: "#fde68a", dot: "#f59e0b", text: "Lenders will require stronger personal guarantees or higher buyer equity." },
-  unbankable: { label: "UNBANKABLE", color: "#dc2626", bg: "#fef2f2", border: "#fecaca", dot: "#ef4444", text: "High risk. Try increasing vendor finance or buyer equity to improve DSCR." },
+  strong:     { label: "STRONG",     color: "#059669", bg: "#ecfdf5", border: "#a7f3d0", dot: "#22c55e", text: "Excellent. High-street banks (HSBC, Barclays, Lloyds) will actively compete for this deal." },
+  acceptable: { label: "ACCEPTABLE", color: "#0891b2", bg: "#ecfeff", border: "#a5f3fc", dot: "#06b6d4", text: "Bankable. Meets standard 1.25× lender minimum. Specialist SME lenders will fund this." },
+  marginal:   { label: "MARGINAL",   color: "#d97706", bg: "#fffbeb", border: "#fde68a", dot: "#f59e0b", text: "Below mainstream lender appetite. Higher equity or vendor finance required." },
+  unbankable: { label: "UNBANKABLE", color: "#dc2626", bg: "#fef2f2", border: "#fecaca", dot: "#ef4444", text: "High risk. Try increasing vendor finance or buyer equity to improve DSCR above 1.25×." },
 };
 
 /* ─── Editable title ─────────────────────────────────────────────────────── */
@@ -180,7 +182,7 @@ function EditableTitle({ value, onChange }: { value: string; onChange: (v: strin
         style={{
           display: editing ? "block" : "none",
           fontSize: 20, fontWeight: 800, color: "#0f172a",
-          background: "#f1f5f9", border: "1.5px solid #4f46e5",
+          background: "#f1f5f9", border: "1.5px solid #2563eb",
           borderRadius: 6, padding: "4px 10px", outline: "none",
           fontFamily: "inherit", letterSpacing: "-0.02em",
           width: "100%", maxWidth: 420, minWidth: 160,
@@ -609,7 +611,7 @@ function SectorBenchmarksCard({
   const priceDeltaSign = priceDelta !== null ? (priceDelta > 0 ? "+" : "") : "";
 
   return (
-    <div className="card" style={{ padding: 20, marginBottom: 16, borderLeft: "3px solid #4f46e5" }}>
+    <div className="card" style={{ padding: 20, marginBottom: 16, borderLeft: "3px solid #2563eb" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 }}>
         <div>
           <h2 style={{ fontSize: 14, fontWeight: 700, color: "var(--text)", margin: "0 0 2px" }}>
@@ -631,7 +633,7 @@ function SectorBenchmarksCard({
         {/* EV multiple */}
         <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 12px" }}>
           <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", letterSpacing: "0.09em", marginBottom: 5 }}>EV / SDE MULTIPLE</div>
-          <div style={{ fontSize: 16, fontWeight: 800, color: "#4f46e5" }}>
+          <div style={{ fontSize: 16, fontWeight: 800, color: "#2563eb" }}>
             {val.adjusted_multiple_low.toFixed(1)}×–{val.adjusted_multiple_high.toFixed(1)}×
           </div>
           <div style={{ fontSize: 10, color: "var(--muted)", marginTop: 2 }}>
@@ -700,7 +702,7 @@ function SectorBenchmarksCard({
         </p>
         <button
           onClick={onViewCreditLimit}
-          style={{ fontSize: 10, fontWeight: 600, color: "#4f46e5", background: "none", border: "none", cursor: "pointer", padding: 0, whiteSpace: "nowrap", textDecoration: "underline" }}
+          style={{ fontSize: 10, fontWeight: 600, color: "#2563eb", background: "none", border: "none", cursor: "pointer", padding: 0, whiteSpace: "nowrap", textDecoration: "underline" }}
         >
           View credit limit calc →
         </button>
@@ -747,7 +749,7 @@ function EstimatedValuationCard({
     askingVsAvg < 0.85  ? { label: "Below Market",  color: "#059669", bg: "#ecfdf5", border: "#a7f3d0" } :
     askingVsAvg < 1.10  ? { label: "Fair Value",    color: "#d97706", bg: "#fffbeb", border: "#fde68a" } :
     askingVsAvg < 1.30  ? { label: "Above Market",  color: "#dc2626", bg: "#fef2f2", border: "#fecaca" } :
-                          { label: "Overpriced",    color: "#7c3aed", bg: "#f5f3ff", border: "#ddd6fe" };
+                          { label: "Overpriced",    color: "#1e3a8a", bg: "#eff6ff", border: "#bfdbfe" };
 
   // Bar scale: max of highVal across sources for relative width
   const maxVal = Math.max(...rows.map(r => r.highVal), askingPrice || 0);
@@ -784,19 +786,19 @@ function EstimatedValuationCard({
 
       {/* Market consensus banner */}
       <div style={{
-        background: "linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%)",
-        border: "1px solid #c7d2fe", borderRadius: 10, padding: "14px 18px",
+        background: "linear-gradient(135deg, #eff6ff 0%, #eff6ff 100%)",
+        border: "1px solid #bfdbfe", borderRadius: 10, padding: "14px 18px",
         display: "flex", justifyContent: "space-between", alignItems: "center",
         marginBottom: 18, flexWrap: "wrap", gap: 12,
       }}>
         <div>
-          <p style={{ fontSize: 10, fontWeight: 700, color: "#6366f1", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 4px" }}>
+          <p style={{ fontSize: 10, fontWeight: 700, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.09em", margin: "0 0 4px" }}>
             Market Consensus Estimate
           </p>
           <p style={{ fontSize: 22, fontWeight: 800, color: "#1e1b4b", margin: 0, letterSpacing: "-0.03em" }}>
             {fmtV(avgLow)} – {fmtV(avgHigh)}
           </p>
-          <p style={{ fontSize: 12, color: "#6366f1", margin: "2px 0 0" }}>
+          <p style={{ fontSize: 12, color: "#2563eb", margin: "2px 0 0" }}>
             Mid-point: <strong>{fmtV(avgMid)}</strong> · avg {avgMultiple}× SDE
           </p>
         </div>
@@ -825,7 +827,7 @@ function EstimatedValuationCard({
               <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
                 <span style={{
                   fontSize: 9, fontWeight: 800, letterSpacing: "0.08em",
-                  color: "#6366f1", background: "#eef2ff", border: "1px solid #c7d2fe",
+                  color: "#2563eb", background: "#eff6ff", border: "1px solid #bfdbfe",
                   borderRadius: 4, padding: "1px 5px",
                 }}>
                   {r.abbrev}
@@ -835,7 +837,7 @@ function EstimatedValuationCard({
                 </span>
               </div>
               <span style={{ fontSize: 12, fontWeight: 700, color: "var(--text)", fontVariantNumeric: "tabular-nums" }}>
-                {r.band.low}–{r.band.high}× · <span style={{ color: "#6366f1" }}>{fmtV(r.midVal)}</span>
+                {r.band.low}–{r.band.high}× · <span style={{ color: "#2563eb" }}>{fmtV(r.midVal)}</span>
               </span>
             </div>
             {/* Range bar */}
@@ -846,14 +848,14 @@ function EstimatedValuationCard({
                 left: bar(r.lowVal),
                 width: `${Math.max(4, Math.round(((r.highVal - r.lowVal) / maxVal) * 100))}%`,
                 top: 0, bottom: 0,
-                background: "#c7d2fe", borderRadius: 9999,
+                background: "#bfdbfe", borderRadius: 9999,
               }} />
               {/* Mid dot */}
               <div style={{
                 position: "absolute",
                 left: `calc(${bar(r.midVal)} - 3px)`,
                 top: 0, bottom: 0, width: 6,
-                background: "#6366f1", borderRadius: 9999,
+                background: "#2563eb", borderRadius: 9999,
               }} />
               {/* Asking price marker */}
               {askingPrice > 0 && (
@@ -872,8 +874,8 @@ function EstimatedValuationCard({
       {/* Legend */}
       <div style={{ display: "flex", gap: 14, marginTop: 14, flexWrap: "wrap" }}>
         {[
-          { color: "#c7d2fe", label: "Valuation range" },
-          { color: "#6366f1", label: "Mid estimate" },
+          { color: "#bfdbfe", label: "Valuation range" },
+          { color: "#2563eb", label: "Mid estimate" },
           ...(askingPrice > 0 ? [{ color: "#f59e0b", label: "Asking price" }] : []),
         ].map(({ color, label }) => (
           <div key={label} style={{ display: "flex", alignItems: "center", gap: 5 }}>
@@ -896,9 +898,9 @@ function EstimatedValuationCard({
 function DealViabilityCard({
   dscr, fcf, onOpenFunnel,
 }: { dscr: number; fcf: number; onOpenFunnel: () => void }) {
-  const score = viabilityScore(dscr, fcf);
+  const score = viabilityScore(dscr);
   const v = VIABILITY[score];
-  const bars = score === "strong" ? 10 : score === "marginal" ? 6 : 3;
+  const bars = score === "strong" ? 10 : score === "acceptable" ? 7 : score === "marginal" ? 4 : 2;
 
   return (
     <div style={{
@@ -1014,9 +1016,9 @@ function DropZone({ onFile, disabled }: { onFile: (f: File) => void; disabled: b
         onDrop={e => { e.preventDefault(); setDragging(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }}
         onClick={() => !disabled && inputRef.current?.click()}
         style={{
-          border: `2px dashed ${dragging ? "#4f46e5" : error ? "#dc2626" : "#cbd5e1"}`,
+          border: `2px dashed ${dragging ? "#2563eb" : error ? "#dc2626" : "#cbd5e1"}`,
           borderRadius: 12, padding: "36px 24px",
-          background: dragging ? "#eef2ff" : "#fafafa",
+          background: dragging ? "#eff6ff" : "#fafafa",
           textAlign: "center", cursor: disabled ? "not-allowed" : "pointer",
           transition: "border-color 0.15s, background 0.15s",
           opacity: disabled ? 0.5 : 1,
@@ -1024,7 +1026,7 @@ function DropZone({ onFile, disabled }: { onFile: (f: File) => void; disabled: b
         <div style={{ fontSize: 32, marginBottom: 10 }}>
           {dragging ? "📂" : "📄"}
         </div>
-        <p style={{ fontSize: 14, fontWeight: 600, color: dragging ? "#4f46e5" : "#334155", margin: "0 0 6px" }}>
+        <p style={{ fontSize: 14, fontWeight: 600, color: dragging ? "#2563eb" : "#334155", margin: "0 0 6px" }}>
           {dragging ? "Release to upload" : "Drop your IM here"}
         </p>
         <p style={{ fontSize: 12, color: "#94a3b8", margin: "0 0 14px" }}>
@@ -1123,6 +1125,7 @@ export default function TriagePage() {
   const [loanTermYears, setLoanTermYears] = useState(5);
   const bankApr = (BOE_BASE_RATE + boeSpread) / 100;      // e.g. 0.12
   const [metrics, setMetrics]         = useState<DealMetrics | null>(null);
+  const [metricsError, setMetricsError] = useState<string>("");
   const metricsTimer                  = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [termLines, setTermLines]     = useState<TerminalLine[]>([]);
   const [termActive, setTermActive]   = useState(false);
@@ -1251,6 +1254,8 @@ export default function TriagePage() {
 
   /* ── File upload (Wizard of Oz simulation) ── */
   const runFileUpload = (file: File) => {
+    // DEMO MODE: Document parsing is not yet live. Shows sample data so users can
+    // experience the full workflow. A banner is displayed to make this clear.
     setLoading(true); setError(null);
     setShowTerm(true); setTermLines([]); setTermActive(true);
 
@@ -1263,12 +1268,12 @@ export default function TriagePage() {
       if (idx >= script.length - 1) {
         clearInterval(roll);
         setTermActive(false);
-        // Populate with simulated extracted data
         setExtracted(SAMPLE_EXTRACTED);
         setAskingPrice(SAMPLE_EXTRACTED.asking_price ?? 0);
         setNetProfit(SAMPLE_EXTRACTED.net_profit ?? 0);
         setAddBacks(SAMPLE_EXTRACTED.add_backs ?? 0);
         setLoading(false);
+        setError("DEMO: Document parsing is coming soon. The workspace has been populated with a sample deal so you can explore the full workflow.");
       }
     }, 700);
   };
@@ -1276,6 +1281,7 @@ export default function TriagePage() {
   /* ── Metrics debounce ── */
   const fetchMetrics = useCallback(async () => {
     if (!askingPrice || !netProfit) return;
+    setMetricsError("");
     try {
       const res = await fetch(`${API}/api/metrics`, {
         method: "POST",
@@ -1289,25 +1295,30 @@ export default function TriagePage() {
       if (res.ok) {
         const m = await res.json();
         setMetrics(m);
+        setMetricsError("");
+        const currentStatus = activeDeal?.status;
         updateDeal(activeDealId, {
-          status: "Analysed",
+          // Only promote status to Analysed — never downgrade Pursuing/Saved/Rejected
+          ...((!currentStatus || currentStatus === "In Review" || currentStatus === "Demo") ? { status: "Analysed" as const } : {}),
           date: new Date().toISOString().split("T")[0],
           isDemo: false,
           ...(extracted?.location      ? { location: extracted.location }           : {}),
           ...(extracted?.business_type ? { sector: extracted.business_type }        : {}),
         });
+      } else {
+        setMetricsError("Analysis failed — please try again.");
       }
-    } catch { /* ignore */ }
+    } catch { setMetricsError("Analysis failed — please try again."); }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [askingPrice, netProfit, addBacks, equityPct, vendorPct, bankPct, bankApr, loanTermYears, extracted, activeDealId, updateDeal]);
 
   useEffect(() => {
     if (metricsTimer.current) clearTimeout(metricsTimer.current);
-    metricsTimer.current = setTimeout(fetchMetrics, 200);
+    metricsTimer.current = setTimeout(fetchMetrics, 600);
     return () => { if (metricsTimer.current) clearTimeout(metricsTimer.current); };
   }, [fetchMetrics]);
 
-  /* ── Re-run reconciliation when extracted data or manual financials change ── */
+  /* ── Re-run reconciliation + credit when financials change after company select ── */
   useEffect(() => {
     if (!companyDetails) return;
     const im = extracted ?? {
@@ -1321,6 +1332,9 @@ export default function TriagePage() {
       raw_confidence: "low" as const,
     };
     runReconcile(companyDetails, im);
+    // Also refresh credit profile so it reflects current financials
+    const sde = (netProfit || 0) + (addBacks || 0);
+    runCredit(companyDetails, { net_profit: netProfit || null, add_backs: addBacks || null, sde: sde > 0 ? sde : null });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [extracted, askingPrice, netProfit, addBacks]);
 
@@ -1362,7 +1376,7 @@ export default function TriagePage() {
         setCreditProfile(profile);
         updateDeal(activeDealId, { creditProfile: profile });
       }
-    } catch { /* ignore */ } finally { setCreditLoading(false); }
+    } catch { /* credit profile is supplemental — failure is non-blocking */ } finally { setCreditLoading(false); }
   };
 
   /* ── Reconciliation ── */
@@ -1383,7 +1397,7 @@ export default function TriagePage() {
         setReconciliation(rec);
         updateDeal(activeDealId, { reconciliation: rec });
       }
-    } catch { /* ignore */ } finally { setReconciling(false); }
+    } catch { /* reconciliation is supplemental — failure is non-blocking */ } finally { setReconciling(false); }
   };
 
   /* ── Email-gated company select ── */
@@ -1423,22 +1437,28 @@ export default function TriagePage() {
   };
 
   /* ── Slider locking ── */
-  const setEquity = (v: number) => { const r = 100-v, ratio = vendorPct+bankPct > 0 ? vendorPct/(vendorPct+bankPct) : 0.5, nv=Math.round(r*ratio); setEquityPct(v); setVendorPct(nv); setBankPct(r-nv); };
-  const setVendor = (v: number) => { const r = 100-v, ratio = equityPct+bankPct > 0 ? equityPct/(equityPct+bankPct) : 0.5, ne=Math.round(r*ratio); setVendorPct(v); setEquityPct(ne); setBankPct(r-ne); };
-  const setBank   = (v: number) => { const r = 100-v, ratio = equityPct+vendorPct > 0 ? equityPct/(equityPct+vendorPct) : 0.5, ne=Math.round(r*ratio); setBankPct(v); setEquityPct(ne); setVendorPct(r-ne); };
+  // Sliders: always ensure the three values sum exactly to 100 (no rounding drift)
+  const setEquity = (v: number) => { const r = 100-v; const nv = vendorPct+bankPct > 0 ? Math.round(r * vendorPct/(vendorPct+bankPct)) : Math.round(r/2); setEquityPct(v); setVendorPct(nv); setBankPct(r-nv); };
+  const setVendor = (v: number) => { const r = 100-v; const ne = equityPct+bankPct > 0 ? Math.round(r * equityPct/(equityPct+bankPct)) : Math.round(r/2); setVendorPct(v); setEquityPct(ne); setBankPct(r-ne); };
+  const setBank   = (v: number) => { const r = 100-v; const ne = equityPct+vendorPct > 0 ? Math.round(r * equityPct/(equityPct+vendorPct)) : Math.round(r/2); setBankPct(v); setEquityPct(ne); setVendorPct(r-ne); };
 
   const hasFinancials = askingPrice > 0 && netProfit > 0 && !activeDeal?.isDemo;
 
   const dscrVariant = metrics
-    ? metrics.dscr_band === "strong" ? "success" : metrics.dscr_band === "tight" ? "amber" : "danger"
+    ? metrics.dscr_band === "strong" ? "success"
+    : metrics.dscr_band === "acceptable" ? "amber"
+    : metrics.dscr_band === "marginal" ? "amber"
+    : "danger"
     : "default";
   const dscrBandLabel = metrics
-    ? metrics.dscr_band === "strong" ? "Strong — passes lender threshold"
-    : metrics.dscr_band === "tight"  ? "Tight — borderline bankable"
-    : "Unbankable — below 1.25×"
+    ? metrics.dscr_band === "strong"     ? "Strong — exceeds 1.50× lender threshold"
+    : metrics.dscr_band === "acceptable" ? "Acceptable — meets 1.25× minimum"
+    : metrics.dscr_band === "marginal"   ? "Marginal — below 1.25×, may need more equity"
+    : "Unbankable — below 1.10×"
     : "";
 
-  const creditMemoUnlocked = hasFinancials && !!metrics && metrics.dscr >= 1.25 && metrics.levered_fcf > 0;
+  // Credit memo available for any analysed deal — removed FCF gate (FCF can be negative due to tax model)
+  const creditMemoUnlocked = hasFinancials && !!metrics && metrics.dscr >= 1.0;
 
   /* ── Workflow navigation ── */
   // currentStep controls which view is shown. Data is NEVER cleared when navigating.
@@ -1447,8 +1467,8 @@ export default function TriagePage() {
 
   const step1Reached = true;
   const step2Reached = hasFinancials;
-  const step3Reached = hasFinancials; // analysis available once financials exist
-  const step4Reached = !!metrics; // unlocks once analysis has run
+  const step3Reached = hasFinancials && !!metrics; // require at least one metrics result
+  const step4Reached = !!metrics;
 
   // Derived "done" flags for the progress bar indicators
   const step1Done = !!companyDetails;
@@ -1483,10 +1503,10 @@ export default function TriagePage() {
         width: 28, height: 28, borderRadius: "50%", flexShrink: 0,
         display: "flex", alignItems: "center", justifyContent: "center",
         fontSize: 11, fontWeight: 800,
-        background: done ? "#059669" : active ? "#4f46e5" : reached ? "#e0e7ff" : "#f1f5f9",
-        color: done ? "#fff" : active ? "#fff" : reached ? "#4f46e5" : "#cbd5e1",
+        background: done ? "#059669" : active ? "#2563eb" : reached ? "#e0e7ff" : "#f1f5f9",
+        color: done ? "#fff" : active ? "#fff" : reached ? "#2563eb" : "#cbd5e1",
         transition: "all 0.25s",
-        boxShadow: active ? "0 0 0 4px rgba(79,70,229,0.15)" : "none",
+        boxShadow: active ? "0 0 0 4px rgba(37,99,235,0.15)" : "none",
       }}>
         {done ? (
           <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1496,7 +1516,7 @@ export default function TriagePage() {
       </div>
       <span className="step-label" style={{
         fontSize: 12, fontWeight: active ? 700 : 500,
-        color: done ? "#059669" : active ? "#4f46e5" : reached ? "#475569" : "#cbd5e1",
+        color: done ? "#059669" : active ? "#2563eb" : reached ? "#475569" : "#cbd5e1",
         whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
         transition: "color 0.25s",
       }}>
@@ -1508,7 +1528,7 @@ export default function TriagePage() {
   /* ── Shared step header ── */
   const StepHeader = ({ n, label, sub }: { n: number; label: string; sub: string }) => (
     <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20, paddingBottom: 16, borderBottom: "1px solid var(--border)" }}>
-      <div style={{ width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 800, color: "#fff", flexShrink: 0, boxShadow: "0 4px 12px rgba(79,70,229,0.3)" }}>{n}</div>
+      <div style={{ width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 800, color: "#fff", flexShrink: 0, boxShadow: "0 4px 12px rgba(37,99,235,0.3)" }}>{n}</div>
       <div>
         <h2 style={{ fontSize: 17, fontWeight: 800, color: "var(--text)", margin: 0, letterSpacing: "-0.02em" }}>{label}</h2>
         <p style={{ fontSize: 12, color: "var(--muted)", margin: 0 }}>{sub}</p>
@@ -1541,11 +1561,11 @@ export default function TriagePage() {
             style={{
               display: "flex", alignItems: "center", gap: 8,
               fontSize: 14, fontWeight: 700,
-              background: nextDisabled ? "#e2e8f0" : "linear-gradient(135deg,#4f46e5,#7c3aed)",
+              background: nextDisabled ? "#e2e8f0" : "linear-gradient(135deg,#1e3a8a,#2563eb)",
               color: nextDisabled ? "#94a3b8" : "#fff",
               border: "none", borderRadius: 10, padding: "11px 22px",
               cursor: nextDisabled ? "not-allowed" : "pointer",
-              boxShadow: nextDisabled ? "none" : "0 4px 14px rgba(79,70,229,0.3)",
+              boxShadow: nextDisabled ? "none" : "0 4px 14px rgba(37,99,235,0.3)",
               transition: "all 0.2s",
             }}>
             {nextLabel ?? "Continue"}
@@ -1574,27 +1594,27 @@ export default function TriagePage() {
         <div style={{
           display: "flex", alignItems: "center", gap: 14, justifyContent: "space-between",
           background: "linear-gradient(135deg,#f0f4ff,#faf5ff)",
-          border: "1px solid #c7d2fe", borderRadius: 12, padding: "12px 18px",
+          border: "1px solid #bfdbfe", borderRadius: 12, padding: "12px 18px",
           marginBottom: 18, flexWrap: "wrap",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,#4f46e5,#7c3aed)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,#1e3a8a,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <svg width="15" height="15" fill="none" stroke="#fff" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg>
             </div>
             <div>
               <p style={{ fontSize: 13, fontWeight: 700, color: "#1e1b4b", margin: "0 0 1px" }}>
                 Your deal analysis isn&apos;t saved yet
               </p>
-              <p style={{ fontSize: 11, color: "#6366f1", margin: 0 }}>
+              <p style={{ fontSize: 11, color: "#2563eb", margin: 0 }}>
                 Create a free account to save unlimited deal audits and revisit them anytime.
               </p>
             </div>
           </div>
           <div style={{ display: "flex", gap: 8 }}>
-            <a href="/login" style={{ fontSize: 12, fontWeight: 600, padding: "7px 14px", borderRadius: 7, border: "1px solid #c7d2fe", background: "#fff", color: "#4f46e5", textDecoration: "none" }}>
+            <a href="/login" style={{ fontSize: 12, fontWeight: 600, padding: "7px 14px", borderRadius: 7, border: "1px solid #bfdbfe", background: "#fff", color: "#2563eb", textDecoration: "none" }}>
               Sign in
             </a>
-            <a href="/signup" style={{ fontSize: 12, fontWeight: 700, padding: "7px 14px", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff", textDecoration: "none" }}>
+            <a href="/signup" style={{ fontSize: 12, fontWeight: 700, padding: "7px 14px", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#1e3a8a,#2563eb)", color: "#fff", textDecoration: "none" }}>
               Create free account →
             </a>
           </div>
@@ -1624,13 +1644,13 @@ export default function TriagePage() {
                 display: "flex", alignItems: "center", gap: 5,
                 padding: "5px 11px", borderRadius: 7, cursor: "pointer",
                 fontSize: 12, fontWeight: 600,
-                border: activeDeal?.status === "Saved" ? "1.5px solid #ddd6fe" : "1.5px solid #e2e8f0",
-                background: activeDeal?.status === "Saved" ? "#f5f3ff" : "#fff",
-                color: activeDeal?.status === "Saved" ? "#7c3aed" : "#94a3b8",
+                border: activeDeal?.status === "Saved" ? "1.5px solid #bfdbfe" : "1.5px solid #e2e8f0",
+                background: activeDeal?.status === "Saved" ? "#eff6ff" : "#fff",
+                color: activeDeal?.status === "Saved" ? "#1e3a8a" : "#94a3b8",
                 transition: "all 0.15s",
               }}
             >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill={activeDeal?.status === "Saved" ? "#7c3aed" : "none"} stroke={activeDeal?.status === "Saved" ? "#7c3aed" : "#94a3b8"} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill={activeDeal?.status === "Saved" ? "#1e3a8a" : "none"} stroke={activeDeal?.status === "Saved" ? "#1e3a8a" : "#94a3b8"} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
               </svg>
               {activeDeal?.status === "Saved" ? "Saved" : "Save for later"}
@@ -1662,12 +1682,12 @@ export default function TriagePage() {
       {/* ── Social proof ── */}
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 22, justifyContent: "center" }}>
         <div style={{ display: "flex", gap: -3 }}>
-          {["#4f46e5","#7c3aed","#06b6d4","#059669","#d97706"].map((c, i) => (
+          {["#1e3a8a","#2563eb","#06b6d4","#059669","#d97706"].map((c, i) => (
             <div key={i} style={{ width: 20, height: 20, borderRadius: "50%", background: c, border: "2px solid #f8fafc", marginLeft: i > 0 ? -6 : 0, flexShrink: 0 }} />
           ))}
         </div>
         <span style={{ fontSize: 12, color: "#64748b" }}>
-          <strong style={{ color: "#4f46e5" }}>3,241+</strong> deals analysed on Triage Finance this month
+          Analyse any UK business listing in under 60 seconds
         </span>
       </div>
 
@@ -1682,7 +1702,7 @@ export default function TriagePage() {
             {/* ── Left: Company Search ── */}
             <div className="card" style={{ padding: 22 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16, paddingBottom: 14, borderBottom: "1px solid var(--border)" }}>
-                <div style={{ width: 30, height: 30, borderRadius: "50%", background: step1Done ? "#059669" : "#4f46e5", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
+                <div style={{ width: 30, height: 30, borderRadius: "50%", background: step1Done ? "#059669" : "#2563eb", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
                   {step1Done ? <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg> : "1"}
                 </div>
                 <div>
@@ -1718,7 +1738,7 @@ export default function TriagePage() {
             {/* ── Right: Financial Data ── */}
             <div className="card" style={{ padding: 22 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16, paddingBottom: 14, borderBottom: "1px solid var(--border)" }}>
-                <div style={{ width: 30, height: 30, borderRadius: "50%", background: step2Done ? "#059669" : "#4f46e5", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
+                <div style={{ width: 30, height: 30, borderRadius: "50%", background: step2Done ? "#059669" : "#2563eb", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
                   {step2Done ? <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg> : "2"}
                 </div>
                 <div>
@@ -1883,6 +1903,12 @@ export default function TriagePage() {
         <div>
           <StepHeader n={3} label="Deal Analysis" sub="Valuation, capital structure, and financial signals" />
 
+          {metricsError && !metricsError.startsWith("DEMO") && (
+            <div style={{ marginBottom: 16, padding: "12px 16px", borderRadius: 10, background: "#fef2f2", border: "1px solid #fecaca" }}>
+              <p style={{ fontSize: 13, color: "#dc2626", margin: 0 }}>{metricsError}</p>
+            </div>
+          )}
+
           {/* Context summary bar */}
           <div style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap" }}>
             {companyDetails && (
@@ -1963,7 +1989,7 @@ export default function TriagePage() {
               <div className="card" style={{ padding: 20 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
                   <h3 style={{ fontSize: 13, fontWeight: 700, color: "var(--text)", margin: 0 }}>Advanced Debt Engineering</h3>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "#4f46e5", background: "#eef2ff", padding: "3px 10px", borderRadius: 20 }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "#2563eb", background: "#eff6ff", padding: "3px 10px", borderRadius: 20 }}>
                     Effective APR: {(BOE_BASE_RATE + boeSpread).toFixed(2)}%
                   </span>
                 </div>
@@ -2044,7 +2070,7 @@ export default function TriagePage() {
           {/* ── Forensic audit (premium) ── */}
           {reconciling && (
             <div style={{ marginBottom: 16, padding: "20px 24px", background: "#0f172a", borderRadius: 12, border: "1px solid #1e293b", color: "#475569", fontSize: 13, display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ width: 14, height: 14, border: "2px solid #334155", borderTopColor: "#6366f1", borderRadius: "50%", display: "inline-block", animation: "spin 0.8s linear infinite" }} />
+              <span style={{ width: 14, height: 14, border: "2px solid #334155", borderTopColor: "#2563eb", borderRadius: "50%", display: "inline-block", animation: "spin 0.8s linear infinite" }} />
               Running forensic reconciliation…
             </div>
           )}
@@ -2127,15 +2153,15 @@ export default function TriagePage() {
 
             {/* Credit memo */}
             <div style={{
-              background: creditMemoUnlocked ? "linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%)" : "#f8fafc",
-              border: `1px solid ${creditMemoUnlocked ? "#c7d2fe" : "#e2e8f0"}`,
+              background: creditMemoUnlocked ? "linear-gradient(135deg, #eff6ff 0%, #eff6ff 100%)" : "#f8fafc",
+              border: `1px solid ${creditMemoUnlocked ? "#bfdbfe" : "#e2e8f0"}`,
               borderRadius: 14, padding: "24px", transition: "all 0.3s",
             }}>
-              <div style={{ width: 40, height: 40, borderRadius: 10, background: creditMemoUnlocked ? "#4f46e5" : "#e2e8f0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, marginBottom: 14 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 10, background: creditMemoUnlocked ? "#2563eb" : "#e2e8f0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, marginBottom: 14 }}>
                 {creditMemoUnlocked ? "📋" : "🔒"}
               </div>
               <h3 style={{ fontSize: 15, fontWeight: 800, color: creditMemoUnlocked ? "#1e1b4b" : "#94a3b8", margin: "0 0 6px" }}>Credit Memo PDF</h3>
-              <p style={{ fontSize: 13, color: creditMemoUnlocked ? "#6366f1" : "#94a3b8", margin: "0 0 18px", lineHeight: 1.55 }}>
+              <p style={{ fontSize: 13, color: creditMemoUnlocked ? "#2563eb" : "#94a3b8", margin: "0 0 18px", lineHeight: 1.55 }}>
                 {creditMemoUnlocked
                   ? "Generate a 3-page institutional Credit Memo ready to share with lenders."
                   : "Unlocks when DSCR ≥ 1.25× and Levered FCF > 0."}
@@ -2150,11 +2176,11 @@ export default function TriagePage() {
                 }}
                 style={{
                   width: "100%", padding: "12px 0",
-                  background: creditMemoUnlocked ? "#4f46e5" : "#e2e8f0",
+                  background: creditMemoUnlocked ? "#2563eb" : "#e2e8f0",
                   color: creditMemoUnlocked ? "#fff" : "#94a3b8",
                   border: "none", borderRadius: 9, fontSize: 13, fontWeight: 700,
                   cursor: creditMemoUnlocked ? "pointer" : "not-allowed",
-                  boxShadow: creditMemoUnlocked ? "0 4px 14px rgba(79,70,229,0.28)" : "none",
+                  boxShadow: creditMemoUnlocked ? "0 4px 14px rgba(37,99,235,0.28)" : "none",
                   display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
                 }}>
                 {creditMemoUnlocked ? (
