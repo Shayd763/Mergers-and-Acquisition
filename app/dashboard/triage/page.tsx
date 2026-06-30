@@ -1531,7 +1531,7 @@ export default function TriagePage() {
   /* ── Shared step header ── */
   const StepHeader = ({ n, label, sub }: { n: number; label: string; sub: string }) => (
     <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20, paddingBottom: 16, borderBottom: "1px solid var(--border)" }}>
-      <div style={{ width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 800, color: "#fff", flexShrink: 0, boxShadow: "0 4px 12px rgba(28,25,23,0.3)" }}>{n}</div>
+      <div style={{ width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 800, color: "#fff", flexShrink: 0, boxShadow: "0 4px 12px rgba(28,25,23,0.3)" }}>{n}</div>
       <div>
         <h2 style={{ fontSize: 17, fontWeight: 800, color: "var(--text)", margin: 0, letterSpacing: "-0.02em" }}>{label}</h2>
         <p style={{ fontSize: 12, color: "var(--muted)", margin: 0 }}>{sub}</p>
@@ -1564,7 +1564,7 @@ export default function TriagePage() {
             style={{
               display: "flex", alignItems: "center", gap: 8,
               fontSize: 14, fontWeight: 700,
-              background: nextDisabled ? "#d6d3d1" : "linear-gradient(135deg,#292524,#1c1917)",
+              background: nextDisabled ? "#d6d3d1" : "linear-gradient(135deg,#166534,#14532d)",
               color: nextDisabled ? "#a8a29e" : "#fff",
               border: "none", borderRadius: 10, padding: "11px 22px",
               cursor: nextDisabled ? "not-allowed" : "pointer",
@@ -1601,7 +1601,7 @@ export default function TriagePage() {
           marginBottom: 18, flexWrap: "wrap",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <svg width="15" height="15" fill="none" stroke="#fff" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg>
             </div>
             <div>
@@ -1617,7 +1617,7 @@ export default function TriagePage() {
             <a href="/login" style={{ fontSize: 12, fontWeight: 600, padding: "7px 14px", borderRadius: 7, border: "1px solid #d6d3d1", background: "#fff", color: "#1c1917", textDecoration: "none" }}>
               Sign in
             </a>
-            <a href="/signup" style={{ fontSize: 12, fontWeight: 700, padding: "7px 14px", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff", textDecoration: "none" }}>
+            <a href="/signup" style={{ fontSize: 12, fontWeight: 700, padding: "7px 14px", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#166534,#14532d)", color: "#fff", textDecoration: "none" }}>
               Create free account →
             </a>
           </div>

@@ -408,7 +408,7 @@ export default function DashboardPage() {
               onClick={() => { setActiveDealId(bankableReal[0].id); router.push("/dashboard/triage"); }}
               style={{
                 flexShrink: 0, fontSize: 12, fontWeight: 700, padding: "9px 16px", borderRadius: 8,
-                background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff",
+                background: "linear-gradient(135deg,#166534,#14532d)", color: "#fff",
                 border: "none", cursor: "pointer",
                 boxShadow: "0 4px 12px rgba(28,25,23,0.40)",
               }}>

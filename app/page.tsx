@@ -78,7 +78,7 @@ function DealSlider() {
     <div style={{ padding: "20px 24px" }}>
       <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", color: "#a8a29e", textTransform: "uppercase", marginBottom: 14 }}>Live Preview — Manchester Consultancy · £450k</p>
       <div style={{ height: 7, borderRadius: 9999, overflow: "hidden", display: "flex", background: "#e7e5e4", marginBottom: 18, border: "1px solid #d6d3d1" }}>
-        <div style={{ width: `${equity}%`, background: "linear-gradient(90deg,#292524,#1c1917)", transition: "width 0.2s" }} />
+        <div style={{ width: `${equity}%`, background: "linear-gradient(90deg,#166534,#14532d)", transition: "width 0.2s" }} />
         <div style={{ width: `${vendor}%`, background: "linear-gradient(90deg,#292524,#a855f7)", transition: "width 0.2s" }} />
         <div style={{ width: `${bank}%`, background: "linear-gradient(90deg,#d97706,#f59e0b)", transition: "width 0.2s" }} />
       </div>
@@ -415,7 +415,7 @@ function PortalLoginButton() {
             className="nav-desktop-links"
             style={{ display: "flex", alignItems: "center", gap: 7, padding: "4px 10px 4px 4px", borderRadius: 9999, background: "#f0fdf4", border: "1px solid #bbf7d0", cursor: "default" }}
           >
-            <div style={{ width: 22, height: 22, borderRadius: "50%", background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 700, color: "#fff", flexShrink: 0 }}>
+            <div style={{ width: 22, height: 22, borderRadius: "50%", background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 700, color: "#fff", flexShrink: 0 }}>
               {initials || "U"}
             </div>
             <span style={{ fontSize: 11, fontWeight: 600, color: "#15803d", whiteSpace: "nowrap" }}>Signed in</span>
@@ -426,7 +426,7 @@ function PortalLoginButton() {
           onClick={handleClick}
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
-          style={{ padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff", fontSize: 13, fontWeight: 700, boxShadow: "0 0 16px rgba(28,25,23,0.3)", whiteSpace: "nowrap" }}
+          style={{ padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#166534,#14532d)", color: "#fff", fontSize: 13, fontWeight: 700, boxShadow: "0 0 16px rgba(28,25,23,0.3)", whiteSpace: "nowrap" }}
         >
           {isSignedIn ? "Portal →" : "Portal Login →"}
         </motion.button>
@@ -458,7 +458,7 @@ function PortalLoginButton() {
             </div>
             <div style={{ display: "flex", gap: 8 }}>
               <Link href="/signup" style={{ flex: 1, textDecoration: "none" }}>
-                <button style={{ width: "100%", padding: "8px 0", background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
+                <button style={{ width: "100%", padding: "8px 0", background: "linear-gradient(135deg,#166534,#14532d)", color: "#fff", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
                   Create free account →
                 </button>
               </Link>
@@ -589,7 +589,7 @@ export default function HomePage() {
           style={{ display: "flex", alignItems: "center", gap: 2, background: "rgba(255,255,255,0.92)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", border: "1px solid #d6d3d1", borderRadius: 9999, padding: "8px 12px", boxShadow: "0 4px 24px rgba(0,0,0,0.08)", maxWidth: "calc(100vw - 24px)", pointerEvents: "all" }}>
           {/* Logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, padding: "4px 10px 4px 4px", textDecoration: "none", flexShrink: 0 }}>
-            <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#292524,#1c1917)", flexShrink: 0 }}><BarChart3 size={13} color="#fff" /></div>
+            <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#166534,#14532d)", flexShrink: 0 }}><BarChart3 size={13} color="#fff" /></div>
             <span style={{ fontSize: 14, fontWeight: 700, color: "#1c1917", letterSpacing: "-0.02em", whiteSpace: "nowrap" }}>Triage Finance</span>
           </Link>
           {/* Desktop links */}
@@ -671,7 +671,7 @@ export default function HomePage() {
             </div>
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.4, ease: EXPO }} style={{ marginTop: "auto" }}>
               <Link href="/dashboard" onClick={() => setMobileNavOpen(false)} style={{ textDecoration: "none", display: "block" }}>
-                <div style={{ background: "linear-gradient(135deg,#292524,#1c1917)", borderRadius: 16, padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 0 40px rgba(28,25,23,0.3)" }}>
+                <div style={{ background: "linear-gradient(135deg,#166534,#14532d)", borderRadius: 16, padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 0 40px rgba(28,25,23,0.3)" }}>
                   <div>
                     <p style={{ fontSize: 16, fontWeight: 700, color: "#fff", margin: "0 0 3px" }}>Start for free</p>
                     <p style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", margin: 0 }}>Triage your first deal in 60 seconds</p>
@@ -705,7 +705,7 @@ export default function HomePage() {
             {(["buyer", "seller"] as const).map(t => (
               <button key={t} onClick={() => setTrack(t)} style={{
                 padding: "9px 22px", borderRadius: 9999, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600, transition: "all 0.2s",
-                background: track === t ? (t === "buyer" ? "linear-gradient(135deg,#292524,#1c1917)" : "linear-gradient(135deg,#059669,#10b981)") : "transparent",
+                background: track === t ? (t === "buyer" ? "linear-gradient(135deg,#166534,#14532d)" : "linear-gradient(135deg,#059669,#10b981)") : "transparent",
                 color: track === t ? "#fff" : "#78716c",
                 boxShadow: track === t ? "0 2px 10px rgba(0,0,0,0.15)" : "none",
               }}>
@@ -1052,7 +1052,7 @@ export default function HomePage() {
           className="grid-2col" style={{ gap: 16 }}>
           {/* Buyer CTA */}
           <motion.div variants={fadeUp}>
-            <div style={{ background: "linear-gradient(135deg,#292524,#1c1917)", borderRadius: 24, padding: "52px 40px", position: "relative", overflow: "hidden", height: "100%", display: "flex", flexDirection: "column" }}>
+            <div style={{ background: "linear-gradient(135deg,#166534,#14532d)", borderRadius: 24, padding: "52px 40px", position: "relative", overflow: "hidden", height: "100%", display: "flex", flexDirection: "column" }}>
               <div style={{ position: "absolute", top: -60, right: -60, width: 200, height: 200, borderRadius: "50%", background: "rgba(255,255,255,0.07)", pointerEvents: "none" }} />
               <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.6)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>For Buyers</p>
               <h3 style={{ fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "#fff", margin: "0 0 14px", letterSpacing: "-0.03em", lineHeight: 1.15 }}>Audit a deal in under 30 seconds.</h3>
@@ -1096,7 +1096,7 @@ export default function HomePage() {
           display: "flex", alignItems: "center", gap: 18,
           marginBottom: 28, flexWrap: "wrap",
         }}>
-          <div style={{ width: 40, height: 40, borderRadius: 10, flexShrink: 0, background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>🔄</div>
+          <div style={{ width: 40, height: 40, borderRadius: 10, flexShrink: 0, background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>🔄</div>
           <div style={{ flex: 1, minWidth: 240 }}>
             <p style={{ fontSize: 13, fontWeight: 800, color: "#c4b5fd", margin: "0 0 3px", letterSpacing: "0.04em" }}>THE DEBT OFFSET GUARANTEE — UP TO £588 CASHBACK</p>
             <p style={{ fontSize: 12.5, color: "rgba(255,255,255,0.6)", margin: 0, lineHeight: 1.6 }}>
@@ -1104,7 +1104,7 @@ export default function HomePage() {
             </p>
           </div>
           <Link href="/dashboard/triage" style={{ textDecoration: "none", flexShrink: 0 }}>
-            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} style={{ padding: "9px 18px", borderRadius: 9, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff", fontSize: 13, fontWeight: 700, whiteSpace: "nowrap" }}>
+            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} style={{ padding: "9px 18px", borderRadius: 9, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#166534,#14532d)", color: "#fff", fontSize: 13, fontWeight: 700, whiteSpace: "nowrap" }}>
               Start Free →
             </motion.button>
           </Link>
@@ -1146,7 +1146,7 @@ export default function HomePage() {
       {/* ── Footer ───────────────────────────────────────────────────────── */}
       <footer style={{ borderTop: "1px solid #d6d3d1", padding: "48px 24px", display: "flex", flexDirection: "column", alignItems: "center", gap: 20, background: "#fff" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#292524,#1c1917)" }}><BarChart3 size={13} color="#fff" /></div>
+          <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#166534,#14532d)" }}><BarChart3 size={13} color="#fff" /></div>
           <span style={{ fontSize: 14, fontWeight: 700, color: "#1c1917" }}>Triage Finance</span>
         </div>
         <div style={{ display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center" }}>

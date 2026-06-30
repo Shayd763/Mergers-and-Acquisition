@@ -76,7 +76,7 @@ export function SiteNav() {
         >
           {/* Logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, padding: "4px 10px 4px 4px", textDecoration: "none", flexShrink: 0 }}>
-            <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#292524,#1c1917)", flexShrink: 0 }}>
+            <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#166534,#14532d)", flexShrink: 0 }}>
               <BarChart3 size={13} color="#fff" />
             </div>
             <span style={{ fontSize: 14, fontWeight: 700, color: "#1c1917", letterSpacing: "-0.02em", whiteSpace: "nowrap" }}>Triage Finance</span>
@@ -108,7 +108,7 @@ export function SiteNav() {
           <div className="nav-desktop-links" style={{ marginLeft: 4 }}>
             <Link href="/dashboard" style={{ textDecoration: "none" }}>
               <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-                style={{ padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff", fontSize: 13, fontWeight: 700, whiteSpace: "nowrap" }}>
+                style={{ padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#166534,#14532d)", color: "#fff", fontSize: 13, fontWeight: 700, whiteSpace: "nowrap" }}>
                 Dashboard
               </motion.button>
             </Link>
@@ -184,7 +184,7 @@ export function SiteNav() {
 
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.4, ease: EXPO }} style={{ marginTop: "auto" }}>
               <Link href="/dashboard" onClick={() => setMobileNavOpen(false)} style={{ textDecoration: "none", display: "block" }}>
-                <div style={{ background: "linear-gradient(135deg,#292524,#1c1917)", borderRadius: 16, padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 0 40px rgba(28,25,23,0.3)" }}>
+                <div style={{ background: "linear-gradient(135deg,#166534,#14532d)", borderRadius: 16, padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 0 40px rgba(28,25,23,0.3)" }}>
                   <div>
                     <p style={{ fontSize: 16, fontWeight: 700, color: "#fff", margin: "0 0 3px" }}>Start for free</p>
                     <p style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", margin: 0 }}>Triage your first deal in 60 seconds</p>

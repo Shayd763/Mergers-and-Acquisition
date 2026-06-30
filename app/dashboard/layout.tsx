@@ -262,10 +262,10 @@ function DealItem({ deal, isActive, onCloseSidebar }: { deal: StoredDeal; isActi
 /* ─── User / account panel ───────────────────────────────────────────────── */
 
 const TIER_META: Record<Tier, { label: string; color: string; bg: string }> = {
-  explorer:      { label: "Explorer",       color: "#78716c", bg: "#e7e5e4" },
-  searcher:      { label: "Active Searcher", color: "#1c1917", bg: "#e7e5e4" },
-  broker:        { label: "Deal Broker",     color: "#292524", bg: "#e7e5e4" },
-  institutional: { label: "Institutional",   color: "#0891b2", bg: "#ecfeff" },
+  explorer:      { label: "Explorer",       color: "#6b7280", bg: "#f3f4f6" },
+  searcher:      { label: "Active Searcher", color: "#166534", bg: "#dcfce7" },
+  broker:        { label: "Deal Broker",     color: "#14532d", bg: "#bbf7d0" },
+  institutional: { label: "Institutional",   color: "#0891b2", bg: "#e0f2fe" },
 };
 
 function UserAccountPanel() {
@@ -297,7 +297,7 @@ function UserAccountPanel() {
             </button>
             <button
               onClick={() => router.push("/signup")}
-              style={{ flex: 1, fontSize: 11, fontWeight: 700, padding: "7px 0", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff", cursor: "pointer" }}>
+              style={{ flex: 1, fontSize: 11, fontWeight: 700, padding: "7px 0", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#166534,#14532d)", color: "#fff", cursor: "pointer" }}>
               Sign up free
             </button>
           </div>
@@ -315,7 +315,7 @@ function UserAccountPanel() {
               // eslint-disable-next-line @next/next/no-img-element
               <img src={session.user.image} alt="" style={{ width: 30, height: 30, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
             ) : (
-              <div style={{ width: 30, height: 30, borderRadius: "50%", background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
+              <div style={{ width: 30, height: 30, borderRadius: "50%", background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
                 {initials}
               </div>
             )}
@@ -398,7 +398,7 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
       {/* Logo — mobile only center */}
       <div className="nav-mobile-btn" style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 7, textDecoration: "none", pointerEvents: "auto" }}>
-          <div style={{ width: 24, height: 24, borderRadius: 6, background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <div style={{ width: 24, height: 24, borderRadius: 6, background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             <BarChart3 size={12} color="#fff" />
           </div>
           <span style={{ fontWeight: 700, fontSize: 13, color: "#1c1917", letterSpacing: "-0.02em" }}>Triage Finance</span>
@@ -448,7 +448,7 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
               // eslint-disable-next-line @next/next/no-img-element
               <img src={session.user.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             ) : (
-              <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, color: "#fff" }}>
+              <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, color: "#fff" }}>
                 {initials}
               </div>
             )}
@@ -456,7 +456,7 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
         ) : (
           <button
             onClick={() => router.push("/login")}
-            style={{ fontSize: 11, fontWeight: 700, padding: "6px 12px", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#292524,#1c1917)", color: "#fff", cursor: "pointer" }}>
+            style={{ fontSize: 11, fontWeight: 700, padding: "6px 12px", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#166534,#14532d)", color: "#fff", cursor: "pointer" }}>
             Sign in
           </button>
         )}
@@ -507,7 +507,7 @@ function FoundingMemberBanner() {
   return (
     <div style={{
       display: "flex", alignItems: "center", justifyContent: "space-between",
-      background: "linear-gradient(90deg,#292524,#1c1917)",
+      background: "linear-gradient(90deg,#166534,#14532d)",
       padding: "8px 16px", flexShrink: 0, flexWrap: "wrap", gap: 8,
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -561,7 +561,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
         {/* Logo */}
         <div style={{ padding: "18px 16px 14px", borderBottom: "1px solid #d6d3d1" }}>
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
-            <div style={{ width: 28, height: 28, borderRadius: 7, background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ width: 28, height: 28, borderRadius: 7, background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <BarChart3 size={14} color="#fff" />
             </div>
             <span style={{ fontWeight: 700, fontSize: 14, color: "#1c1917", letterSpacing: "-0.02em" }}>Triage Finance</span>

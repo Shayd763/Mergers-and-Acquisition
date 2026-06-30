@@ -285,7 +285,7 @@ export default function AccountPage() {
             // eslint-disable-next-line @next/next/no-img-element
             <img src={session.user.image} alt="" style={{ width: 52, height: 52, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
           ) : (
-            <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
+            <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
               {initials}
             </div>
           )}

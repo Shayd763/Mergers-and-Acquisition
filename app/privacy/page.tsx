@@ -6,7 +6,7 @@ export default function PrivacyPage() {
   return (
     <div style={{ maxWidth: 720, margin: "0 auto", padding: "64px 24px 80px", fontFamily: "'Inter','Segoe UI',system-ui,sans-serif" }}>
       <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none", marginBottom: 40 }}>
-        <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 15 }}>T</div>
+        <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 15 }}>T</div>
         <span style={{ fontWeight: 700, fontSize: 16, color: "#1c1917", letterSpacing: "-0.02em" }}>Triage Finance</span>
       </Link>
 

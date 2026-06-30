@@ -279,7 +279,7 @@ function TierCard({ tier: td, current, onUpgrade, onContact, onFree }: {
       {td.badge && (
         <div style={{
           position: "absolute", top: -10, left: "50%", transform: "translateX(-50%)",
-          background: "linear-gradient(135deg,#292524,#1c1917)",
+          background: "linear-gradient(135deg,#166534,#14532d)",
           color: "#fff", fontSize: 9, fontWeight: 800, letterSpacing: "0.1em",
           padding: "3px 10px", borderRadius: 9999, whiteSpace: "nowrap",
         }}>
@@ -338,7 +338,7 @@ function TierCard({ tier: td, current, onUpgrade, onContact, onFree }: {
           background: isCurrent
             ? "transparent"
             : td.highlight
-            ? "linear-gradient(135deg,#292524,#1c1917)"
+            ? "linear-gradient(135deg,#166534,#14532d)"
             : td.contact
             ? "linear-gradient(135deg,#0891b2,#06b6d4)"
             : `${td.accentColor}33`,

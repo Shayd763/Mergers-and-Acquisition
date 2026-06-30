@@ -23,7 +23,7 @@ export default function LoginPage() {
 
       {/* Logo */}
       <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", marginBottom: 32 }}>
-        <div style={{ width: 36, height: 36, borderRadius: 9, background: "linear-gradient(135deg,#292524,#1c1917)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ width: 36, height: 36, borderRadius: 9, background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <BarChart3 size={18} color="#fff" />
         </div>
         <span style={{ fontWeight: 700, fontSize: 18, color: "var(--text)", letterSpacing: "-0.02em" }}>Triage Finance</span>
