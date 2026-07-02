@@ -2,6 +2,15 @@ import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 import { userDb } from "@/lib/db";
 
+const ADMIN_EMAILS = new Set([
+  "shailendavdra@gmail.com",
+  ...(process.env.ADMIN_EMAILS ?? "").split(",").map(e => e.trim()).filter(Boolean),
+]);
+
+function isAdmin(email: string) {
+  return ADMIN_EMAILS.has(email.toLowerCase());
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
   providers: [
@@ -24,8 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, user }) {
       const email = user?.email ?? (token.email as string | undefined);
       if (email) {
-        const adminEmails = (process.env.ADMIN_EMAILS ?? "").split(",").map(e => e.trim()).filter(Boolean);
-        if (adminEmails.includes(email)) {
+        if (isAdmin(email)) {
           token.tier = "institutional";
         } else {
           const row = await userDb.getByEmail(email);
@@ -38,8 +46,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     async session({ session, token }) {
       if (session.user?.email) {
-        const adminEmails = (process.env.ADMIN_EMAILS ?? "").split(",").map(e => e.trim()).filter(Boolean);
-        if (adminEmails.includes(session.user.email)) {
+        if (isAdmin(session.user.email)) {
           (session as unknown as Record<string, unknown>).tier = "institutional";
         } else {
           const row = await userDb.getByEmail(session.user.email);
