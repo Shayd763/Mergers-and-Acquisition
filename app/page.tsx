@@ -426,7 +426,8 @@ function PortalLoginButton() {
           onClick={handleClick}
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
-          style={{ padding: "7px 16px", borderRadius: 9999, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#166534,#14532d)", color: "#fff", fontSize: 13, fontWeight: 700, boxShadow: "0 0 16px rgba(28,25,23,0.3)", whiteSpace: "nowrap" }}
+          className="btn-glass"
+          style={{ padding: "7px 18px", borderRadius: 9999, fontSize: 13, whiteSpace: "nowrap" }}
         >
           {isSignedIn ? "Portal →" : "Portal Login →"}
         </motion.button>
@@ -776,13 +777,21 @@ export default function HomePage() {
             <motion.div key={track + "-ctas"} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25, delay: 0.08 }}
               style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
               <Link href={hero.cta1.href} style={{ textDecoration: "none" }}>
-                <motion.button whileHover={{ scale: 1.04, boxShadow: `0 8px 30px ${track === "buyer" ? "rgba(28,25,23,0.35)" : "rgba(5,150,105,0.3)"}` }} whileTap={{ scale: 0.97 }}
-                  style={{ padding: "14px 28px", borderRadius: 12, border: "none", cursor: "pointer", background: `linear-gradient(135deg,${hero.accent},${track === "buyer" ? "#1c1917" : "#10b981"})`, color: "#fff", fontSize: 15, fontWeight: 700, boxShadow: `0 4px 20px ${track === "buyer" ? "rgba(28,25,23,0.25)" : "rgba(5,150,105,0.2)"}`, display: "flex", alignItems: "center", gap: 8 }}>
+                <motion.button
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="btn-glass"
+                  style={{ fontSize: 15, padding: "14px 30px", borderRadius: 14 }}
+                >
                   {hero.cta1.label} <ArrowRight size={16} />
                 </motion.button>
               </Link>
               <Link href={hero.cta2.href} style={{ textDecoration: "none" }}>
-                <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} style={{ padding: "14px 28px", borderRadius: 12, cursor: "pointer", background: "#ffffff", border: "1px solid #d6d3d1", color: "#44403c", fontSize: 15, fontWeight: 600, boxShadow: "0 1px 3px rgba(0,0,0,0.06)", display: "flex", alignItems: "center", gap: 8 }}>
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  style={{ padding: "14px 28px", borderRadius: 14, cursor: "pointer", background: "rgba(255,255,255,0.7)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.5)", color: "#44403c", fontSize: 15, fontWeight: 600, boxShadow: "0 2px 12px rgba(0,0,0,0.08)", display: "flex", alignItems: "center", gap: 8 }}
+                >
                   {hero.cta2.label}
                 </motion.button>
               </Link>

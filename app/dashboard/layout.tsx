@@ -297,7 +297,8 @@ function UserAccountPanel() {
             </button>
             <button
               onClick={() => router.push("/signup")}
-              style={{ flex: 1, fontSize: 11, fontWeight: 700, padding: "7px 0", borderRadius: 7, border: "none", background: "linear-gradient(135deg,#166534,#14532d)", color: "#fff", cursor: "pointer" }}>
+              className="btn-glass"
+              style={{ flex: 1, fontSize: 11, padding: "7px 0", borderRadius: 7 }}>
               Sign up free
             </button>
           </div>
@@ -519,7 +520,8 @@ function FoundingMemberBanner() {
       <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
         <button
           onClick={() => openUpgradeModal()}
-          style={{ fontSize: 11, fontWeight: 700, padding: "5px 13px", borderRadius: 6, border: "none", background: "#fff", color: "#1c1917", cursor: "pointer", whiteSpace: "nowrap" }}>
+          className="btn-glass"
+          style={{ fontSize: 11, padding: "5px 13px", borderRadius: 6, whiteSpace: "nowrap" }}>
           Claim offer →
         </button>
         <button onClick={dismiss} aria-label="Dismiss" style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: 16, lineHeight: 1, padding: "8px", minWidth: 36, minHeight: 36, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -612,15 +614,8 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
         <div style={{ padding: "12px 10px", borderTop: "1px solid #d6d3d1" }}>
           <button
             onClick={handleNewDeal}
-            style={{
-              width: "100%", padding: "9px 14px", borderRadius: 9,
-              border: "1.5px dashed #d6d3d1", background: "transparent",
-              color: "#1c1917", fontSize: 12, fontWeight: 700, cursor: "pointer",
-              display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-              transition: "background 0.12s, border-color 0.12s",
-            }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#e7e5e4"; (e.currentTarget as HTMLElement).style.borderColor = "#1c1917"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.borderColor = "#d6d3d1"; }}
+            className="btn-glass"
+            style={{ width: "100%", padding: "9px 14px", borderRadius: 9, fontSize: 12, justifyContent: "center" }}
           >
             <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
