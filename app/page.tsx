@@ -218,17 +218,17 @@ function BentoCell({ icon, label, value, sub, iconBg }: { icon: React.ReactNode;
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
 const FAQS = [
-  { q: "Who is Triage Finance built for?", a: "ETA buyers, search fund operators, independent sponsors, and first-time acquirers in the UK SME market. We also serve business owners wanting to understand their buyability score, and deal syndicators structuring acquisitions on behalf of passive investors." },
+  { q: "Who is Acquisition Exchange built for?", a: "ETA buyers, search fund operators, independent sponsors, and first-time acquirers in the UK SME market. We also serve business owners wanting to understand their buyability score, and deal syndicators structuring acquisitions on behalf of passive investors." },
   { q: "How does the AI extraction work?", a: "Paste raw listing text — broker PDFs, Rightbiz/Daltons descriptions, or CIM summaries — and Claude extracts structured financials in under a second: asking price, revenue, net profit, lease data, and add-backs. These feed directly into our deterministic financial model." },
   { q: "What is the Deal Arbitrage model?", a: "Deal Arbitrage is a framework where you source and structure a UK business acquisition using bank debt (60%), vendor finance (20%), and raised equity (20%) — with zero personal capital required. You export an institutional credit memo to attract passive investors, charge a 2–4% deal sourcing fee at completion, and retain 15–30% sweat equity as the deal architect." },
   { q: "How does the lender referral work?", a: "We maintain relationships with SME-focused UK commercial lenders. When you submit a deal, we package your credit memo and send it to matched lenders. We receive a standard referral commission upon successful loan origination — at no additional cost to you." },
-  { q: "Is this advice?", a: "Triage Finance is a rapid screening tool, not financial advice. Our outputs are directional indicators. Always verify financials with a qualified accountant and solicitor before proceeding with any acquisition." },
+  { q: "Is this advice?", a: "Acquisition Exchange is a rapid screening tool, not financial advice. Our outputs are directional indicators. Always verify financials with a qualified accountant and solicitor before proceeding with any acquisition." },
   { q: "Can I use this as a business seller?", a: "Yes — our sell-side funnel lets you input your own financials and receive a Bankability Score: an institutional assessment of how easy it would be for a buyer to get a high-street bank loan to acquire your business. You can export a buyer prospectus and register to be matched with our network of pre-vetted, high-value UK acquirers." },
   { q: "What is the Debt Offset Guarantee?", a: "Active Searcher and Deal Broker subscribers who successfully raise acquisition debt through our licensed commercial partner network receive a 100% refund of their subscription fees paid over the preceding 12 months — up to £588 (Searcher) or £1,788 (Broker) — credited directly to their account upon loan completion. Pro literally pays for itself the moment you close." },
 ];
 
 const TESTIMONIALS = [
-  { name: "James Hartley", role: "Search Fund Principal, London", quote: "I screened 40 deals in a month using Triage Finance. The DSCR and levered FCF outputs saved me hours of spreadsheet work per deal. It's become essential to my process.", rating: 5 },
+  { name: "James Hartley", role: "Search Fund Principal, London", quote: "I screened 40 deals in a month using Acquisition Exchange. The DSCR and levered FCF outputs saved me hours of spreadsheet work per deal. It's become essential to my process.", rating: 5 },
   { name: "Sophie Chen", role: "ETA Buyer, Birmingham", quote: "The credit memo PDF alone is worth the subscription. I sent it directly to my broker — they said it was more polished than most buyers they see at Series A stage.", rating: 5 },
   { name: "Marcus Webb", role: "Independent Sponsor, Manchester", quote: "I used the Deal Arbitrage model to structure my first acquisition with £0 personal capital. The credit memo convinced two angel investors to contribute the 20% equity in under a week.", rating: 5 },
 ];
@@ -590,7 +590,7 @@ export default function HomePage() {
           {/* Logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, padding: "4px 10px 4px 4px", textDecoration: "none", flexShrink: 0 }}>
             <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#166534,#14532d)", flexShrink: 0 }}><BarChart3 size={13} color="#fff" /></div>
-            <span style={{ fontSize: 14, fontWeight: 700, color: "#1c1917", letterSpacing: "-0.02em", whiteSpace: "nowrap" }}>Triage Finance</span>
+            <span style={{ fontSize: 14, fontWeight: 700, color: "#1c1917", letterSpacing: "-0.02em", whiteSpace: "nowrap" }}>Acquisition Exchange</span>
           </Link>
           {/* Desktop links */}
           <div className="nav-desktop-links" style={{ display: "flex", alignItems: "center", gap: 2 }}>
@@ -878,7 +878,7 @@ export default function HomePage() {
           style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14 }}>
           {[
             { n: 1, icon: <Target size={16} />, title: "Source the Target", body: "Find a UK retirement-sale business with stable SDE (e.g., engineering firm at £200k SDE, asking £600k from a retiring founder).", accent: "#1c1917" },
-            { n: 2, icon: <BarChart3 size={16} />, title: "Audit the Deal", body: "Drop the numbers into Triage Finance. Structure 60% bank / 20% vendor / 20% investor equity. Verify DSCR ≥ 1.35× and IRR ≥ 30%.", accent: "#292524" },
+            { n: 2, icon: <BarChart3 size={16} />, title: "Audit the Deal", body: "Drop the numbers into Acquisition Exchange. Structure 60% bank / 20% vendor / 20% investor equity. Verify DSCR ≥ 1.35× and IRR ≥ 30%.", accent: "#292524" },
             { n: 3, icon: <FileText size={16} />, title: "Export Credit Memo", body: "Download the 3-page institutional-grade Deal Credit Memo PDF. This is your proof of concept — lender and investor ready on Day 1.", accent: "#059669" },
             { n: 4, icon: <Users size={16} />, title: "Pitch Passive Investors", body: "Approach HNWs: 'I have a pre-underwritten UK deal with an institutional credit memo. I need £120k equity — the business pays it off.' Close in days.", accent: "#d97706" },
             { n: 5, icon: <Wallet size={16} />, title: "Pocket the Arbitrage", body: "Take a 2–4% deal sourcing fee (£12k–£24k cash on Day 1). Retain 15–30% sweat equity as deal architect. Zero personal capital deployed.", accent: "#dc2626" },
@@ -1147,7 +1147,7 @@ export default function HomePage() {
       <footer style={{ borderTop: "1px solid #d6d3d1", padding: "48px 24px", display: "flex", flexDirection: "column", alignItems: "center", gap: 20, background: "#fff" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#166534,#14532d)" }}><BarChart3 size={13} color="#fff" /></div>
-          <span style={{ fontSize: 14, fontWeight: 700, color: "#1c1917" }}>Triage Finance</span>
+          <span style={{ fontSize: 14, fontWeight: 700, color: "#1c1917" }}>Acquisition Exchange</span>
         </div>
         <div style={{ display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center" }}>
           {[{ href: "/dashboard/triage", label: "Audit a Deal" }, { href: "/sell", label: "Value My Business" }, { href: "/deal-sourcing-guide", label: "Deal Sourcing Guide" }, { href: "/calculators/dscr-calculator", label: "DSCR Calculator" }, { href: "#pricing", label: "Pricing" }].map(l => (
@@ -1156,9 +1156,9 @@ export default function HomePage() {
           ))}
         </div>
         <p style={{ fontSize: 12, color: "#a8a29e", maxWidth: 520, textAlign: "center", lineHeight: 1.65 }}>
-          Triage Finance is a deal screening utility for educational and analytical purposes. Not authorised by the FCA. Not financial advice. Always engage a qualified accountant and solicitor before proceeding with any acquisition.
+          Acquisition Exchange is a deal screening utility for educational and analytical purposes. Not authorised by the FCA. Not financial advice. Always engage a qualified accountant and solicitor before proceeding with any acquisition.
         </p>
-        <p style={{ fontSize: 11, color: "#d6d3d1", margin: 0 }}>© {new Date().getFullYear()} Triage Finance Ltd. All rights reserved.</p>
+        <p style={{ fontSize: 11, color: "#d6d3d1", margin: 0 }}>© {new Date().getFullYear()} Acquisition Exchange Ltd. All rights reserved.</p>
       </footer>
     </div>
   );
@@ -1214,7 +1214,7 @@ function PricingCards() {
               "White-labelled Credit Memo PDF — your logo, your brand",
               "Shared investor pipeline dashboards for co-investors",
               "Priority routing to our pre-approved UK lender network",
-              "Remove all Triage Finance branding from client-facing outputs",
+              "Remove all Acquisition Exchange branding from client-facing outputs",
               "Annual Rebate on Closing (up to £1,788)",
             ]}
             cta="Upgrade — £149/mo"
@@ -1234,7 +1234,7 @@ function PricingCards() {
               "Custom SLA and uptime guarantee",
             ]}
             cta="Contact Us"
-            href="mailto:hello@triagefinance.co.uk"
+            href="mailto:hello@acquisition.exchange"
             isCurrent={tier === "institutional"}
           /></motion.div>
         </motion.div>

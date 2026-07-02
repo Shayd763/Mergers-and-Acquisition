@@ -128,7 +128,7 @@ const DealContext = createContext<DealContextValue | null>(null);
 
 /* ─── Guest localStorage helpers ─────────────────────────────────────────── */
 
-const GUEST_KEY = "triage_finance_deals_guest";
+const GUEST_KEY = "acqex_deals_guest";
 
 function loadGuest(): StoredDeal[] | null {
   try {

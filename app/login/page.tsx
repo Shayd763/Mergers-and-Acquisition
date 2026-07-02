@@ -26,13 +26,13 @@ export default function LoginPage() {
         <div style={{ width: 36, height: 36, borderRadius: 9, background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <BarChart3 size={18} color="#fff" />
         </div>
-        <span style={{ fontWeight: 700, fontSize: 18, color: "var(--text)", letterSpacing: "-0.02em" }}>Triage Finance</span>
+        <span style={{ fontWeight: 700, fontSize: 18, color: "var(--text)", letterSpacing: "-0.02em" }}>Acquisition Exchange</span>
       </Link>
 
       {/* Card */}
       <div className="card" style={{ width: "100%", maxWidth: 400, padding: 32 }}>
         <h1 style={{ fontSize: 22, fontWeight: 800, color: "var(--text)", marginBottom: 4, letterSpacing: "-0.02em" }}>Welcome back</h1>
-        <p style={{ fontSize: 14, color: "var(--muted)", marginBottom: 28 }}>Sign in to your Triage Finance workspace</p>
+        <p style={{ fontSize: 14, color: "var(--muted)", marginBottom: 28 }}>Sign in to your Acquisition Exchange workspace</p>
 
         {/* OAuth */}
         <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 24 }}>

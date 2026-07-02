@@ -154,7 +154,7 @@ export default function BuyPageClient({
           <div style={{ width: 22, height: 22, borderRadius: 6, background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <BarChart3 size={12} color="#fff" />
           </div>
-          <span style={{ fontSize: 13, fontWeight: 700, color: "#f4f4f5" }}>Triage Finance</span>
+          <span style={{ fontSize: 13, fontWeight: 700, color: "#f4f4f5" }}>Acquisition Exchange</span>
         </Link>
         <span style={{ color: "#27272a", fontSize: 12 }}>·</span>
         <span style={{ fontSize: 12, color: "#71717a" }}>{sd.displayName} · {cd.displayName}</span>
@@ -334,7 +334,7 @@ export default function BuyPageClient({
       <footer style={{ borderTop: "1px solid rgba(255,255,255,0.05)", padding: "32px 24px", textAlign: "center", position: "relative", zIndex: 1 }}>
         <p style={{ fontSize: 11, color: "#27272a", maxWidth: 560, margin: "0 auto" }}>
           Market data is indicative only and based on 2024 UK SME M&A benchmarks. Not financial advice. Always engage qualified advisors.{" "}
-          <Link href="/" style={{ color: "#3f3f46", textDecoration: "underline" }}>Triage Finance</Link>
+          <Link href="/" style={{ color: "#3f3f46", textDecoration: "underline" }}>Acquisition Exchange</Link>
         </p>
       </footer>
     </div>

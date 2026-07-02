@@ -401,7 +401,7 @@ function TopBar({ onOpenSidebar, pathname }: { onOpenSidebar: () => void; pathna
           <div style={{ width: 24, height: 24, borderRadius: 6, background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             <BarChart3 size={12} color="#fff" />
           </div>
-          <span style={{ fontWeight: 700, fontSize: 13, color: "#1c1917", letterSpacing: "-0.02em" }}>Triage Finance</span>
+          <span style={{ fontWeight: 700, fontSize: 13, color: "#1c1917", letterSpacing: "-0.02em" }}>Acquisition Exchange</span>
         </Link>
       </div>
 
@@ -564,7 +564,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
             <div style={{ width: 28, height: 28, borderRadius: 7, background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <BarChart3 size={14} color="#fff" />
             </div>
-            <span style={{ fontWeight: 700, fontSize: 14, color: "#1c1917", letterSpacing: "-0.02em" }}>Triage Finance</span>
+            <span style={{ fontWeight: 700, fontSize: 14, color: "#1c1917", letterSpacing: "-0.02em" }}>Acquisition Exchange</span>
           </Link>
         </div>
 

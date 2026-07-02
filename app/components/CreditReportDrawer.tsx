@@ -1075,7 +1075,7 @@ export function CreditReportDrawer({ isOpen, onClose, profile, companyName, comp
         {/* ── Footer ── */}
         <div style={{ borderTop: "1px solid #1e293b", padding: "12px 24px", flexShrink: 0, background: "#0a0f1e", display: "flex", alignItems: "center", gap: 12 }}>
           <span style={{ fontSize: 10, color: "#44403c", flex: 1 }}>
-            Triage Finance Open-Source Credit Engine · Powered by Companies House public data · Not a regulated credit reference report
+            Acquisition Exchange Open-Source Credit Engine · Powered by Companies House public data · Not a regulated credit reference report
           </span>
           <button
             onClick={onClose}

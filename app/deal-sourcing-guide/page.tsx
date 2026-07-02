@@ -258,7 +258,7 @@ export default function DealSourcingGuidePage() {
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           <p style={{ fontSize: 14, color: "#78716c", lineHeight: 1.75 }}>
-            Triage Finance generates a 3-page PDF containing everything a UK commercial lender or angel investor needs to make a decision. It's the same structure used by mid-market PE firms — adapted for UK SME acquisitions.
+            Acquisition Exchange generates a 3-page PDF containing everything a UK commercial lender or angel investor needs to make a decision. It's the same structure used by mid-market PE firms — adapted for UK SME acquisitions.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
             {[
@@ -497,7 +497,7 @@ export default function DealSourcingGuidePage() {
         {/* Footer note */}
         <div style={{ marginTop: 48, textAlign: "center" }}>
           <p style={{ fontSize: 11, color: "#a8a29e", lineHeight: 1.7 }}>
-            This guide is for educational purposes only. Deal structuring, equity arrangements, and fee agreements require independent legal and financial advice. Triage Finance is not authorised by the FCA and does not provide financial advice.
+            This guide is for educational purposes only. Deal structuring, equity arrangements, and fee agreements require independent legal and financial advice. Acquisition Exchange is not authorised by the FCA and does not provide financial advice.
           </p>
         </div>
       </div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from "react";
 import { useSession } from "next-auth/react";
 
@@ -51,8 +51,8 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
 
   // Per-user localStorage key so switching accounts doesn't leak tier
   const storageKey = session?.user?.email
-    ? `triage_sub_${session.user.email}`
-    : "triage_sub_guest";
+    ? `acqex_sub_${session.user.email}`
+    : "acqex_sub_guest";
 
   // When session loads, prefer the DB-backed tier from the session
   useEffect(() => {
@@ -73,7 +73,7 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
       // Unauthenticated — try guest localStorage
       lastEmailRef.current = null;
       try {
-        const stored = localStorage.getItem("triage_sub_guest");
+        const stored = localStorage.getItem("acqex_sub_guest");
         if (stored) {
           const { tier: t } = JSON.parse(stored) as { tier: Tier };
           if (["explorer", "searcher", "broker", "institutional"].includes(t)) setTierState(t);

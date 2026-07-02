@@ -415,7 +415,7 @@ export function LenderFunnelModal({
 
           {/* Commission disclaimer */}
           <p style={{ fontSize: 10, color: "#a8a29e", textAlign: "center", margin: "10px 0 0", lineHeight: 1.6 }}>
-            Triage Finance is a commercial matching utility. We receive a standard referral commission from our
+            Acquisition Exchange is a commercial matching utility. We receive a standard referral commission from our
             lending partners upon successful loan origination at no additional cost to you.
             Introductions do not constitute financial advice. Loans subject to lender credit assessment.
           </p>

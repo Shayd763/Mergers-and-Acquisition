@@ -244,7 +244,7 @@ export default function AccountPage() {
 
     // Institutional = contact sales
     if (td.id === "institutional") {
-      window.location.href = "mailto:hello@triagefinance.co.uk?subject=Institutional%20Plan%20Enquiry";
+      window.location.href = "mailto:hello@acquisition.exchange?subject=Institutional%20Plan%20Enquiry";
       return;
     }
 
@@ -409,11 +409,11 @@ export default function AccountPage() {
               if (res.ok) {
                 window.location.href = "/?deleted=1";
               } else {
-                alert("Failed to delete account. Please contact support at hello@triagefinance.co.uk");
+                alert("Failed to delete account. Please contact support at hello@acquisition.exchange");
                 setDeleteLoading(false);
               }
             } catch {
-              alert("Failed to delete account. Please contact support at hello@triagefinance.co.uk");
+              alert("Failed to delete account. Please contact support at hello@acquisition.exchange");
               setDeleteLoading(false);
             }
           }}

@@ -105,7 +105,7 @@ export function NavigationTransition() {
           position: "absolute",
           inset: 0,
           backgroundImage:
-            "radial-gradient(ellipse 80% 50% at 50% 46%, rgba(91,82,240,0.1) 0%, transparent 65%)",
+            "radial-gradient(ellipse 80% 50% at 50% 46%, rgba(22,101,52,0.12) 0%, transparent 65%)",
           pointerEvents: "none",
         }} />
 
@@ -125,8 +125,8 @@ export function NavigationTransition() {
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <div style={{
               width: 9, height: 9, borderRadius: "50%",
-              background: "linear-gradient(135deg,#1c1917,#8b5cf6)",
-              boxShadow: "0 0 18px rgba(99,102,241,0.75)",
+              background: "linear-gradient(135deg,#14532d,#22c55e)",
+              boxShadow: "0 0 18px rgba(34,197,94,0.65)",
             }} />
             <span style={{
               fontSize: "clamp(26px, 3.8vw, 50px)",
@@ -137,12 +137,12 @@ export function NavigationTransition() {
               textTransform: "uppercase",
               lineHeight: 1,
             }}>
-              Triage Finance
+              Acquisition Exchange
             </span>
             <div style={{
               width: 9, height: 9, borderRadius: "50%",
-              background: "linear-gradient(135deg,#8b5cf6,#1c1917)",
-              boxShadow: "0 0 18px rgba(139,92,246,0.75)",
+              background: "linear-gradient(135deg,#22c55e,#14532d)",
+              boxShadow: "0 0 18px rgba(34,197,94,0.65)",
             }} />
           </div>
 
@@ -151,7 +151,7 @@ export function NavigationTransition() {
             width: "100%",
             height: "0.5px",
             background:
-              "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 25%, rgba(99,102,241,0.55) 50%, rgba(255,255,255,0.15) 75%, transparent 100%)",
+              "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.10) 25%, rgba(34,197,94,0.50) 50%, rgba(255,255,255,0.10) 75%, transparent 100%)",
           }} />
 
           {/* Caption */}
@@ -190,7 +190,7 @@ export function NavigationTransition() {
                 inset: 0,
                 borderRadius: 9999,
                 background:
-                  "linear-gradient(90deg, transparent 0%, rgba(99,102,241,0.9) 50%, transparent 100%)",
+                  "linear-gradient(90deg, transparent 0%, rgba(34,197,94,0.85) 50%, transparent 100%)",
                 animation: "tf-sweep 2.2s cubic-bezier(0.4,0,0.2,1) infinite",
               }} />
             </div>
@@ -204,7 +204,7 @@ export function NavigationTransition() {
                     width: 4,
                     height: 4,
                     borderRadius: "50%",
-                    background: "rgba(99,102,241,0.7)",
+                    background: "rgba(34,197,94,0.7)",
                     animation: `tf-dot 1.6s ease-in-out infinite`,
                     animationDelay: `${i * 0.22}s`,
                   }}
@@ -222,15 +222,15 @@ export function NavigationTransition() {
         height: "1px",
         zIndex: 9999,
         pointerEvents: "none",
-        background: "rgba(99,102,241,0.1)",
+        background: "rgba(22,101,52,0.08)",
         opacity: isOut ? 0 : 1,
         transition: `opacity ${FADE_OUT_MS * 0.35}ms ease`,
       }}>
         <div style={{
           height: "100%",
           width: `${progress}%`,
-          background: "linear-gradient(90deg,#1c1917 0%,#a78bfa 55%,#818cf8 100%)",
-          boxShadow: "0 0 8px rgba(99,102,241,0.8)",
+          background: "linear-gradient(90deg,#14532d 0%,#22c55e 55%,#16a34a 100%)",
+          boxShadow: "0 0 8px rgba(34,197,94,0.75)",
           transition: progress === 100 ? "width 0.2s ease-out" : "width 0.1s linear",
         }} />
       </div>

@@ -32,7 +32,7 @@ function SignupForm() {
       {/* Logo */}
       <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", marginBottom: 32 }}>
         <div style={{ width: 36, height: 36, borderRadius: 9, background: "linear-gradient(135deg,#1c1917,#292524)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 17 }}>T</div>
-        <span style={{ fontWeight: 700, fontSize: 18, color: "var(--text)", letterSpacing: "-0.02em" }}>Triage Finance</span>
+        <span style={{ fontWeight: 700, fontSize: 18, color: "var(--text)", letterSpacing: "-0.02em" }}>Acquisition Exchange</span>
       </Link>
 
       {/* Card */}

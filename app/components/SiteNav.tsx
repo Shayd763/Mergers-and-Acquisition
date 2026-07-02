@@ -79,7 +79,7 @@ export function SiteNav() {
             <div style={{ width: 24, height: 24, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#166534,#14532d)", flexShrink: 0 }}>
               <BarChart3 size={13} color="#fff" />
             </div>
-            <span style={{ fontSize: 14, fontWeight: 700, color: "#1c1917", letterSpacing: "-0.02em", whiteSpace: "nowrap" }}>Triage Finance</span>
+            <span style={{ fontSize: 14, fontWeight: 700, color: "#1c1917", letterSpacing: "-0.02em", whiteSpace: "nowrap" }}>Acquisition Exchange</span>
           </Link>
 
           {/* Desktop links */}

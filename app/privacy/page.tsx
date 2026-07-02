@@ -1,13 +1,13 @@
 ﻿import Link from "next/link";
 
-export const metadata = { title: "Privacy Policy — Triage Finance" };
+export const metadata = { title: "Privacy Policy — Acquisition Exchange" };
 
 export default function PrivacyPage() {
   return (
     <div style={{ maxWidth: 720, margin: "0 auto", padding: "64px 24px 80px", fontFamily: "'Inter','Segoe UI',system-ui,sans-serif" }}>
       <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none", marginBottom: 40 }}>
         <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 15 }}>T</div>
-        <span style={{ fontWeight: 700, fontSize: 16, color: "#1c1917", letterSpacing: "-0.02em" }}>Triage Finance</span>
+        <span style={{ fontWeight: 700, fontSize: 16, color: "#1c1917", letterSpacing: "-0.02em" }}>Acquisition Exchange</span>
       </Link>
 
       <h1 style={{ fontSize: 28, fontWeight: 800, color: "#1c1917", margin: "0 0 8px", letterSpacing: "-0.03em" }}>Privacy Policy</h1>
@@ -16,7 +16,7 @@ export default function PrivacyPage() {
       <div style={{ fontSize: 14, color: "#44403c", lineHeight: 1.75, display: "flex", flexDirection: "column", gap: 24 }}>
         <section>
           <h2 style={{ fontSize: 16, fontWeight: 700, color: "#1c1917", margin: "0 0 8px" }}>1. Who We Are</h2>
-          <p>Triage Finance is a deal analysis platform for UK SME acquisitions. References to &quot;we&quot;, &quot;us&quot;, or &quot;our&quot; refer to Triage Finance. Contact: <a href="mailto:hello@triagefinance.co.uk" style={{ color: "#1c1917" }}>hello@triagefinance.co.uk</a>.</p>
+          <p>Acquisition Exchange is a deal analysis platform for UK SME acquisitions. References to &quot;we&quot;, &quot;us&quot;, or &quot;our&quot; refer to Acquisition Exchange. Contact: <a href="mailto:hello@acquisition.exchange" style={{ color: "#1c1917" }}>hello@acquisition.exchange</a>.</p>
         </section>
 
         <section>
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
 
         <section>
           <h2 style={{ fontSize: 16, fontWeight: 700, color: "#1c1917", margin: "0 0 8px" }}>6. Your Rights (UK GDPR)</h2>
-          <p>You have the right to access, correct, or delete your personal data; to object to processing; and to data portability. To exercise these rights, contact <a href="mailto:hello@triagefinance.co.uk" style={{ color: "#1c1917" }}>hello@triagefinance.co.uk</a>.</p>
+          <p>You have the right to access, correct, or delete your personal data; to object to processing; and to data portability. To exercise these rights, contact <a href="mailto:hello@acquisition.exchange" style={{ color: "#1c1917" }}>hello@acquisition.exchange</a>.</p>
         </section>
 
         <section>

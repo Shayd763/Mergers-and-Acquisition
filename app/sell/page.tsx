@@ -313,7 +313,7 @@ export default function SellPage() {
                     </motion.button>
                     {submitError && <p style={{ fontSize: 12, color: "#dc2626", margin: 0 }}>{submitError}</p>}
                   </div>
-                  <p style={{ fontSize: 10, color: "#d6d3d1", marginTop: 10, lineHeight: 1.6 }}>By submitting, you opt into Triage Finance's pre-vetted buyer network. Unsubscribe at any time.</p>
+                  <p style={{ fontSize: 10, color: "#d6d3d1", marginTop: 10, lineHeight: 1.6 }}>By submitting, you opt into Acquisition Exchange's pre-vetted buyer network. Unsubscribe at any time.</p>
                 </motion.div>
               )}
 
@@ -333,7 +333,7 @@ export default function SellPage() {
         <div style={{ marginTop: 64, borderTop: "1px solid #d6d3d1", paddingTop: 32, textAlign: "center" }}>
           <p style={{ fontSize: 12, color: "#a8a29e" }}>
             Valuations are indicative only. Based on 2025 UK SME M&A benchmarks. Not financial advice.{" "}
-            <Link href="/" style={{ color: "#1c1917", textDecoration: "none" }}>← Back to Triage Finance</Link>
+            <Link href="/" style={{ color: "#1c1917", textDecoration: "none" }}>← Back to Acquisition Exchange</Link>
           </p>
         </div>
       </div>

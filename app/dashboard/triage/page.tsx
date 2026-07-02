@@ -981,7 +981,7 @@ function DealViabilityCard({
             </svg>
           </button>
           <p style={{ fontSize: 10, color: "#a8a29e", textAlign: "center", margin: "8px 0 0", lineHeight: 1.5 }}>
-            Triage Finance receives a referral commission from lenders on successful origination · No cost to you
+            Acquisition Exchange receives a referral commission from lenders on successful origination · No cost to you
           </p>
         </div>
       )}

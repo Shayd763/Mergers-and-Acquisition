@@ -80,7 +80,7 @@ export function EmailCaptureModal({ isOpen, onCaptured, onClose, headline, subli
             ))}
           </div>
           <span style={{ fontSize: 11, color: "#1c1917", fontWeight: 600 }}>
-            3,241+ deal analysts already on Triage Finance
+            3,241+ deal analysts already on Acquisition Exchange
           </span>
         </div>
 

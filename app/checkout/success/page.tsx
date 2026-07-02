@@ -22,7 +22,7 @@ export default function CheckoutSuccessPage() {
         <div style={{ width: 36, height: 36, borderRadius: 9, background: "linear-gradient(135deg,#166534,#14532d)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <BarChart3 size={18} color="#fff" />
         </div>
-        <span style={{ fontWeight: 700, fontSize: 18, color: "#1c1917", letterSpacing: "-0.02em" }}>Triage Finance</span>
+        <span style={{ fontWeight: 700, fontSize: 18, color: "#1c1917", letterSpacing: "-0.02em" }}>Acquisition Exchange</span>
       </Link>
 
       <div style={{
@@ -70,7 +70,7 @@ export default function CheckoutSuccessPage() {
 
       <p style={{ fontSize: 12, color: "#a8a29e", marginTop: 24, textAlign: "center" }}>
         A receipt has been sent to your email. Questions?{" "}
-        <a href="mailto:hello@triagefinance.co.uk" style={{ color: "#78716c" }}>hello@triagefinance.co.uk</a>
+        <a href="mailto:hello@acquisition.exchange" style={{ color: "#78716c" }}>hello@acquisition.exchange</a>
       </p>
     </div>
   );
